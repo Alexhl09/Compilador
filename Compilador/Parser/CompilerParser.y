@@ -1,0 +1,6 @@
+
+%start program
+
+%%
+    
+    program : 'program';
