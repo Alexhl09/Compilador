@@ -2,6 +2,7 @@
 /* Simplify our definitions */
 
 %%
+
     .            {
                     /* All else, return character value as token ID. */
                     print("ERROR")

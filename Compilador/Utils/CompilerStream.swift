@@ -31,6 +31,7 @@ class CompilerStream : OCFileInput
 
     func peekByte() -> Int
     {
+        let a = nil ?? ""
         if pos >= string.count {
             return -1
         } else {
