@@ -9,7 +9,7 @@ int[] merge(const int array[], const int left, const int mid, const int right)
 {
     const int subArrayOne = mid - left + 1;
     const int subArrayTwo = right - mid;
-    int[] result = new int[subArrayOne + subArrayTwo];
+    var result[subArrayOne + subArrayTwo];
     
     // Create temp arrays
     var leftArray = new int[subArrayOne];
@@ -81,7 +81,11 @@ int[] mergeSort(const int array[], const int begin, const int end)
 // Function to print an array
 printArray(int A[])
 {
+    var i;
     for (i : A){
+        print(i)
+    }
+    for(i : 1..<10){
         print(i)
     }
 }

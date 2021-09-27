@@ -52,6 +52,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "-"           {return CompilerParser.MINUS}
 ";"          {return CompilerParser.SEMICOLON}
 ":"          {return CompilerParser.COLON}
+"?"          {return CompilerParser.QM}
 "..."          {return CompilerParser.CPTRG}
 "..<"          {return CompilerParser.INCPTRG}
 {CteF}   {
