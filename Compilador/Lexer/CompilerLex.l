@@ -39,6 +39,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "&&"         {return CompilerParser.AND}
 "||"         {return CompilerParser.OR}
 "<>"       {return CompilerParser.DIF}
+"!"       {return CompilerParser.NOT}
 "<"         {return CompilerParser.LT}
 ">"         {return CompilerParser.GT}
 "{"          {return CompilerParser.LBRACE}
