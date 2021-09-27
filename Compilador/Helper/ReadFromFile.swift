@@ -10,7 +10,7 @@ func readFromFile(_ file : String) -> String {
 
     if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
 
-        let fileURL = dir.appendingPathComponent("Projects").appendingPathComponent("LittleDuck").appendingPathComponent("LittleDuck").appendingPathComponent(file)
+        let fileURL = dir.appendingPathComponent("Projects").appendingPathComponent("Compilador").appendingPathComponent("Compilador").appendingPathComponent(file)
 
         //reading
         do {

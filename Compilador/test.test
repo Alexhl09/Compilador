@@ -5,15 +5,15 @@
 // Merges two subarrays of array[].
 // First subarray is arr[begin..mid]
 // Second subarray is arr[mid+1..end]
-int[] merge(int array[], const int left, const int mid, const int right)
+int[] merge(const int array[], const int left, const int mid, const int right)
 {
     const int subArrayOne = mid - left + 1;
     const int subArrayTwo = right - mid;
     int[] result = new int[subArrayOne + subArrayTwo];
     
     // Create temp arrays
-    var leftArray = new int[subArrayOne],
-    var rightArray = new int[subArrayTwo],
+    var leftArray = new int[subArrayOne];
+    var rightArray = new int[subArrayTwo];
     var i,j = 0;
     
     // Copy data to temp arrays leftArray[] and rightArray[]
@@ -65,7 +65,7 @@ int[] merge(int array[], const int left, const int mid, const int right)
 // begin is for left index and end is
 // right index of the sub-array
 // of arr to be sorted */
-int[] mergeSort(int array[], const int begin, const int end)
+int[] mergeSort(const int array[], const int begin, const int end)
 {
     if (begin >= end) {
         return; // Returns recursively
@@ -89,7 +89,7 @@ printArray(int A[])
 
 
  
-int func main(int a) {
+main {
     int arr[6] = { 12, 11, 13, 5, 6, 7 };
     var arr_size = 6;
 
@@ -99,6 +99,5 @@ int func main(int a) {
     let sorted = mergeSort(arr, 0, arr_size - 1);
     print("Sorted array is")
     printArray(arr);
-    return 0;
 }
     
