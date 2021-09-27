@@ -33,6 +33,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "while"    {return CompilerParser.WHILE}
 "if"         {return CompilerParser.IF}
 "else"    { return CompilerParser.ELSE }
+"null"    { return CompilerParser.NLL }
 ","           {return CompilerParser.COMMA}
 "="         {return CompilerParser.EQ}
 "&&"         {return CompilerParser.AND}
