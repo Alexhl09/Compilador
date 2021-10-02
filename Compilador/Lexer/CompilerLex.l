@@ -31,6 +31,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "Int"    {return CompilerParser.INTEGERCLASS}
 "String"    {return CompilerParser.STRINGCLASS}
 "while"    {return CompilerParser.WHILE}
+"for"    {return CompilerParser.FOR}
 "if"         {return CompilerParser.IF}
 "else"    { return CompilerParser.ELSE }
 "null"    { return CompilerParser.NLL }
@@ -62,7 +63,6 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     print(value)
     return CompilerParser.CTEF}
 {CteI}   {
-
     value = NSNumber.init(value:Int(text) ?? 0)
     print(value)
     return CompilerParser.CTEI}
