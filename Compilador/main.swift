@@ -12,20 +12,20 @@ let file = readLine()
 let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
-
-// Now read all the tokens.
+//
+//Now read all the tokens.
 //    var tokenID = 0
 //    while (-1 != tokenID) {
 //        tokenID = lex.lex()
 //        print("\(lex.line):\(lex.column) Token: \(tokenID) - \(lex.text) , value \(lex.value)\n");
 //    }
 
-//let parser = CompilerParser.init(lexer: lex)
-//let error = CompilerErrorDelegate.init()
-//parser.errorDelegate = error
-//
-//if (parser.parse()) {
-//    print("Parseo exitoso")
-//} else {
-//    print("Error.")
-//}
+let parser = CompilerParser.init(lexer: lex)
+let error = CompilerErrorDelegate.init()
+parser.errorDelegate = error
+
+if (parser.parse()) {
+    print("Parseo exitoso")
+} else {
+    print("Error.")
+}

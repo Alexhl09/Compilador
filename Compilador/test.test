@@ -1,107 +1,37 @@
-
-// Alex AND JP Merge Sort
-
-
-// Merges two subarrays of array[].
-// First subarray is arr[begin..mid]
-// Second subarray is arr[mid+1..end]
-int[] merge(const int array[], const int left, const int mid, const int right)
-{
-    const int subArrayOne = mid - left + 1;
-    const int subArrayTwo = right - mid;
-    var result[subArrayOne + subArrayTwo];
-    
-    // Create temp arrays
-    var leftArray = new int[subArrayOne];
-    var rightArray = new int[subArrayTwo];
-    var i,j = 0;
-    
-    // Copy data to temp arrays leftArray[] and rightArray[]
-    for (i : 0..<subArrayOne){
-        leftArray[i] = array[left + i];
+int doble(int A) {
+    return A * A;
+}
+printArray(int A) {
+    var a;
+    a = 10;
+    print(a);
+    for (a : 0...9)
+    {
+        print(a);
     }
     
-    for(j = 0; j < subArrayTwo; j++) {
-        rightArray[j] = array[mid + 1 + j];
-    }
-
-    var indexOfSubArrayOne = 0; // Initial index of first sub-array
-    var indexOfSubArrayTwo = 0; // Initial index of second sub-array
-    var indexOfMergedArray = left; // Initial index of merged array
-
-    // Merge the temp arrays back into array[left..right]
-    while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
-        if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
-            result[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-            indexOfSubArrayOne++;
-        }
-        else {
-            result[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-            indexOfSubArrayTwo++;
-        }
-        indexOfMergedArray++;
+    while (a > 10){
+        print(a);
+        a = 1;
     }
     
-    
-    // Copy the remaining elements of
-    // left[], if there are any
-    while (indexOfSubArrayOne < subArrayOne) {
-        result[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-        indexOfSubArrayOne++;
-        indexOfMergedArray++;
+    for(a = 10; a < 10){
+        a = a - 1;
+        print(a);
     }
     
-    // Copy the remaining elements of
-    // right[], if there are any
-    while (indexOfSubArrayTwo < subArrayTwo) {
-        result[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-        indexOfSubArrayTwo++;
-        indexOfMergedArray++;
-    }
-    
-    return result;
+    a = doble(a);
+   
+    print(a);
 }
 
-// begin is for left index and end is
-// right index of the sub-array
-// of arr to be sorted */
-int[] mergeSort(const int array[], const int begin, const int end)
-{
-    if (begin >= end) {
-        return; // Returns recursively
-    }
-
-    var mid = begin + (end - begin) / 2;
-    var left = mergeSort(array, begin, mid);
-    let right = mergeSort(array, mid + 1, end);
-    merge(array, begin, mid, end);
-}
-
-// UTILITY FUNCTIONS
-// Function to print an array
-printArray(int A[])
-{
-    var i;
-    for (i : A){
-        print(i)
-    }
-    for(i : 1..<10){
-        print(i)
-    }
-}
-
-
-
- 
 main {
-    int arr[6] = { 12, 11, 13, 5, 6, 7 };
+    var arr[6] = { 12, 11, 13, 5, 6, 7 };
     var arr_size = 6;
-
     print("Given array is");
     printArray(arr);
-
-    let sorted = mergeSort(arr, 0, arr_size - 1);
-    print("Sorted array is")
+    const int sorted = mergeSort(arr, 0, arr_size - 1);
+    print("Sorted array is");
     printArray(arr);
 }
     

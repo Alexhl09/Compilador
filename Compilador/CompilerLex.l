@@ -56,6 +56,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 ";"          {return CompilerParser.SEMICOLON}
 ":"          {return CompilerParser.COLON}
 "?"          {return CompilerParser.QM}
+"."          {return CompilerParser.DOT}
 "..."          {return CompilerParser.CPTRG}
 "..<"          {return CompilerParser.INCPTRG}
 {CteF}   {
@@ -69,7 +70,8 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 {CteS}  {
     print(text)
     return CompilerParser.CTES}
-{id}        {return CompilerParser.ID}
+{id}        {
+    return CompilerParser.ID}
 
 
 .            {
