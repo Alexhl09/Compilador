@@ -125,11 +125,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    funcionesReturn : tipoSimple ID LPAREN params RPAREN LBRACE cuerpoReturn RBRACE
    | tipoSimple ID LPAREN RPAREN LBRACE cuerpoReturn RBRACE
    | error { error(code: CompilerParser.ERROR_SYNTAX) };
-   
-   csv: LSBRAKE csvA RSBRAKE;
 
-   csvA : flujoBloque |
-            flujoBloque csvA;
    
    const: CONST constA expresion |
             CONST constB expresion;
@@ -153,12 +149,6 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
                | cicloForIterador
                | cicloForEach;
                
-   cV : cVA |
-        flujoBloque;
-   
-   cVA : vars |
-         vars cVA;
-   
    cuerpoReturn : cuerpoLista cuerpoReturn |
                 RTN expresion SEMICOLON cuerpoReturn |
                 RTN expresion SEMICOLON;
