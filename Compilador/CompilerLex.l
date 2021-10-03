@@ -21,6 +21,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "float"    {return CompilerParser.FLOAT }
 "double"    {return CompilerParser.DOUBLE }
 "int"       {return CompilerParser.INT}
+"string"       {return CompilerParser.STR}
 "print"   {return CompilerParser.PRINT}
 "input"   {return CompilerParser.INPUT}
 "char"    {return CompilerParser.CHAR}

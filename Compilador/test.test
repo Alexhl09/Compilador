@@ -1,3 +1,5 @@
+var x = 10;
+
 int doble(int A) {
     return A * A;
 }
@@ -21,7 +23,7 @@ printArray(int A) {
     }
     
     a = doble(a);
-   
+    a = a > 10 ? 10 : 2;
     print(a);
 }
 
