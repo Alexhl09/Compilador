@@ -65,6 +65,7 @@
 		A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerStream.swift; sourceTree = "<group>"; };
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; };
+		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,12 +100,15 @@
 		A930EA1226FFB9E10062BE51 /* Compilador */ = {
 			isa = PBXGroup;
 			children = (
+				A930EA2A26FFBB260062BE51 /* CompilerLex.l */,
+				A930EA2B26FFBB260062BE51 /* CompilerParser.y */,
 				A9FA5EA626FFBF3C00425354 /* Helper */,
 				A9FA5EA526FFBF0400425354 /* Utils */,
 				A9FA5EA426FFBEFA00425354 /* Lexer */,
 				A9FA5EA326FFBEF400425354 /* Parser */,
 				A930EA1326FFB9E10062BE51 /* main.swift */,
 				A9FA5EA926FFBF9D00425354 /* test.test */,
+				A990DE3F27095A3900C94528 /* diagramas.pdf */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";
@@ -112,7 +116,6 @@
 		A9FA5EA326FFBEF400425354 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
-				A930EA2B26FFBB260062BE51 /* CompilerParser.y */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -120,7 +123,6 @@
 		A9FA5EA426FFBEFA00425354 /* Lexer */ = {
 			isa = PBXGroup;
 			children = (
-				A930EA2A26FFBB260062BE51 /* CompilerLex.l */,
 				A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */,
 				A930EA2226FFBB1E0062BE51 /* OCLexInput.swift */,
 			);
@@ -337,7 +339,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8ZMLMM945;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -348,7 +350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8ZMLMM945;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
