@@ -17,6 +17,10 @@
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
+		A990DE95270CE75D00C94528 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE94270CE75D00C94528 /* Variable.swift */; };
+		A990DE97270CE79800C94528 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE96270CE79800C94528 /* Scope.swift */; };
+		A990DE99270CE7D700C94528 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE98270CE7D700C94528 /* Type.swift */; };
+		A990DE9B270CED6000C94528 /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9A270CED6000C94528 /* SymbolTable.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +76,10 @@
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		A990DE91270BC12300C94528 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		A990DE94270CE75D00C94528 /* Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		A990DE96270CE79800C94528 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
+		A990DE98270CE7D700C94528 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		A990DE9A270CED6000C94528 /* SymbolTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTable.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +114,7 @@
 		A930EA1226FFB9E10062BE51 /* Compilador */ = {
 			isa = PBXGroup;
 			children = (
+				A990DE93270CE74900C94528 /* Vars */,
 				A9FA5EA626FFBF3C00425354 /* Helper */,
 				A9FA5EA526FFBF0400425354 /* Utils */,
 				A9FA5EA426FFBEFA00425354 /* Lexer */,
@@ -115,6 +124,17 @@
 				A990DE3F27095A3900C94528 /* diagramas.pdf */,
 			);
 			path = Compilador;
+			sourceTree = "<group>";
+		};
+		A990DE93270CE74900C94528 /* Vars */ = {
+			isa = PBXGroup;
+			children = (
+				A990DE94270CE75D00C94528 /* Variable.swift */,
+				A990DE96270CE79800C94528 /* Scope.swift */,
+				A990DE98270CE7D700C94528 /* Type.swift */,
+				A990DE9A270CED6000C94528 /* SymbolTable.swift */,
+			);
+			path = Vars;
 			sourceTree = "<group>";
 		};
 		A9FA5EA326FFBEF400425354 /* Parser */ = {
@@ -218,12 +238,16 @@
 				A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */,
 				A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */,
 				A930EA2626FFBB1E0062BE51 /* OCFileInput.swift in Sources */,
+				A990DE97270CE79800C94528 /* Scope.swift in Sources */,
 				A930EA2726FFBB1E0062BE51 /* OCLexInput.swift in Sources */,
 				A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */,
 				A990DE92270BC12300C94528 /* Stack.swift in Sources */,
 				A990DE90270BC11800C94528 /* Queue.swift in Sources */,
+				A990DE95270CE75D00C94528 /* Variable.swift in Sources */,
 				A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */,
 				A930EA1426FFB9E10062BE51 /* main.swift in Sources */,
+				A990DE99270CE7D700C94528 /* Type.swift in Sources */,
+				A990DE9B270CED6000C94528 /* SymbolTable.swift in Sources */,
 				A930EA2826FFBB1E0062BE51 /* CompilerErrorDelegate.swift in Sources */,
 				A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */,
 			);
