@@ -9,6 +9,20 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
     static let ERROR_UNIMPLEMENTED = (CompilerParser.ERROR_STARTERRORID+1)
 }
 
+%nonassoc TYPE FUNCTION
+%nonassoc ID
+%nonassoc LBRACK
+%nonassoc DO OF
+%nonassoc THEN
+%nonassoc ELSE
+%nonassoc ASSIGN
+%left OR
+%left AND
+%nonassoc EQ NEQ LT LE GT GE
+%left PLUS MINUS
+%left TIMES DIVIDE
+%left UMINUS
+
 %start programa
 
 %%
@@ -33,17 +47,20 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    
     vars : VAR ID SEMICOLON
          | VAR ID varsPrimaArreglos SEMICOLON
-         | VAR ID EQ expresion SEMICOLON
-         | VAR ID varsPrimaArreglos EQ expresion SEMICOLON
-         | CONST tipoSimple varsPrimaArreglos EQ varsPrima SEMICOLON
-         | tipoCompuesto ID EQ expresion SEMICOLON
+         | VAR ID varAssign SEMICOLON
+         | VAR ID varsPrimaArreglos varAssign SEMICOLON
+         | CONST tipoSimple varsPrimaArreglos varsPrima SEMICOLON
+         | tipoCompuesto ID varAssign SEMICOLON
          | const;
+         
+    varAssign : EQ expresion
+              | EQ llamada;
          
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE
                       | LSBRAKE CTEI RSBRAKE varsPrimaArreglos;
     
-    varsPrima : LBRACE expresion RBRACE
-              | LBRACE expresion COMMA RBRACE;
+    varsPrima : EQ LBRACE expresion RBRACE
+              | EQ LBRACE expresion COMMA RBRACE;
                   
     funciones : funcionesVoid
               | funcionesReturn
@@ -73,9 +90,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
     params : tipoSimple ID
            | tipoSimple ID COMMA params;
            
-   asignar : ID EQ expresion SEMICOLON
-           | ID EQ llamada SEMICOLON;
-
+   asignar : ID varAssign SEMICOLON;
+           
    escribir : PRINT LPAREN escribirA RPAREN SEMICOLON;
    
    escribirA : escribirB
@@ -120,20 +136,22 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    cicloForIterador : FOR LPAREN cicloForIteradorA SEMICOLON expresion RPAREN cuerpoSinVars
                     | FOR LPAREN SEMICOLON expresion RPAREN cuerpoSinVars;
    
-   cicloForIteradorA : ID EQ CTEI;
+   cicloForIteradorA : ID assignCTEI;
+   
+   assignCTEI : EQ CTEI;
    
    funcionesReturn : tipoSimple ID LPAREN params RPAREN LBRACE cuerpoReturn RBRACE
    | tipoSimple ID LPAREN RPAREN LBRACE cuerpoReturn RBRACE
    | error { error(code: CompilerParser.ERROR_SYNTAX) };
 
    
-   const: CONST constA expresion |
-            CONST constB expresion;
+   const: CONST constA varAssign |
+            CONST constB varAssign;
    
-   constA : tipoSimple ID EQ |
-            tipoSimple expresion EQ;
+   constA : tipoSimple ID |
+            tipoSimple expresion;
    
-   constB : tipoCompuesto ID EQ;
+   constB : tipoCompuesto ID;
    
    array : arrayA |
             arrayA arrayA;
@@ -153,41 +171,41 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
                 RTN expresion SEMICOLON cuerpoReturn |
                 RTN expresion SEMICOLON;
    
-   expresion : he
+   expresion : hiperExpression
                 | LBRACE arrayFactor RBRACE
                 | llamada SEMICOLON;
 
     arrayFactor : factor COMMA arrayFactor
                 | factor;
                 
-   he : se
-       | he AND he
-       | he OR he;
+   hiperExpression : superExpression
+       | hiperExpression AND hiperExpression
+       | hiperExpression OR hiperExpression;
        
-   se : me
-       | me EQ me
-       | me NEQ me
-       | me LT me
-       | me LE me
-       | me GT me
-       | me GE me
-       | se QM se COLON se;
+   superExpression : megaExpression
+       | megaExpression EQ megaExpression
+       | megaExpression NEQ megaExpression
+       | megaExpression LT megaExpression
+       | megaExpression LE megaExpression
+       | megaExpression GT megaExpression
+       | megaExpression GE megaExpression
+       | superExpression QM superExpression COLON superExpression;
        
-   me : termino
-       | termino MINUS me
-       | termino PLUS me;
+   megaExpression : termino
+       | termino MINUS megaExpression
+       | termino PLUS megaExpression;
     
        
    termino : factor
-           | factor TIMES me
-           | factor DIVIDE me;
+           | factor TIMES megaExpression
+           | factor DIVIDE megaExpression;
 
    factor : CTEI
            | CTEF
            | CTES
            | ID
            | ID LPAREN expresion RPAREN
-           | LPAREN me RPAREN
+           | LPAREN megaExpression RPAREN
            | NLL;
            
 //   lvalue : ID

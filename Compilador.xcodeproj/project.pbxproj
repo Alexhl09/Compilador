@@ -14,6 +14,9 @@
 		A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */; };
 		A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2A26FFBB260062BE51 /* CompilerLex.l */; };
 		A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2B26FFBB260062BE51 /* CompilerParser.y */; };
+		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
+		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
+		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,9 @@
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
+		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
+		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		A990DE91270BC12300C94528 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,8 +106,6 @@
 		A930EA1226FFB9E10062BE51 /* Compilador */ = {
 			isa = PBXGroup;
 			children = (
-				A930EA2A26FFBB260062BE51 /* CompilerLex.l */,
-				A930EA2B26FFBB260062BE51 /* CompilerParser.y */,
 				A9FA5EA626FFBF3C00425354 /* Helper */,
 				A9FA5EA526FFBF0400425354 /* Utils */,
 				A9FA5EA426FFBEFA00425354 /* Lexer */,
@@ -116,6 +120,7 @@
 		A9FA5EA326FFBEF400425354 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
+				A930EA2B26FFBB260062BE51 /* CompilerParser.y */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 		A9FA5EA426FFBEFA00425354 /* Lexer */ = {
 			isa = PBXGroup;
 			children = (
+				A930EA2A26FFBB260062BE51 /* CompilerLex.l */,
 				A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */,
 				A930EA2226FFBB1E0062BE51 /* OCLexInput.swift */,
 			);
@@ -141,7 +147,10 @@
 		A9FA5EA626FFBF3C00425354 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */,
 				A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */,
+				A990DE8F270BC11800C94528 /* Queue.swift */,
+				A990DE91270BC12300C94528 /* Stack.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -211,9 +220,12 @@
 				A930EA2626FFBB1E0062BE51 /* OCFileInput.swift in Sources */,
 				A930EA2726FFBB1E0062BE51 /* OCLexInput.swift in Sources */,
 				A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */,
+				A990DE92270BC12300C94528 /* Stack.swift in Sources */,
+				A990DE90270BC11800C94528 /* Queue.swift in Sources */,
 				A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */,
 				A930EA1426FFB9E10062BE51 /* main.swift in Sources */,
 				A930EA2826FFBB1E0062BE51 /* CompilerErrorDelegate.swift in Sources */,
+				A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
