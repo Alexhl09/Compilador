@@ -24,10 +24,12 @@ extension NodeSymbolTable : CustomStringConvertible {
 
     var description: String {
            return """
-                Identifier's Name: \(myVar.identifier)
-                    \nType: \(myVar.type)
-                    \nScope: \(myVar.scope)
-                    \nLine Number: \(lineNumber)
+                |   Identifier's Name: \(myVar.identifier)
+                |   Type: \(myVar.type)
+                |   Scope: \(myVar.scope)
+                |   Line Number: \(lineNumber)
+                |
+                --------------------------------------
                 """
     }
 }
@@ -139,7 +141,17 @@ extension SymbolTable : CustomStringConvertible {
 
     var description: String {
         return self.head.reduce("") { res, next in
-            return res + "\n" + next.value.description
+            var a = ""
+            if(next.value.nextNode != nil){
+               
+                var temp : NodeSymbolTable? = next.value.nextNode!
+                while(temp != nil){
+                    a += temp!.description
+                    temp = temp!.nextNode
+                }
+            }
+            
+            return res + "\n" + next.value.description + (a != "" ? "\n\t| \(a) |" : a)
         }
     }
 }
