@@ -18,19 +18,35 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 {ws}    {/* Skip whitespace */}
 "main"   {return CompilerParser.MAIN}
 "var"       {return  CompilerParser.VAR}
-"float"    {return CompilerParser.FLOAT }
-"double"    {return CompilerParser.DOUBLE }
-"int"       {return CompilerParser.INT}
-"string"       {return CompilerParser.STR}
+"float"    {
+    value = TypeVar.float as AnyObject?
+    return CompilerParser.FLOAT }
+"double"    {
+    value = TypeVar.double as AnyObject?
+    return CompilerParser.DOUBLE }
+"int"       {
+    value = TypeVar.integer as AnyObject?
+    return CompilerParser.INT}
+"string"       {
+    value = TypeVar.string as AnyObject?
+    return CompilerParser.STR}
 "print"   {return CompilerParser.PRINT}
 "input"   {return CompilerParser.INPUT}
-"char"    {return CompilerParser.CHAR}
+"char"    {
+    value = TypeVar.char as AnyObject?
+    return CompilerParser.CHAR}
 "new"     {return CompilerParser.NEW}
 "const"    {return CompilerParser.CONST}
 "return"    {return CompilerParser.RTN}
-"bool"    {return CompilerParser.BOOLEAN}
-"Int"    {return CompilerParser.INTEGERCLASS}
-"String"    {return CompilerParser.STRINGCLASS}
+"bool"    {
+    value = TypeVar.boolean as AnyObject?
+    return CompilerParser.BOOLEAN}
+"Int"    {
+    value = TypeVar.Integer as AnyObject?
+    return CompilerParser.INTEGERCLASS}
+"String"    {
+    value = TypeVar.String as AnyObject?
+    return CompilerParser.STRINGCLASS}
 "while"    {return CompilerParser.WHILE}
 "for"    {return CompilerParser.FOR}
 "if"         {return CompilerParser.IF}
@@ -72,6 +88,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     print(text)
     return CompilerParser.CTES}
 {id}        {
+    value = text as AnyObject?
     return CompilerParser.ID}
 
 

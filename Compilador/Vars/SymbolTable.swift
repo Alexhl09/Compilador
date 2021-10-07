@@ -93,7 +93,6 @@ class SymbolTable{
             temp = nil
             return true
         }
-        return false
     }
     
     func find(id : String) -> String{
@@ -116,12 +115,12 @@ class SymbolTable{
         return "-1"
     }
     
-    func insert(id: String, scope: Scope, type: TypeWord,typeVar : TypeVar = .void, lineaNum : UInt16) -> Bool {
-        let index = id.hashValue
-        let p : NodeSymbolTable = NodeSymbolTable(variable: Variable(identifier:id, scope: scope, type: type, typeVar: typeVar), lineNumber: lineaNum)
+    func insert(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
+        let index = variable.identifier.hashValue
+        let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
         if(self.head[index] == nil){
             head[index] = p
-            print("Inserted \(id)")
+            print("Inserted \(variable.identifier)")
             return true
         }else{
             var start : NodeSymbolTable? = self.head[index]
@@ -130,8 +129,17 @@ class SymbolTable{
             }
             
             start?.nextNode = p
-            print("Inserted \(id)")
+            print("Inserted \(variable.identifier)")
             return true
+        }
+    }
+}
+
+extension SymbolTable : CustomStringConvertible {
+
+    var description: String {
+        return self.head.reduce("") { res, next in
+            return res + "\n" + next.value.description
         }
     }
 }

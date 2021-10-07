@@ -13,11 +13,15 @@ enum TypeVar : Int {
     case string
     case boolean
     case float
+    case char
     case double
+    case Integer
+    case String
+    case ID
 }
 
 enum TypeWord : Int {
-    case keyword
+    case function
     case variable
 }
 

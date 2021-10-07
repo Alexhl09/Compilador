@@ -10,5 +10,6 @@ import Foundation
 enum Scope : String {
     case global = "Global"
     case local = "Local"
+    case functionParameter = "Function parameter"
 }
 

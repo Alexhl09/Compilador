@@ -1,12 +1,19 @@
 %token <NSNumber> NUMBER
-%token VAR FLOAT ELSE PRINT INT IF COMMA EQ DIF LT
-GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES ID MAIN DOUBLE INPUT CHAR CONST RTN BOOLEAN INTEGERCLASS STRINGCLASS WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT STR
+%token <String> ID
+%token VAR ELSE PRINT IF COMMA EQ DIF LT
+GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT
+%token <TypeVar> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS
+%type <TypeVar> tipoSimple tipoCompuesto
+%type <Variable> vars const tipo
 
-%token <NSNumber> CTEI
 
+%global {
+    var st : SymbolTable = SymbolTable()
+}
 
 %errors {
     static let ERROR_UNIMPLEMENTED = (CompilerParser.ERROR_STARTERRORID+1)
+    static let NO_VAR_INSERTED = (CompilerParser.ERROR_STARTERRORID+2)
 }
 
 %nonassoc TYPE FUNCTION
@@ -31,27 +38,28 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
              | funciones MAIN cuerpo
              | MAIN cuerpo;
                 
-    programaPrimo : vars programaPrimo
-                    | vars;
+   programaPrimo : vars programaPrimo {st.insert($1.changeToGlobal(), UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)}
+                    | vars {st.insert($1.changeToGlobal(), UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)};
            
-   tipoCompuesto : INTEGERCLASS |
-                    STRINGCLASS |
-                    ID;
+   tipoCompuesto : INTEGERCLASS {$$ = $1 as AnyObject} |
+                   STRINGCLASS {$$ = $1 as AnyObject} |
+                   ID {$$ = TypeVar.ID as AnyObject} ;
+                    
+    tipoSimple : INT {$$ = $1 as AnyObject} |
+                FLOAT {$$ = $1 as AnyObject}  |
+                DOUBLE {$$ = $1 as AnyObject}  |
+                CHAR {$$ = $1 as AnyObject} |
+                BOOLEAN {$$ = $1 as AnyObject}  |
+                STR {$$ = $1 as AnyObject}  |
+                VOID {$$ = $1 as AnyObject} ;
    
-   tipoSimple : INT |
-                FLOAT |
-                DOUBLE |
-                CHAR |
-                BOOLEAN |
-                STR;
-   
-    vars : VAR ID SEMICOLON
-         | VAR ID varsPrimaArreglos SEMICOLON
-         | VAR ID varAssign SEMICOLON
-         | VAR ID varsPrimaArreglos varAssign SEMICOLON
-         | CONST tipoSimple varsPrimaArreglos varsPrima SEMICOLON
+   vars : VAR ID SEMICOLON  {$$ = Variable(identifier: $2, type: .variable, constant: false)}
+         | VAR ID varsPrimaArreglos SEMICOLON {$$ =  Variable(identifier: $2, type: .variable, constant: false, array: true)}
+         | VAR ID varAssign SEMICOLON {$$ = Variable(identifier: $2, type: .variable, constant: false)}
+         | VAR ID varsPrimaArreglos varAssign SEMICOLON {print("E");$$ =  Variable(identifier: $2, type: .variable, constant: false, array: true)}
          | tipoCompuesto ID varAssign SEMICOLON
-         | const;
+         | CONST tipoSimple ID varsPrimaArreglos varsPrima SEMICOLON {$$ = Variable(identifier: $3, type: .variable, constant: true, array: true)}
+         | const SEMICOLON {$$ = $1};
          
     varAssign : EQ expresion
               | EQ llamada;
@@ -73,7 +81,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
                    | cuerpoLista cuerpoListaA;
                    
     
-    cuerpoLista : vars {print("VAR")}
+    cuerpoLista : vars {st.insert($1, UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)}
                 | asignar
                 | llamada SEMICOLON
                 | leer
@@ -145,13 +153,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    | error { error(code: CompilerParser.ERROR_SYNTAX) };
 
    
-   const: CONST constA varAssign |
-            CONST constB varAssign;
+   tipo : tipoSimple {$$ = $1 as AnyObject} | tipoCompuesto {$$ = $1 as AnyObject};
    
-   constA : tipoSimple ID |
-            tipoSimple expresion;
-   
-   constB : tipoCompuesto ID;
+   const: CONST tipo ID varAssign {$$ = Variable(identifier: $3, type: .variable, constant: true)};
    
    array : arrayA |
             arrayA arrayA;
