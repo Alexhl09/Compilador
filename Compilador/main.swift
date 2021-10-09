@@ -24,7 +24,6 @@ let lex = CompilerLex.init(stream: stream)
 let parser = CompilerParser.init(lexer: lex)
 let error = CompilerErrorDelegate.init()
 parser.errorDelegate = error
-
 if (parser.parse()) {
     print(parser.st)
     print("Parseo exitoso")

@@ -117,6 +117,11 @@ class SymbolTable{
         return "-1"
     }
     
+    func varScopeValid(_ variable : Variable,_ start : NodeSymbolTable?) -> Bool {
+        print("ERROR, \(variable.identifier) ya existe")
+        return start?.nextNode?.myVar.identifier == variable.identifier && start?.nextNode?.myVar.scope == variable.scope
+    }
+    
     func insert(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
         let index = variable.identifier.hashValue
         let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
@@ -126,7 +131,45 @@ class SymbolTable{
             return true
         }else{
             var start : NodeSymbolTable? = self.head[index]
-            while(start?.nextNode != nil){
+            while(!varScopeValid(variable, start) && start?.nextNode != nil){
+                start = start?.nextNode
+            }
+            
+            start?.nextNode = p
+            print("Inserted \(variable.identifier)")
+            return true
+        }
+    }
+    
+    func insertFunction(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
+        let index = variable.identifier.hashValue
+        let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
+        if(self.head[index] == nil){
+            head[index] = p
+            print("Inserted \(variable.identifier)")
+            return true
+        }else{
+            var start : NodeSymbolTable? = self.head[index]
+            while(!varScopeValid(variable, start) && start?.nextNode != nil){
+                start = start?.nextNode
+            }
+            
+            start?.nextNode = p
+            print("Inserted \(variable.identifier)")
+            return true
+        }
+    }
+    
+    func insertVariable(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
+        let index = variable.identifier.hashValue
+        let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
+        if(self.head[index] == nil){
+            head[index] = p
+            print("Inserted \(variable.identifier)")
+            return true
+        }else{
+            var start : NodeSymbolTable? = self.head[index]
+            while(!varScopeValid(variable, start) && start?.nextNode != nil){
                 start = start?.nextNode
             }
             
@@ -137,6 +180,8 @@ class SymbolTable{
     }
 }
 
+
+
 extension SymbolTable : CustomStringConvertible {
 
     var description: String {
@@ -146,7 +191,7 @@ extension SymbolTable : CustomStringConvertible {
                
                 var temp : NodeSymbolTable? = next.value.nextNode!
                 while(temp != nil){
-                    a += temp!.description
+                    a += "\t " + temp!.description
                     temp = temp!.nextNode
                 }
             }
@@ -155,3 +200,4 @@ extension SymbolTable : CustomStringConvertible {
         }
     }
 }
+

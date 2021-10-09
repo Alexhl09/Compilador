@@ -19,33 +19,33 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "main"   {return CompilerParser.MAIN}
 "var"       {return  CompilerParser.VAR}
 "float"    {
-    value = TypeVar.float as AnyObject?
+    value = NSNumber(integerLiteral: TypeVar.float.rawValue)
     return CompilerParser.FLOAT }
 "double"    {
-    value = TypeVar.double as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.double.rawValue)
     return CompilerParser.DOUBLE }
 "int"       {
-    value = TypeVar.integer as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.integer.rawValue)
     return CompilerParser.INT}
 "string"       {
-    value = TypeVar.string as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.string.rawValue)
     return CompilerParser.STR}
 "print"   {return CompilerParser.PRINT}
 "input"   {return CompilerParser.INPUT}
 "char"    {
-    value = TypeVar.char as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.char.rawValue)
     return CompilerParser.CHAR}
 "new"     {return CompilerParser.NEW}
 "const"    {return CompilerParser.CONST}
 "return"    {return CompilerParser.RTN}
 "bool"    {
-    value = TypeVar.boolean as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.boolean.rawValue)
     return CompilerParser.BOOLEAN}
 "Int"    {
-    value = TypeVar.Integer as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.Integer.rawValue)
     return CompilerParser.INTEGERCLASS}
 "String"    {
-    value = TypeVar.String as AnyObject?
+    value = NSNumber(integerLiteral:TypeVar.String.rawValue)
     return CompilerParser.STRINGCLASS}
 "while"    {return CompilerParser.WHILE}
 "for"    {return CompilerParser.FOR}

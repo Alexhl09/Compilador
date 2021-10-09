@@ -21,6 +21,7 @@
 		A990DE97270CE79800C94528 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE96270CE79800C94528 /* Scope.swift */; };
 		A990DE99270CE7D700C94528 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE98270CE7D700C94528 /* Type.swift */; };
 		A990DE9B270CED6000C94528 /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9A270CED6000C94528 /* SymbolTable.swift */; };
+		A990DE9D270F779900C94528 /* SymbolCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9C270F779900C94528 /* SymbolCube.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		A990DE96270CE79800C94528 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		A990DE98270CE7D700C94528 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		A990DE9A270CED6000C94528 /* SymbolTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTable.swift; sourceTree = "<group>"; };
+		A990DE9C270F779900C94528 /* SymbolCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolCube.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +135,7 @@
 				A990DE96270CE79800C94528 /* Scope.swift */,
 				A990DE98270CE7D700C94528 /* Type.swift */,
 				A990DE9A270CED6000C94528 /* SymbolTable.swift */,
+				A990DE9C270F779900C94528 /* SymbolCube.swift */,
 			);
 			path = Vars;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A990DE9D270F779900C94528 /* SymbolCube.swift in Sources */,
 				A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */,
 				A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */,
 				A930EA2626FFBB1E0062BE51 /* OCFileInput.swift in Sources */,
