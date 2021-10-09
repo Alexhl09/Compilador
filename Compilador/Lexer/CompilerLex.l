@@ -16,8 +16,10 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 {SingleComment}     { /* Skip comment */ }
 "/*".*"*/"     { /* Skip comment */ }
 {ws}    {/* Skip whitespace */}
-"main"   {return CompilerParser.MAIN}
+"main"   {    return CompilerParser.MAIN}
 "var"       {return  CompilerParser.VAR}
+"func" {
+    return CompilerParser.FUNC}
 "float"    {
     value = NSNumber(integerLiteral: TypeVar.float.rawValue)
     return CompilerParser.FLOAT }
@@ -60,8 +62,14 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "!"       {return CompilerParser.NOT}
 "<"         {return CompilerParser.LT}
 ">"         {return CompilerParser.GT}
-"{"          {return CompilerParser.LBRACE}
-"}"          {return CompilerParser.RBRACE}
+"{"          {
+    print("NEW NODE")
+    CompilerParser.st.newNode()
+    return CompilerParser.LBRACE}
+"}"          {
+    print("BYE NODE")
+    CompilerParser.st.pop()
+    return CompilerParser.RBRACE}
 \/           {return CompilerParser.DIVIDE}
 \*           {return CompilerParser.TIMES}
 "("          {return CompilerParser.LPAREN}
@@ -78,17 +86,15 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "..<"          {return CompilerParser.INCPTRG}
 {CteF}   {
     value = NSNumber.init(value:Float(text) ?? 0)
-    print(value)
     return CompilerParser.CTEF}
 {CteI}   {
     value = NSNumber.init(value:Int(text) ?? 0)
-    print(value)
     return CompilerParser.CTEI}
 {CteS}  {
-    print(text)
+    value = NSString(string:text)
     return CompilerParser.CTES}
 {id}        {
-    value = text as AnyObject?
+    value = NSString(string:text)
     return CompilerParser.ID}
 
 

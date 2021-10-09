@@ -9,6 +9,8 @@ import Foundation
 
 print("Nombre archivo: ")
 
+
+
 let file = readLine()
 let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
@@ -25,7 +27,8 @@ let parser = CompilerParser.init(lexer: lex)
 let error = CompilerErrorDelegate.init()
 parser.errorDelegate = error
 if (parser.parse()) {
-    print(parser.st)
+    let st = CompilerParser.st
+    print(st.description)
     print("Parseo exitoso")
 } else {
     print("Error.")
@@ -33,8 +36,8 @@ if (parser.parse()) {
 
 
 /**
- 
- 
+
+
  var st : SymbolTable = SymbolTable()
 
  var check : String = ""
