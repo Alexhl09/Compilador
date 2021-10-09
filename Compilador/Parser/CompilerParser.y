@@ -1,20 +1,21 @@
 %token <NSNumber> NUMBER
-%token <String> ID
+%token <NSString> ID CTES
 %token VAR ELSE PRINT IF COMMA EQ DIF LT
-GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT
+GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT FUNC PGR
 %token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS
 %type <NSNumber> tipoSimple tipoCompuesto tipo
-%type <Variable> vars const funcionesVoid funcionesReturn
+%type <Symbol> vars const funcionesVoid funcionesReturn
 
 
 %global {
-    var st : SymbolTable = SymbolTable()
+    static var st : SymbolTable = SymbolTable()
 }
 
 %errors {
     static let ERROR_UNIMPLEMENTED = (CompilerParser.ERROR_STARTERRORID+1)
     static let NO_VAR_INSERTED = (CompilerParser.ERROR_STARTERRORID+2)
 }
+
 
 %nonassoc TYPE FUNCTION
 %nonassoc ID
@@ -37,10 +38,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
     programa : programaPrimo funciones MAIN cuerpo
              | funciones MAIN cuerpo
              | MAIN cuerpo;
-                
-   programaPrimo : vars programaPrimo {st.insert($1.changeToGlobal(), UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)}
-                    
-                | vars {st.insert($1.changeToGlobal(), UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)};
+             
+             programaPrimo : vars programaPrimo
+             | vars ;
            
    tipoCompuesto : INTEGERCLASS {$$ = $1} |
                    STRINGCLASS {$$ = $1} |
@@ -54,13 +54,13 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
                 STR {$$ = $1}  |
                 VOID {$$ = $1} ;
    
-   vars : VAR ID SEMICOLON  {$$ = Variable(identifier: $2, type: .variable, constant: false)}
-         | VAR ID varsPrimaArreglos SEMICOLON {$$ =  Variable(identifier: $2, type: .variable, constant: false, array: true)}
-         | VAR ID varAssign SEMICOLON {$$ = Variable(identifier: $2, type: .variable, constant: false)}
-         | VAR ID varsPrimaArreglos varAssign SEMICOLON {print("E");$$ =  Variable(identifier: $2, type: .variable, constant: false, array: true)}
-         | tipoCompuesto ID varAssign SEMICOLON
-         | CONST tipoSimple ID varsPrimaArreglos varsPrima SEMICOLON {$$ = Variable(identifier: $3, type: .variable, typeVar : TypeVar(rawValue: (($2 != nil) ? $2 : NSNumber(integerLiteral: 0)).intValue) ?? .void, constant: true, array: true)}
-         | const {$$ = $1};
+   vars : VAR ID SEMICOLON  {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, false, false))}
+   | VAR ID varsPrimaArreglos SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, true, false))}
+   | VAR ID varAssign SEMICOLON { CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, false, true))}
+   | VAR ID varsPrimaArreglos varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, true, true))}
+   | tipoCompuesto ID varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, TypeSymbol.init(rawValue: $1.intValue) ?? .void, true, false, true))}
+   | CONST tipoSimple ID varsPrimaArreglos varsPrima SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .field, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, true))}
+   | const;
          
     varAssign : EQ expresion
               | EQ llamada;
@@ -71,25 +71,25 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
     varsPrima : EQ LBRACE expresion RBRACE
               | EQ LBRACE expresion COMMA RBRACE;
                   
-    funciones : funcionesVoid {st.insert($1, UInt16(lex.line)) ? print("Inserted func") : error(code: CompilerParser.NO_VAR_INSERTED)}
-              | funcionesReturn {st.insert($1, UInt16(lex.line)) ? print("Inserted func") : error(code: CompilerParser.NO_VAR_INSERTED)}
-              | funcionesVoid funciones {st.insert($1, UInt16(lex.line)) ? print("Inserted func") : error(code: CompilerParser.NO_VAR_INSERTED)}
-              | funcionesReturn funciones {st.insert($1, UInt16(lex.line)) ? print("Inserted func") : error(code: CompilerParser.NO_VAR_INSERTED)};
+    funciones : funcionesVoid
+                  | funcionesReturn
+                  | funcionesVoid funciones
+                  | funcionesReturn funciones;
     
     cuerpo : LBRACE cuerpoListaA RBRACE;
     
     cuerpoListaA : cuerpoLista
-                   | cuerpoLista cuerpoListaA;
+                | cuerpoLista cuerpoListaA {$$ = $1 as AnyObject?};
                    
     
-    cuerpoLista : vars {st.insert($1, UInt16(lex.line)) ? print("Inserted var") : error(code: CompilerParser.NO_VAR_INSERTED)}
+    cuerpoLista : vars
                 | asignar
                 | llamada SEMICOLON
                 | leer
                 | escribir
                 | condicion
                 | cicloWhile
-                | cicloForEach {print("FE")}
+                | cicloForEach
                 | cicloForIterador
                 | error { error(code: CompilerParser.ERROR_SYNTAX) }
                 ;
@@ -140,6 +140,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    cicloWhile : WHILE LPAREN expresion RPAREN cuerpoSinVars;
    
    range : CPTRG | INCPTRG;
+   
    cicloForEach : FOR LPAREN ID COLON ID RPAREN cuerpoSinVars
    | FOR LPAREN ID COLON factor range factor RPAREN cuerpoSinVars
                     ;
@@ -152,21 +153,21 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF CTES
    
    assignCTEI : EQ CTEI;
    
-   funcionesReturn : tipoSimple ID LPAREN params RPAREN LBRACE cuerpoReturn RBRACE {$$ = Variable(identifier: $2, scope: .global, type: .function, typeVar: TypeVar(rawValue: ($1 != nil ? $1 : NSNumber(integerLiteral: 0)).intValue) ?? .void, constant: false)}
+   funcionesReturn : FUNC tipoSimple ID LPAREN params RPAREN LBRACE cuerpoReturn RBRACE {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .method, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, false))}
    
-                | tipoSimple ID LPAREN RPAREN LBRACE cuerpoReturn RBRACE {$$ = Variable(identifier: $2, scope: .global, type: .function, typeVar: TypeVar(rawValue: ($1  != nil ? $1 : NSNumber(integerLiteral: 0)).intValue) ?? .void, constant: false)}
+   | FUNC tipoSimple ID LPAREN RPAREN LBRACE cuerpoReturn RBRACE {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .method, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, false))}
                 | error { error(code: CompilerParser.ERROR_SYNTAX) };
 
    
    tipo : tipoSimple {$$ = $1} | tipoCompuesto {$$ = $1};
    
-   const: CONST tipo ID varAssign SEMICOLON {$$ = Variable(identifier: $3, type: .variable, typeVar : TypeVar(rawValue: ($2  != nil ? $2 : NSNumber(integerLiteral: 0)).intValue) ?? .void, constant: true)};
+   const: CONST tipo ID varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .field, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, true))};
    
    array : arrayA |
             arrayA arrayA;
    
-   funcionesVoid : ID LPAREN params RPAREN cuerpo {$$ = Variable(identifier: $1, scope: .global, type: .function, constant: false)}
-                    | ID LPAREN RPAREN cuerpo {$$ = Variable(identifier: $1, scope: .global, type: .function, constant: false)};
+   funcionesVoid : FUNC ID LPAREN params RPAREN cuerpo {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .method, .void, true, false, false))}
+                 | FUNC ID LPAREN RPAREN cuerpo {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .method, .void, true, false, false))};
    
    flujoBloque : asignar
                | llamada
