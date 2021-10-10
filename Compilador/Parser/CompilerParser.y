@@ -62,8 +62,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
    | CONST tipoSimple ID varsPrimaArreglos varsPrima SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .field, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, true))}
    | const;
          
-    varAssign : EQ expresion
-              | EQ llamada;
+    varAssign : EQ expresion;
          
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE
                       | LSBRAKE CTEI RSBRAKE varsPrimaArreglos;
@@ -116,38 +115,23 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
    llamadaA : expresion
             | expresion COMMA llamadaA;
    
-   condicion : condicionA cuerpoSinVars
-             | condicionA ELSE cuerpoSinVars;
+   condicion : condicionA cuerpo
+             | condicionA ELSE cuerpo;
    
    condicionA : IF LPAREN expresion RPAREN;
    
-   cuerpoSinVars : LBRACE cuerpoSinVarsA RBRACE;
-   
-   cuerpoSinVarsA : cuerpoSinVarsLista
-                  | cuerpoSinVarsLista cuerpoSinVarsA;
-                  
-   cuerpoSinVarsLista : asignar
-                      | llamada
-                      | leer
-                      | escribir
-                      | condicion
-                      | cicloWhile
-                      | cicloForIterador
-                      | cicloForEach
-                      | error { error(code: CompilerParser.ERROR_SYNTAX) }
-                      ;
                       
-   cicloWhile : WHILE LPAREN expresion RPAREN cuerpoSinVars;
+   cicloWhile : WHILE LPAREN expresion RPAREN cuerpo;
    
    range : CPTRG | INCPTRG;
    
-   cicloForEach : FOR LPAREN ID COLON ID RPAREN cuerpoSinVars
-   | FOR LPAREN ID COLON factor range factor RPAREN cuerpoSinVars
+   cicloForEach : FOR LPAREN ID COLON ID RPAREN cuerpo
+                    | FOR LPAREN ID COLON factor range factor RPAREN cuerpo
                     ;
 
    
-   cicloForIterador : FOR LPAREN cicloForIteradorA SEMICOLON expresion RPAREN cuerpoSinVars
-                    | FOR LPAREN SEMICOLON expresion RPAREN cuerpoSinVars;
+   cicloForIterador : FOR LPAREN cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
+                    | FOR LPAREN SEMICOLON expresion RPAREN cuerpo;
    
    cicloForIteradorA : ID assignCTEI;
    
@@ -182,8 +166,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
                 RTN expresion SEMICOLON;
    
    expresion : hiperExpression
-                | LBRACE arrayFactor RBRACE
-                | llamada SEMICOLON;
+                | llamada
+                | LBRACE arrayFactor RBRACE;
 
     arrayFactor : factor COMMA arrayFactor
                 | factor;
@@ -193,7 +177,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
        | hiperExpression OR hiperExpression;
        
    superExpression : megaExpression
-       | megaExpression EQ megaExpression
+       | megaExpression EQ EQ megaExpression
        | megaExpression NEQ megaExpression
        | megaExpression LT megaExpression
        | megaExpression LE megaExpression
