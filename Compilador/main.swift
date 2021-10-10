@@ -12,7 +12,7 @@ print("Nombre archivo: ")
 
 
 let file = readLine()
-let p = readFromFile(file ?? "")
+let p = readFromFileJp(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
 //

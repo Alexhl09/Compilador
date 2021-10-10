@@ -25,7 +25,7 @@ func readFromFileJp(_ file : String) -> String {
 
     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
 
-        let fileURL = dir.appendingPathComponent("Tec").appendingPathComponent("Compilador").appendingPathComponent("Compilador").appendingPathComponent(file)
+        let fileURL = dir.appendingPathComponent("Tec").appendingPathComponent("Compiladores").appendingPathComponent("Compilador").appendingPathComponent("Compilador").appendingPathComponent(file)
 
         //reading
         do {
