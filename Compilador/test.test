@@ -11,9 +11,10 @@ func printArray(int A) {
     print(a);
     for (a : 0...9)
     {
+        var abc;
         print(a);
     }
-    while (a > 10){
+    while (a > 10) {
         print(a);
         a = 1;
     }
@@ -26,7 +27,7 @@ func printArray(int A) {
     print(a);
 }
 
-main {
+main () {
 var arr[6] = { 12, 11, 13, 5, 6, 7 };
     var arr_size = 6;
     print("Given array is");

@@ -1,14 +1,15 @@
 %token <NSNumber> NUMBER
 %token <NSString> ID CTES
 %token VAR ELSE PRINT IF COMMA EQ DIF LT
-GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT FUNC PGR
-%token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS
-%type <NSNumber> tipoSimple tipoCompuesto tipo
+GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT FUNC PGR
+%token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
+%type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
 
 
+
 %global {
-    static var st : SymbolTable = SymbolTable()
+    var semantic : SemanticHandler = SemanticHandler()
 }
 
 %errors {
@@ -35,16 +36,16 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
 
 %%
     
-    programa : programaPrimo funciones MAIN cuerpo
-             | funciones MAIN cuerpo
-             | MAIN cuerpo;
+    programa : programaPrimo funciones MAIN startNode RPAREN cuerpo
+             | funciones MAIN startNode RPAREN cuerpo
+             | MAIN startNode RPAREN cuerpo;
              
              programaPrimo : vars programaPrimo
              | vars ;
            
    tipoCompuesto : INTEGERCLASS {$$ = $1} |
                    STRINGCLASS {$$ = $1} |
-                   ID {$$ = NSNumber(integerLiteral: TypeVar.ID.rawValue)} ;
+                   ID {$$ = NSNumber(integerLiteral: TypeSymbol.ID.rawValue)} ;
 
    tipoSimple : INT {$$ = $1} |
                 FLOAT {$$ = $1}  |
@@ -54,16 +55,36 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
                 STR {$$ = $1}  |
                 VOID {$$ = $1} ;
    
-   vars : VAR ID SEMICOLON  {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, false, false))}
-   | VAR ID varsPrimaArreglos SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, true, false))}
-   | VAR ID varAssign SEMICOLON { CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, false, true))}
-   | VAR ID varsPrimaArreglos varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, .void, false, true, true))}
-   | tipoCompuesto ID varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .field, TypeSymbol.init(rawValue: $1.intValue) ?? .void, true, false, true))}
-   | CONST tipoSimple ID varsPrimaArreglos varsPrima SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .field, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, true))}
+   vars : VAR ID SEMICOLON
+        {
+            semantic.insertSymbolToST($2, false, false)
+        }
+   | VAR ID varsPrimaArreglos SEMICOLON
+        {
+            semantic.insertSymbolToST($2, false, true)
+        }
+   | VAR ID varAssign SEMICOLON
+        {
+            semantic.insertSymbolToST($2, false, false);
+            semantic.saveValueVariable(id : $2 as String)
+        }
+   | VAR ID varsPrimaArreglos varAssign SEMICOLON
+        {
+            semantic.insertSymbolToST($2, false, true);
+        }
+   | tipoCompuesto ID varAssign SEMICOLON
+        {
+            semantic.insertSymbolToST($2, false, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void);
+            semantic.saveValueVariable(id : $2 as String)
+        }
+   | CONST tipoSimple ID varsPrimaArreglos varsPrima varAssign SEMICOLON
+        {
+            semantic.insertSymbolToST($3, true, true, TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+        }
    | const;
-         
-    varAssign : EQ expresion;
-         
+            
+    varAssign : EQ expresion ;
+    
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE
                       | LSBRAKE CTEI RSBRAKE varsPrimaArreglos;
     
@@ -75,7 +96,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
                   | funcionesVoid funciones
                   | funcionesReturn funciones;
     
-    cuerpo : LBRACE cuerpoListaA RBRACE;
+    cuerpo : LBRACE cuerpoListaA popNode;
     
     cuerpoListaA : cuerpoLista
                 | cuerpoLista cuerpoListaA {$$ = $1 as AnyObject?};
@@ -95,10 +116,17 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
                 
                 
 
-    params : tipoSimple ID
-           | tipoSimple ID COMMA params;
+   params : tipoSimple ID
+            {
+                semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void)
+            }
+            | tipoSimple ID COMMA params
+            {
+                semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void)
+            }
+            ;
            
-   asignar : ID varAssign SEMICOLON;
+    asignar : ID varAssign SEMICOLON {semantic.saveValueVariable(id : $1 as String)};
            
    escribir : PRINT LPAREN escribirA RPAREN SEMICOLON;
    
@@ -118,40 +146,67 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
    condicion : condicionA cuerpo
              | condicionA ELSE cuerpo;
    
-   condicionA : IF LPAREN expresion RPAREN;
+   condicionA : IF startNode expresion RPAREN;
    
                       
-   cicloWhile : WHILE LPAREN expresion RPAREN cuerpo;
+   cicloWhile : WHILE startNode expresion RPAREN cuerpo {print("w")};
+   
+   startNode : LPAREN {
+       print("NEW NODE")
+       semantic.startScope()
+   }
+   ;
+   
+   popNode : RBRACE {
+       print("BYE NODE")
+       semantic.endScope()
+   }
+   ;
    
    range : CPTRG | INCPTRG;
    
-   cicloForEach : FOR LPAREN ID COLON ID RPAREN cuerpo
-                    | FOR LPAREN ID COLON factor range factor RPAREN cuerpo
+   cicloForEach : FOR startNode ID COLON ID RPAREN cuerpo
+                    | FOR startNode ID COLON factor range factor RPAREN cuerpo
                     ;
 
    
-   cicloForIterador : FOR LPAREN cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
-                    | FOR LPAREN SEMICOLON expresion RPAREN cuerpo;
+   cicloForIterador : FOR startNode cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
+                    | FOR startNode SEMICOLON expresion RPAREN cuerpo;
    
-   cicloForIteradorA : ID assignCTEI;
+   cicloForIteradorA : ID assignCTEI {semantic.saveValueVariable(id : $1 as String)};
    
    assignCTEI : EQ CTEI;
    
-   funcionesReturn : FUNC tipoSimple ID LPAREN params RPAREN LBRACE cuerpoReturn RBRACE {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .method, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, false))}
-   
-   | FUNC tipoSimple ID LPAREN RPAREN LBRACE cuerpoReturn RBRACE {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .method, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, false))}
-                | error { error(code: CompilerParser.ERROR_SYNTAX) };
+   funcionesReturn : FUNC tipoSimple ID startNode params RPAREN LBRACE cuerpoReturn popNode
+       {
+           semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+       }
+   | FUNC tipoSimple ID startNode RPAREN LBRACE cuerpoReturn popNode
+       {
+           semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+       }
+   | error { error(code: CompilerParser.ERROR_SYNTAX) };
 
    
    tipo : tipoSimple {$$ = $1} | tipoCompuesto {$$ = $1};
    
-   const: CONST tipo ID varAssign SEMICOLON {CompilerParser.st.insertInHashTable(Symbol(lex.line, $3, .field, TypeSymbol.init(rawValue: $2.intValue) ?? .void, true, false, true))};
+   const: CONST tipo ID varAssign SEMICOLON
+        {
+            semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.saveValueVariable(id : $3 as String)
+        };
    
    array : arrayA |
             arrayA arrayA;
    
-   funcionesVoid : FUNC ID LPAREN params RPAREN cuerpo {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .method, .void, true, false, false))}
-                 | FUNC ID LPAREN RPAREN cuerpo {CompilerParser.st.insertInHashTable(Symbol(lex.line, $2, .method, .void, true, false, false))};
+   funcionesVoid : FUNC ID startNode params RPAREN cuerpo
+       {
+           semantic.insertSymbolToST($2, true, false, .void, .method)
+       }
+    | FUNC ID startNode RPAREN cuerpo
+        {
+            semantic.insertSymbolToST($2, true, false, .void, .method)
+        };
    
    flujoBloque : asignar
                | llamada
@@ -172,35 +227,65 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON CTEF MAIN
     arrayFactor : factor COMMA arrayFactor
                 | factor;
                 
-   hiperExpression : superExpression
-       | hiperExpression AND hiperExpression
-       | hiperExpression OR hiperExpression;
-       
+hiperExpression : superExpression
+        | hiperExpression booleanOperators hiperExpression {semantic.addQuadruple()};
+   
+   booleanOperators : AND {semantic.addOperator(op: Operator.and)}
+        | OR {semantic.addOperator(op: Operator.or)}
+        ;
+   
    superExpression : megaExpression
-       | megaExpression EQ EQ megaExpression
-       | megaExpression NEQ megaExpression
-       | megaExpression LT megaExpression
-       | megaExpression LE megaExpression
-       | megaExpression GT megaExpression
-       | megaExpression GE megaExpression
+   | megaExpression comparisonOperators megaExpression {print("jojo"); semantic.addQuadruple()}
        | superExpression QM superExpression COLON superExpression;
        
-   megaExpression : termino
-       | termino MINUS megaExpression
-       | termino PLUS megaExpression;
+comparisonOperators : EQ EQ {semantic.addOperator(op: Operator.equal)}
+        | NEQ {semantic.addOperator(op: Operator.different)}
+        | LT {semantic.addOperator(op: Operator.lessThan)}
+        | LE {semantic.addOperator(op: Operator.lessOrEqualThan)}
+        | GT {semantic.addOperator(op: Operator.greaterThan)}
+        | GE {semantic.addOperator(op: Operator.greaterOrEqualThan)}
+        ;
+       
+megaExpression : termino
+                | termino o1 megaExpression {semantic.addQuadruple()};
+
+o1 : PLUS {semantic.addOperator(op: Operator.sum)}
+        | MINUS {semantic.addOperator(op:Operator.minus)};
+    
     
        
-   termino : factor
-           | factor TIMES megaExpression
-           | factor DIVIDE megaExpression;
+termino : factor
+        | factor o2 megaExpression {semantic.addQuadruple()};
+        
+    o2 : TIMES {semantic.addOperator(op: Operator.multiply)}
+        | DIVIDE {semantic.addOperator(op: Operator.division)};
 
-   factor : CTEI
-           | CTEF
-           | CTES
-           | ID
-           | ID LPAREN expresion RPAREN
-           | LPAREN megaExpression RPAREN
-           | NLL;
+factor : CTEI
+        {
+            semantic.addConstantInteger($1)
+        }
+       | CTEF
+       {
+           semantic.addConstantFloat($1)
+       }
+       | booleanValue
+       {
+           semantic.addConstantBool($1)
+       }
+       | CTES
+       {
+           semantic.addConstantString($1)
+       }
+       | ID
+       {
+           semantic.addIDAsQuadruple($1)
+       }
+       | ID LPAREN expresion RPAREN
+       | LPAREN megaExpression RPAREN
+       | NLL;
+       
+       
+booleanValue : T {$$ = $1}| F {$$ = $1};
            
 //   lvalue : ID
 //           | ID LSBRAKE expresion RSBRAKE

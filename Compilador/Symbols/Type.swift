@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TypeVar : Int {
+enum TypeSymbol : Int {
     case void
     case integer
     case string
@@ -19,9 +19,3 @@ enum TypeVar : Int {
     case String
     case ID
 }
-
-enum TypeWord : Int {
-    case function
-    case variable
-}
-

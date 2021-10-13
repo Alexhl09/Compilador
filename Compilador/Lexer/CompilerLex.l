@@ -21,36 +21,42 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "func" {
     return CompilerParser.FUNC}
 "float"    {
-    value = NSNumber(integerLiteral: TypeVar.float.rawValue)
+    value = NSNumber(integerLiteral: TypeSymbol.float.rawValue)
     return CompilerParser.FLOAT }
 "double"    {
-    value = NSNumber(integerLiteral:TypeVar.double.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.double.rawValue)
     return CompilerParser.DOUBLE }
 "int"       {
-    value = NSNumber(integerLiteral:TypeVar.integer.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.integer.rawValue)
     return CompilerParser.INT}
 "string"       {
-    value = NSNumber(integerLiteral:TypeVar.string.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.string.rawValue)
     return CompilerParser.STR}
 "print"   {return CompilerParser.PRINT}
 "input"   {return CompilerParser.INPUT}
 "char"    {
-    value = NSNumber(integerLiteral:TypeVar.char.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.char.rawValue)
     return CompilerParser.CHAR}
 "new"     {return CompilerParser.NEW}
 "const"    {return CompilerParser.CONST}
 "return"    {return CompilerParser.RTN}
 "bool"    {
-    value = NSNumber(integerLiteral:TypeVar.boolean.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.boolean.rawValue)
     return CompilerParser.BOOLEAN}
 "Int"    {
-    value = NSNumber(integerLiteral:TypeVar.Integer.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.Integer.rawValue)
     return CompilerParser.INTEGERCLASS}
 "String"    {
-    value = NSNumber(integerLiteral:TypeVar.String.rawValue)
+    value = NSNumber(integerLiteral:TypeSymbol.String.rawValue)
     return CompilerParser.STRINGCLASS}
 "while"    {return CompilerParser.WHILE}
 "for"    {return CompilerParser.FOR}
+"true"    {
+    value = NSNumber(integerLiteral:BooleanType.T.rawValue)
+    return CompilerParser.T}
+"false"    {
+    value = NSNumber(integerLiteral:BooleanType.F.rawValue)
+    return CompilerParser.F}
 "if"         {return CompilerParser.IF}
 "else"    { return CompilerParser.ELSE }
 "null"    { return CompilerParser.NLL }
@@ -63,15 +69,13 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "<"         {return CompilerParser.LT}
 ">"         {return CompilerParser.GT}
 "{"          {
-    print("NEW NODE")
-    CompilerParser.st.newNode()
     return CompilerParser.LBRACE}
 "}"          {
-    print("BYE NODE")
-    CompilerParser.st.pop()
     return CompilerParser.RBRACE}
-\/           {return CompilerParser.DIVIDE}
-\*           {return CompilerParser.TIMES}
+\/           {
+    return CompilerParser.DIVIDE}
+\*           {
+    return CompilerParser.TIMES}
 "("          {return CompilerParser.LPAREN}
 ")"          {return CompilerParser.RPAREN}
 "["          {return CompilerParser.LSBRAKE}
@@ -88,6 +92,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     value = NSNumber.init(value:Float(text) ?? 0)
     return CompilerParser.CTEF}
 {CteI}   {
+
     value = NSNumber.init(value:Int(text) ?? 0)
     return CompilerParser.CTEI}
 {CteS}  {
@@ -96,8 +101,6 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 {id}        {
     value = NSString(string:text)
     return CompilerParser.ID}
-
-
 .            {
                 /* All else, return character value as token ID. */
                 print("ERROR")

@@ -8,39 +8,19 @@
 import Foundation
 
 
-
-
-enum TypeSymbol : Int {
-    case void
-    case integer
-    case string
-    case boolean
-    case float
-    case char
-    case double
-    case Integer
-    case String
-    case ID
-}
-
-
-enum Kind : Int {
-    case method
-    case field
-}
-
 public class Symbol {
     var lineNumber : UInt16
-    var identifier: NSString
+    var identifier: String
     var kind : Kind
     var type: TypeSymbol
     var constant : Bool
     var array : Bool
     var assigned : Bool
+
     
     init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool){
         self.lineNumber = UInt16(lineNumber)
-        self.identifier = identifier
+        self.identifier = String(identifier)
         self.kind = kind
         self.type = type
         self.constant = constant

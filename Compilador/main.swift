@@ -12,7 +12,7 @@ print("Nombre archivo: ")
 
 
 let file = readLine()
-let p = readFromFileJp(file ?? "")
+let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
 //
@@ -27,8 +27,8 @@ let parser = CompilerParser.init(lexer: lex)
 let error = CompilerErrorDelegate.init()
 parser.errorDelegate = error
 if (parser.parse()) {
-    let st = CompilerParser.st
-    print(st.description)
+    let st = parser.semantic
+    print(st.symbolTable.description)
     print("Parseo exitoso")
 } else {
     print("Error.")

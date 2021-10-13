@@ -17,6 +17,10 @@ public struct Stack<Element> {
       storage.append(element)
     }
     
+    public func size() -> Int {
+        return storage.count
+    }
+    
     // Utiliza la funcion del array, popLast que saca el ultimo elemento ingresado
     @discardableResult
     public mutating func pop() -> Element? {
