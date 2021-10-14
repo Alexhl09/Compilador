@@ -1,14 +1,25 @@
 var x = 10;
-var x = 12;
+// var x = 12;
 func int doble(int A) {
+    //var x = 10 > "A";
     const int a = 10;
-    return A * A;
+    var S = 1;
+    return A * A - S;
 }
 func printArray(int A) {
     var a;
     var b = 10;
     a = 10;
     print(a);
+    
+    if(b > 10) {
+        var x = 1;
+        print(a);
+    } else {
+        var x = 1;
+        print(a);
+    }
+    
     for (a : 0...9)
     {
         var abc;
@@ -18,11 +29,13 @@ func printArray(int A) {
         print(a);
         a = 1;
     }
-    for(a = 10; a < 10){
+    for(var a = 0; a = 10; a < 10){
         a = a - 1;
         print(a);
     }
+    /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     a = doble(a);
+    */
     a = a > 10 ? 10 : 2;
     print(a);
 }

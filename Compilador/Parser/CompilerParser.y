@@ -10,12 +10,38 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 
 %global {
     var semantic : SemanticHandler = SemanticHandler()
+
 }
 
 %errors {
     static let ERROR_UNIMPLEMENTED = (CompilerParser.ERROR_STARTERRORID+1)
-    static let NO_VAR_INSERTED = (CompilerParser.ERROR_STARTERRORID+2)
+    static let VAR_ALREADY_DECLARED = (CompilerParser.ERROR_STARTERRORID+2)
+    static let TYPE_MISMATCH = (CompilerParser.ERROR_STARTERRORID+3)
+    static let UNDECLARED_VAR = (CompilerParser.ERROR_STARTERRORID+4)
 }
+
+%{
+    extension CompilerParser : SemanticErrorDelegate {}
+%}
+
+%init {
+    semantic.delegate = self
+}
+
+%local {
+    func sendVariableRepeated(id : String){
+        error(code: CompilerParser.VAR_ALREADY_DECLARED, data: ["varRep": id as AnyObject])
+    }
+
+    func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol){
+        error(code: CompilerParser.TYPE_MISMATCH, data: ["t1": NSNumber(value: t1.rawValue) as AnyObject, "t2": NSNumber(value: t2.rawValue) as AnyObject])
+    }
+
+    func sendUndeclareVariable(id: NSString) {
+        error(code: CompilerParser.UNDECLARED_VAR, data: ["undeclaredVar": id as NSString])
+    }
+}
+
 
 
 %nonassoc TYPE FUNCTION
@@ -144,21 +170,23 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             | expresion COMMA llamadaA;
    
    condicion : condicionA cuerpo
-             | condicionA ELSE cuerpo;
+             | condicionA cuerpo startNodeElse cuerpo;
+             
+    startNodeElse : ELSE {
+        semantic.startScope()
+    };
    
    condicionA : IF startNode expresion RPAREN;
    
                       
-   cicloWhile : WHILE startNode expresion RPAREN cuerpo {print("w")};
+   cicloWhile : WHILE startNode expresion RPAREN cuerpo {};
    
    startNode : LPAREN {
-       print("NEW NODE")
        semantic.startScope()
    }
    ;
    
    popNode : RBRACE {
-       print("BYE NODE")
        semantic.endScope()
    }
    ;
@@ -170,7 +198,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                     ;
 
    
-   cicloForIterador : FOR startNode cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
+   cicloForIterador : FOR startNode vars cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
                     | FOR startNode SEMICOLON expresion RPAREN cuerpo;
    
    cicloForIteradorA : ID assignCTEI {semantic.saveValueVariable(id : $1 as String)};
@@ -214,7 +242,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                | condicion
                | cicloWhile
                | cicloForIterador
-               | cicloForEach;
+               | cicloForEach
+               | factor;
                
    cuerpoReturn : cuerpoLista cuerpoReturn |
                 RTN expresion SEMICOLON cuerpoReturn |
@@ -235,8 +264,10 @@ hiperExpression : superExpression
         ;
    
    superExpression : megaExpression
-   | megaExpression comparisonOperators megaExpression {print("jojo"); semantic.addQuadruple()}
-       | superExpression QM superExpression COLON superExpression;
+        | megaExpression comparisonOperators megaExpression {semantic.addQuadruple()}
+        | superExpression QM flujoBloque COLON flujoBloque
+            {semantic.addQuadrupleWithTernaryOperator()}
+       ;
        
 comparisonOperators : EQ EQ {semantic.addOperator(op: Operator.equal)}
         | NEQ {semantic.addOperator(op: Operator.different)}
@@ -291,3 +322,4 @@ booleanValue : T {$$ = $1}| F {$$ = $1};
 //           | ID LSBRAKE expresion RSBRAKE
 //           | lvalue DOT ID
 //           | lvalue LSBRAKE expresion RSBRAKE
+

@@ -5,12 +5,13 @@ import Cocoa
 class CompilerErrorDelegate: CompilerParserError {
     func error(parser: CompilerParser, line: Int, column: Int, filename: String?, errorCode: Int, data: [String : AnyObject]?) {
         // Report error
+        var infoPrint = ""
         switch errorCode {
         case 1:
-            print("Error de sintaxis")
+            infoPrint += "Error de sintaxis"
         case 2:
             let tokens : [String] = data?["tokens"] as! [String]
-            print("ERROR_MISSINGTOKEN, posible token: \(tokens.first ?? "")")
+            infoPrint += "ERROR_MISSINGTOKEN, posible token: \(tokens.first ?? "")"
             
         case 3:
             print("---------------")
@@ -20,9 +21,23 @@ class CompilerErrorDelegate: CompilerParserError {
                 print(i)
             }
             print("---------------")
+        case 258:
+            guard let dicVariable : [String:String] = data as? [String:String] else {return}
+            guard let n = dicVariable["varRep"] else {return}
+            infoPrint += "Var \(n) already exists"
+            
+        case 259:
+            guard let dicVariable : [String:NSNumber] = data as? [String:NSNumber] else {return}
+            guard let t1 = dicVariable["t1"] else {return}
+            guard let t2 = dicVariable["t2"] else {return}
+            infoPrint += "Type mismatch between \(TypeSymbol(rawValue: t1.intValue) ?? .void) and \(TypeSymbol(rawValue: t2.intValue) ?? .void)"
+        case 260:
+            guard let dicVariable : [String:NSString] = data as? [String:NSString] else {return}
+            guard let undeclaredID = dicVariable["undeclaredVar"] as? String else {return}
+            infoPrint += "Undeclared var \(undeclaredID)"
         default:
             print("Error")
         }
-        print(" en la linea: ", line, " en la columna: ", column)
+        print(infoPrint + " en la linea: ", line + 1, " en la columna: ", column)
     }
 }

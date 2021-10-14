@@ -7,7 +7,14 @@
 
 import Foundation
 
+protocol SemanticErrorDelegate {
+    func sendVariableRepeated(id : String)
+    func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol)
+    func sendUndeclareVariable(id: NSString)
+}
+
 class SemanticHandler {
+    var delegate : SemanticErrorDelegate? = nil
     var quadruples : [Quadruple] = []
     var symbolTable : SymbolTable = SymbolTable()
     var jumpStack : Stack<Quadruple> = []
@@ -17,7 +24,9 @@ class SemanticHandler {
     
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
         let s = Symbol(lex.line, id, kind, type, constant, array, false)
-        symbolTable.insertInHashTable(s)
+        if (!symbolTable.insertInHashTable(s)){
+            delegate?.sendVariableRepeated(id: id as String)
+        }
     }
     
     func startScope(){
@@ -53,6 +62,7 @@ class SemanticHandler {
             
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
                 print("ERROR")
+                delegate?.sendInvalidOperationBetween(t1: leftType, t2: rightType)
                 return
             }
     
@@ -86,8 +96,14 @@ class SemanticHandler {
     
     func addIDAsQuadruple(_ id : NSString){
         let identifier : String = String(id)
-        guard let operand = self.symbolTable.lookup(identifier) else {print("ID NO EXISTE EN MI TABLE"); return}
+        guard let operand = self.symbolTable.lookup(identifier) else {print("ID NO EXISTE EN MI TABLE");
+            delegate?.sendUndeclareVariable(id: id)
+            return}
         self.addOperand(symbol: operand)
+    }
+    
+    func addQuadrupleWithTernaryOperator(){
+        print("OperadorTernario")
     }
     
     func saveValueVariable(id: String){
@@ -112,13 +128,10 @@ class SemanticHandler {
         let leftOperand  : String = operationStack.operands.pop() ?? ""
         let leftType : TypeSymbol = operationStack.types.pop() ?? .void
         
-        
         guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
             print("ERROR")
             return
         }
-        
         self.quadruples.append(Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand))
-        
     }
 }
