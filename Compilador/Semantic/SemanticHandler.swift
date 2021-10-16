@@ -11,13 +11,14 @@ protocol SemanticErrorDelegate {
     func sendVariableRepeated(id : String)
     func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol)
     func sendUndeclareVariable(id: NSString)
+    func sendTypeMismatch()
 }
 
 class SemanticHandler {
     var delegate : SemanticErrorDelegate? = nil
     var quadruples : [Quadruple] = []
     var symbolTable : SymbolTable = SymbolTable()
-    var jumpStack : Stack<Quadruple> = []
+    var jumpStack : Stack<Int> = []
     var operationStack : OperatorStack = OperatorStack()
     var numTemp : Int = 0
     var numConstantes : Int = 0
@@ -80,6 +81,7 @@ class SemanticHandler {
             self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: symbolTemporal.identifier))
             self.addOperand(symbol: symbolTemporal)
         }
+        
     }
     
     func newGlobalVariable(s : TypeSymbol) -> Int {
@@ -123,12 +125,23 @@ class SemanticHandler {
         // IF el ultimo operando es de tipo boolean sino ERROR
         // Agregar cuadruplo con (GOTOF, resultado del pop, _, _) y agregar a pila de saltos una ubicacion antes de la acutual (num de quadruplos - 1)
         //
+        if (operationStack.types.pop() != TypeSymbol.boolean) {
+            print("ERROR")
+            delegate?.sendTypeMismatch()
+        }
+        let result : String = operationStack.operands.pop() ?? ""
+        self.quadruples.append(Quadruple(argument1: "GOTOF", argument2: result, op: nil, result: nil))
+        print("Inserted Quadruple \(quadruples.count)")
+        jumpStack.push(quadruples.count - 1)
     }
     
-    func endCodicional(){
+    func endCondicional(){
         // Sacar cosa de la pila de saltos (puede ser un GOTO) para saber en que indice rellenar
         // Poner en este quadruplo el indice de a donde debe ir una vez que termine como parte del resultado
         // Fill (indice al cual ir, size de cuadruplos)
+        let end = jumpStack.pop()
+        quadruples[end!] = Quadruple(argument1: quadruples[end!].argument1, argument2: quadruples[end!].argument2, op: nil, result: String(quadruples.count))
+        print("Filled Quadruple \(end) with address \(quadruples.count - 1)")
     }
     
     func addElse(){
@@ -138,6 +151,11 @@ class SemanticHandler {
         // Entonces tomar como indice al utlimo de la pila de saltos inice=pilaSaltos.pop
         // Agregar a la pila de saltos uno antes de ahorita, pila.append(tamano de cuadruplos menos 1)
         // Rellenar en Fill (inice, size de cuadruplos)
+        self.quadruples.append(Quadruple(argument1: "GOTO", argument2: nil, op: nil, result: nil))
+        let end = jumpStack.pop()
+        jumpStack.push(quadruples.count - 1)
+        quadruples[end!] = Quadruple(argument1: quadruples[end!].argument1, argument2: quadruples[end!].argument2, op: nil, result: String(quadruples.count))
+        print("Filled Quadruple ELSE \(end) with address \(quadruples.count - 1)")
     }
     
     

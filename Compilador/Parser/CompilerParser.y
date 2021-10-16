@@ -40,6 +40,10 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     func sendUndeclareVariable(id: NSString) {
         error(code: CompilerParser.UNDECLARED_VAR, data: ["undeclaredVar": id as NSString])
     }
+
+    func sendTypeMismatch() {
+        error(code: CompilerParser.TYPE_MISMATCH, data: [:])
+    }
 }
 
 
@@ -169,15 +173,17 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    llamadaA : expresion
             | expresion COMMA llamadaA;
    
-   condicion : condicionA cuerpo
-             | condicionA cuerpo startNodeElse cuerpo;
+   condicion : condicionA cuerpo { semantic.endCondicional() }
+             | condicionA cuerpo startNodeElse cuerpo { semantic.endCondicional() };
              
     startNodeElse : ELSE {
         semantic.startScope()
+        semantic.addElse()
     };
    
-   condicionA : IF startNode expresion RPAREN;
-   
+   condicionA : IF startNode expresion RPAREN {
+       semantic.addCondicional()
+   };
                       
    cicloWhile : WHILE startNode expresion RPAREN cuerpo {};
    

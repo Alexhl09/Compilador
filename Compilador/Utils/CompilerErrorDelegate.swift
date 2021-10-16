@@ -27,6 +27,10 @@ class CompilerErrorDelegate: CompilerParserError {
             infoPrint += "Var \(n) already exists"
             
         case 259:
+            if (data?.isEmpty ?? false) {
+                infoPrint += "Condition must be a boolean operator"
+                break
+            }
             guard let dicVariable : [String:NSNumber] = data as? [String:NSNumber] else {return}
             guard let t1 = dicVariable["t1"] else {return}
             guard let t2 = dicVariable["t2"] else {return}

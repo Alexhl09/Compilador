@@ -9,8 +9,9 @@ import Foundation
 
 print("Nombre archivo: ")
 
-let file = readLine()
-let p = readFromFile(file ?? "")
+// let file = readLine()
+let file = "test.test"
+let p = readFromFileJp(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
 //
