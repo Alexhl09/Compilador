@@ -17,5 +17,8 @@ La tabla semantica de operadores se hizo con una estructura de tipo Diccionario 
 
 La segunda estructura, es una tabla de simbolos implementada con una lista encadenada con un comportamiento FIFO donde cada nodo representa un scope y es de tipo diccionario para almacenar la información sobre las funciones y variables que se encuentran en el. Esta estructura funciona con N scopes, es decir no está limitada por solamente un scope global y uno local.
 
+## Tercer avance
 
+Para el tercer avance, preparamos la generación de cuadruplos para expresiones y lógicas asi como para la asignacion de variables y para estructuras condicionales como el if/if else. Aunque esto suena a poco. Se trabajo muy duro en generar una estructura basica con la cual poder interactuar con el estado de la semantica de nuestro compilador. De tal manera que las tareas necesarias a realizar se encuentran centralizadas en una misma estructura lo que permite tener un código más organizado y legible. 
 
+Con esto mismo, el código ya está preparandose para las siguientes entregas pues el manejador de semantica del programa ya contiene todas las estructuras necesarias para la administración de memoria que será implementada durante las siguientes entregas.
