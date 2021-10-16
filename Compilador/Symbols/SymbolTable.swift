@@ -11,6 +11,7 @@ import Foundation
 public class Symbol {
     var lineNumber : UInt16
     var identifier: String
+    var address: Int
     var kind : Kind
     var type: TypeSymbol
     var constant : Bool
@@ -18,7 +19,7 @@ public class Symbol {
     var assigned : Bool
 
     
-    init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool){
+    init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0){
         self.lineNumber = UInt16(lineNumber)
         self.identifier = String(identifier)
         self.kind = kind
@@ -26,6 +27,7 @@ public class Symbol {
         self.constant = constant
         self.array = array
         self.assigned = assigned
+        self.address = address
     }
     
     init(){
@@ -36,6 +38,7 @@ public class Symbol {
         self.constant = false
         self.array = false
         self.assigned = false
+        self.address = -1
     }
     
 }
@@ -93,6 +96,8 @@ extension SymbolTable{
             self.tail = self.head
         }
     }
+    
+    public func onlyOneNode()-> Bool{return (head != nil && head?.next == nil)}
     
     public mutating func append(_ node : Node){
         copyNodes()

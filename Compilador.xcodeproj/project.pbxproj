@@ -25,6 +25,10 @@
 		A990DEA527162F3700C94528 /* SemanticHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA427162F3700C94528 /* SemanticHandler.swift */; };
 		A990DEA72716395B00C94528 /* OperatorStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA62716395B00C94528 /* OperatorStack.swift */; };
 		A990DEA92716446700C94528 /* BooleanType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA82716446700C94528 /* BooleanType.swift */; };
+		A9955AA3271A0EE100A5BC43 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */; };
+		A9955AA5271A10A700A5BC43 /* VirtualMemoryBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */; };
+		A9955AA7271A119B00A5BC43 /* SegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA6271A119B00A5BC43 /* SegmentType.swift */; };
+		A9955AAB271A5AA400A5BC43 /* VirtualMemorySemantic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +92,10 @@
 		A990DEA427162F3700C94528 /* SemanticHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticHandler.swift; sourceTree = "<group>"; };
 		A990DEA62716395B00C94528 /* OperatorStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorStack.swift; sourceTree = "<group>"; };
 		A990DEA82716446700C94528 /* BooleanType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanType.swift; sourceTree = "<group>"; };
+		A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemory.swift; sourceTree = "<group>"; };
+		A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemoryBlock.swift; sourceTree = "<group>"; };
+		A9955AA6271A119B00A5BC43 /* SegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentType.swift; sourceTree = "<group>"; };
+		A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemorySemantic.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +130,7 @@
 		A930EA1226FFB9E10062BE51 /* Compilador */ = {
 			isa = PBXGroup;
 			children = (
+				A9955AA1271A0ED100A5BC43 /* VirtualMachine */,
 				A990DEA327162F2700C94528 /* Semantic */,
 				A990DEA02715596700C94528 /* Cuadruples */,
 				A990DE93270CE74900C94528 /* Symbols */,
@@ -160,9 +169,28 @@
 		A990DEA327162F2700C94528 /* Semantic */ = {
 			isa = PBXGroup;
 			children = (
+				A9955AA9271A5A8600A5BC43 /* VirtualMemory */,
 				A990DEA427162F3700C94528 /* SemanticHandler.swift */,
 			);
 			path = Semantic;
+			sourceTree = "<group>";
+		};
+		A9955AA1271A0ED100A5BC43 /* VirtualMachine */ = {
+			isa = PBXGroup;
+			children = (
+				A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */,
+				A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */,
+				A9955AA6271A119B00A5BC43 /* SegmentType.swift */,
+			);
+			path = VirtualMachine;
+			sourceTree = "<group>";
+		};
+		A9955AA9271A5A8600A5BC43 /* VirtualMemory */ = {
+			isa = PBXGroup;
+			children = (
+				A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */,
+			);
+			path = VirtualMemory;
 			sourceTree = "<group>";
 		};
 		A9FA5EA326FFBEF400425354 /* Parser */ = {
@@ -264,10 +292,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A990DEA72716395B00C94528 /* OperatorStack.swift in Sources */,
+				A9955AA5271A10A700A5BC43 /* VirtualMemoryBlock.swift in Sources */,
 				A990DE9D270F779900C94528 /* SemanticTable.swift in Sources */,
+				A9955AAB271A5AA400A5BC43 /* VirtualMemorySemantic.swift in Sources */,
 				A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */,
 				A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */,
 				A930EA2626FFBB1E0062BE51 /* OCFileInput.swift in Sources */,
+				A9955AA7271A119B00A5BC43 /* SegmentType.swift in Sources */,
 				A930EA2726FFBB1E0062BE51 /* OCLexInput.swift in Sources */,
 				A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */,
 				A990DE92270BC12300C94528 /* Stack.swift in Sources */,
@@ -281,6 +312,7 @@
 				A990DEA527162F3700C94528 /* SemanticHandler.swift in Sources */,
 				A990DEA22715597400C94528 /* Quadruple.swift in Sources */,
 				A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */,
+				A9955AA3271A0EE100A5BC43 /* VirtualMemory.swift in Sources */,
 				A990DE9F2715593000C94528 /* Kind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,4 +1,6 @@
 var x = 10;
+var y = 20;
+var z = 30;
 // var x = 12;
 func int doble(int A) {
     //var x = 10 > "A";

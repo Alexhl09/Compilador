@@ -21,12 +21,20 @@ class SemanticHandler {
     var operationStack : OperatorStack = OperatorStack()
     var numTemp : Int = 0
     var numConstantes : Int = 0
+    var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
         let s = Symbol(lex.line, id, kind, type, constant, array, false)
+
+        
         if (!symbolTable.insertInHashTable(s)){
             delegate?.sendVariableRepeated(id: id as String)
+        }else{
+            if(symbolTable.onlyOneNode()){
+                s.address = newGlobalVariable(s: type)
+            }
         }
+        
     }
     
     func startScope(){
@@ -74,6 +82,10 @@ class SemanticHandler {
         }
     }
     
+    func newGlobalVariable(s : TypeSymbol) -> Int {
+        return memory.newGlobalAddress(type: s)
+    }
+    
     func addConstantInteger(_ number :NSNumber){
         self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .integer, true, false, true))
         numConstantes = numConstantes + 1
@@ -96,7 +108,7 @@ class SemanticHandler {
     
     func addIDAsQuadruple(_ id : NSString){
         let identifier : String = String(id)
-        guard let operand = self.symbolTable.lookup(identifier) else {print("ID NO EXISTE EN MI TABLE");
+        guard let operand = self.symbolTable.lookup(identifier) else {
             delegate?.sendUndeclareVariable(id: id)
             return}
         self.addOperand(symbol: operand)
