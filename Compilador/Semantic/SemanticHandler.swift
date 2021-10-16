@@ -118,6 +118,30 @@ class SemanticHandler {
         print("OperadorTernario")
     }
     
+    
+    func addCondicional(){
+        // IF el ultimo operando es de tipo boolean sino ERROR
+        // Agregar cuadruplo con (GOTOF, resultado del pop, _, _) y agregar a pila de saltos una ubicacion antes de la acutual (num de quadruplos - 1)
+        //
+    }
+    
+    func endCodicional(){
+        // Sacar cosa de la pila de saltos (puede ser un GOTO) para saber en que indice rellenar
+        // Poner en este quadruplo el indice de a donde debe ir una vez que termine como parte del resultado
+        // Fill (indice al cual ir, size de cuadruplos)
+    }
+    
+    func addElse(){
+        // A comenzar el else
+        // Add un nuevo cuadruplo con GOTO para saltar ejecucion de lo siguiente en caso de verdadero
+        // Si tenemos algo en la pila de saltos
+        // Entonces tomar como indice al utlimo de la pila de saltos inice=pilaSaltos.pop
+        // Agregar a la pila de saltos uno antes de ahorita, pila.append(tamano de cuadruplos menos 1)
+        // Rellenar en Fill (inice, size de cuadruplos)
+    }
+    
+    
+    
     func saveValueVariable(id: String){
         guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); return}
         // Add to operands stack
