@@ -72,7 +72,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		31662056271B966C00B2E409 /* diagramas_v2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = diagramas_v2.pdf; path = /Users/jpvargas/Documents/Tec/Compiladores/Compilador/diagramas_v2.pdf; sourceTree = "<absolute>"; };
 		A930EA1026FFB9E10062BE51 /* Compilador */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Compilador; sourceTree = BUILT_PRODUCTS_DIR; };
 		A930EA1326FFB9E10062BE51 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCFileInput.swift; sourceTree = "<group>"; };
@@ -115,7 +114,6 @@
 		A930EA0726FFB9E10062BE51 = {
 			isa = PBXGroup;
 			children = (
-				31662056271B966C00B2E409 /* diagramas_v2.pdf */,
 				A930EA1226FFB9E10062BE51 /* Compilador */,
 				A930EA1126FFB9E10062BE51 /* Products */,
 			);
@@ -441,7 +439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8ZMLMM945;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -452,7 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8ZMLMM945;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

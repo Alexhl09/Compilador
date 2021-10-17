@@ -32,7 +32,8 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "string"       {
     value = NSNumber(integerLiteral:TypeSymbol.string.rawValue)
     return CompilerParser.STR}
-"print"   {return CompilerParser.PRINT}
+"print"   {
+    return CompilerParser.PRINT}
 "input"   {return CompilerParser.INPUT}
 "char"    {
     value = NSNumber(integerLiteral:TypeSymbol.char.rawValue)

@@ -8,10 +8,10 @@
 import Foundation
 
 struct Quadruple {
-    let argument1 : String
+    let argument1 : String?
     let argument2 : String?
-    let op : Operator?
-    let result : String?
+    let op : Operator
+    var result : String?
 }
 
 //func quadruple(op : Operator, arg1 : Symbol, arg2: Symbol? = nil) -> Symbol? {

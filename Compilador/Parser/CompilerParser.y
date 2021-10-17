@@ -158,7 +158,10 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
            
     asignar : ID varAssign SEMICOLON {semantic.saveValueVariable(id : $1 as String)};
            
-   escribir : PRINT LPAREN escribirA RPAREN SEMICOLON;
+           
+  escribir : PRINT LPAREN escribirA RPAREN SEMICOLON {semantic.addPrint()};
+  
+  printOper : PRINT {semantic.addOperator(op: Operator.print)};
    
    escribirA : escribirB
              | escribirB COMMA escribirA;

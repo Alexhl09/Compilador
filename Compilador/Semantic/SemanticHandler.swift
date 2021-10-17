@@ -130,7 +130,7 @@ class SemanticHandler {
             delegate?.sendTypeMismatch()
         }
         let result : String = operationStack.operands.pop() ?? ""
-        self.quadruples.append(Quadruple(argument1: "GOTOF", argument2: result, op: nil, result: nil))
+        self.quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         print("Inserted Quadruple \(quadruples.count)")
         jumpStack.push(quadruples.count - 1)
     }
@@ -139,9 +139,13 @@ class SemanticHandler {
         // Sacar cosa de la pila de saltos (puede ser un GOTO) para saber en que indice rellenar
         // Poner en este quadruplo el indice de a donde debe ir una vez que termine como parte del resultado
         // Fill (indice al cual ir, size de cuadruplos)
-        let end = jumpStack.pop()
-        quadruples[end!] = Quadruple(argument1: quadruples[end!].argument1, argument2: quadruples[end!].argument2, op: nil, result: String(quadruples.count))
-        print("Filled Quadruple \(end) with address \(quadruples.count - 1)")
+        let end = jumpStack.pop() ?? 0
+        fillQuadruple(index: end, value: String(quadruples.count + 1))
+        print("Filled Quadruple \(end) with address \(quadruples.count + 1)")
+    }
+    
+    func fillQuadruple(index: Int, value : String){
+        quadruples[index].result = value
     }
     
     func addElse(){
@@ -151,11 +155,20 @@ class SemanticHandler {
         // Entonces tomar como indice al utlimo de la pila de saltos inice=pilaSaltos.pop
         // Agregar a la pila de saltos uno antes de ahorita, pila.append(tamano de cuadruplos menos 1)
         // Rellenar en Fill (inice, size de cuadruplos)
-        self.quadruples.append(Quadruple(argument1: "GOTO", argument2: nil, op: nil, result: nil))
-        let end = jumpStack.pop()
+        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+        guard let end = jumpStack.pop() else {print("No hay algo en el jumpStack"); return}
         jumpStack.push(quadruples.count - 1)
-        quadruples[end!] = Quadruple(argument1: quadruples[end!].argument1, argument2: quadruples[end!].argument2, op: nil, result: String(quadruples.count))
+        fillQuadruple(index: end, value: String(quadruples.count))
+
         print("Filled Quadruple ELSE \(end) with address \(quadruples.count - 1)")
+    }
+    
+    func addPrint(){
+        if(!operationStack.operands.isEmpty){
+            let operand = operationStack.operands.pop()
+            let op = operationStack.operators.pop() ?? .print
+            self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
+        }
     }
     
     
