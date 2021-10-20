@@ -17,8 +17,10 @@ enum Operator : Int {
     case assign
     case goto
     case gotof
+    case gotot
     case read
     case print
+    case noNil
 }
 
 struct SemCubeKey : Hashable {

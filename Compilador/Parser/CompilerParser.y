@@ -113,7 +113,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | const;
             
-    varAssign : EQ expresion ;
+    varAssign : varEqAssign expresion ;
+    
+    varEqAssign : EQ {semantic.addOperator(op: .assign)};
     
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE
                       | LSBRAKE CTEI RSBRAKE varsPrimaArreglos;
@@ -136,11 +138,12 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 | asignar
                 | llamada SEMICOLON
                 | leer
-                | escribir
+                | escribir SEMICOLON
                 | condicion
                 | cicloWhile
                 | cicloForEach
                 | cicloForIterador
+                | ternary SEMICOLON
                 | error { error(code: CompilerParser.ERROR_SYNTAX) }
                 ;
                 
@@ -159,7 +162,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     asignar : ID varAssign SEMICOLON {semantic.saveValueVariable(id : $1 as String)};
            
            
-  escribir : PRINT LPAREN escribirA RPAREN SEMICOLON {semantic.addPrint()};
+  escribir : PRINT LPAREN escribirA RPAREN {semantic.addPrint()};
   
   printOper : PRINT {semantic.addOperator(op: Operator.print)};
    
@@ -200,17 +203,26 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    }
    ;
    
-   range : CPTRG | INCPTRG;
+   range : CPTRG | INCPTRG {
+       
+   };
    
-   cicloForEach : FOR startNode ID COLON ID RPAREN cuerpo
-                    | FOR startNode ID COLON factor range factor RPAREN cuerpo
+   cicloForEach : FOR startNode VAR ID COLON ID RPAREN cuerpo
+                | FOR startNode declareVarCiclo RPAREN cuerpo {semantic.endForEachRange()}
                     ;
 
+   declareVarCiclo : INT ID COLON factor range factor
+        {
+            semantic.insertSymbolToST($2, false, false, .integer);
+            semantic.addOperator(op:.equal)
+            semantic.saveValueVariable(id : $2 as String)
+            semantic.addForEachCompleteRange(id : $2 as String);
+        };
    
    cicloForIterador : FOR startNode vars cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
                     | FOR startNode SEMICOLON expresion RPAREN cuerpo;
    
-   cicloForIteradorA : ID assignCTEI {semantic.saveValueVariable(id : $1 as String)};
+   cicloForIteradorA : hiperExpression {};
    
    assignCTEI : EQ CTEI;
    
@@ -252,7 +264,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                | cicloWhile
                | cicloForIterador
                | cicloForEach
-               | factor;
+               | factor
+               | ternary;
                
    cuerpoReturn : cuerpoLista cuerpoReturn |
                 RTN expresion SEMICOLON cuerpoReturn |
@@ -274,9 +287,16 @@ hiperExpression : superExpression
    
    superExpression : megaExpression
         | megaExpression comparisonOperators megaExpression {semantic.addQuadruple()}
-        | superExpression QM flujoBloque COLON flujoBloque
-            {semantic.addQuadrupleWithTernaryOperator()}
-       ;
+        | ternary;
+       
+    ternary : superExpression ternaryTrue ternaryBloque ternaryFalse ternaryBloque {semantic.endTernaryOperator()};
+       
+    ternaryTrue : QM {semantic.addQuadrupleWithTernaryOperator()};
+    
+    ternaryFalse : COLON {semantic.colonTernaryOperator()};
+       
+    ternaryBloque : flujoBloque
+                    | expresion;
        
 comparisonOperators : EQ EQ {semantic.addOperator(op: Operator.equal)}
         | NEQ {semantic.addOperator(op: Operator.different)}

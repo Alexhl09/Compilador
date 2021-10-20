@@ -22,33 +22,48 @@ func printArray(int A) {
         print(a);
     }
     
-    for (a : 0...9)
+    // Genera cuadruplo f = 0
+    // PILA DE SALTOS
+    // 9<f
+    // Res pila operandos tipo bool
+    // GOTOF res
+    // PILA DE SALTOS PARA MIGAJA
+    
+    for (int f : 0...9)
     {
         var abc; 
         print(b);
+        
+        // indexFalse Migaja pop()
+        // indexPrimer Migaja pop()
+        // GOTO(x, indexPrimer)
+        // FILL(indexFalse, COUNT cuadruplos + 1)
+        // f++
     }
-    while (a > 10) {
-        print(b);
-        a = 1;
-    }
-    for(var a = 0; a = 10; a < 10){
-        a = a - 1;
-        print(a);
-    }
+//    while (a > 10) {
+//        print(b);
+//        a = 1;
+//    }
+//    for(var a = 0; a == 10; a < 10){
+//        a = a - 1;
+//        print(a);
+//    }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     a = doble(a);
     */
-    a = a > 10 ? 10 : 2;
+    a > 10 ? print(x) : print(y);
+    a = a > 10 ? 10 + 2 : 2 + 4;
     print(a);
 }
 
 main () {
-var arr[6] = { 12, 11, 13, 5, 6, 7 };
+ // var arr[6] = { 12, 11, 13, 5, 6, 7 };
+    var arr = true;
     var arr_size = 6;
     print("Given array is");
-    printArray(arr);
-    const int sorted = mergeSort(arr, 0, arr_size - 1);
+    print(arr);
+    //const int sorted = mergeSort(arr, 0, arr_size - 1);
     print("Sorted array is");
-    printArray(arr);
+    print(arr);
 }
     

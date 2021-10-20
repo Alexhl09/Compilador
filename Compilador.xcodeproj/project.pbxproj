@@ -79,7 +79,7 @@
 		A930EA2326FFBB1E0062BE51 /* CompilerErrorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerErrorDelegate.swift; sourceTree = "<group>"; };
 		A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerStream.swift; sourceTree = "<group>"; };
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
-		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; };
+		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		A9955AA6271A119B00A5BC43 /* SegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentType.swift; sourceTree = "<group>"; };
 		A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemorySemantic.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
-		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; };
+		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +241,7 @@
 				A930EA0C26FFB9E10062BE51 /* Sources */,
 				A930EA0D26FFB9E10062BE51 /* Frameworks */,
 				A930EA0E26FFB9E10062BE51 /* CopyFiles */,
+				A9955AC7271FAB8500A5BC43 /* ShellScript */,
 			);
 			buildRules = (
 				A930EA1B26FFBA920062BE51 /* PBXBuildRule */,
@@ -285,6 +286,26 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A9955AC7271FAB8500A5BC43 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A930EA0C26FFB9E10062BE51 /* Sources */ = {

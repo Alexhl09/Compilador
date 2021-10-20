@@ -66,7 +66,7 @@ class VirtualMemoryBlockSemantic {
     var sizeBlock : Int
     var initialAddress: Int
     var intBlocks : SemiBlockMemory
-    var floatsBlocks : SemiBlockMemory
+    var voidBlocks : SemiBlockMemory
     var boolBlocks : SemiBlockMemory
     var doubleBlocks : SemiBlockMemory
     
@@ -77,7 +77,7 @@ class VirtualMemoryBlockSemantic {
         self.sizeBlock = sizeBlock
         self.initialAddress = initialAddress
         self.intBlocks = SemiBlockMemory(initialAddress: initialAddress, sizeSemiBlock: sizeBlock)
-        self.floatsBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock), sizeSemiBlock: sizeBlock)
+        self.voidBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock), sizeSemiBlock: sizeBlock)
         self.doubleBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock * 2), sizeSemiBlock: sizeBlock)
         self.boolBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock * 3), sizeSemiBlock: sizeBlock)
     }
@@ -85,8 +85,8 @@ class VirtualMemoryBlockSemantic {
     func newIntAddress(sizeToReserve: Int) -> Int {
         return self.intBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
     }
-    func newFloatsAddress(sizeToReserve: Int) -> Int {
-        return self.floatsBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
+    func newVoidAddress(sizeToReserve: Int) -> Int {
+        return self.voidBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
     }
     func newDoubleAddress(sizeToReserve: Int) -> Int {
         return self.doubleBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
@@ -98,7 +98,7 @@ class VirtualMemoryBlockSemantic {
     func newAddress(type: TypeSymbol, size : Int = 1) -> Int {
         switch type {
         case .void:
-            break
+            return newVoidAddress(sizeToReserve: size)
         case .integer:
             return newIntAddress(sizeToReserve: size)
         case .string:
@@ -106,7 +106,7 @@ class VirtualMemoryBlockSemantic {
         case .boolean:
             return newBoolAddress(sizeToReserve: size)
         case .float:
-            return newFloatsAddress(sizeToReserve: size)
+            break
         case .char:
             break
         case .double:

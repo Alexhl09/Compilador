@@ -8,7 +8,7 @@
 import Foundation
 
 struct Quadruple {
-    let argument1 : String?
+    var argument1 : String?
     let argument2 : String?
     let op : Operator
     var result : String?

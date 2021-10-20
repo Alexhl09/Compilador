@@ -74,12 +74,12 @@ class SemanticHandler {
                 delegate?.sendInvalidOperationBetween(t1: leftType, t2: rightType)
                 return
             }
-    
-            let symbolTemporal : Symbol = Symbol(0, "temp\(numTemp)" as NSString, .field, resultType, true, false, true)
-            numTemp = numTemp + 1
            
-            self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: symbolTemporal.identifier))
-            self.addOperand(symbol: symbolTemporal)
+            self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "temp\(numTemp)"))
+            self.operationStack.operands.push("temp\(numTemp)")
+            self.operationStack.types.push(resultType)
+            numTemp = numTemp + 1
+
         }
         
     }
@@ -116,8 +116,74 @@ class SemanticHandler {
         self.addOperand(symbol: operand)
     }
     
-    func addQuadrupleWithTernaryOperator(){
-        print("OperadorTernario")
+    func addQuadrupleWithTernaryOperator(){        
+        if(operationStack.operands.size() >= 1){
+            
+            let rightOperand : String = operationStack.operands.pop() ?? ""
+            let rightType : TypeSymbol = operationStack.types.pop() ?? .void
+    
+            if(rightType != .boolean){
+                print("ERROR type mismatch ternary")
+            }
+            
+            self.quadruples.append(Quadruple(argument1: rightOperand, argument2: nil, op: .gotof, result: nil))
+            self.jumpStack.push(self.quadruples.count - 1)
+        }
+    }
+    
+    func colonTernaryOperator(){
+        if(operationStack.operands.size() >= 1){
+            let indexToFill = self.jumpStack.pop() ?? 0
+            
+//            do{
+//                try self.generateQuadruple()
+//            }catch(let error){
+//                print(error.localizedDescription)
+//            }
+//
+            
+            self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+            self.jumpStack.push(self.quadruples.count - 1)
+            
+            self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
+            
+        }
+    }
+    
+    func endTernaryOperator(){
+        let indexToFill = self.jumpStack.pop() ?? 0
+            
+//            do{
+//                try self.generateQuadruple()
+//            }catch(let error){
+//                print(error.localizedDescription)
+//            }
+            
+        
+            
+        self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
+            
+        if(self.operationStack.operands.size() >= 2){
+            let op : Operator = .assign
+
+            let rightOperand : String = operationStack.operands.pop() ?? ""
+            let rightType = operationStack.types.pop() ?? .void
+
+            
+            let leftOperand  : String = operationStack.operands.pop() ?? ""
+            let leftType = operationStack.types.pop() ?? .void
+            
+            guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
+                print("ERROR")
+                delegate?.sendInvalidOperationBetween(t1: leftType, t2: rightType)
+                return
+            }
+            
+            self.quadruples.append(Quadruple(argument1: rightOperand, argument2: leftOperand, op: op, result: "temp\(numTemp)"))
+            self.operationStack.operands.push("temp\(numTemp)")
+            self.operationStack.types.push(resultType)
+            numTemp = numTemp + 1
+        }
     }
     
     
@@ -140,8 +206,8 @@ class SemanticHandler {
         // Poner en este quadruplo el indice de a donde debe ir una vez que termine como parte del resultado
         // Fill (indice al cual ir, size de cuadruplos)
         let end = jumpStack.pop() ?? 0
-        fillQuadruple(index: end, value: String(quadruples.count + 1))
-        print("Filled Quadruple \(end) with address \(quadruples.count + 1)")
+        fillQuadruple(index: end, value: String(quadruples.count))
+        print("Filled Quadruple \(end) with address \(quadruples.count)")
     }
     
     func fillQuadruple(index: Int, value : String){
@@ -166,11 +232,61 @@ class SemanticHandler {
     func addPrint(){
         if(!operationStack.operands.isEmpty){
             let operand = operationStack.operands.pop()
+            let _ = operationStack.types.pop()
             let op = operationStack.operators.pop() ?? .print
             self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
         }
     }
     
+    
+    func addForEachCompleteRange(id: String){
+        self.jumpStack.push(self.quadruples.count)
+        self.operationStack.operators.push(.lessOrEqualThan)
+        
+        self.addQuadruple()
+       
+        if (operationStack.types.pop() != TypeSymbol.boolean) {
+            print("ERROR")
+            delegate?.sendTypeMismatch()
+        }
+        
+        let result : String = operationStack.operands.pop() ?? ""
+        
+        self.quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
+        self.jumpStack.push(self.quadruples.count - 1)
+        
+        // i++
+        
+        self.operationStack.operators.push(.sum)
+        self.addOperand(symbol: self.symbolTable.lookup(id)!)
+        self.operationStack.types.push(.integer)
+        self.operationStack.operands.push("1")
+        self.addQuadruple()
+        self.addOperator(op: .equal)
+        self.saveValueVariable(id: id)
+        
+    }
+    
+    func endForEachRange(){
+        
+        guard let indexFalse = self.jumpStack.pop() else { return  }
+        guard let indexGoto = self.jumpStack.pop() else { return  }
+        
+        // SUM 1
+        
+        self.fillQuadruple(index: indexFalse, value: "\(quadruples.count)")
+        self.quadruples.append(Quadruple(argument1: "\(indexGoto)", argument2: nil, op: .goto, result: nil))
+        
+    }
+    
+    func getResultFromQuadruple(index: Int) -> String{
+        return self.quadruples[index].argument2 ?? ""
+    }
+    
+    
+    func changeArgument1Quadruple(arg1: String, index : Int){
+        quadruples[index].argument1 = arg1
+    }
     
     
     func saveValueVariable(id: String){
@@ -183,9 +299,17 @@ class SemanticHandler {
         }
         
         self.addOperand(symbol: symbol)
-        self.addOperator(op: .assign)
         
-        
+        do {
+           try generateQuadruple()
+        }catch(let error){
+            print(error.localizedDescription)
+        }
+       
+    }
+    
+    func generateQuadruple() throws {
+
         let op : Operator = operationStack.operators.pop()!
 
         let rightOperand : String = operationStack.operands.pop() ?? ""
@@ -197,8 +321,15 @@ class SemanticHandler {
         
         guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
             print("ERROR")
-            return
+            throw ErrorCompiler.TypeMismatch
         }
-        self.quadruples.append(Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand))
+        let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
+        self.quadruples.append(generatedQuadruple)
+//        self.operationStack.operands.push(rightOperand)
+//        self.operationStack.types.push(rightType)
     }
+}
+
+enum ErrorCompiler : Error{
+    case TypeMismatch
 }
