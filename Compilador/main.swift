@@ -28,6 +28,7 @@ parser.errorDelegate = error
 if (parser.parse()) {
     let st = parser.semantic
     print(st.symbolTable.description)
+    writeSemanticAlex(semantic: st)
     print("Parseo exitoso")
 } else {
     print("Error.")

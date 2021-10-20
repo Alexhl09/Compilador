@@ -14,7 +14,7 @@ protocol SemanticErrorDelegate {
     func sendTypeMismatch()
 }
 
-class SemanticHandler {
+class SemanticHandler : CustomStringConvertible {
     var delegate : SemanticErrorDelegate? = nil
     var quadruples : [Quadruple] = []
     var symbolTable : SymbolTable = SymbolTable()
@@ -24,9 +24,32 @@ class SemanticHandler {
     var numConstantes : Int = 0
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     
+    public var description: String {
+        let q = quadruples.reduce("", { res, q in
+            res.appending("Op: \(q.op ?? .noNil)\t\tAddress1: \(q.argument1 ?? "")\t\tAddress2: \(q.argument2 ?? "")\t\tResult: \(q.result ?? "")\n")
+        })
+        return
+    """
+    Memory: \n \(memory.description)
+    
+    Cuadruplos:\n\(q)
+    
+    JumpStack:\n \(jumpStack.description)
+    
+    Operators:\n \(operationStack.operators.description)
+    
+    Operands:\n \(operationStack.operands.description)
+    
+    Types:\n \(operationStack.types.description)
+    
+    Last SymbolTable:\n \(symbolTable.description)
+    
+    """
+        
+    }
+    
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
         let s = Symbol(lex.line, id, kind, type, constant, array, false)
-
         
         if (!symbolTable.insertInHashTable(s)){
             delegate?.sendVariableRepeated(id: id as String)
@@ -51,8 +74,13 @@ class SemanticHandler {
     }
     
     func addOperand(symbol : Symbol){
-        operationStack.operands.push(symbol.identifier)
+        operationStack.operands.push("\(symbol.address)")
         operationStack.types.push(symbol.type)
+    }
+    
+    func addOperandByMemory(memoryAddress: Int, type: TypeSymbol) {
+        operationStack.operands.push("\(memoryAddress)")
+        operationStack.types.push(type)
     }
     
     func addQuadruple() {
@@ -74,11 +102,12 @@ class SemanticHandler {
                 delegate?.sendInvalidOperationBetween(t1: leftType, t2: rightType)
                 return
             }
+            
+            let tempAddress = memory.newTemporalAddress(type: resultType)
            
-            self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "temp\(numTemp)"))
-            self.operationStack.operands.push("temp\(numTemp)")
+            self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "\(tempAddress)"))
+            self.operationStack.operands.push("\(tempAddress)")
             self.operationStack.types.push(resultType)
-            numTemp = numTemp + 1
 
         }
         
@@ -89,13 +118,11 @@ class SemanticHandler {
     }
     
     func addConstantInteger(_ number :NSNumber){
-        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .integer, true, false, true))
-        numConstantes = numConstantes + 1
+        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .integer), type: .integer)
     }
     
     func addConstantFloat(_ number : NSNumber){
-        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .float, true, false, true))
-        numConstantes = numConstantes + 1
+        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .double), type: .double)
     }
     
     func addConstantString(_ string : NSString){
@@ -104,8 +131,7 @@ class SemanticHandler {
     }
     
     func addConstantBool(_ number : NSNumber){
-        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .boolean, true, false, true))
-        numConstantes = numConstantes + 1
+        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .boolean), type: .boolean)
     }
     
     func addIDAsQuadruple(_ id : NSString){
@@ -179,13 +205,13 @@ class SemanticHandler {
                 return
             }
             
-            self.quadruples.append(Quadruple(argument1: rightOperand, argument2: leftOperand, op: op, result: "temp\(numTemp)"))
-            self.operationStack.operands.push("temp\(numTemp)")
+            let tempAddress = memory.newTemporalAddress(type: resultType)
+            
+            self.quadruples.append(Quadruple(argument1: rightOperand, argument2: leftOperand, op: op, result: "\(tempAddress)"))
+            self.operationStack.operands.push("\(tempAddress)")
             self.operationStack.types.push(resultType)
-            numTemp = numTemp + 1
         }
     }
-    
     
     func addCondicional(){
         // IF el ultimo operando es de tipo boolean sino ERROR
@@ -296,6 +322,14 @@ class SemanticHandler {
         if(!symbol.assigned){
             symbol.assigned = true
             symbol.type = operationStack.types.peek() ?? .void
+            
+            switch symbol.type {
+                case .integer:
+                    let beforeAddres = symbol.address
+                symbol.address = newGlobalVariable(s: .integer)
+                default:
+                break
+            }
         }
         
         self.addOperand(symbol: symbol)

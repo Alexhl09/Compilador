@@ -29,6 +29,7 @@
 		A9955AA5271A10A700A5BC43 /* VirtualMemoryBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */; };
 		A9955AA7271A119B00A5BC43 /* SegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA6271A119B00A5BC43 /* SegmentType.swift */; };
 		A9955AAB271A5AA400A5BC43 /* VirtualMemorySemantic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */; };
+		A9955AC9271FC28100A5BC43 /* WriteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AC8271FC28100A5BC43 /* WriteFile.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,7 @@
 		A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemoryBlock.swift; sourceTree = "<group>"; };
 		A9955AA6271A119B00A5BC43 /* SegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentType.swift; sourceTree = "<group>"; };
 		A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemorySemantic.swift; sourceTree = "<group>"; };
+		A9955AC8271FC28100A5BC43 /* WriteFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteFile.swift; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
@@ -227,6 +229,7 @@
 				A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */,
 				A990DE8F270BC11800C94528 /* Queue.swift */,
 				A990DE91270BC12300C94528 /* Stack.swift */,
+				A9955AC8271FC28100A5BC43 /* WriteFile.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				A990DE92270BC12300C94528 /* Stack.swift in Sources */,
 				A990DEA92716446700C94528 /* BooleanType.swift in Sources */,
 				A990DE90270BC11800C94528 /* Queue.swift in Sources */,
+				A9955AC9271FC28100A5BC43 /* WriteFile.swift in Sources */,
 				A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */,
 				A930EA1426FFB9E10062BE51 /* main.swift in Sources */,
 				A990DE99270CE7D700C94528 /* Type.swift in Sources */,

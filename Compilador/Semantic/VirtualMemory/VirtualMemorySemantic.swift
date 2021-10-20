@@ -7,8 +7,8 @@
 
 import Foundation
 
-class VirtualMemorySemantic {
-    let maxSize: Int = 20000
+class VirtualMemorySemantic : CustomStringConvertible {
+    let maxSize: Int = 24000
     var sizeByBlock : Int
     var globalBlock : VirtualMemoryBlockSemantic
     var localBlock : VirtualMemoryBlockSemantic
@@ -39,47 +39,50 @@ class VirtualMemorySemantic {
         return constantBlock.newAddress(type: type, size: sizeToReserve)
     }
     
+    public var description: String {
+        return
+    """
+    
+    ------------------------------------------------------------------
+    |   MEMORY SIZE:\n \(maxSize) Unidades
+    |   SIZE PER BLOCK:\n \(sizeByBlock) Unidades
+    |   
+    |   GLOBAL BLOCK:\n \(globalBlock.description)
+    |
+    |   LOCAL BLOCK:\n \(localBlock.description)
+    |
+    |   TEMP BLOCK:\n \(tempBlock.description)
+    |
+    |   CONSTANT BLOCK:\n \(constantBlock.description)
+    ------------------------------------------------------------------
+    """
+        
+    }
+    
 }
 
-struct SemiBlockMemory {
-    var initialAddress, myAddress, lastAddress : Int
-    
-    init(initialAddress : Int, sizeSemiBlock: Int) {
-        self.initialAddress = initialAddress
-        self.myAddress = initialAddress
-        self.lastAddress = initialAddress + sizeSemiBlock
-    }
-    
-    mutating func newAddressInMemory(sizeToReserve: Int) -> Int{
-        let newAddress = self.myAddress
-        self.myAddress += sizeToReserve
-        return newAddress
-    }
-    
-    func size() -> Int {
-        return self.myAddress - self.initialAddress
-    }
-}
 
 
-class VirtualMemoryBlockSemantic {
+class VirtualMemoryBlockSemantic : CustomStringConvertible {
     var sizeBlock : Int
     var initialAddress: Int
     var intBlocks : SemiBlockMemory
     var voidBlocks : SemiBlockMemory
     var boolBlocks : SemiBlockMemory
     var doubleBlocks : SemiBlockMemory
+    var floatBlocks : SemiBlockMemory
+    var charBlocks : SemiBlockMemory
     
-    
-
     
     init(sizeBlock: Int, initialAddress: Int){
-        self.sizeBlock = sizeBlock
+        self.sizeBlock = sizeBlock / 6
         self.initialAddress = initialAddress
-        self.intBlocks = SemiBlockMemory(initialAddress: initialAddress, sizeSemiBlock: sizeBlock)
-        self.voidBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock), sizeSemiBlock: sizeBlock)
-        self.doubleBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock * 2), sizeSemiBlock: sizeBlock)
-        self.boolBlocks = SemiBlockMemory(initialAddress: initialAddress + (sizeBlock * 3), sizeSemiBlock: sizeBlock)
+        self.intBlocks = SemiBlockMemory(initialAddress: initialAddress, sizeSemiBlock: self.sizeBlock)
+        self.voidBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock), sizeSemiBlock: self.sizeBlock)
+        self.doubleBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 2), sizeSemiBlock: self.sizeBlock)
+        self.boolBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 3), sizeSemiBlock: self.sizeBlock)
+        self.floatBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 4), sizeSemiBlock: self.sizeBlock)
+        self.charBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 5), sizeSemiBlock: self.sizeBlock)
     }
     
     func newIntAddress(sizeToReserve: Int) -> Int {
@@ -95,6 +98,14 @@ class VirtualMemoryBlockSemantic {
         return self.boolBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
     }
     
+    func newFloatAddress(sizeToReserve: Int) -> Int {
+        return self.floatBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
+    }
+    
+    func newCharAddress(sizeToReserve: Int) -> Int {
+        return self.charBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
+    }
+    
     func newAddress(type: TypeSymbol, size : Int = 1) -> Int {
         switch type {
         case .void:
@@ -106,9 +117,9 @@ class VirtualMemoryBlockSemantic {
         case .boolean:
             return newBoolAddress(sizeToReserve: size)
         case .float:
-            break
+            return newFloatAddress(sizeToReserve: size)
         case .char:
-            break
+            return newCharAddress(sizeToReserve: size)
         case .double:
             return newDoubleAddress(sizeToReserve: size)
         case .Integer:
@@ -121,4 +132,67 @@ class VirtualMemoryBlockSemantic {
         return -1
     }
     
+    public var description: String {
+        return
+    """
+    ----------------------------------------------------
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    ____________________________________________________
+    | MEMORY SIZE:\n \(sizeBlock) Unidades
+    |
+    | INTEGERS:
+    | \(intBlocks.description)
+    |
+    | VOIDS:
+    | \(voidBlocks.description)
+    |
+    | DOUBLES:
+    | \(doubleBlocks.description)
+    |
+    | BOOLS:
+    | \(boolBlocks.description)
+    |
+    | FLOATS:
+    | \(floatBlocks.description)
+    |
+    | CHARS:
+    | \(charBlocks.description)
+    |___________________________________________________
+    ----------------------------------------------------
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    """
+    }
+    
+}
+
+
+class SemiBlockMemory : CustomStringConvertible {
+    var initialAddress, myAddress, lastAddress : Int
+    
+    init(initialAddress : Int, sizeSemiBlock: Int) {
+        self.initialAddress = initialAddress
+        self.myAddress = initialAddress
+        self.lastAddress = initialAddress + sizeSemiBlock - 1
+    }
+    
+    func newAddressInMemory(sizeToReserve: Int) -> Int{
+        let newAddress = self.myAddress
+        self.myAddress += sizeToReserve
+        return newAddress
+    }
+    
+    func size() -> Int {
+        return self.myAddress - self.initialAddress
+    }
+    
+    public var description: String {
+        return
+    """
+    _________________________________
+    |   INITIAL ADDRESS: \(initialAddress)
+    |   ACTUAL ADDRESS: \(myAddress)
+    |   LAST ADDRESS: \(lastAddress)
+    |________________________________
+    """
+    }
 }

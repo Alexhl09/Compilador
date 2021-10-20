@@ -1,0 +1,339 @@
+Memory: 
+ 
+------------------------------------------------------------------
+|   MEMORY SIZE:
+ 24000 Unidades
+|   SIZE PER BLOCK:
+ 6000 Unidades
+|   
+|   GLOBAL BLOCK:
+ ----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+____________________________________________________
+| MEMORY SIZE:
+ 1000 Unidades
+|
+| INTEGERS:
+| _________________________________
+|   INITIAL ADDRESS: 0
+|   ACTUAL ADDRESS: 12
+|   LAST ADDRESS: 999
+|________________________________
+|
+| VOIDS:
+| _________________________________
+|   INITIAL ADDRESS: 1000
+|   ACTUAL ADDRESS: 1004
+|   LAST ADDRESS: 1999
+|________________________________
+|
+| DOUBLES:
+| _________________________________
+|   INITIAL ADDRESS: 2000
+|   ACTUAL ADDRESS: 2000
+|   LAST ADDRESS: 2999
+|________________________________
+|
+| BOOLS:
+| _________________________________
+|   INITIAL ADDRESS: 3000
+|   ACTUAL ADDRESS: 3000
+|   LAST ADDRESS: 3999
+|________________________________
+|
+| FLOATS:
+| _________________________________
+|   INITIAL ADDRESS: 4000
+|   ACTUAL ADDRESS: 4000
+|   LAST ADDRESS: 4999
+|________________________________
+|
+| CHARS:
+| _________________________________
+|   INITIAL ADDRESS: 5000
+|   ACTUAL ADDRESS: 5000
+|   LAST ADDRESS: 5999
+|________________________________
+|___________________________________________________
+----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+|
+|   LOCAL BLOCK:
+ ----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+____________________________________________________
+| MEMORY SIZE:
+ 1000 Unidades
+|
+| INTEGERS:
+| _________________________________
+|   INITIAL ADDRESS: 6000
+|   ACTUAL ADDRESS: 6000
+|   LAST ADDRESS: 6999
+|________________________________
+|
+| VOIDS:
+| _________________________________
+|   INITIAL ADDRESS: 7000
+|   ACTUAL ADDRESS: 7000
+|   LAST ADDRESS: 7999
+|________________________________
+|
+| DOUBLES:
+| _________________________________
+|   INITIAL ADDRESS: 8000
+|   ACTUAL ADDRESS: 8000
+|   LAST ADDRESS: 8999
+|________________________________
+|
+| BOOLS:
+| _________________________________
+|   INITIAL ADDRESS: 9000
+|   ACTUAL ADDRESS: 9000
+|   LAST ADDRESS: 9999
+|________________________________
+|
+| FLOATS:
+| _________________________________
+|   INITIAL ADDRESS: 10000
+|   ACTUAL ADDRESS: 10000
+|   LAST ADDRESS: 10999
+|________________________________
+|
+| CHARS:
+| _________________________________
+|   INITIAL ADDRESS: 11000
+|   ACTUAL ADDRESS: 11000
+|   LAST ADDRESS: 11999
+|________________________________
+|___________________________________________________
+----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+|
+|   TEMP BLOCK:
+ ----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+____________________________________________________
+| MEMORY SIZE:
+ 1000 Unidades
+|
+| INTEGERS:
+| _________________________________
+|   INITIAL ADDRESS: 12000
+|   ACTUAL ADDRESS: 12006
+|   LAST ADDRESS: 12999
+|________________________________
+|
+| VOIDS:
+| _________________________________
+|   INITIAL ADDRESS: 13000
+|   ACTUAL ADDRESS: 13000
+|   LAST ADDRESS: 13999
+|________________________________
+|
+| DOUBLES:
+| _________________________________
+|   INITIAL ADDRESS: 14000
+|   ACTUAL ADDRESS: 14000
+|   LAST ADDRESS: 14999
+|________________________________
+|
+| BOOLS:
+| _________________________________
+|   INITIAL ADDRESS: 15000
+|   ACTUAL ADDRESS: 15004
+|   LAST ADDRESS: 15999
+|________________________________
+|
+| FLOATS:
+| _________________________________
+|   INITIAL ADDRESS: 16000
+|   ACTUAL ADDRESS: 16000
+|   LAST ADDRESS: 16999
+|________________________________
+|
+| CHARS:
+| _________________________________
+|   INITIAL ADDRESS: 17000
+|   ACTUAL ADDRESS: 17000
+|   LAST ADDRESS: 17999
+|________________________________
+|___________________________________________________
+----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+|
+|   CONSTANT BLOCK:
+ ----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+____________________________________________________
+| MEMORY SIZE:
+ 1000 Unidades
+|
+| INTEGERS:
+| _________________________________
+|   INITIAL ADDRESS: 18000
+|   ACTUAL ADDRESS: 18019
+|   LAST ADDRESS: 18999
+|________________________________
+|
+| VOIDS:
+| _________________________________
+|   INITIAL ADDRESS: 19000
+|   ACTUAL ADDRESS: 19000
+|   LAST ADDRESS: 19999
+|________________________________
+|
+| DOUBLES:
+| _________________________________
+|   INITIAL ADDRESS: 20000
+|   ACTUAL ADDRESS: 20000
+|   LAST ADDRESS: 20999
+|________________________________
+|
+| BOOLS:
+| _________________________________
+|   INITIAL ADDRESS: 21000
+|   ACTUAL ADDRESS: 21001
+|   LAST ADDRESS: 21999
+|________________________________
+|
+| FLOATS:
+| _________________________________
+|   INITIAL ADDRESS: 22000
+|   ACTUAL ADDRESS: 22000
+|   LAST ADDRESS: 22999
+|________________________________
+|
+| CHARS:
+| _________________________________
+|   INITIAL ADDRESS: 23000
+|   ACTUAL ADDRESS: 23000
+|   LAST ADDRESS: 23999
+|________________________________
+|___________________________________________________
+----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+------------------------------------------------------------------
+
+Cuadruplos:
+Op: assign		Address1: 18000		Address2: 		Result: 0
+Op: assign		Address1: 18001		Address2: 		Result: 1
+Op: assign		Address1: 18002		Address2: 		Result: 2
+Op: assign		Address1: 18003		Address2: 		Result: 3
+Op: assign		Address1: 18004		Address2: 		Result: 4
+Op: multiply		Address1: 0		Address2: 0		Result: 12000
+Op: minus		Address1: 12000		Address2: 4		Result: 12001
+Op: assign		Address1: 18005		Address2: 		Result: 6
+Op: assign		Address1: 18006		Address2: 		Result: 7
+Op: print		Address1: 		Address2: 		Result: 7
+Op: greaterThan		Address1: 6		Address2: 18007		Result: 15000
+Op: gotof		Address1: 15000		Address2: 		Result: 15
+Op: assign		Address1: 18008		Address2: 		Result: 8
+Op: print		Address1: 		Address2: 		Result: 7
+Op: goto		Address1: 		Address2: 		Result: 17
+Op: assign		Address1: 18009		Address2: 		Result: 9
+Op: print		Address1: 		Address2: 		Result: 7
+Op: equal		Address1: 18011		Address2: 		Result: 10
+Op: lessOrEqualThan		Address1: 12001		Address2: 18010		Result: 15001
+Op: gotof		Address1: 15001		Address2: 		Result: 23
+Op: sum		Address1: 10		Address2: 1		Result: 12002
+Op: equal		Address1: 12002		Address2: 		Result: 10
+Op: print		Address1: 		Address2: 		Result: 6
+Op: goto		Address1: 18		Address2: 		Result: 
+Op: greaterThan		Address1: 7		Address2: 18012		Result: 15002
+Op: gotof		Address1: 15002		Address2: 		Result: 28
+Op: print		Address1: 		Address2: 		Result: 0
+Op: print		Address1: 		Address2: 		Result: 1
+Op: greaterThan		Address1: 7		Address2: 18013		Result: 15003
+Op: gotof		Address1: 15003		Address2: 		Result: 32
+Op: sum		Address1: 18014		Address2: 18015		Result: 12003
+Op: goto		Address1: 		Address2: 		Result: 33
+Op: sum		Address1: 18016		Address2: 18017		Result: 12004
+Op: assign		Address1: 12004		Address2: 12003		Result: 12005
+Op: assign		Address1: 12005		Address2: 		Result: 7
+Op: print		Address1: 		Address2: 		Result: 7
+Op: assign		Address1: 21000		Address2: 		Result: 0
+Op: assign		Address1: 18018		Address2: 		Result: 11
+Op: print		Address1: 		Address2: 		Result: 0
+Op: print		Address1: 		Address2: 		Result: 0
+Op: print		Address1: 		Address2: 		Result: 0
+Op: print		Address1: 		Address2: 		Result: 0
+
+
+JumpStack:
+ ----top----
+
+----------
+
+Operators:
+ ----top----
+
+----------
+
+Operands:
+ ----top----
+
+----------
+
+Types:
+ ----top----
+
+----------
+
+Last SymbolTable:
+ [372183657614396850: 
+
+   |===================================
+   |     Identifier : x
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 1
+    =================================== 
+, 6337511285621254795: 
+
+   |===================================
+   |     Identifier : y
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 2
+    =================================== 
+, 7837406602836376318: 
+
+   |===================================
+   |     Identifier : z
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 4
+    =================================== 
+, 8154276155539126418: 
+
+   |===================================
+   |     Identifier : printArray
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 58
+    =================================== 
+, -8817570599206377202: 
+
+   |===================================
+   |     Identifier : doble
+   |     Kind : method
+   |     Type : integer
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 10
+    =================================== 
+]
