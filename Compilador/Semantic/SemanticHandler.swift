@@ -49,7 +49,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
-        let s = Symbol(lex.line, id, kind, type, constant, array, false)
+        let s = Symbol(lex.line, id, kind, type, constant, array, false, address: self.memory.newLocalAdress(type: type))
         
         if (!symbolTable.insertInHashTable(s)){
             delegate?.sendVariableRepeated(id: id as String)
@@ -265,9 +265,14 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     
-    func addForEachCompleteRange(id: String){
+    func addForEachRange(range: String, id: String){
         self.jumpStack.push(self.quadruples.count)
-        self.operationStack.operators.push(.lessOrEqualThan)
+        
+        if(range == "..."){
+            self.operationStack.operators.push(.lessOrEqualThan)
+        }else{
+            self.operationStack.operators.push(.lessThan)
+        }
         
         self.addQuadruple()
        
@@ -361,6 +366,22 @@ class SemanticHandler : CustomStringConvertible {
         self.quadruples.append(generatedQuadruple)
 //        self.operationStack.operands.push(rightOperand)
 //        self.operationStack.types.push(rightType)
+    }
+    
+    func readID(_ id: NSString){
+        self.addOperator(op: .read)
+        
+        self.addIDAsQuadruple(id)
+        
+        if(!operationStack.operators.isEmpty){
+            let op : Operator = operationStack.operators.pop()!
+            
+            let rightOperand : String = operationStack.operands.pop() ?? ""
+            let rightType : TypeSymbol = operationStack.types.pop() ?? .void
+            
+            let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
+            self.quadruples.append(generatedQuadruple)
+        }
     }
 }
 

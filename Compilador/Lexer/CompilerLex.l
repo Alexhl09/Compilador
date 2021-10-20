@@ -87,8 +87,12 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 ":"          {return CompilerParser.COLON}
 "?"          {return CompilerParser.QM}
 "."          {return CompilerParser.DOT}
-"..."          {return CompilerParser.CPTRG}
-"..<"          {return CompilerParser.INCPTRG}
+"..."          {
+    value = NSString(string:text)
+    return CompilerParser.CPTRG}
+"..<"          {
+    value = NSString(string:text)
+    return CompilerParser.INCPTRG}
 {CteF}   {
     value = NSNumber.init(value:Float(text) ?? 0)
     return CompilerParser.CTEF}

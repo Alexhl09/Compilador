@@ -1,10 +1,11 @@
 %token <NSNumber> NUMBER
-%token <NSString> ID CTES
+%token <NSString> ID CTES CPTRG INCPTRG
 %token VAR ELSE PRINT IF COMMA EQ DIF LT
-GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW CPTRG INCPTRG AND OR QM NLL NOT DOT FUNC PGR
+GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW AND OR QM NLL NOT DOT FUNC PGR
 %token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
 %type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
+%type <NSString> range
 
 
 
@@ -137,7 +138,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     cuerpoLista : vars
                 | asignar
                 | llamada SEMICOLON
-                | leer
+                | leer SEMICOLON
                 | escribir SEMICOLON
                 | condicion
                 | cicloWhile
@@ -203,9 +204,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    }
    ;
    
-   range : CPTRG | INCPTRG {
-       
-   };
+   range : CPTRG {$$ = $1} | INCPTRG {$$ = $1};
    
    cicloForEach : FOR startNode VAR ID COLON ID RPAREN cuerpo
                 | FOR startNode declareVarCiclo RPAREN cuerpo {semantic.endForEachRange()}
@@ -216,8 +215,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             semantic.insertSymbolToST($2, false, false, .integer);
             semantic.addOperator(op:.equal)
             semantic.saveValueVariable(id : $2 as String)
-            semantic.addForEachCompleteRange(id : $2 as String);
-        };
+            semantic.addForEachRange(range: $5 as String, id : $2 as String);
+        }
+        ;
    
    cicloForIterador : FOR startNode vars cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
                     | FOR startNode SEMICOLON expresion RPAREN cuerpo;
@@ -346,6 +346,13 @@ factor : CTEI
        
        
 booleanValue : T {$$ = $1}| F {$$ = $1};
+
+
+leer : INPUT LPAREN ID RPAREN
+    {
+        semantic.readID($3)
+    }
+;
            
 //   lvalue : ID
 //           | ID LSBRAKE expresion RSBRAKE
