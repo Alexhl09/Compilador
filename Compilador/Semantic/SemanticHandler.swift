@@ -43,9 +43,7 @@ class SemanticHandler : CustomStringConvertible {
     Operators:\n \(operationStack.operators.description)
     
     Operands:\n \(operationStack.operands.description)
-    
-    Types:\n \(operationStack.types.description)
-    
+        
     Last SymbolTable:\n \(symbolTable.description)
     
     Constants: \n \(constInfo)
@@ -80,13 +78,11 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func addOperand(symbol : Symbol){
-        operationStack.operands.push("\(symbol.address)")
-        operationStack.types.push(symbol.type)
+        operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
     }
     
     func addOperandByMemory(memoryAddress: Int, type: TypeSymbol) {
-        operationStack.operands.push("\(memoryAddress)")
-        operationStack.types.push(type)
+        operationStack.addOperand(operand: "\(memoryAddress)", type: type)
     }
     
     func addQuadruple() {
@@ -95,12 +91,9 @@ class SemanticHandler : CustomStringConvertible {
             
             let op : Operator = operationStack.operators.pop()!
 
-            let rightOperand : String = operationStack.operands.pop() ?? ""
-            let rightType : TypeSymbol = operationStack.types.pop() ?? .void
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
     
-            
-            let leftOperand  : String = operationStack.operands.pop() ?? ""
-            let leftType : TypeSymbol = operationStack.types.pop() ?? .void
+            let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
     
             
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
@@ -112,9 +105,7 @@ class SemanticHandler : CustomStringConvertible {
             let tempAddress = memory.newTemporalAddress(type: resultType)
            
             self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "\(tempAddress)"))
-            self.operationStack.operands.push("\(tempAddress)")
-            self.operationStack.types.push(resultType)
-
+            self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
         }
         
     }
@@ -217,8 +208,7 @@ class SemanticHandler : CustomStringConvertible {
     func addQuadrupleWithTernaryOperator(){        
         if(operationStack.operands.size() >= 1){
             
-            let rightOperand : String = operationStack.operands.pop() ?? ""
-            let rightType : TypeSymbol = operationStack.types.pop() ?? .void
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("",.void)
     
             if(rightType != .boolean){
                 print("ERROR type mismatch ternary")
@@ -264,12 +254,8 @@ class SemanticHandler : CustomStringConvertible {
         if(self.operationStack.operands.size() >= 2){
             let op : Operator = .assign
 
-            let rightOperand : String = operationStack.operands.pop() ?? ""
-            let rightType = operationStack.types.pop() ?? .void
-
-            
-            let leftOperand  : String = operationStack.operands.pop() ?? ""
-            let leftType = operationStack.types.pop() ?? .void
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
             
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
                 print("ERROR")
@@ -280,8 +266,7 @@ class SemanticHandler : CustomStringConvertible {
             let tempAddress = memory.newTemporalAddress(type: resultType)
             
             self.quadruples.append(Quadruple(argument1: rightOperand, argument2: leftOperand, op: op, result: "\(tempAddress)"))
-            self.operationStack.operands.push("\(tempAddress)")
-            self.operationStack.types.push(resultType)
+            self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
         }
     }
     
@@ -289,11 +274,15 @@ class SemanticHandler : CustomStringConvertible {
         // IF el ultimo operando es de tipo boolean sino ERROR
         // Agregar cuadruplo con (GOTOF, resultado del pop, _, _) y agregar a pila de saltos una ubicacion antes de la acutual (num de quadruplos - 1)
         //
-        if (operationStack.types.pop() != TypeSymbol.boolean) {
+        
+        let (result,t) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        
+        guard t == TypeSymbol.boolean  else {
             print("ERROR")
             delegate?.sendTypeMismatch()
+            return
         }
-        let result : String = operationStack.operands.pop() ?? ""
+        
         self.quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         print("Inserted Quadruple \(quadruples.count)")
         jumpStack.push(quadruples.count - 1)
@@ -329,8 +318,7 @@ class SemanticHandler : CustomStringConvertible {
     
     func addPrint(){
         if(!operationStack.operands.isEmpty){
-            let operand = operationStack.operands.pop()
-            let _ = operationStack.types.pop()
+            let (operand, _) = operationStack.getLastOperand() ?? ("", .void)
             let op = operationStack.operators.pop() ?? .print
             self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
         }
@@ -348,13 +336,14 @@ class SemanticHandler : CustomStringConvertible {
         
         self.addQuadruple()
        
-        if (operationStack.types.pop() != TypeSymbol.boolean) {
+        let (result, t) = operationStack.getLastOperand() ?? ("", .void)
+        
+        guard (t == TypeSymbol.boolean) else {
             print("ERROR")
             delegate?.sendTypeMismatch()
+            return
         }
-        
-        let result : String = operationStack.operands.pop() ?? ""
-        
+                
         self.quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         self.jumpStack.push(self.quadruples.count - 1)
         
@@ -362,8 +351,8 @@ class SemanticHandler : CustomStringConvertible {
         
         self.operationStack.operators.push(.sum)
         self.addOperand(symbol: self.symbolTable.lookup(id)!)
-        self.operationStack.types.push(.integer)
-        self.operationStack.operands.push("1")
+        
+        addConstantInteger(1)
         self.addQuadruple()
         self.addOperator(op: .equal)
         self.saveValueVariable(id: id)
@@ -398,7 +387,7 @@ class SemanticHandler : CustomStringConvertible {
         
         if(!symbol.assigned){
             symbol.assigned = true
-            symbol.type = operationStack.types.peek() ?? .void
+            symbol.type = operationStack.operands.peek()?.1 ?? .void
             
             switch symbol.type {
                 case .integer:
@@ -423,12 +412,8 @@ class SemanticHandler : CustomStringConvertible {
 
         let op : Operator = operationStack.operators.pop()!
 
-        let rightOperand : String = operationStack.operands.pop() ?? ""
-        let rightType : TypeSymbol = operationStack.types.pop() ?? .void
-
-        
-        let leftOperand  : String = operationStack.operands.pop() ?? ""
-        let leftType : TypeSymbol = operationStack.types.pop() ?? .void
+        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
         
         guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
             print("ERROR")
@@ -448,8 +433,7 @@ class SemanticHandler : CustomStringConvertible {
         if(!operationStack.operators.isEmpty){
             let op : Operator = operationStack.operators.pop()!
             
-            let rightOperand : String = operationStack.operands.pop() ?? ""
-            let rightType : TypeSymbol = operationStack.types.pop() ?? .void
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
             
             let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)

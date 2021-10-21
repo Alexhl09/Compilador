@@ -9,17 +9,19 @@ import Foundation
 
 struct OperatorStack {
     var operators : Stack<Operator>
-    var types : Stack<TypeSymbol>
-    var operands : Stack<String>
+    var operands : Stack<(String, TypeSymbol)>
     
     init() {
         operators = []
         operands = []
-        types = []
     }
     
     mutating func addOperand(operand : String, type : TypeSymbol){
-        operands.push(operand)
+        operands.push((operand, type))
+    }
+    
+    mutating func getLastOperand() -> (String, TypeSymbol)? {
+        return self.operands.pop()
     }
     
     mutating func addOperator(op : Operator){
