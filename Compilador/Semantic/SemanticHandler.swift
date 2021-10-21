@@ -22,12 +22,16 @@ class SemanticHandler : CustomStringConvertible {
     var operationStack : OperatorStack = OperatorStack()
     var numTemp : Int = 0
     var numConstantes : Int = 0
+    var constants: [String: Int] = [:]
+    var functionAsMainThread : String? = nil
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     
     public var description: String {
         let q = quadruples.reduce("", { res, q in
-            res.appending("Op: \(q.op ?? .noNil)\t\tAddress1: \(q.argument1 ?? "")\t\tAddress2: \(q.argument2 ?? "")\t\tResult: \(q.result ?? "")\n")
+            res.appending("Op: \(q.op )\t\tAddress1: \(q.argument1 ?? "")\t\tAddress2: \(q.argument2 ?? "")\t\tResult: \(q.result ?? "")\n")
         })
+        
+        let constInfo = constants.description
         return
     """
     Memory: \n \(memory.description)
@@ -43,6 +47,8 @@ class SemanticHandler : CustomStringConvertible {
     Types:\n \(operationStack.types.description)
     
     Last SymbolTable:\n \(symbolTable.description)
+    
+    Constants: \n \(constInfo)
     
     """
         
@@ -118,11 +124,43 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func addConstantInteger(_ number :NSNumber){
-        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .integer), type: .integer)
+        let integerValue = number.intValue
+        
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(integerValue)") {
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .integer)
+        }else{
+            // Pedir nueva memoria
+            let newAddress = memory.newConstantAddress(type: .integer)
+            self.saveAddress(constant: integerValue, index: newAddress)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .integer)
+        }
     }
     
     func addConstantFloat(_ number : NSNumber){
-        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .double), type: .double)
+        let floatValue = number.floatValue
+        
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(floatValue)") {
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .float)
+        }else{
+            // Pedir nueva memoria
+            let newAddress = memory.newConstantAddress(type: .float)
+            self.saveAddress(constant: floatValue, index: newAddress)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .float)
+        }
+        
+    }
+    
+    func addConstantDouble(_ number : NSNumber){
+        let doubleValue = number.doubleValue
+        
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(doubleValue)") {
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .double)
+        }else{
+            // Pedir nueva memoria
+            let newAddress = memory.newConstantAddress(type: .double)
+            self.saveAddress(constant: doubleValue, index: newAddress)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .double)
+        }
     }
     
     func addConstantString(_ string : NSString){
@@ -130,8 +168,42 @@ class SemanticHandler : CustomStringConvertible {
         numConstantes = numConstantes + 1
     }
     
+    func getConstantAddress(index: String) -> Int? {
+        return self.constants[index]
+    }
+    
     func addConstantBool(_ number : NSNumber){
-        self.addOperandByMemory(memoryAddress: memory.newConstantAddress(type: .boolean), type: .boolean)
+        let boolValue = number.boolValue
+        
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(boolValue)") {
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
+        }else{
+            // Pedir nueva memoria
+            let newAddress = memory.newConstantAddress(type: .boolean)
+            self.saveAddress(constant: boolValue, index: newAddress)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .boolean)
+        }
+    }
+    
+    func addConstantChar(_ character : NSString){
+        let charValue = character.character(at: 0)
+        
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
+        }else{
+            // Pedir nueva memoria
+            let newAddress = memory.newConstantAddress(type: .boolean)
+            self.saveAddress(constant: charValue, index: newAddress)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .boolean)
+        }
+    }
+    
+    func saveAddress(constant: Any, index: Int) {
+        self.constants["\(constant)"] = index
+    }
+    
+    func lookUpAddressConstantTable(value: String) -> Int? {
+        return self.constants[value]
     }
     
     func addIDAsQuadruple(_ id : NSString){

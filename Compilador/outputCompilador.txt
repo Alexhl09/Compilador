@@ -172,7 +172,7 @@ ____________________________________________________
 | INTEGERS:
 | _________________________________
 |   INITIAL ADDRESS: 18000
-|   ACTUAL ADDRESS: 18020
+|   ACTUAL ADDRESS: 18010
 |   LAST ADDRESS: 18999
 |________________________________
 |
@@ -219,43 +219,43 @@ Cuadruplos:
 Op: assign		Address1: 18000		Address2: 		Result: 0
 Op: assign		Address1: 18001		Address2: 		Result: 1
 Op: assign		Address1: 18002		Address2: 		Result: 2
-Op: assign		Address1: 18003		Address2: 		Result: 3
-Op: assign		Address1: 18004		Address2: 		Result: 4
+Op: assign		Address1: 18000		Address2: 		Result: 3
+Op: assign		Address1: 18003		Address2: 		Result: 4
 Op: multiply		Address1: 6000		Address2: 6000		Result: 12000
 Op: minus		Address1: 12000		Address2: 4		Result: 12001
-Op: assign		Address1: 18005		Address2: 		Result: 6
+Op: assign		Address1: 18004		Address2: 		Result: 6
 Op: read		Address1: 		Address2: 		Result: 6
-Op: assign		Address1: 18006		Address2: 		Result: 7
-Op: assign		Address1: 18007		Address2: 		Result: 8
+Op: assign		Address1: 18000		Address2: 		Result: 7
+Op: assign		Address1: 18000		Address2: 		Result: 8
 Op: print		Address1: 		Address2: 		Result: 8
-Op: greaterThan		Address1: 7		Address2: 18008		Result: 15000
+Op: greaterThan		Address1: 7		Address2: 18000		Result: 15000
 Op: gotof		Address1: 15000		Address2: 		Result: 17
-Op: assign		Address1: 18009		Address2: 		Result: 9
+Op: assign		Address1: 18003		Address2: 		Result: 9
 Op: print		Address1: 		Address2: 		Result: 8
 Op: goto		Address1: 		Address2: 		Result: 19
-Op: assign		Address1: 18010		Address2: 		Result: 10
+Op: assign		Address1: 18003		Address2: 		Result: 10
 Op: print		Address1: 		Address2: 		Result: 8
-Op: equal		Address1: 18012		Address2: 		Result: 11
-Op: lessOrEqualThan		Address1: 12001		Address2: 18011		Result: 15001
+Op: equal		Address1: 18006		Address2: 		Result: 11
+Op: lessOrEqualThan		Address1: 12001		Address2: 18005		Result: 15001
 Op: gotof		Address1: 15001		Address2: 		Result: 25
 Op: sum		Address1: 11		Address2: 1		Result: 12002
 Op: equal		Address1: 12002		Address2: 		Result: 11
 Op: print		Address1: 		Address2: 		Result: 7
 Op: goto		Address1: 20		Address2: 		Result: 
-Op: greaterThan		Address1: 8		Address2: 18013		Result: 15002
+Op: greaterThan		Address1: 8		Address2: 18000		Result: 15002
 Op: gotof		Address1: 15002		Address2: 		Result: 30
 Op: print		Address1: 		Address2: 		Result: 0
 Op: print		Address1: 		Address2: 		Result: 1
-Op: greaterThan		Address1: 8		Address2: 18014		Result: 15003
+Op: greaterThan		Address1: 8		Address2: 18000		Result: 15003
 Op: gotof		Address1: 15003		Address2: 		Result: 34
-Op: sum		Address1: 18015		Address2: 18016		Result: 12003
+Op: sum		Address1: 18000		Address2: 18007		Result: 12003
 Op: goto		Address1: 		Address2: 		Result: 35
-Op: sum		Address1: 18017		Address2: 18018		Result: 12004
+Op: sum		Address1: 18007		Address2: 18008		Result: 12004
 Op: assign		Address1: 12004		Address2: 12003		Result: 12005
 Op: assign		Address1: 12005		Address2: 		Result: 8
 Op: print		Address1: 		Address2: 		Result: 8
 Op: assign		Address1: 21000		Address2: 		Result: 7011
-Op: assign		Address1: 18019		Address2: 		Result: 12
+Op: assign		Address1: 18009		Address2: 		Result: 12
 Op: print		Address1: 		Address2: 		Result: 0
 Op: print		Address1: 		Address2: 		Result: 7011
 Op: print		Address1: 		Address2: 		Result: 0
@@ -283,7 +283,7 @@ Types:
 ----------
 
 Last SymbolTable:
- [2738808329601599893: 
+ [-2276547085682627496: 
 
    |===================================
    |     Identifier : z
@@ -294,7 +294,7 @@ Last SymbolTable:
    |     Assigned : true
    |     Line : 4
     =================================== 
-, -239544105692770140: 
+, 8195230249641747930: 
 
    |===================================
    |     Identifier : doble
@@ -305,29 +305,7 @@ Last SymbolTable:
    |     Assigned : false
    |     Line : 10
     =================================== 
-, 1116576450243840621: 
-
-   |===================================
-   |     Identifier : y
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 2
-    =================================== 
-, 9074763882983177193: 
-
-   |===================================
-   |     Identifier : x
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 1
-    =================================== 
-, -5922927621235870444: 
+, 3369797439010356150: 
 
    |===================================
    |     Identifier : printArray
@@ -338,4 +316,29 @@ Last SymbolTable:
    |     Assigned : false
    |     Line : 63
     =================================== 
+, 5425896964759936750: 
+
+   |===================================
+   |     Identifier : y
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 2
+    =================================== 
+, -7153167895603998313: 
+
+   |===================================
+   |     Identifier : x
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 1
+    =================================== 
 ]
+
+Constants: 
+ ["4": 18008, "2": 18007, "10": 18000, "1": 18003, "0": 18005, "9": 18006, "6": 18009, "true": 21000, "30": 18002, "200": 18004, "20": 18001]
