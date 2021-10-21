@@ -11,6 +11,8 @@ func int doble(int A) {
 func printArray(int A) {
     var a;
     var o;
+    var x = 10.3;
+    var p = "a";
     
     o = 200;
     
@@ -65,10 +67,10 @@ main () {
  // var arr[6] = { 12, 11, 13, 5, 6, 7 };
     var arr = true;
     var arr_size = 6;
-    print("Given array is");
+    print("a");
     print(arr);
     //const int sorted = mergeSort(arr, 0, arr_size - 1);
-    print("Sorted array is");
+    print("a");
     print(arr);
 }
     

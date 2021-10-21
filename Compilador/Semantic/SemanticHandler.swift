@@ -189,12 +189,12 @@ class SemanticHandler : CustomStringConvertible {
         let charValue = character.character(at: 0)
         
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
         }else{
             // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .boolean)
+            let newAddress = memory.newConstantAddress(type: .char)
             self.saveAddress(constant: charValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .boolean)
+            self.addOperandByMemory(memoryAddress: newAddress, type: .char)
         }
     }
     
@@ -343,6 +343,14 @@ class SemanticHandler : CustomStringConvertible {
     
     
     func addForEachRange(range: String, id: String){
+        
+        // Save id to iterate in st
+        self.insertSymbolToST(id as NSString, false, false, .integer);
+        // assign
+        self.addOperator(op:.assign)
+        // to id the last factor
+        self.saveValueVariable(id : id)
+        
         self.jumpStack.push(self.quadruples.count)
         
         if(range == "..."){
@@ -366,22 +374,30 @@ class SemanticHandler : CustomStringConvertible {
         
         // i++
         
-        self.operationStack.operators.push(.sum)
-        self.addOperand(symbol: self.symbolTable.lookup(id)!)
-        
-        addConstantInteger(1)
-        self.addQuadruple()
-        self.addOperator(op: .equal)
-        self.saveValueVariable(id: id)
+       
         
     }
     
-    func endForEachRange(){
+    func plusplusOneRange(id: String){
+        
+        self.operationStack.operators.push(.sum)
+        self.addOperand(symbol: self.symbolTable.lookup(id)!)
+        self.addConstantInteger(1)
+        self.addQuadruple()
+        self.addOperator(op: .assign)
+        self.saveValueVariable(id: id)
+    }
+    
+    func endForEachRange(id: NSString){
+        
+        self.plusplusOneRange(id: id as String)
         
         guard let indexFalse = self.jumpStack.pop() else { return  }
         guard let indexGoto = self.jumpStack.pop() else { return  }
         
         // SUM 1
+        
+       
         
         self.fillQuadruple(index: indexFalse, value: "\(quadruples.count + 1)")
         self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: "\(indexGoto)"))

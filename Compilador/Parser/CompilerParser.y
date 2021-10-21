@@ -1,11 +1,11 @@
 %token <NSNumber> NUMBER
-%token <NSString> ID CTES CPTRG INCPTRG
+%token <NSString> ID CTES CTEC CPTRG INCPTRG
 %token VAR ELSE PRINT IF COMMA EQ DIF LT
 GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW AND OR QM NLL NOT DOT FUNC PGR
 %token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
 %type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
-%type <NSString> range
+%type <NSString> range declareVarCiclo
 
 
 
@@ -210,16 +210,18 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    range : CPTRG {$$ = $1} | INCPTRG {$$ = $1};
    
-   cicloForEach : FOR startNode VAR ID COLON ID RPAREN cuerpo
-                | FOR startNode declareVarCiclo RPAREN cuerpo {semantic.endForEachRange()}
-                    ;
+   cicloForEach : forEach popNode;
+   
+   forEach : FOR startNode VAR ID COLON ID RPAREN cuerpo
+            | FOR startNode declareVarCiclo RPAREN endForEach {semantic.endForEachRange(id: $3)}
+            ;
+                
+   endForEach : LBRACE cuerpoListaA;
 
    declareVarCiclo : INT ID COLON factor range factor
         {
-            semantic.insertSymbolToST($2, false, false, .integer);
-            semantic.addOperator(op:.equal)
-            semantic.saveValueVariable(id : $2 as String)
             semantic.addForEachRange(range: $5 as String, id : $2 as String);
+            $$ = $2;
         }
         ;
    
@@ -343,6 +345,10 @@ factor : CTEI
        | ID
        {
            semantic.addIDAsQuadruple($1)
+       }
+       | CTEC
+       {
+           semantic.addConstantChar($1)
        }
        | ID LPAREN expresion RPAREN
        | LPAREN megaExpression RPAREN

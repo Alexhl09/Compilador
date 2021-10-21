@@ -8,6 +8,7 @@ id ({letter}|_)({letter}|{digit}|_)*
 CteI {digit}+
 CteF {digit}+(\.{digit}+)
 CteS \"+[A-Za-z0-9 \\^_\-%$()&*@#.']*\"+
+CteC \"+[A-Za-z0-9 \\^_\-%$()&*@#.']\"+
 SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 
 %%
@@ -97,9 +98,11 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     value = NSNumber.init(value:Float(text) ?? 0)
     return CompilerParser.CTEF}
 {CteI}   {
-
     value = NSNumber.init(value:Int(text) ?? 0)
     return CompilerParser.CTEI}
+{CteC}  {
+    value = NSString(string:text)
+    return CompilerParser.CTEC}
 {CteS}  {
     value = NSString(string:text)
     return CompilerParser.CTES}
