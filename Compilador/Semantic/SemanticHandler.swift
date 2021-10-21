@@ -52,6 +52,11 @@ class SemanticHandler : CustomStringConvertible {
         
     }
     
+    init() {
+        self.jumpStack.push(self.quadruples.count)
+        self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+    }
+    
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
         let s = Symbol(lex.line, id, kind, type, constant, array, false, address: self.memory.newLocalAdress(type: type))
         
@@ -199,6 +204,13 @@ class SemanticHandler : CustomStringConvertible {
     
     func lookUpAddressConstantTable(value: String) -> Int? {
         return self.constants[value]
+    }
+    
+    func foundMain(){
+        let indexMain = jumpStack.pop() ?? 0
+        
+        fillQuadruple(index: indexMain, value: "\(self.quadruples.count)")
+        
     }
     
     func addIDAsQuadruple(_ id : NSString){

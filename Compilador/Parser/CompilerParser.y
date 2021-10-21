@@ -67,11 +67,15 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 
 %%
     
-    programa : programaPrimo funciones MAIN startNode RPAREN cuerpo
+    programa : programaPrimo funciones startMain startNode RPAREN cuerpo
              | funciones MAIN startNode RPAREN cuerpo
              | MAIN startNode RPAREN cuerpo;
              
-             programaPrimo : vars programaPrimo
+    startMain : MAIN {
+        semantic.insertSymbolToST("main", true, false, .void, .method)
+        semantic.foundMain()};
+             
+    programaPrimo : vars programaPrimo
              | vars ;
            
    tipoCompuesto : INTEGERCLASS {$$ = $1} |
