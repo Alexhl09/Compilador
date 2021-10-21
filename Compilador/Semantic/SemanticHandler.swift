@@ -27,8 +27,8 @@ class SemanticHandler : CustomStringConvertible {
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     
     public var description: String {
-        let q = quadruples.reduce("", { res, q in
-            res.appending("Op: \(q.op )\t\tAddress1: \(q.argument1 ?? "")\t\tAddress2: \(q.argument2 ?? "")\t\tResult: \(q.result ?? "")\n")
+        let q = quadruples.enumerated().reduce("", { res, q in
+            res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "\tAddress1: \(q.element.argument1 ?? "")\t\tAddress2: \(q.element.argument2 ?? "")\tResult: \(q.element.result ?? "")\n")
         })
         
         let constInfo = constants.description
@@ -91,9 +91,9 @@ class SemanticHandler : CustomStringConvertible {
             
             let op : Operator = operationStack.operators.pop()!
 
-            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand()!
     
-            let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand()!
     
             
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
@@ -112,6 +112,10 @@ class SemanticHandler : CustomStringConvertible {
     
     func newGlobalVariable(s : TypeSymbol) -> Int {
         return memory.newGlobalAddress(type: s)
+    }
+    
+    func newLocalVariable(t: TypeSymbol) -> Int {
+        return memory.newLocalAdress(type: t)
     }
     
     func addConstantInteger(_ number :NSNumber){
@@ -201,7 +205,8 @@ class SemanticHandler : CustomStringConvertible {
         let identifier : String = String(id)
         guard let operand = self.symbolTable.lookup(identifier) else {
             delegate?.sendUndeclareVariable(id: id)
-            return}
+            return
+        }
         self.addOperand(symbol: operand)
     }
     
@@ -366,8 +371,8 @@ class SemanticHandler : CustomStringConvertible {
         
         // SUM 1
         
-        self.fillQuadruple(index: indexFalse, value: "\(quadruples.count)")
-        self.quadruples.append(Quadruple(argument1: "\(indexGoto)", argument2: nil, op: .goto, result: nil))
+        self.fillQuadruple(index: indexFalse, value: "\(quadruples.count + 1)")
+        self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: "\(indexGoto)"))
         
     }
     
@@ -388,14 +393,19 @@ class SemanticHandler : CustomStringConvertible {
         if(!symbol.assigned){
             symbol.assigned = true
             symbol.type = operationStack.operands.peek()?.1 ?? .void
-            
-            switch symbol.type {
-                case .integer:
-                    let beforeAddres = symbol.address
-                symbol.address = newGlobalVariable(s: .integer)
-                default:
-                break
+            let beforeAddres = symbol.address
+            if(symbolTable.onlyOneNode()){
+                symbol.address = newGlobalVariable(s: symbol.type)
+            }else{
+                symbol.address = newLocalVariable(t: symbol.type)
             }
+//            switch symbol.type {
+//                case .integer:
+//
+//                case
+//                default:
+//                break
+//            }
         }
         
         self.addOperand(symbol: symbol)

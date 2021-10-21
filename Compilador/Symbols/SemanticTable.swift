@@ -23,6 +23,56 @@ enum Operator : Int {
     case noNil
 }
 
+extension Operator : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .sum:
+            return "+"
+        case .minus:
+            return "-"
+        case .multiply:
+            return "*"
+        case .division:
+            return "/"
+        case .modulo:
+            return "%"
+        case .intDivision:
+            return "div"
+        case .greaterThan:
+            return ">"
+        case .lessThan:
+            return "<"
+        case .greaterOrEqualThan:
+            return ">="
+        case .lessOrEqualThan:
+            return "<="
+        case .equal:
+            return "=="
+        case .different:
+            return "!="
+        case .and:
+            return "&&"
+        case .or:
+            return "||"
+        case .assign:
+            return "="
+        case .goto:
+            return "GOTO"
+        case .gotof:
+            return "GOTOF"
+        case .gotot:
+            return "GOTOT"
+        case .read:
+            return "READ"
+        case .print:
+            return "PRINT"
+        case .noNil:
+            return "noNil"
+        }
+    }
+}
+
+
 struct SemCubeKey : Hashable {
     let op1 : TypeSymbol
     let op2 : TypeSymbol?

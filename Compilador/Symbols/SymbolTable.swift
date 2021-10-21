@@ -57,6 +57,7 @@ extension Symbol : CustomStringConvertible {
        |     Array : \(array)
        |     Assigned : \(assigned)
        |     Line : \(lineNumber)
+       |     Address : \(address)
         =================================== \n
     """
     }

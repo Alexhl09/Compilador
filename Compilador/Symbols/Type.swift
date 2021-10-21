@@ -19,3 +19,4 @@ enum TypeSymbol : Int {
     case String
     case ID
 }
+
