@@ -98,6 +98,7 @@
 		A9955AA6271A119B00A5BC43 /* SegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentType.swift; sourceTree = "<group>"; };
 		A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMemorySemantic.swift; sourceTree = "<group>"; };
 		A9955AC8271FC28100A5BC43 /* WriteFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteFile.swift; sourceTree = "<group>"; };
+		A9955ADD2724920700A5BC43 /* outputCompilador.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outputCompilador.txt; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
@@ -132,6 +133,7 @@
 		A930EA1226FFB9E10062BE51 /* Compilador */ = {
 			isa = PBXGroup;
 			children = (
+				A9955ADD2724920700A5BC43 /* outputCompilador.txt */,
 				A9955AA1271A0ED100A5BC43 /* VirtualMachine */,
 				A990DEA327162F2700C94528 /* Semantic */,
 				A990DEA02715596700C94528 /* Cuadruples */,

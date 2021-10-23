@@ -68,14 +68,14 @@ ____________________________________________________
 | INTEGERS:
 | _________________________________
 |   INITIAL ADDRESS: 6000
-|   ACTUAL ADDRESS: 6014
+|   ACTUAL ADDRESS: 6000
 |   LAST ADDRESS: 6999
 |________________________________
 |
 | VOIDS:
 | _________________________________
 |   INITIAL ADDRESS: 7000
-|   ACTUAL ADDRESS: 7016
+|   ACTUAL ADDRESS: 7000
 |   LAST ADDRESS: 7999
 |________________________________
 |
@@ -89,21 +89,21 @@ ____________________________________________________
 | BOOLS:
 | _________________________________
 |   INITIAL ADDRESS: 9000
-|   ACTUAL ADDRESS: 9001
+|   ACTUAL ADDRESS: 9000
 |   LAST ADDRESS: 9999
 |________________________________
 |
 | FLOATS:
 | _________________________________
 |   INITIAL ADDRESS: 10000
-|   ACTUAL ADDRESS: 10001
+|   ACTUAL ADDRESS: 10000
 |   LAST ADDRESS: 10999
 |________________________________
 |
 | CHARS:
 | _________________________________
 |   INITIAL ADDRESS: 11000
-|   ACTUAL ADDRESS: 11001
+|   ACTUAL ADDRESS: 11000
 |   LAST ADDRESS: 11999
 |________________________________
 |___________________________________________________
@@ -120,7 +120,7 @@ ____________________________________________________
 | INTEGERS:
 | _________________________________
 |   INITIAL ADDRESS: 12000
-|   ACTUAL ADDRESS: 12006
+|   ACTUAL ADDRESS: 12000
 |   LAST ADDRESS: 12999
 |________________________________
 |
@@ -141,7 +141,7 @@ ____________________________________________________
 | BOOLS:
 | _________________________________
 |   INITIAL ADDRESS: 15000
-|   ACTUAL ADDRESS: 15004
+|   ACTUAL ADDRESS: 15000
 |   LAST ADDRESS: 15999
 |________________________________
 |
@@ -216,53 +216,58 @@ ____________________________________________________
 ------------------------------------------------------------------
 
 Cuadruplos:
-[0] - Op: GOTO      	Address1: 		Address2: 	Result: 41
+[0] - Op: GOTO      	Address1: 		Address2: 	Result: 45
 [1] - Op: =         	Address1: 18000		Address2: 	Result: 0
 [2] - Op: =         	Address1: 18001		Address2: 	Result: 1
 [3] - Op: =         	Address1: 18002		Address2: 	Result: 2
-[4] - Op: =         	Address1: 18000		Address2: 	Result: 6002
-[5] - Op: =         	Address1: 18003		Address2: 	Result: 6003
-[6] - Op: *         	Address1: 6000		Address2: 6000	Result: 12000
-[7] - Op: -         	Address1: 12000		Address2: 6003	Result: 12001
-[8] - Op: =         	Address1: 22000		Address2: 	Result: 10000
-[9] - Op: =         	Address1: 23000		Address2: 	Result: 11000
-[10] - Op: =        	Address1: 18004		Address2: 	Result: 6006
-[11] - Op: READ     	Address1: 		Address2: 	Result: 6006
-[12] - Op: =        	Address1: 18000		Address2: 	Result: 6007
-[13] - Op: =        	Address1: 18000		Address2: 	Result: 6008
-[14] - Op: PRINT    	Address1: 		Address2: 	Result: 6008
-[15] - Op: >        	Address1: 6007		Address2: 18000	Result: 15000
-[16] - Op: GOTOF    	Address1: 15000		Address2: 	Result: 20
-[17] - Op: =        	Address1: 18003		Address2: 	Result: 6009
-[18] - Op: PRINT    	Address1: 		Address2: 	Result: 6008
-[19] - Op: GOTO     	Address1: 		Address2: 	Result: 22
-[20] - Op: =        	Address1: 18003		Address2: 	Result: 6010
-[21] - Op: PRINT    	Address1: 		Address2: 	Result: 6008
-[22] - Op: =        	Address1: 18006		Address2: 	Result: 6012
-[23] - Op: <=       	Address1: 12001		Address2: 18005	Result: 15001
-[24] - Op: GOTOF    	Address1: 15001		Address2: 	Result: 29
-[25] - Op: PRINT    	Address1: 		Address2: 	Result: 6007
-[26] - Op: +        	Address1: 6012		Address2: 18003	Result: 12002
-[27] - Op: =        	Address1: 12002		Address2: 	Result: 6012
-[28] - Op: GOTO     	Address1: 		Address2: 	Result: 23
-[29] - Op: >        	Address1: 6008		Address2: 18000	Result: 15002
-[30] - Op: GOTOF    	Address1: 15002		Address2: 	Result: 33
-[31] - Op: PRINT    	Address1: 		Address2: 	Result: 10000
-[32] - Op: PRINT    	Address1: 		Address2: 	Result: 1
-[33] - Op: >        	Address1: 6008		Address2: 18000	Result: 15003
-[34] - Op: GOTOF    	Address1: 15003		Address2: 	Result: 37
-[35] - Op: +        	Address1: 18000		Address2: 18007	Result: 12003
-[36] - Op: GOTO     	Address1: 		Address2: 	Result: 38
-[37] - Op: +        	Address1: 18007		Address2: 18008	Result: 12004
-[38] - Op: =        	Address1: 12004		Address2: 12003	Result: 12005
-[39] - Op: =        	Address1: 12005		Address2: 	Result: 6008
-[40] - Op: PRINT    	Address1: 		Address2: 	Result: 6008
-[41] - Op: =        	Address1: 21000		Address2: 	Result: 9000
-[42] - Op: =        	Address1: 18009		Address2: 	Result: 6013
-[43] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
-[44] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
-[45] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
-[46] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
+[4] - Op: >         	Address1: 18000		Address2: 18003	Result: 15000
+[5] - Op: =         	Address1: 15000		Address2: 	Result: 9000
+[6] - Op: =         	Address1: 18000		Address2: 	Result: 6002
+[7] - Op: =         	Address1: 18003		Address2: 	Result: 6003
+[8] - Op: *         	Address1: 6000		Address2: 6000	Result: 12000
+[9] - Op: -         	Address1: 12000		Address2: 6003	Result: 12001
+[10] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
+[11] - Op: =        	Address1: 22000		Address2: 	Result: 10000
+[12] - Op: =        	Address1: 23000		Address2: 	Result: 11000
+[13] - Op: =        	Address1: 18004		Address2: 	Result: 6001
+[14] - Op: READ     	Address1: 		Address2: 	Result: 6001
+[15] - Op: =        	Address1: 18000		Address2: 	Result: 6002
+[16] - Op: =        	Address1: 18000		Address2: 	Result: 6003
+[17] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
+[18] - Op: >        	Address1: 6002		Address2: 18000	Result: 15000
+[19] - Op: GOTOF    	Address1: 15000		Address2: 	Result: 23
+[20] - Op: =        	Address1: 18003		Address2: 	Result: 6004
+[21] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
+[22] - Op: GOTO     	Address1: 		Address2: 	Result: 25
+[23] - Op: =        	Address1: 18003		Address2: 	Result: 6005
+[24] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
+[25] - Op: =        	Address1: 18006		Address2: 	Result: 6007
+[26] - Op: <=       	Address1: 12001		Address2: 18005	Result: 15001
+[27] - Op: GOTOF    	Address1: 15001		Address2: 	Result: 32
+[28] - Op: PRINT    	Address1: 		Address2: 	Result: 6002
+[29] - Op: +        	Address1: 6007		Address2: 18003	Result: 12000
+[30] - Op: =        	Address1: 12000		Address2: 	Result: 6007
+[31] - Op: GOTO     	Address1: 		Address2: 	Result: 26
+[32] - Op: >        	Address1: 6003		Address2: 18000	Result: 15002
+[33] - Op: GOTOF    	Address1: 15002		Address2: 	Result: 36
+[34] - Op: PRINT    	Address1: 		Address2: 	Result: 10000
+[35] - Op: PRINT    	Address1: 		Address2: 	Result: 1
+[36] - Op: >        	Address1: 6003		Address2: 18000	Result: 15003
+[37] - Op: GOTOF    	Address1: 15003		Address2: 	Result: 40
+[38] - Op: +        	Address1: 18000		Address2: 18007	Result: 12001
+[39] - Op: GOTO     	Address1: 		Address2: 	Result: 41
+[40] - Op: +        	Address1: 18007		Address2: 18008	Result: 12002
+[41] - Op: =        	Address1: 12002		Address2: 12001	Result: 12003
+[42] - Op: =        	Address1: 12003		Address2: 	Result: 6003
+[43] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
+[44] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
+[45] - Op: =        	Address1: 21000		Address2: 	Result: 9000
+[46] - Op: =        	Address1: 18009		Address2: 	Result: 6000
+[47] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
+[48] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
+[49] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
+[50] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
+[51] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
 
 
 JumpStack:
@@ -281,19 +286,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [4390623496912729644: 
-
-   |===================================
-   |     Identifier : main
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 65
-   |     Address : 1004
-    =================================== 
-, -3209429224583175010: 
+ [-2811332664605978826: 
 
    |===================================
    |     Identifier : y
@@ -305,19 +298,7 @@ Last SymbolTable:
    |     Line : 2
    |     Address : 1
     =================================== 
-, 2250864321060996901: 
-
-   |===================================
-   |     Identifier : z
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 4
-   |     Address : 2
-    =================================== 
-, -3851687550141305572: 
+, -3046704996983196461: 
 
    |===================================
    |     Identifier : x
@@ -329,7 +310,31 @@ Last SymbolTable:
    |     Line : 1
    |     Address : 0
     =================================== 
-, 4571514166221357068: 
+, 4696979470216169723: 
+
+   |===================================
+   |     Identifier : z
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 4
+   |     Address : 2
+    =================================== 
+, -9105903205273327128: 
+
+   |===================================
+   |     Identifier : main
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 65
+   |     Address : 1004
+    =================================== 
+, -4989381923953112419: 
 
    |===================================
    |     Identifier : doble
@@ -341,7 +346,7 @@ Last SymbolTable:
    |     Line : 10
    |     Address : 3
     =================================== 
-, 8247644868392841412: 
+, -4659310147120647973: 
 
    |===================================
    |     Identifier : printArray
@@ -356,4 +361,17 @@ Last SymbolTable:
 ]
 
 Constants: 
- ["20": 18001, "10.3": 22000, "1": 18003, "4": 18008, "true": 21000, "0": 18005, "2": 18007, "9": 18006, "30": 18002, "10": 18000, "34": 23000, "6": 18009, "200": 18004]
+ Constant:[10]       Address: 18000
+Constant:[20]       Address: 18001
+Constant:[0]        Address: 18005
+Constant:[4]        Address: 18008
+Constant:[30]       Address: 18002
+Constant:[10.3]     Address: 22000
+Constant:[2]        Address: 18007
+Constant:[6]        Address: 18009
+Constant:[1]        Address: 18003
+Constant:[34]       Address: 23000
+Constant:[9]        Address: 18006
+Constant:[200]      Address: 18004
+Constant:[true]     Address: 21000
+

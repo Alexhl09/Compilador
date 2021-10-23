@@ -39,6 +39,12 @@ class VirtualMemorySemantic : CustomStringConvertible {
         return constantBlock.newAddress(type: type, size: sizeToReserve)
     }
     
+    func removeLocalAndTemporalMemory(){
+        self.localBlock = VirtualMemoryBlockSemantic(sizeBlock: sizeByBlock, initialAddress: sizeByBlock)
+        self.tempBlock = VirtualMemoryBlockSemantic(sizeBlock: sizeByBlock, initialAddress: sizeByBlock * 2)
+    }
+    
+    
     public var description: String {
         return
     """

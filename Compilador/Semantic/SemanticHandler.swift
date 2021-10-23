@@ -29,6 +29,7 @@ class SemanticHandler : CustomStringConvertible {
         
         self.jumpStack.push(self.quadruples.count)
         self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+        functionAsMainThread = "main"
     }
     
     // MARK: - SymbolTable
@@ -554,13 +555,28 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    func startFunction(_ id: NSString){
+        self.functionAsMainThread = id as String
+    }
+    
+    func endFunction(){
+        guard let symbolFunction = self.symbolTable.lookup(self.functionAsMainThread ?? "") else {
+            print("ERROR no function found")
+            return
+        }
+        let endFunctionQuadruple = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
+        self.quadruples.append(endFunctionQuadruple)
+        self.memory.removeLocalAndTemporalMemory()
+    }
     
     public var description: String {
         let q = quadruples.enumerated().reduce("", { res, q in
             res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "\tAddress1: \(q.element.argument1 ?? "")\t\tAddress2: \(q.element.argument2 ?? "")\tResult: \(q.element.result ?? "")\n")
         })
         
-        let constInfo = constants.description
+        let constInfo = constants.reduce("") { res, dic in
+            res.appending("Constant:[\(dic.key)]".padding(toLength: 20, withPad: " ", startingAt: 0) + "Address: \(dic.value)\n")
+        }
         return
     """
     Memory: \n \(memory.description)

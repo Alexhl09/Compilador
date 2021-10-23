@@ -5,7 +5,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 %token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
 %type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
-%type <NSString> range declareVarCiclo
+%type <NSString> range declareVarCiclo idFunc
 
 
 
@@ -67,13 +67,14 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 
 %%
     
-    programa : programaPrimo funciones startMain startNode RPAREN cuerpo
-             | funciones MAIN startNode RPAREN cuerpo
-             | MAIN startNode RPAREN cuerpo;
+    programa : programaPrimo funciones startMain startNode RPAREN cuerpo {semantic.endFunction()}
+            | funciones MAIN startNode RPAREN cuerpo {semantic.endFunction()}
+            | MAIN startNode RPAREN cuerpo {semantic.endFunction()};
              
     startMain : MAIN {
         semantic.insertSymbolToST("main", true, false, .void, .method)
-        semantic.foundMain()};
+        semantic.foundMain()
+    };
              
     programaPrimo : vars programaPrimo
              | vars ;
@@ -129,9 +130,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
               | EQ LBRACE expresion COMMA RBRACE;
                   
     funciones : funcionesVoid
-                  | funcionesReturn
-                  | funcionesVoid funciones
-                  | funcionesReturn funciones;
+                | funcionesReturn
+                | funcionesVoid funciones
+                | funcionesReturn funciones;
     
     cuerpo : LBRACE cuerpoListaA popNode;
     
@@ -232,13 +233,15 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    assignCTEI : EQ CTEI;
    
-   funcionesReturn : FUNC tipoSimple ID startNode params RPAREN LBRACE cuerpoReturn popNode
+   funcionesReturn : FUNC tipoSimple idFunc startNode params RPAREN LBRACE cuerpoReturn popNode
        {
            semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+           semantic.endFunction()
        }
-   | FUNC tipoSimple ID startNode RPAREN LBRACE cuerpoReturn popNode
+   | FUNC tipoSimple idFunc startNode RPAREN LBRACE cuerpoReturn popNode
        {
            semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+           semantic.endFunction()
        }
    | error { error(code: CompilerParser.ERROR_SYNTAX) };
 
@@ -254,14 +257,18 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    array : arrayA |
             arrayA arrayA;
    
-   funcionesVoid : FUNC ID startNode params RPAREN cuerpo
+   funcionesVoid : FUNC idFunc startNode params RPAREN cuerpo
        {
            semantic.insertSymbolToST($2, true, false, .void, .method)
+           semantic.endFunction()
        }
-    | FUNC ID startNode RPAREN cuerpo
+    | FUNC idFunc startNode RPAREN cuerpo
         {
             semantic.insertSymbolToST($2, true, false, .void, .method)
+            semantic.endFunction()
         };
+        
+    idFunc : ID{semantic.startFunction($1); $$ = $1};
    
    flujoBloque : asignar
                | llamada

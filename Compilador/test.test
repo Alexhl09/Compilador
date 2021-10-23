@@ -3,7 +3,7 @@ var y = 20;
 var z = 30;
 // var x = 12;
 func int doble(int A) {
-    //var x = 10 > "A";
+    var x = 10 > 1;
     const int a = 10;
     var S = 1;
     return A * A - S;
