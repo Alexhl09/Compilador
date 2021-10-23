@@ -7,14 +7,10 @@
 
 import Foundation
 
-protocol SemanticErrorDelegate {
-    func sendVariableRepeated(id : String)
-    func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol)
-    func sendUndeclareVariable(id: NSString)
-    func sendTypeMismatch()
-}
-
 class SemanticHandler : CustomStringConvertible {
+    
+    // MARK: - Properties
+    
     var delegate : SemanticErrorDelegate? = nil
     var quadruples : [Quadruple] = []
     var symbolTable : SymbolTable = SymbolTable()
@@ -26,193 +22,273 @@ class SemanticHandler : CustomStringConvertible {
     var functionAsMainThread : String? = nil
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     
-    public var description: String {
-        let q = quadruples.enumerated().reduce("", { res, q in
-            res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "\tAddress1: \(q.element.argument1 ?? "")\t\tAddress2: \(q.element.argument2 ?? "")\tResult: \(q.element.result ?? "")\n")
-        })
-        
-        let constInfo = constants.description
-        return
-    """
-    Memory: \n \(memory.description)
     
-    Cuadruplos:\n\(q)
-    
-    JumpStack:\n \(jumpStack.description)
-    
-    Operators:\n \(operationStack.operators.description)
-    
-    Operands:\n \(operationStack.operands.description)
-        
-    Last SymbolTable:\n \(symbolTable.description)
-    
-    Constants: \n \(constInfo)
-    
-    """
-        
-    }
+    // MARK: - Initializer
     
     init() {
+        
         self.jumpStack.push(self.quadruples.count)
         self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
     }
     
+    // MARK: - SymbolTable
+    
+    /**
+     
+     This function inserts in the symbol table an identifier and its properties, like the type, kind, and more. If it wasn't possible to insert it to the symbol table, it sends an error indicating that the variable was already declared.
+     - Note: When it was inserted it asks for a local or global address in memory depending on the deepth of the symbol table
+     - Parameters:
+        - id: The identifier to be inserted in the symbolTable
+        - constant: Add a flag indicating if the symbol is constant
+        - array: Add a flag indicating if the symbol is an array
+        - type: Add the type of the symbol, by default is void
+        - kind: Add the kind of the symbol (field or method), by default is a field
+    */
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
-        let s = Symbol(lex.line, id, kind, type, constant, array, false, address: self.memory.newLocalAdress(type: type))
+        let symbolToInsert = Symbol(lex.line, id, kind, type, constant, array, false)
         
-        if (!symbolTable.insertInHashTable(s)){
+        if (!symbolTable.insertInHashTable(symbolToInsert)){
             delegate?.sendVariableRepeated(id: id as String)
         }else{
             if(symbolTable.onlyOneNode()){
-                s.address = newGlobalVariable(s: type)
+                symbolToInsert.address = newGlobalVariable(s: type)
+            }else{
+                symbolToInsert.address = newLocalVariable(t: type)
             }
         }
-        
     }
     
+    /**
+     This function creates a new node at the beginning of the symbol table (Implemeted as a linked list with dictionaries)
+    */
     func startScope(){
         symbolTable.newNode()
     }
     
+    /**
+     This function removes the node first node of the symbol table
+    */
     func endScope(){
         symbolTable.pop()
     }
     
+    // MARK: - Operation stack
+    
+    /**
+     Adds a new operator to the operators stack
+     - Parameter op: The operator to be inserted in the operator stack
+    */
     func addOperator(op : Operator){
         operationStack.operators.push(op)
     }
     
+    /**
+     Adds a new operand to the operands stack (a stack made of tuple (Operand, Type))
+     - Parameter symbol: The symbol to be inserted in the operands stack
+    */
     func addOperand(symbol : Symbol){
         operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
     }
     
+    /**
+     Adds a new operand to the operands stack (a stack made of tuple (Operand, Type))
+     - Parameter memoryAddress: The operand to be inserted in the operands stack
+     - Parameter type: The type of the operand to be inserted in the operands stack
+    */
     func addOperandByMemory(memoryAddress: Int, type: TypeSymbol) {
         operationStack.addOperand(operand: "\(memoryAddress)", type: type)
     }
     
-    func addQuadruple() {
-        // Logic for 2 operands
-        if(operationStack.operands.size() >= 2 && operationStack.operators.size() >= 1){
-            
-            let op : Operator = operationStack.operators.pop()!
+    
+    // MARK: - Memory Handler
+    /**
+     Ask to the memory for a new global address for a specific type
+     - Parameter s: The type of the symbol
+    */
+    func newGlobalVariable(s : TypeSymbol) -> Int {
+        return memory.newGlobalAddress(type: s)
+    }
+    /**
+     Ask to the memory for a new local address for a specific type
+     - Parameter t: The type of the symbol
+    */
+    func newLocalVariable(t: TypeSymbol) -> Int {
+        return memory.newLocalAdress(type: t)
+    }
+    
+    // MARK: - Constants
+    /**
+     Look for the address of an specific value of integer, and save that as an operand
+     - Parameter number: The object number
+    */
+    func addConstantInteger(_ number :NSNumber){
+        /// Takes the integer value
+        let integerValue = number.intValue
+        /// Looks for the address in the constant Table
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(integerValue)") {
+            /// If found, add that address as an operand of type integer
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .integer)
+        }else{
+            /// If not, ask for new constant address of integer type
+            let newAddress = memory.newConstantAddress(type: .integer)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: integerValue, address: newAddress)
+            /// Add the new address as an operand in operands stack
+            self.addOperandByMemory(memoryAddress: newAddress, type: .integer)
+        }
+    }
+    
+    /**
+     Look for the address of an specific value of float, and save that as an operand
+     - Parameter number: The object number
+    */
+    func addConstantFloat(_ number : NSNumber){
+        /// Takes the float value
+        let floatValue = number.floatValue
+        /// Looks for the address in the constant Table
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(floatValue)") {
+            /// If found, add that address as an operand of type float
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .float)
+        }else{
+            /// If not, ask for new constant address of float type
+            let newAddress = memory.newConstantAddress(type: .float)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: floatValue, address: newAddress)
+            /// Add the new address as an operand in operands stack
+            self.addOperandByMemory(memoryAddress: newAddress, type: .float)
+        }
+        
+    }
+    /**
+     Look for the address of an specific value of double, and save that as an operand
+     - Parameter number: The object number
+    */
+    func addConstantDouble(_ number : NSNumber){
+        /// Takes the float value
+        let doubleValue = number.doubleValue
+        /// Looks for the address in the constant Table
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(doubleValue)") {
+            /// If found, add that address as an operand of type double
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .double)
+        }else{
+            /// If not, ask for new constant address of double type
+            let newAddress = memory.newConstantAddress(type: .double)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: doubleValue, address: newAddress)
+            /// Add the new address as an operand in operands stack
+            self.addOperandByMemory(memoryAddress: newAddress, type: .double)
+        }
+    }
+    /**
+     Look for the address of an specific value of bool, and save that as an operand
+     - Parameter number: The object number
+    */
+    func addConstantBool(_ number : NSNumber){
+        /// Takes the bool value
+        let boolValue = number.boolValue
+        /// Looks for the address in the constant Table
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(boolValue)") {
+            /// If found, add that address as an operand of type bool
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
+        }else{
+            /// If not, ask for new constant address of bool type
+            let newAddress = memory.newConstantAddress(type: .boolean)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: boolValue, address: newAddress)
+            /// Add the new address as an operand in operands stack
+            self.addOperandByMemory(memoryAddress: newAddress, type: .boolean)
+        }
+    }
+    /**
+     Look for the address of an specific value of double, and save that as an operand
+     - Parameter character: The object nsstring
+    */
+    func addConstantChar(_ character : NSString){
+        // Takes the char value
+        let charValue = character.character(at: 0)
+        /// Looks for the address in the constant Table
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
+            /// If found, add that address as an operand of type bool
+            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
+        }else{
+            /// If not, ask for new constant address of char type
+            let newAddress = memory.newConstantAddress(type: .char)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: charValue, address: newAddress)
+            /// Add the new address as an operand in operands stack
+            self.addOperandByMemory(memoryAddress: newAddress, type: .char)
+        }
+    }
+    
+    // FIXME: - No constant string
+    func addConstantString(_ string : NSString){
+        
+        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
+        numConstantes = numConstantes + 1
+    }
 
+    /**
+     Save address with a new constant and the address
+     - Returns: An optional address for a value
+     - Parameter constant: The value to be used as index in cosntant table
+     - Parameter address: The address of the value
+    */
+    func saveAddress(constant: Any, address: Int) {
+        self.constants["\(constant)"] = address
+    }
+    
+    /**
+     Look in the constant table for an address in a specified index
+     - Returns: An optional address for a value
+     - Parameter value: The value to be searched in constant table
+    */
+    func lookUpAddressConstantTable(value: String) -> Int? {
+        return self.constants[value]
+    }
+    
+    // MARK: - Quadruple Generation
+    /**
+     This function creates the quadruples for 2 operands.
+    */
+    func addQuadruple() {
+        /// Logic for 2 operands
+        /// First check if the operands stack has at least 2 operands, and at least 1 operator in the operators stack
+        if(operationStack.operands.size() >= 2 && operationStack.operators.size() >= 1){
+            /// Pop the operator
+            let op : Operator = operationStack.operators.pop()!
+            /// Pop the right operand (last to be inserted in operands stacks)
             let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand()!
-    
+            /// Pop the left operand (last to be inserted in operands stacks)
             let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand()!
-    
-            
+            /// Check if it possible the operation between left and right operand
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
-                print("ERROR")
+                /// If it is impossible, send an error
                 delegate?.sendInvalidOperationBetween(t1: leftType, t2: rightType)
                 return
             }
-            
+            /// Ask for a temp memory for the result type
             let tempAddress = memory.newTemporalAddress(type: resultType)
-           
+            /// Add to the quadruples a new one, with the operation
             self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "\(tempAddress)"))
+            /// Add the temp result as an operand in th operands stack
             self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
         }
         
     }
     
-    func newGlobalVariable(s : TypeSymbol) -> Int {
-        return memory.newGlobalAddress(type: s)
-    }
-    
-    func newLocalVariable(t: TypeSymbol) -> Int {
-        return memory.newLocalAdress(type: t)
-    }
-    
-    func addConstantInteger(_ number :NSNumber){
-        let integerValue = number.intValue
-        
-        if let lookUpAddress = lookUpAddressConstantTable(value: "\(integerValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .integer)
-        }else{
-            // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .integer)
-            self.saveAddress(constant: integerValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .integer)
-        }
-    }
-    
-    func addConstantFloat(_ number : NSNumber){
-        let floatValue = number.floatValue
-        
-        if let lookUpAddress = lookUpAddressConstantTable(value: "\(floatValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .float)
-        }else{
-            // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .float)
-            self.saveAddress(constant: floatValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .float)
-        }
-        
-    }
-    
-    func addConstantDouble(_ number : NSNumber){
-        let doubleValue = number.doubleValue
-        
-        if let lookUpAddress = lookUpAddressConstantTable(value: "\(doubleValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .double)
-        }else{
-            // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .double)
-            self.saveAddress(constant: doubleValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .double)
-        }
-    }
-    
-    func addConstantString(_ string : NSString){
-        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
-        numConstantes = numConstantes + 1
-    }
-    
-    func getConstantAddress(index: String) -> Int? {
-        return self.constants[index]
-    }
-    
-    func addConstantBool(_ number : NSNumber){
-        let boolValue = number.boolValue
-        
-        if let lookUpAddress = lookUpAddressConstantTable(value: "\(boolValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
-        }else{
-            // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .boolean)
-            self.saveAddress(constant: boolValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .boolean)
-        }
-    }
-    
-    func addConstantChar(_ character : NSString){
-        let charValue = character.character(at: 0)
-        
-        if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
-        }else{
-            // Pedir nueva memoria
-            let newAddress = memory.newConstantAddress(type: .char)
-            self.saveAddress(constant: charValue, index: newAddress)
-            self.addOperandByMemory(memoryAddress: newAddress, type: .char)
-        }
-    }
-    
-    func saveAddress(constant: Any, index: Int) {
-        self.constants["\(constant)"] = index
-    }
-    
-    func lookUpAddressConstantTable(value: String) -> Int? {
-        return self.constants[value]
-    }
-    
+    /**
+     When the main is found
+    */
     func foundMain(){
+        /// Pop jump stack and take that as the index where the goto main isntruction is
         let indexMain = jumpStack.pop() ?? 0
-        
+        /// Use the funtion fill to add the information need fot the main to jump
         fillQuadruple(index: indexMain, value: "\(self.quadruples.count)")
-        
     }
     
+    /**
+     When the main is found
+    */
     func addIDAsQuadruple(_ id : NSString){
         let identifier : String = String(id)
         guard let operand = self.symbolTable.lookup(identifier) else {
@@ -477,8 +553,43 @@ class SemanticHandler : CustomStringConvertible {
             self.quadruples.append(generatedQuadruple)
         }
     }
+    
+    
+    public var description: String {
+        let q = quadruples.enumerated().reduce("", { res, q in
+            res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "\tAddress1: \(q.element.argument1 ?? "")\t\tAddress2: \(q.element.argument2 ?? "")\tResult: \(q.element.result ?? "")\n")
+        })
+        
+        let constInfo = constants.description
+        return
+    """
+    Memory: \n \(memory.description)
+    
+    Cuadruplos:\n\(q)
+    
+    JumpStack:\n \(jumpStack.description)
+    
+    Operators:\n \(operationStack.operators.description)
+    
+    Operands:\n \(operationStack.operands.description)
+        
+    Last SymbolTable:\n \(symbolTable.description)
+    
+    Constants: \n \(constInfo)
+    
+    """
+        
+    }
 }
 
 enum ErrorCompiler : Error{
     case TypeMismatch
+}
+
+
+protocol SemanticErrorDelegate {
+    func sendVariableRepeated(id : String)
+    func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol)
+    func sendUndeclareVariable(id: NSString)
+    func sendTypeMismatch()
 }
