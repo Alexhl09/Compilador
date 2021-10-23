@@ -22,6 +22,8 @@ enum Operator : Int {
     case print
     case noNil
     case endFunc
+    case era
+    case gosub
 }
 
 extension Operator : CustomStringConvertible {
@@ -71,6 +73,10 @@ extension Operator : CustomStringConvertible {
             return "noNil"
         case .endFunc:
             return "ENDFUNC"
+        case .era:
+            return "ERA"
+        case .gosub:
+            return "GOSUB"
         }
     }
 }

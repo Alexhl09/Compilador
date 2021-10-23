@@ -216,58 +216,61 @@ ____________________________________________________
 ------------------------------------------------------------------
 
 Cuadruplos:
-[0] - Op: GOTO      	Address1: 		Address2: 	Result: 45
-[1] - Op: =         	Address1: 18000		Address2: 	Result: 0
-[2] - Op: =         	Address1: 18001		Address2: 	Result: 1
-[3] - Op: =         	Address1: 18002		Address2: 	Result: 2
-[4] - Op: >         	Address1: 18000		Address2: 18003	Result: 15000
-[5] - Op: =         	Address1: 15000		Address2: 	Result: 9000
-[6] - Op: =         	Address1: 18000		Address2: 	Result: 6002
-[7] - Op: =         	Address1: 18003		Address2: 	Result: 6003
-[8] - Op: *         	Address1: 6000		Address2: 6000	Result: 12000
-[9] - Op: -         	Address1: 12000		Address2: 6003	Result: 12001
-[10] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
-[11] - Op: =        	Address1: 22000		Address2: 	Result: 10000
-[12] - Op: =        	Address1: 23000		Address2: 	Result: 11000
-[13] - Op: =        	Address1: 18004		Address2: 	Result: 6001
-[14] - Op: READ     	Address1: 		Address2: 	Result: 6001
-[15] - Op: =        	Address1: 18000		Address2: 	Result: 6002
-[16] - Op: =        	Address1: 18000		Address2: 	Result: 6003
-[17] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
-[18] - Op: >        	Address1: 6002		Address2: 18000	Result: 15000
-[19] - Op: GOTOF    	Address1: 15000		Address2: 	Result: 23
-[20] - Op: =        	Address1: 18003		Address2: 	Result: 6004
-[21] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
-[22] - Op: GOTO     	Address1: 		Address2: 	Result: 25
-[23] - Op: =        	Address1: 18003		Address2: 	Result: 6005
-[24] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
-[25] - Op: =        	Address1: 18006		Address2: 	Result: 6007
-[26] - Op: <=       	Address1: 12001		Address2: 18005	Result: 15001
-[27] - Op: GOTOF    	Address1: 15001		Address2: 	Result: 32
-[28] - Op: PRINT    	Address1: 		Address2: 	Result: 6002
-[29] - Op: +        	Address1: 6007		Address2: 18003	Result: 12000
-[30] - Op: =        	Address1: 12000		Address2: 	Result: 6007
-[31] - Op: GOTO     	Address1: 		Address2: 	Result: 26
-[32] - Op: >        	Address1: 6003		Address2: 18000	Result: 15002
-[33] - Op: GOTOF    	Address1: 15002		Address2: 	Result: 36
-[34] - Op: PRINT    	Address1: 		Address2: 	Result: 10000
-[35] - Op: PRINT    	Address1: 		Address2: 	Result: 1
-[36] - Op: >        	Address1: 6003		Address2: 18000	Result: 15003
-[37] - Op: GOTOF    	Address1: 15003		Address2: 	Result: 40
-[38] - Op: +        	Address1: 18000		Address2: 18007	Result: 12001
-[39] - Op: GOTO     	Address1: 		Address2: 	Result: 41
-[40] - Op: +        	Address1: 18007		Address2: 18008	Result: 12002
-[41] - Op: =        	Address1: 12002		Address2: 12001	Result: 12003
-[42] - Op: =        	Address1: 12003		Address2: 	Result: 6003
-[43] - Op: PRINT    	Address1: 		Address2: 	Result: 6003
-[44] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
-[45] - Op: =        	Address1: 21000		Address2: 	Result: 9000
-[46] - Op: =        	Address1: 18009		Address2: 	Result: 6000
-[47] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
-[48] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
-[49] - Op: PRINT    	Address1: 		Address2: 	Result: 23000
-[50] - Op: PRINT    	Address1: 		Address2: 	Result: 9000
-[51] - Op: ENDFUNC  	Address1: 		Address2: 	Result: 
+[0] - Op: GOTO      Address1:           Address2:           Result: 48
+[1] - Op: =         Address1: 18000     Address2:           Result: 0
+[2] - Op: =         Address1: 18001     Address2:           Result: 1
+[3] - Op: =         Address1: 18002     Address2:           Result: 2
+[4] - Op: >         Address1: 18000     Address2: 18003     Result: 15000
+[5] - Op: =         Address1: 15000     Address2:           Result: 9000
+[6] - Op: =         Address1: 18000     Address2:           Result: 6002
+[7] - Op: =         Address1: 18003     Address2:           Result: 6003
+[8] - Op: *         Address1: 6000      Address2: 6000      Result: 12000
+[9] - Op: -         Address1: 12000     Address2: 6003      Result: 12001
+[10] - Op: ENDFUNC  Address1:           Address2:           Result: 
+[11] - Op: =        Address1: 22000     Address2:           Result: 10000
+[12] - Op: =        Address1: 23000     Address2:           Result: 11000
+[13] - Op: =        Address1: 18004     Address2:           Result: 6001
+[14] - Op: READ     Address1:           Address2:           Result: 6001
+[15] - Op: =        Address1: 18000     Address2:           Result: 6002
+[16] - Op: =        Address1: 18000     Address2:           Result: 6003
+[17] - Op: PRINT    Address1:           Address2:           Result: 6003
+[18] - Op: >        Address1: 6002      Address2: 18000     Result: 15000
+[19] - Op: GOTOF    Address1: 15000     Address2:           Result: 23
+[20] - Op: =        Address1: 18003     Address2:           Result: 6004
+[21] - Op: PRINT    Address1:           Address2:           Result: 6003
+[22] - Op: GOTO     Address1:           Address2:           Result: 25
+[23] - Op: =        Address1: 18003     Address2:           Result: 6005
+[24] - Op: PRINT    Address1:           Address2:           Result: 6003
+[25] - Op: =        Address1: 18006     Address2:           Result: 6007
+[26] - Op: <=       Address1: 12001     Address2: 18005     Result: 15001
+[27] - Op: GOTOF    Address1: 15001     Address2:           Result: 32
+[28] - Op: PRINT    Address1:           Address2:           Result: 6002
+[29] - Op: +        Address1: 6007      Address2: 18003     Result: 12000
+[30] - Op: =        Address1: 12000     Address2:           Result: 6007
+[31] - Op: GOTO     Address1:           Address2:           Result: 26
+[32] - Op: ERA      Address1:           Address2:           Result: doble
+[33] - Op: GOSUB    Address1:           Address2:           Result: doble
+[34] - Op: =        Address1: 6003      Address2:           Result: 6003
+[35] - Op: >        Address1: 6003      Address2: 18000     Result: 15002
+[36] - Op: GOTOF    Address1: 15002     Address2:           Result: 39
+[37] - Op: PRINT    Address1:           Address2:           Result: 10000
+[38] - Op: PRINT    Address1:           Address2:           Result: 1
+[39] - Op: >        Address1: 6003      Address2: 18000     Result: 15003
+[40] - Op: GOTOF    Address1: 15003     Address2:           Result: 43
+[41] - Op: +        Address1: 18000     Address2: 18007     Result: 12001
+[42] - Op: GOTO     Address1:           Address2:           Result: 44
+[43] - Op: +        Address1: 18007     Address2: 18008     Result: 12002
+[44] - Op: =        Address1: 12002     Address2: 12001     Result: 12003
+[45] - Op: =        Address1: 12003     Address2:           Result: 6003
+[46] - Op: PRINT    Address1:           Address2:           Result: 6003
+[47] - Op: ENDFUNC  Address1:           Address2:           Result: 
+[48] - Op: =        Address1: 21000     Address2:           Result: 9000
+[49] - Op: =        Address1: 18009     Address2:           Result: 6000
+[50] - Op: PRINT    Address1:           Address2:           Result: 23000
+[51] - Op: PRINT    Address1:           Address2:           Result: 9000
+[52] - Op: PRINT    Address1:           Address2:           Result: 23000
+[53] - Op: PRINT    Address1:           Address2:           Result: 9000
+[54] - Op: ENDFUNC  Address1:           Address2:           Result: 
 
 
 JumpStack:
@@ -286,55 +289,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [-2811332664605978826: 
-
-   |===================================
-   |     Identifier : y
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 2
-   |     Address : 1
-    =================================== 
-, -3046704996983196461: 
-
-   |===================================
-   |     Identifier : x
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 1
-   |     Address : 0
-    =================================== 
-, 4696979470216169723: 
-
-   |===================================
-   |     Identifier : z
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 4
-   |     Address : 2
-    =================================== 
-, -9105903205273327128: 
-
-   |===================================
-   |     Identifier : main
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 65
-   |     Address : 1004
-    =================================== 
-, -4989381923953112419: 
+ [8098897389835512290: 
 
    |===================================
    |     Identifier : doble
@@ -346,7 +301,43 @@ Last SymbolTable:
    |     Line : 10
    |     Address : 3
     =================================== 
-, -4659310147120647973: 
+, 4093479007791535636: 
+
+   |===================================
+   |     Identifier : main
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 66
+   |     Address : 1004
+    =================================== 
+, -5507420521645991993: 
+
+   |===================================
+   |     Identifier : z
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 4
+   |     Address : 2
+    =================================== 
+, -2986688950470414246: 
+
+   |===================================
+   |     Identifier : x
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 1
+   |     Address : 0
+    =================================== 
+, 6639653873393079085: 
 
    |===================================
    |     Identifier : printArray
@@ -355,23 +346,35 @@ Last SymbolTable:
    |     Constant : true
    |     Array : false
    |     Assigned : false
-   |     Line : 65
+   |     Line : 66
    |     Address : 1003
+    =================================== 
+, 5807539497372323609: 
+
+   |===================================
+   |     Identifier : y
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 2
+   |     Address : 1
     =================================== 
 ]
 
 Constants: 
- Constant:[10]       Address: 18000
-Constant:[20]       Address: 18001
-Constant:[0]        Address: 18005
-Constant:[4]        Address: 18008
-Constant:[30]       Address: 18002
+ Constant:[0]        Address: 18005
 Constant:[10.3]     Address: 22000
-Constant:[2]        Address: 18007
 Constant:[6]        Address: 18009
-Constant:[1]        Address: 18003
 Constant:[34]       Address: 23000
+Constant:[10]       Address: 18000
+Constant:[20]       Address: 18001
 Constant:[9]        Address: 18006
+Constant:[4]        Address: 18008
 Constant:[200]      Address: 18004
+Constant:[1]        Address: 18003
 Constant:[true]     Address: 21000
+Constant:[30]       Address: 18002
+Constant:[2]        Address: 18007
 

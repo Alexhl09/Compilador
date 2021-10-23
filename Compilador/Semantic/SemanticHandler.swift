@@ -569,9 +569,34 @@ class SemanticHandler : CustomStringConvertible {
         self.memory.removeLocalAndTemporalMemory()
     }
     
+    func functionCall(_ idFunction : NSString){
+       
+        guard let symbolFunction = symbolTable.lookup(idFunction as String) else {
+            print("Not found function to be called")
+            return
+        }
+        /// Validate number parameters
+        ///
+        // FIXME: - Generate era
+        
+        let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
+        self.quadruples.append(quadrupleEra)
+        
+        // FIXME: - Pass paramaters as quadruples
+        
+        //
+        let quadrupleGosub = Quadruple(argument1: nil, argument2: nil, op: .gosub, result: symbolFunction.identifier)
+        self.quadruples.append(quadrupleGosub)
+        
+        // Check if return not void
+        if(symbolFunction.type != .void && symbolFunction.kind == .method){
+            
+        }
+    }
+    
     public var description: String {
         let q = quadruples.enumerated().reduce("", { res, q in
-            res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "\tAddress1: \(q.element.argument1 ?? "")\t\tAddress2: \(q.element.argument2 ?? "")\tResult: \(q.element.result ?? "")\n")
+            res.appending("[\(q.offset)] - Op: \(q.element.op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "Address1: \(q.element.argument1 ?? "")".padding(toLength: 20, withPad: " ", startingAt: 0) + "Address2: \(q.element.argument2 ?? "")".padding(toLength: 20, withPad: " ", startingAt: 0) + "Result: \(q.element.result ?? "")\n")
         })
         
         let constInfo = constants.reduce("") { res, dic in

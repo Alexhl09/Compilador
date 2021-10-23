@@ -56,8 +56,9 @@ func printArray(int A) {
 //        print(a);
 //    }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
-    a = doble(a);
+    
     */
+    a = doble(a);
     a > 10 ? print(x) : print(y);
     a = a > 10 ? 10 + 2 : 2 + 4;
     print(a);

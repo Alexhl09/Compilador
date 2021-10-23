@@ -179,8 +179,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
              | cadena;
              
 
-   llamada : ID LPAREN llamadaA RPAREN
-            | ID LPAREN RPAREN;
+   llamada : ID LPAREN llamadaA RPAREN {semantic.functionCall($1)}
+            | ID LPAREN RPAREN {semantic.functionCall($1)};
    
    llamadaA : expresion
             | expresion COMMA llamadaA;
