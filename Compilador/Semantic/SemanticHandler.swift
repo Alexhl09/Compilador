@@ -555,6 +555,8 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    // MARK: - FUNCTIONS
+    
     func startFunction(_ id: NSString){
         self.functionAsMainThread = id as String
     }
@@ -575,23 +577,65 @@ class SemanticHandler : CustomStringConvertible {
             print("Not found function to be called")
             return
         }
+        
+        // FIXME: - Validate parameters
         /// Validate number parameters
+        /// Agarrar los tipos de los argumentos pasados, con los que deberian estar en symbolFunction
         ///
-        // FIXME: - Generate era
+        /// SINO SE MANDA ERROR
+        ///
         
         let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleEra)
         
         // FIXME: - Pass paramaters as quadruples
-        
-        //
+
+        // CRAETE GOSUB
         let quadrupleGosub = Quadruple(argument1: nil, argument2: nil, op: .gosub, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleGosub)
-        
+                    
         // Check if return not void
-        if(symbolFunction.type != .void && symbolFunction.kind == .method){
-            
+        let typeFunc = symbolFunction.type
+        if(typeFunc != .void && symbolFunction.kind == .method){
+//            switch typeFunc {
+//            case .void:
+//                break
+//            case .integer:
+//                break
+//            case .string:
+//                break
+//            case .boolean:
+//                break
+//            case .float:
+//                break
+//            case .char:
+//                break
+//            case .double:
+//                break
+//            case .Integer:
+//                break
+//            case .String:
+//                break
+//            case .ID:
+//                break
+//            }
         }
+    }
+    
+    func returnFunctions(){
+        guard let symbolFunction = symbolTable.lookup(functionAsMainThread ?? "") else {
+            return
+        }
+        // Tipo esperado de retorno
+        let returnTypeExpected = symbolFunction.type
+        let (operand, type) = operationStack.getLastOperand() ?? ("",.void)
+        
+        guard (returnTypeExpected != type) else {
+            print("Mistmatch return and expected")
+            return
+        }
+        // Generar return cuadruple
+        // Address of function
     }
     
     public var description: String {
