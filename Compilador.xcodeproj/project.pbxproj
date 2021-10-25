@@ -73,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		313FBE6A2724992E00A5BA1D /* outputCompilador.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = outputCompilador.txt; sourceTree = "<group>"; };
 		A930EA1026FFB9E10062BE51 /* Compilador */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Compilador; sourceTree = BUILT_PRODUCTS_DIR; };
 		A930EA1326FFB9E10062BE51 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCFileInput.swift; sourceTree = "<group>"; };
@@ -145,6 +146,7 @@
 				A930EA1326FFB9E10062BE51 /* main.swift */,
 				A9FA5EA926FFBF9D00425354 /* test.test */,
 				A990DE3F27095A3900C94528 /* diagramas.pdf */,
+				313FBE6A2724992E00A5BA1D /* outputCompilador.txt */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";
@@ -466,7 +468,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				DEVELOPMENT_TEAM = ALTY44U358;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -477,7 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				DEVELOPMENT_TEAM = ALTY44U358;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

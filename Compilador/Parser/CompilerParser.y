@@ -197,7 +197,17 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
        semantic.addCondicional()
    };
                       
-   cicloWhile : WHILE startNode expresion RPAREN cuerpo {};
+   cicloWhile : cicloWhileP1 startNode expresion cicloWhileP2 cuerpo {
+       semantic.whileP3()
+   };
+   
+   cicloWhileP1 : WHILE {
+       semantic.whileP1()
+   };
+   
+   cicloWhileP2 : RPAREN {
+       semantic.whileP2();
+   };
    
    startNode : LPAREN {
        semantic.startScope()
@@ -226,11 +236,19 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
         ;
    
-   cicloForIterador : FOR startNode vars cicloForIteradorA SEMICOLON expresion RPAREN cuerpo
-                    | FOR startNode SEMICOLON expresion RPAREN cuerpo;
+   cicloForIterador : FOR startNode cicloForIteradorP1 cicloForIteradorA cicloForIteradorP2 asignar RPAREN cuerpo {semantic.whileP3()}
+                    | FOR startNode cicloForIteradorP2 asignar RPAREN cuerpo {semantic.whileP3()};
+                    
+   cicloForIteradorP1: vars {
+       semantic.whileP1()
+   };
+   
+   cicloForIteradorP2: SEMICOLON {
+       semantic.whileP2()
+   };
    
    cicloForIteradorA : hiperExpression {};
-   
+   ()
    assignCTEI : EQ CTEI;
    
    funcionesReturn : FUNC tipoSimple idFunc startNode params RPAREN LBRACE cuerpoReturn popNode

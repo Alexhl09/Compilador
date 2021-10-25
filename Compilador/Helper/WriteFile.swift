@@ -23,6 +23,22 @@ func writeSemanticAlex(semantic: SemanticHandler){
 
 }
 
+func writeSemanticJp(semantic: SemanticHandler){
+    if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
+        let memoryText = semantic.description
+        
+        
+        let fileURL = dir.appendingPathComponent("Tec").appendingPathComponent("Compiladores").appendingPathComponent("Compilador").appendingPathComponent("Compilador").appendingPathComponent("outputCompilador.txt")
+
+        do {
+            try memoryText.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
+        }
+    }
+
+}
+
 extension String {
     func leftPadding(toLength: Int, withPad character: Character) -> String {
         let stringLength = self.count

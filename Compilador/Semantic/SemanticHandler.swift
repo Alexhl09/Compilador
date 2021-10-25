@@ -555,6 +555,31 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    func whileP1() {
+        jumpStack.push(quadruples.count - 1)
+    }
+    
+    func whileP2() {
+        let (result,t) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        
+        guard t == TypeSymbol.boolean  else {
+            print("ERROR")
+            delegate?.sendTypeMismatch()
+            return
+        }
+        print("Added Q for while on \(quadruples.count)")
+        quadruples.append(Quadruple(argument1: nil, argument2: result, op: .gotof, result: nil))
+        jumpStack.push(quadruples.count - 1)
+    }
+    
+    func whileP3() {
+        let end = jumpStack.pop()
+        let result = jumpStack.pop()
+        quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: "\(result)"))
+        fillQuadruple(index: end!, value: String(quadruples.count))
+        
+    }
+    
     // MARK: - FUNCTIONS
     
     func startFunction(_ id: NSString){

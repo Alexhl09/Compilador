@@ -47,14 +47,14 @@ func printArray(int A) {
         // FILL(indexFalse, COUNT cuadruplos + 1)
         // f++
     }
-//    while (a > 10) {
-//        print(b);
-//        a = 1;
-//    }
-//    for(var a = 0; a == 10; a < 10){
-//        a = a - 1;
-//        print(a);
-//    }
+    while (a > 10) {
+        print(b);
+        a = 1;
+    }
+    for(var a = 0; a == 10;a = a + 1;){
+        a = a - 1;
+        print(a);
+    }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     
     */
