@@ -11,7 +11,7 @@ print("Nombre archivo: ")
 
 // let file = readLine()
 let file = "test.test"
-let p = readFromFileJp(file ?? "")
+let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
 //
@@ -28,7 +28,7 @@ parser.errorDelegate = error
 if (parser.parse()) {
     let st = parser.semantic
     print(st.symbolTable.description)
-    writeSemanticJp(semantic: st)
+    writeSemanticAlex(semantic: st)
     print("Parseo exitoso")
 } else {
     print("Error.")

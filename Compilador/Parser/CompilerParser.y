@@ -5,13 +5,14 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 %token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
 %type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
-%type <NSString> range declareVarCiclo idFunc
-
+%type <NSString> range declareVarCiclo idFunc idFuncReturn
+%type <NSMutableArray> params
 
 
 %global {
     var semantic : SemanticHandler = SemanticHandler()
-
+    var params : [Symbol] = []
+    var arguments : [(String, TypeSymbol)] = []
 }
 
 %errors {
@@ -141,7 +142,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                    
     
     cuerpoLista : vars
-                | asignar
+                | asignar SEMICOLON
                 | llamada SEMICOLON
                 | leer SEMICOLON
                 | escribir SEMICOLON
@@ -157,15 +158,21 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 
    params : tipoSimple ID
             {
-                semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void)
+                let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+                semantic.insertSymbolToST($2, true, false, type);
+                let symbol = semantic.returnSymbolByID($2 as String)
+                params.append(symbol)
             }
             | tipoSimple ID COMMA params
             {
-                semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void)
+                let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+                semantic.insertSymbolToST($2, true, false, type);
+                let symbol = semantic.returnSymbolByID($2 as String)
+                params.append(symbol)
             }
             ;
            
-    asignar : ID varAssign SEMICOLON {semantic.saveValueVariable(id : $1 as String)};
+    asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)};
            
            
   escribir : PRINT LPAREN escribirA RPAREN {semantic.addPrint()};
@@ -179,11 +186,19 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
              | cadena;
              
 
-   llamada : ID LPAREN llamadaA RPAREN {semantic.functionCall($1)}
-            | ID LPAREN RPAREN {semantic.functionCall($1)};
+  llamada : ID LPAREN llamadaA RPAREN {semantic.functionCall($1, args: arguments);
+                 arguments.removeAll()
+             }
+        | ID LPAREN RPAREN {semantic.functionCall($1, args: [])};
    
-   llamadaA : expresion
-            | expresion COMMA llamadaA;
+   llamadaA : expresion {
+                let arg = (semantic.operationStack.getLastOperand() ?? ("",.void))
+                arguments.append(arg)
+            }
+            | expresion COMMA llamadaA {
+                let arg = (semantic.operationStack.getLastOperand() ?? ("",.void))
+                arguments.append(arg)
+            };
    
    condicion : condicionA cuerpo { semantic.endCondicional() }
              | condicionA cuerpo startNodeElse cuerpo { semantic.endCondicional() };
@@ -251,14 +266,15 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    ()
    assignCTEI : EQ CTEI;
    
-   funcionesReturn : FUNC tipoSimple idFunc startNode params RPAREN LBRACE cuerpoReturn popNode
+   funcionesReturn : FUNC idFuncReturn startNode params RPAREN LBRACE cuerpoReturn popNode
        {
-           semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+           semantic.returnSymbolByID($2 as String).params = params
            semantic.endFunction()
+           self.params.removeAll()
        }
-   | FUNC tipoSimple idFunc startNode RPAREN LBRACE cuerpoReturn popNode
+   | FUNC idFuncReturn startNode RPAREN LBRACE cuerpoReturn popNode
        {
-           semantic.insertSymbolToST($3, true, false, TypeSymbol.init(rawValue: $2.intValue) ?? .void, .method)
+           
            semantic.endFunction()
        }
    | error { error(code: CompilerParser.ERROR_SYNTAX) };
@@ -277,8 +293,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    funcionesVoid : FUNC idFunc startNode params RPAREN cuerpo
        {
-           semantic.insertSymbolToST($2, true, false, .void, .method)
+           semantic.insertSymbolToST($2, true, false, .void, .method, params: self.params)
            semantic.endFunction()
+           self.params.removeAll()
        }
     | FUNC idFunc startNode RPAREN cuerpo
         {
@@ -287,8 +304,12 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         };
         
     idFunc : ID{semantic.startFunction($1); $$ = $1};
+    
+    idFuncReturn : tipoSimple ID{
+        semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void, .method)
+        ; semantic.startFunction($2); $$ = $2};
    
-   flujoBloque : asignar
+   flujoBloque : asignar SEMICOLON
                | llamada
                | escribir
                | condicion
@@ -299,8 +320,10 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                | ternary;
                
    cuerpoReturn : cuerpoLista cuerpoReturn |
-                RTN expresion SEMICOLON cuerpoReturn |
-                RTN expresion SEMICOLON;
+   returnCuerpo SEMICOLON cuerpoReturn |
+   returnCuerpo SEMICOLON;
+                
+    returnCuerpo : RTN expresion {semantic.returnFunctions()};
    
    expresion : hiperExpression
                 | llamada

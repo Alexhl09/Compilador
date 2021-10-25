@@ -2,17 +2,19 @@ var x = 10;
 var y = 20;
 var z = 30;
 // var x = 12;
-func int doble(int A) {
+func float doble(float A, double p) {
     var x = 10 > 1;
     const int a = 10;
     var S = 1;
     return A * A - S;
 }
 func printArray(int A) {
+    const double ju = 9.0;
     var a;
     var o;
     var x = 10.3;
     var p = "a";
+    
     
     o = 200;
     
@@ -51,17 +53,22 @@ func printArray(int A) {
         print(b);
         a = 1;
     }
-    for(var a = 0; a == 10;a = a + 1;){
+    for(var a = 0; a > 10;a = a + 1){
         a = a - 1;
         print(a);
     }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     
     */
-    // a = doble(a);
+    const float t = doble(x, ju);
+    print(t);
     a > 10 ? print(x) : print(y);
     a = a > 10 ? 10 + 2 : 2 + 4;
     print(a);
+}
+
+func int mergeSort(bool arr, int pos, int size){
+    return 10;
 }
 
 main () {
@@ -70,7 +77,8 @@ main () {
     var arr_size = 6;
     print("a");
     print(arr);
-    //const int sorted = mergeSort(arr, 0, arr_size - 1);
+    const int sorted = mergeSort(arr, 0, arr_size - 1);
+    print(sorted);
     print("a");
     print(arr);
 }

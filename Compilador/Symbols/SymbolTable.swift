@@ -17,6 +17,7 @@ public class Symbol {
     var constant : Bool
     var array : Bool
     var assigned : Bool
+    var params : [Symbol] = []
 
     
     init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0){
@@ -46,6 +47,9 @@ public class Symbol {
 extension Symbol : CustomStringConvertible {
 
     public var description: String {
+        let paramsString = params.reversed().reduce("") { res, s in
+            res.appending("\(s.type)\t")
+        }
        return
     """
     \n
@@ -58,6 +62,7 @@ extension Symbol : CustomStringConvertible {
        |     Assigned : \(assigned)
        |     Line : \(lineNumber)
        |     Address : \(address)
+       |     Type parameters: \(paramsString)
         =================================== \n
     """
     }

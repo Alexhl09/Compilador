@@ -24,6 +24,8 @@ enum Operator : Int {
     case endFunc
     case era
     case gosub
+    case param
+    case rtn
 }
 
 extension Operator : CustomStringConvertible {
@@ -77,6 +79,10 @@ extension Operator : CustomStringConvertible {
             return "ERA"
         case .gosub:
             return "GOSUB"
+        case .param:
+            return "PARAM"
+        case .rtn:
+            return "RETURN"
         }
     }
 }
@@ -299,10 +305,36 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     ///
     ///
     SemCubeKey.init(op1: .Integer, op2: .Integer, o: .assign) : .Integer,
+    SemCubeKey.init(op1: .Integer, op2: .integer, o: .assign) : .integer,
+    SemCubeKey.init(op1: .Integer, op2: .double, o: .assign) : .double,
+    SemCubeKey.init(op1: .Integer, op2: .float, o: .assign) : .float,
+    
+    SemCubeKey.init(op1: .double, op2: .Integer, o: .assign) : .double,
+    SemCubeKey.init(op1: .double, op2: .integer, o: .assign) : .double,
+    SemCubeKey.init(op1: .double, op2: .float, o: .assign) : .double,
     SemCubeKey.init(op1: .double, op2: .double, o: .assign) : .double,
+
+    SemCubeKey.init(op1: .float, op2: .Integer, o: .assign) : .float,
+    SemCubeKey.init(op1: .float, op2: .integer, o: .assign) : .float,
     SemCubeKey.init(op1: .float, op2: .float, o: .assign) : .float,
+    SemCubeKey.init(op1: .float, op2: .double, o: .assign) : .double,
+    
+    SemCubeKey.init(op1: .integer, op2: .Integer, o: .assign) : .integer,
     SemCubeKey.init(op1: .integer, op2: .integer, o: .assign) : .integer,
+    SemCubeKey.init(op1: .integer, op2: .float, o: .assign) : .float,
+    SemCubeKey.init(op1: .integer, op2: .double, o: .assign) : .double,
+    
     SemCubeKey.init(op1: .boolean, op2: .boolean, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .Integer, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .integer, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .float, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .double, o: .assign) : .boolean,
+    
+    SemCubeKey.init(op1: .Integer, op2: .boolean, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .integer, op2: .boolean, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .float, op2: .boolean, o: .assign) : .boolean,
+    SemCubeKey.init(op1: .double, op2: .boolean, o: .assign) : .boolean,
+    
     SemCubeKey.init(op1: .void, op2: .void, o: .assign) : .void,
     SemCubeKey.init(op1: .char, op2: .char, o: .assign) : .char,
     

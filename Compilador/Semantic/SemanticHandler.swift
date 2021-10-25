@@ -45,7 +45,7 @@ class SemanticHandler : CustomStringConvertible {
         - type: Add the type of the symbol, by default is void
         - kind: Add the kind of the symbol (field or method), by default is a field
     */
-    func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field){
+    func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field, params: [Symbol] = []){
         let symbolToInsert = Symbol(lex.line, id, kind, type, constant, array, false)
         
         if (!symbolTable.insertInHashTable(symbolToInsert)){
@@ -55,6 +55,9 @@ class SemanticHandler : CustomStringConvertible {
                 symbolToInsert.address = newGlobalVariable(s: type)
             }else{
                 symbolToInsert.address = newLocalVariable(t: type)
+            }
+            if(params.count > 0){
+                symbolToInsert.params = params
             }
         }
     }
@@ -422,10 +425,21 @@ class SemanticHandler : CustomStringConvertible {
     func addForEachRange(range: String, id: String){
         
         // Save id to iterate in st
-        self.insertSymbolToST(id as NSString, false, false, .integer);
+        self.insertSymbolToST(id as NSString, false, false, .integer)
         // assign
         self.addOperator(op:.assign)
         // to id the last factor
+
+        
+        // INVERT RANGE
+        
+        let firstOperand = self.operationStack.getLastOperand() ?? ("", .void)
+        let sencondOperand = self.operationStack.getLastOperand() ?? ("", .void)
+        
+        self.operationStack.addOperand(operand: firstOperand.0, type: firstOperand.1)
+        self.operationStack.addOperand(operand: sencondOperand.0, type: sencondOperand.1)
+  
+        
         self.saveValueVariable(id : id)
         
         self.jumpStack.push(self.quadruples.count)
@@ -435,7 +449,8 @@ class SemanticHandler : CustomStringConvertible {
         }else{
             self.operationStack.operators.push(.lessThan)
         }
-        
+        // Agregar para validacion de for
+        self.addOperand(symbol: returnSymbolByID(id))
         self.addQuadruple()
        
         let (result, t) = operationStack.getLastOperand() ?? ("", .void)
@@ -495,15 +510,18 @@ class SemanticHandler : CustomStringConvertible {
         guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); return}
         // Add to operands stack
         
-        if(!symbol.assigned){
+        if(!symbol.assigned && !symbol.constant){
             symbol.assigned = true
-            symbol.type = operationStack.operands.peek()?.1 ?? .void
-            let beforeAddres = symbol.address
-            if(symbolTable.onlyOneNode()){
-                symbol.address = newGlobalVariable(s: symbol.type)
-            }else{
-                symbol.address = newLocalVariable(t: symbol.type)
+            if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
+                symbol.type = operationStack.operands.peek()?.1 ?? .void
+                let beforeAddres = symbol.address
+                if(symbolTable.onlyOneNode()){
+                    symbol.address = newGlobalVariable(s: symbol.type)
+                }else{
+                    symbol.address = newLocalVariable(t: symbol.type)
+                }
             }
+            
 //            switch symbol.type {
 //                case .integer:
 //
@@ -525,6 +543,10 @@ class SemanticHandler : CustomStringConvertible {
     
     func generateQuadruple() throws {
 
+        guard operationStack.operands.size() > 1 else {
+            print("Error generating quadruple for line\(lex.line)")
+            return
+        }
         let op : Operator = operationStack.operators.pop()!
 
         let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
@@ -538,6 +560,11 @@ class SemanticHandler : CustomStringConvertible {
         self.quadruples.append(generatedQuadruple)
 //        self.operationStack.operands.push(rightOperand)
 //        self.operationStack.types.push(rightType)
+        
+    }
+    
+    func returnSymbolByID(_ id: String) -> Symbol{
+        return self.symbolTable.lookup(id) ?? Symbol()
     }
     
     func readID(_ id: NSString){
@@ -556,7 +583,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func whileP1() {
-        jumpStack.push(quadruples.count - 1)
+        jumpStack.push(quadruples.count)
     }
     
     func whileP2() {
@@ -568,15 +595,15 @@ class SemanticHandler : CustomStringConvertible {
             return
         }
         print("Added Q for while on \(quadruples.count)")
-        quadruples.append(Quadruple(argument1: nil, argument2: result, op: .gotof, result: nil))
+        quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         jumpStack.push(quadruples.count - 1)
     }
     
     func whileP3() {
-        let end = jumpStack.pop()
-        let result = jumpStack.pop()
+        let end = jumpStack.pop() ?? -1
+        let result = jumpStack.pop() ?? -1
         quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: "\(result)"))
-        fillQuadruple(index: end!, value: String(quadruples.count))
+        fillQuadruple(index: end, value: String(quadruples.count))
         
     }
     
@@ -596,7 +623,7 @@ class SemanticHandler : CustomStringConvertible {
         self.memory.removeLocalAndTemporalMemory()
     }
     
-    func functionCall(_ idFunction : NSString){
+    func functionCall(_ idFunction : NSString, args : [(String, TypeSymbol)]){
        
         guard let symbolFunction = symbolTable.lookup(idFunction as String) else {
             print("Not found function to be called")
@@ -610,11 +637,22 @@ class SemanticHandler : CustomStringConvertible {
         /// SINO SE MANDA ERROR
         ///
         
+        let typeArguments = args.map({$0.1})
+        let typeParams = symbolFunction.params.map({$0.type})
+        guard (typeArguments == typeParams) else{
+            print("error function paramaters type mismatch")
+            return
+        }
         let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleEra)
         
         // FIXME: - Pass paramaters as quadruples
-
+        for (index, arg) in args.enumerated() {
+            let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params[index].address)")
+            self.quadruples.append(quadrupleParam)
+        }
+        
+        
         // CRAETE GOSUB
         let quadrupleGosub = Quadruple(argument1: nil, argument2: nil, op: .gosub, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleGosub)
@@ -622,6 +660,17 @@ class SemanticHandler : CustomStringConvertible {
         // Check if return not void
         let typeFunc = symbolFunction.type
         if(typeFunc != .void && symbolFunction.kind == .method){
+      
+            let newAddresss = newLocalVariable(t: typeFunc)
+            self.operationStack.addOperand(operand: "\(newAddresss)", type: typeFunc)
+        
+            
+            
+            let quadrupleReturn = Quadruple(argument1: "\(symbolFunction.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
+            self.quadruples.append(quadrupleReturn)
+           // self.addOperandByMemory(memoryAddress: newAddresss, type: typeFunc)
+
+            
 //            switch typeFunc {
 //            case .void:
 //                break
@@ -655,10 +704,13 @@ class SemanticHandler : CustomStringConvertible {
         let returnTypeExpected = symbolFunction.type
         let (operand, type) = operationStack.getLastOperand() ?? ("",.void)
         
-        guard (returnTypeExpected != type) else {
+        guard (returnTypeExpected == type) else {
             print("Mistmatch return and expected")
             return
         }
+        
+        let quadruploReturn = Quadruple(argument1: operand, argument2: nil, op: .rtn, result: "\(symbolFunction.address)")
+        self.quadruples.append(quadruploReturn)
         // Generar return cuadruple
         // Address of function
     }
