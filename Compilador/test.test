@@ -8,7 +8,7 @@ func float doble(float A, double p) {
     var S = 1;
     return A * A - S;
 }
-func printArray(int A) {
+func printArray(int A, bool B) {
     const double ju = 9.0;
     var a;
     var o;
@@ -77,7 +77,8 @@ main () {
     var arr_size = 6;
     print("a");
     print(arr);
-    const int sorted = mergeSort(arr, 0, arr_size - 1);
+    printArray(4, arr);
+    const int sorted = mergeSort(arr, 10 - 2, arr_size - 1);
     print(sorted);
     print("a");
     print(arr);

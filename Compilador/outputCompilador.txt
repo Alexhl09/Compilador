@@ -265,8 +265,8 @@ Cuadruplos:
 [46] - Op: PRINT    Address1:           Address2:           Result: 6007
 [47] - Op: GOTO     Address1:           Address2:           Result: 40
 [48] - Op: ERA      Address1:           Address2:           Result: doble
-[49] - Op: PARAM    Address1: 8000      Address2:           Result: 8000
-[50] - Op: PARAM    Address1: 10000     Address2:           Result: 10000
+[49] - Op: PARAM    Address1: 10000     Address2:           Result: 10000
+[50] - Op: PARAM    Address1: 8000      Address2:           Result: 8000
 [51] - Op: GOSUB    Address1:           Address2:           Result: doble
 [52] - Op: =        Address1: 4000      Address2:           Result: 10001
 [53] - Op: =        Address1: 10001     Address2:           Result: 10002
@@ -290,17 +290,23 @@ Cuadruplos:
 [71] - Op: =        Address1: 18009     Address2:           Result: 6000
 [72] - Op: PRINT    Address1:           Address2:           Result: 23000
 [73] - Op: PRINT    Address1:           Address2:           Result: 9000
-[74] - Op: -        Address1: 6000      Address2: 18003     Result: 12000
-[75] - Op: ERA      Address1:           Address2:           Result: mergeSort
-[76] - Op: PARAM    Address1: 12000     Address2:           Result: 6000
-[77] - Op: PARAM    Address1: 18005     Address2:           Result: 6001
-[78] - Op: PARAM    Address1: 9000      Address2:           Result: 9000
-[79] - Op: GOSUB    Address1:           Address2:           Result: mergeSort
-[80] - Op: =        Address1: 3         Address2:           Result: 6001
-[81] - Op: =        Address1: 6001      Address2:           Result: 6002
-[82] - Op: PRINT    Address1:           Address2:           Result: 23000
-[83] - Op: PRINT    Address1:           Address2:           Result: 9000
-[84] - Op: ENDFUNC  Address1:           Address2:           Result: 
+[74] - Op: ERA      Address1:           Address2:           Result: printArray
+[75] - Op: PARAM    Address1: 18008     Address2:           Result: 6000
+[76] - Op: PARAM    Address1: 9000      Address2:           Result: 9000
+[77] - Op: GOSUB    Address1:           Address2:           Result: printArray
+[78] - Op: -        Address1: 18000     Address2: 18007     Result: 12000
+[79] - Op: -        Address1: 6000      Address2: 18003     Result: 12001
+[80] - Op: ERA      Address1:           Address2:           Result: mergeSort
+[81] - Op: PARAM    Address1: 9000      Address2:           Result: 9000
+[82] - Op: PARAM    Address1: 12000     Address2:           Result: 6001
+[83] - Op: PARAM    Address1: 12001     Address2:           Result: 6000
+[84] - Op: GOSUB    Address1:           Address2:           Result: mergeSort
+[85] - Op: =        Address1: 3         Address2:           Result: 6001
+[86] - Op: =        Address1: 6001      Address2:           Result: 6002
+[87] - Op: PRINT    Address1:           Address2:           Result: 6002
+[88] - Op: PRINT    Address1:           Address2:           Result: 23000
+[89] - Op: PRINT    Address1:           Address2:           Result: 9000
+[90] - Op: ENDFUNC  Address1:           Address2:           Result: 
 
 
 JumpStack:
@@ -319,33 +325,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [3874821269543183153: 
-
-   |===================================
-   |     Identifier : main
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 73
-   |     Address : 1004
-   |     Type parameters: 
-    =================================== 
-, 7823390829611212657: 
-
-   |===================================
-   |     Identifier : z
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 4
-   |     Address : 2
-   |     Type parameters: 
-    =================================== 
-, -2536508743410805809: 
+ [-9034315318315374305: 
 
    |===================================
    |     Identifier : printArray
@@ -356,35 +336,22 @@ Last SymbolTable:
    |     Assigned : false
    |     Line : 69
    |     Address : 1003
-   |     Type parameters: integer	
+   |     Type parameters: boolean	integer	
     =================================== 
-, -5080130893963380463: 
+, 2190241613487600267: 
 
    |===================================
-   |     Identifier : doble
+   |     Identifier : mergeSort
    |     Kind : method
-   |     Type : float
+   |     Type : integer
    |     Constant : true
    |     Array : false
    |     Assigned : false
-   |     Line : 4
-   |     Address : 4000
-   |     Type parameters: float	double	
+   |     Line : 69
+   |     Address : 3
+   |     Type parameters: integer	integer	boolean	
     =================================== 
-, 4723702335987064777: 
-
-   |===================================
-   |     Identifier : x
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 1
-   |     Address : 0
-   |     Type parameters: 
-    =================================== 
-, 5549298555299876008: 
+, -6526733327898507510: 
 
    |===================================
    |     Identifier : y
@@ -397,34 +364,73 @@ Last SymbolTable:
    |     Address : 1
    |     Type parameters: 
     =================================== 
-, -4898804758424105889: 
+, 5558248334918116958: 
 
    |===================================
-   |     Identifier : mergeSort
-   |     Kind : method
+   |     Identifier : z
+   |     Kind : field
    |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 4
+   |     Address : 2
+   |     Type parameters: 
+    =================================== 
+, -4193828716796199269: 
+
+   |===================================
+   |     Identifier : main
+   |     Kind : method
+   |     Type : void
    |     Constant : true
    |     Array : false
    |     Assigned : false
-   |     Line : 69
-   |     Address : 3
-   |     Type parameters: boolean	integer	integer	
+   |     Line : 73
+   |     Address : 1004
+   |     Type parameters: 
+    =================================== 
+, 2239323196160638574: 
+
+   |===================================
+   |     Identifier : x
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 1
+   |     Address : 0
+   |     Type parameters: 
+    =================================== 
+, 3310472557434180469: 
+
+   |===================================
+   |     Identifier : doble
+   |     Kind : method
+   |     Type : float
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 4
+   |     Address : 4000
+   |     Type parameters: double	float	
     =================================== 
 ]
 
 Constants: 
- Constant:[30]       Address: 18002
-Constant:[20]       Address: 18001
+ Constant:[9]        Address: 18006
+Constant:[200]      Address: 18004
+Constant:[30]       Address: 18002
 Constant:[10]       Address: 18000
-Constant:[0]        Address: 18005
-Constant:[34]       Address: 23000
-Constant:[1]        Address: 18003
-Constant:[9]        Address: 18006
-Constant:[9.0]      Address: 22000
 Constant:[true]     Address: 21000
+Constant:[9.0]      Address: 22000
+Constant:[34]       Address: 23000
+Constant:[4]        Address: 18008
+Constant:[20]       Address: 18001
 Constant:[6]        Address: 18009
 Constant:[2]        Address: 18007
+Constant:[0]        Address: 18005
 Constant:[10.3]     Address: 22001
-Constant:[200]      Address: 18004
-Constant:[4]        Address: 18008
+Constant:[1]        Address: 18003
 

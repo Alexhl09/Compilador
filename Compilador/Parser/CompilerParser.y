@@ -186,10 +186,13 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
              | cadena;
              
 
-  llamada : ID LPAREN llamadaA RPAREN {semantic.functionCall($1, args: arguments);
-                 arguments.removeAll()
+  llamada : ID LPAREN llamadaA RPAREN {
+                semantic.functionCall($1, args: arguments);
+                arguments.removeAll()
              }
-        | ID LPAREN RPAREN {semantic.functionCall($1, args: [])};
+        | ID LPAREN RPAREN {
+            semantic.functionCall($1, args: [])
+        };
    
    llamadaA : expresion {
                 let arg = (semantic.operationStack.getLastOperand() ?? ("",.void))
@@ -268,7 +271,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    funcionesReturn : FUNC idFuncReturn startNode params RPAREN LBRACE cuerpoReturn popNode
        {
-           semantic.returnSymbolByID($2 as String).params = params
+           semantic.returnSymbolByID($2 as String).params = params.reversed()
            semantic.endFunction()
            self.params.removeAll()
        }

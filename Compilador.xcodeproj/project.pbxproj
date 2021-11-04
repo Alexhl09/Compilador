@@ -14,6 +14,8 @@
 		A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */; };
 		A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2A26FFBB260062BE51 /* CompilerLex.l */; };
 		A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2B26FFBB260062BE51 /* CompilerParser.y */; };
+		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
+		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
@@ -82,6 +84,8 @@
 		A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerStream.swift; sourceTree = "<group>"; };
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
+		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
+		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 				A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */,
 				A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */,
 				A9955AA6271A119B00A5BC43 /* SegmentType.swift */,
+				A97361E4273383DE00E1175A /* VirtualMachine.swift */,
+				A97361E62733841C00E1175A /* ActivationRecord.swift */,
 			);
 			path = VirtualMachine;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 				A930EA2726FFBB1E0062BE51 /* OCLexInput.swift in Sources */,
 				A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */,
 				A990DE92270BC12300C94528 /* Stack.swift in Sources */,
+				A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */,
 				A990DEA92716446700C94528 /* BooleanType.swift in Sources */,
 				A990DE90270BC11800C94528 /* Queue.swift in Sources */,
 				A9955AC9271FC28100A5BC43 /* WriteFile.swift in Sources */,
@@ -340,6 +347,7 @@
 				A930EA2826FFBB1E0062BE51 /* CompilerErrorDelegate.swift in Sources */,
 				A990DEA527162F3700C94528 /* SemanticHandler.swift in Sources */,
 				A990DEA22715597400C94528 /* Quadruple.swift in Sources */,
+				A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */,
 				A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */,
 				A9955AA3271A0EE100A5BC43 /* VirtualMemory.swift in Sources */,
 				A990DE9F2715593000C94528 /* Kind.swift in Sources */,

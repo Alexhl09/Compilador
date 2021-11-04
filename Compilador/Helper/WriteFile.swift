@@ -16,7 +16,8 @@ func writeSemanticAlex(semantic: SemanticHandler){
 
         do {
             try memoryText.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
+        } catch let error{
+            print(error.localizedDescription)
             // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
         }
     }

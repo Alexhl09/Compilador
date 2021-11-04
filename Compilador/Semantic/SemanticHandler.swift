@@ -57,7 +57,7 @@ class SemanticHandler : CustomStringConvertible {
                 symbolToInsert.address = newLocalVariable(t: type)
             }
             if(params.count > 0){
-                symbolToInsert.params = params
+                symbolToInsert.params = params.reversed() as Array
             }
         }
     }
@@ -637,7 +637,7 @@ class SemanticHandler : CustomStringConvertible {
         /// SINO SE MANDA ERROR
         ///
         
-        let typeArguments = args.map({$0.1})
+        let typeArguments = args.map({$0.1}).reversed() as Array
         let typeParams = symbolFunction.params.map({$0.type})
         guard (typeArguments == typeParams) else{
             print("error function paramaters type mismatch")
@@ -647,8 +647,8 @@ class SemanticHandler : CustomStringConvertible {
         self.quadruples.append(quadrupleEra)
         
         // FIXME: - Pass paramaters as quadruples
-        for (index, arg) in args.enumerated() {
-            let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params[index].address)")
+        for (index, arg) in args.enumerated().reversed() {
+            let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address)")
             self.quadruples.append(quadrupleParam)
         }
         
