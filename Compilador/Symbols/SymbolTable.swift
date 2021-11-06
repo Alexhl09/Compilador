@@ -16,6 +16,7 @@ public class Symbol {
     var type: TypeSymbol
     var constant : Bool
     var array : Bool
+    var dimension2D : (UInt, UInt)?
     var assigned : Bool
     var params : [Symbol] = []
 
@@ -29,6 +30,30 @@ public class Symbol {
         self.array = array
         self.assigned = assigned
         self.address = address
+    }
+//    
+//    init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0, rows : NSNumber){
+//        self.lineNumber = UInt16(lineNumber)
+//        self.identifier = String(identifier)
+//        self.kind = kind
+//        self.type = type
+//        self.constant = constant
+//        self.array = array
+//        self.assigned = assigned
+//        self.address = address
+//        self.dimension2D = (rows.uintValue, 1)
+//    }
+    
+    init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0, rows : NSNumber, columns : NSNumber){
+        self.lineNumber = UInt16(lineNumber)
+        self.identifier = String(identifier)
+        self.kind = kind
+        self.type = type
+        self.constant = constant
+        self.array = array
+        self.assigned = assigned
+        self.address = address
+        self.dimension2D = (rows.uintValue, columns.uintValue)
     }
     
     init(){

@@ -8,7 +8,6 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 %type <NSString> range declareVarCiclo idFunc idFuncReturn
 %type <NSMutableArray> params
 
-
 %global {
     var semantic : SemanticHandler = SemanticHandler()
     var params : [Symbol] = []
@@ -98,7 +97,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | VAR ID varsPrimaArreglos SEMICOLON
         {
-            semantic.insertSymbolToST($2, false, true)
+            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber));
         }
    | VAR ID varAssign SEMICOLON
         {
@@ -107,7 +106,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | VAR ID varsPrimaArreglos varAssign SEMICOLON
         {
-            semantic.insertSymbolToST($2, false, true);
+            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber));
+            semantic.assignArray($2);
         }
    | tipoCompuesto ID varAssign SEMICOLON
         {
@@ -116,7 +116,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | CONST tipoSimple ID varsPrimaArreglos varsPrima varAssign SEMICOLON
         {
-            semantic.insertSymbolToST($3, true, true, TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), const : true, type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.assignArray($3);
         }
    | const;
             
@@ -124,8 +125,12 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     
     varEqAssign : EQ {semantic.addOperator(op: .assign)};
     
-    varsPrimaArreglos : LSBRAKE CTEI RSBRAKE
-                      | LSBRAKE CTEI RSBRAKE varsPrimaArreglos;
+    varsPrimaArreglos : LSBRAKE CTEI RSBRAKE {
+        $$ = ($2, 1) as! AnyObject
+    }
+    | LSBRAKE CTEI RSBRAKE LSBRAKE CTEI RSBRAKE {
+        $$ = ($2, $5) as! AnyObject
+    };
     
     varsPrima : EQ LBRACE expresion RBRACE
               | EQ LBRACE expresion COMMA RBRACE;

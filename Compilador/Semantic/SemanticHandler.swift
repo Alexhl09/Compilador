@@ -46,6 +46,7 @@ class SemanticHandler : CustomStringConvertible {
         - kind: Add the kind of the symbol (field or method), by default is a field
     */
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field, params: [Symbol] = []){
+        
         let symbolToInsert = Symbol(lex.line, id, kind, type, constant, array, false)
         
         if (!symbolTable.insertInHashTable(symbolToInsert)){
@@ -60,6 +61,58 @@ class SemanticHandler : CustomStringConvertible {
                 symbolToInsert.params = params.reversed() as Array
             }
         }
+    }
+    
+    func insertArrayToST(_ id : NSString, _ dimension : (NSNumber, NSNumber), const : Bool = true, type: TypeSymbol  = .void){
+        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
+        
+        
+        self.addConstantInteger(dimension.0, saveOperand: false)
+        self.addConstantInteger(dimension.1, saveOperand: false)
+        
+        let sizeArray = dimension.0.intValue * dimension.1.intValue
+        
+        if (!symbolTable.insertInHashTable(symbolToInsert)){
+            delegate?.sendVariableRepeated(id: id as String)
+        }else{
+            if(symbolTable.onlyOneNode()){
+                symbolToInsert.address = newGlobalVariable(s: type, size: sizeArray)
+            }else{
+                symbolToInsert.address = newLocalVariable(t: type, size: sizeArray)
+            }
+        }
+    }
+    
+    func assignArray(_ id: NSString){
+        
+        
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
+
+        let sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
+        guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); return }
+    
+        if(!symbol.assigned && !symbol.constant){
+            symbol.assigned = true
+            if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
+                symbol.type = operationStack.operands.peek()?.1 ?? .void
+                let beforeAddres = symbol.address
+                if(symbolTable.onlyOneNode()){
+                    symbol.address = self.newGlobalVariable(s: symbol.type, size: sizeArray)
+                }else{
+                    symbol.address = self.newLocalVariable(t: symbol.type, size: sizeArray)
+                }
+            }
+        }
+        
+        let baseAddress = symbol.address
+        let operands : [(String, TypeSymbol)] = self.operationStack.getLastNOperands(sizeArray).reversed()
+        
+        for i in (0..<sizeArray) {
+           
+            let quadrupleArrayAssign = Quadruple(argument1: "\(operands[i].0)", argument2: nil, op: .assign, result: "\(baseAddress + i)")
+            self.quadruples.append(quadrupleArrayAssign)
+        }
+        let _ = self.operationStack.operators.pop()
     }
     
     /**
@@ -109,15 +162,15 @@ class SemanticHandler : CustomStringConvertible {
      Ask to the memory for a new global address for a specific type
      - Parameter s: The type of the symbol
     */
-    func newGlobalVariable(s : TypeSymbol) -> Int {
-        return memory.newGlobalAddress(type: s)
+    func newGlobalVariable(s : TypeSymbol, size : Int = 1) -> Int {
+        return memory.newGlobalAddress(type: s, size: size)
     }
     /**
      Ask to the memory for a new local address for a specific type
      - Parameter t: The type of the symbol
     */
-    func newLocalVariable(t: TypeSymbol) -> Int {
-        return memory.newLocalAdress(type: t)
+    func newLocalVariable(t: TypeSymbol, size : Int = 1) -> Int {
+        return memory.newLocalAdress(type: t, sizeToReserve: size)
     }
     
     // MARK: - Constants
@@ -125,20 +178,24 @@ class SemanticHandler : CustomStringConvertible {
      Look for the address of an specific value of integer, and save that as an operand
      - Parameter number: The object number
     */
-    func addConstantInteger(_ number :NSNumber){
+    func addConstantInteger(_ number :NSNumber, size : Int = 1, saveOperand : Bool = true){
         /// Takes the integer value
         let integerValue = number.intValue
         /// Looks for the address in the constant Table
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(integerValue)") {
             /// If found, add that address as an operand of type integer
-            self.addOperandByMemory(memoryAddress: lookUpAddress, type: .integer)
+            if(saveOperand){
+                self.addOperandByMemory(memoryAddress: lookUpAddress, type: .integer)
+            }
         }else{
             /// If not, ask for new constant address of integer type
-            let newAddress = memory.newConstantAddress(type: .integer)
+            let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: integerValue, address: newAddress)
             /// Add the new address as an operand in operands stack
-            self.addOperandByMemory(memoryAddress: newAddress, type: .integer)
+            if(saveOperand){
+                self.addOperandByMemory(memoryAddress: newAddress, type: .integer)
+            }
         }
     }
     
@@ -146,7 +203,7 @@ class SemanticHandler : CustomStringConvertible {
      Look for the address of an specific value of float, and save that as an operand
      - Parameter number: The object number
     */
-    func addConstantFloat(_ number : NSNumber){
+    func addConstantFloat(_ number : NSNumber, size : Int = 1){
         /// Takes the float value
         let floatValue = number.floatValue
         /// Looks for the address in the constant Table
@@ -155,7 +212,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .float)
         }else{
             /// If not, ask for new constant address of float type
-            let newAddress = memory.newConstantAddress(type: .float)
+            let newAddress = memory.newConstantAddress(type: .float, sizeToReserve: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: floatValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -167,7 +224,7 @@ class SemanticHandler : CustomStringConvertible {
      Look for the address of an specific value of double, and save that as an operand
      - Parameter number: The object number
     */
-    func addConstantDouble(_ number : NSNumber){
+    func addConstantDouble(_ number : NSNumber, size : Int = 1){
         /// Takes the float value
         let doubleValue = number.doubleValue
         /// Looks for the address in the constant Table
@@ -176,7 +233,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .double)
         }else{
             /// If not, ask for new constant address of double type
-            let newAddress = memory.newConstantAddress(type: .double)
+            let newAddress = memory.newConstantAddress(type: .double, sizeToReserve: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: doubleValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -187,7 +244,7 @@ class SemanticHandler : CustomStringConvertible {
      Look for the address of an specific value of bool, and save that as an operand
      - Parameter number: The object number
     */
-    func addConstantBool(_ number : NSNumber){
+    func addConstantBool(_ number : NSNumber, size : Int = 1){
         /// Takes the bool value
         let boolValue = number.boolValue
         /// Looks for the address in the constant Table
@@ -196,7 +253,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
         }else{
             /// If not, ask for new constant address of bool type
-            let newAddress = memory.newConstantAddress(type: .boolean)
+            let newAddress = memory.newConstantAddress(type: .boolean, sizeToReserve: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: boolValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -207,7 +264,7 @@ class SemanticHandler : CustomStringConvertible {
      Look for the address of an specific value of double, and save that as an operand
      - Parameter character: The object nsstring
     */
-    func addConstantChar(_ character : NSString){
+    func addConstantChar(_ character : NSString, size : Int = 1){
         // Takes the char value
         let charValue = character.character(at: 0)
         /// Looks for the address in the constant Table
@@ -216,7 +273,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
         }else{
             /// If not, ask for new constant address of char type
-            let newAddress = memory.newConstantAddress(type: .char)
+            let newAddress = memory.newConstantAddress(type: .char, sizeToReserve: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: charValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -450,7 +507,7 @@ class SemanticHandler : CustomStringConvertible {
             self.operationStack.operators.push(.lessThan)
         }
         // Agregar para validacion de for
-        self.addOperand(symbol: returnSymbolByID(id))
+        self.addOperand(symbol: returnSymbolByID(id) )
         self.addQuadruple()
        
         let (result, t) = operationStack.getLastOperand() ?? ("", .void)

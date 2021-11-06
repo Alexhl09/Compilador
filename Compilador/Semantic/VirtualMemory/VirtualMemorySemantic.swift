@@ -23,11 +23,11 @@ class VirtualMemorySemantic : CustomStringConvertible {
         self.constantBlock = VirtualMemoryBlockSemantic(sizeBlock: sizeByBlock, initialAddress: sizeByBlock * 3)
     }
     
-    func newGlobalAddress(type: TypeSymbol) -> Int{
-        return globalBlock.newAddress(type: type)
+    func newGlobalAddress(type: TypeSymbol, size : Int) -> Int{
+        return globalBlock.newAddress(type: type, size: size)
     }
     
-    func newLocalAdress(type: TypeSymbol, sizeToReserve : Int = 1) -> Int {
+    func newLocalAdress(type: TypeSymbol, sizeToReserve:Int) -> Int {
         return localBlock.newAddress(type: type, size: sizeToReserve)
     }
     
@@ -35,7 +35,7 @@ class VirtualMemorySemantic : CustomStringConvertible {
         return tempBlock.newAddress(type: type, size: sizetoReserve)
     }
     
-    func newConstantAddress(type: TypeSymbol, sizeToReserve:Int = 1) -> Int {
+    func newConstantAddress(type: TypeSymbol, sizeToReserve:Int ) -> Int {
         return constantBlock.newAddress(type: type, size: sizeToReserve)
     }
     
@@ -112,7 +112,7 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
         return self.charBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
     }
     
-    func newAddress(type: TypeSymbol, size : Int = 1) -> Int {
+    func newAddress(type: TypeSymbol, size : Int) -> Int {
         switch type {
         case .void:
             return newVoidAddress(sizeToReserve: size)

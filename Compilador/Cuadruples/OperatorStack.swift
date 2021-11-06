@@ -27,4 +27,16 @@ struct OperatorStack {
     mutating func addOperator(op : Operator){
         operators.push(op)
     }
+    
+    mutating func getLastNOperands(_ n : Int) -> [(String, TypeSymbol)] {
+        if(n <= operands.size()){
+            var lastP : [(String, TypeSymbol)] = []
+            for i in 0..<n{
+                lastP.append(self.operands.pop()!)
+            }
+            return lastP
+        }
+        return []
+    }
+    
 }
