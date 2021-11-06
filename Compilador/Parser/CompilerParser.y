@@ -106,7 +106,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | VAR ID varsPrimaArreglos varAssign SEMICOLON
         {
-            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber));
+            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber), const : false);
             semantic.assignArray($2);
         }
    | tipoCompuesto ID varAssign SEMICOLON
@@ -116,7 +116,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | CONST tipoSimple ID varsPrimaArreglos varsPrima varAssign SEMICOLON
         {
-            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), const : true, type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
             semantic.assignArray($3);
         }
    | const;
@@ -335,8 +335,11 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    expresion : hiperExpression
                 | llamada
-                | LBRACE arrayFactor RBRACE;
-
+                | LBRACE arrayExpressions RBRACE;
+                
+    arrayExpressions : arrayFactor SEMICOLON arrayExpressions
+    | arrayFactor;
+    
     arrayFactor : factor COMMA arrayFactor
                 | factor;
                 
