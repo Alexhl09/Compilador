@@ -12,6 +12,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     var semantic : SemanticHandler = SemanticHandler()
     var params : [Symbol] = []
     var arguments : [(String, TypeSymbol)] = []
+    var linkedListArray = ArrayLinkedList()
+    var r : Int = 1
 }
 
 %errors {
@@ -95,18 +97,22 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         {
             semantic.insertSymbolToST($2, false, false)
         }
-   | VAR ID varsPrimaArreglos SEMICOLON
+   | VAR ID varsPrimaArreglosMulti SEMICOLON
         {
-            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber));
+            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r);
+            linkedListArray = ArrayLinkedList();
+            r = 1;
         }
    | VAR ID varAssign SEMICOLON
         {
             semantic.insertSymbolToST($2, false, false);
-            semantic.saveValueVariable(id : $2 as String)
+            semantic.saveValueVariable(id : $2 as String);
         }
    | VAR ID varsPrimaArreglos varAssign SEMICOLON
         {
-            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber), const : false);
+            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber), linkedListArray, r: r, const : false);
+            linkedListArray = ArrayLinkedList();
+            r = 1;
             semantic.assignArray($2);
         }
    | tipoCompuesto ID varAssign SEMICOLON
@@ -116,7 +122,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | CONST tipoSimple ID varsPrimaArreglos varsPrima varAssign SEMICOLON
         {
-            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), linkedListArray, r: r, type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            linkedListArray = ArrayLinkedList();
+            r = 1;
             semantic.assignArray($3);
         }
    | const;
@@ -126,10 +134,27 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     varEqAssign : EQ {semantic.addOperator(op: .assign)};
     
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE {
+        let lS = $2.intValue
+        r = (lS) * r
+        linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r: r))
         $$ = ($2, 1) as! AnyObject
     }
     | LSBRAKE CTEI RSBRAKE LSBRAKE CTEI RSBRAKE {
+        let lS = $2.intValue
+        r = (lS) * r
+        linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
         $$ = ($2, $5) as! AnyObject
+    };
+    
+    varsPrimaArreglosMulti : LSBRAKE CTEI RSBRAKE {
+        let lS = $2.intValue
+        r = (lS) * r
+        linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
+    }
+    | LSBRAKE CTEI RSBRAKE varsPrimaArreglosMulti {
+        let lS = $2.intValue
+        r = (lS) * r
+        linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
     };
     
     varsPrima : EQ LBRACE expresion RBRACE
@@ -177,7 +202,27 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             }
             ;
            
-    asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)};
+    asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)}
+    | ID LSBRAKE expresion RSBRAKE varAssign {
+        print("Assigned cell array");
+        semantic.assignOneCellArray($1);
+    }
+    | ID LSBRAKE expresion RSBRAKE LSBRAKE expresion RSBRAKE varAssign {
+        print("Assigned cell matrix")
+        semantic.assignOneCellArray($1);
+    }
+    | assigV varAssign {
+        print("Assigned multi");
+        semantic.assignToPointer();
+    };
+    
+    assigV: ID assMulti {
+        semantic.assignOneCellArray($1);
+    };
+    
+    assMulti : LSBRAKE expresion RSBRAKE
+    | LSBRAKE expresion RSBRAKE assMulti;
+    
            
            
   escribir : PRINT LPAREN escribirA RPAREN {semantic.addPrint()};

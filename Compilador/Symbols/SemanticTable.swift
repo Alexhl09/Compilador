@@ -26,6 +26,8 @@ enum Operator : Int {
     case gosub
     case param
     case rtn
+    case vrf
+    case sumAd
 }
 
 extension Operator : CustomStringConvertible {
@@ -83,6 +85,10 @@ extension Operator : CustomStringConvertible {
             return "PARAM"
         case .rtn:
             return "RETURN"
+        case .vrf:
+            return "VERIFY"
+        case .sumAd:
+            return "SUM ADDR"
         }
     }
 }

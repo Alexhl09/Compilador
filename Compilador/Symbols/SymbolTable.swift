@@ -16,7 +16,8 @@ public class Symbol {
     var type: TypeSymbol
     var constant : Bool
     var array : Bool
-    var dimension2D : (UInt, UInt)?
+    var dimension2D : (Int, Int)?
+    var arrayList : ArrayLinkedList?
     var assigned : Bool
     var params : [Symbol] = []
 
@@ -53,7 +54,7 @@ public class Symbol {
         self.array = array
         self.assigned = assigned
         self.address = address
-        self.dimension2D = (rows.uintValue, columns.uintValue)
+        self.dimension2D = (rows.intValue, columns.intValue)
     }
     
     init(){
@@ -319,14 +320,10 @@ public class Node {
         self.next = next
     }
     
-    
     init(next : Node? = nil){
         self.symbols = [:]
         self.next = next
     }
-    
-    
-
 }
 
 extension Node: CustomStringConvertible {

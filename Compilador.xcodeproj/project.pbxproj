@@ -16,6 +16,7 @@
 		A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2B26FFBB260062BE51 /* CompilerParser.y */; };
 		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
 		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
+		A97362042737696000E1175A /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
@@ -86,6 +87,7 @@
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
+		A97362032737696000E1175A /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				A990DE9C270F779900C94528 /* SemanticTable.swift */,
 				A990DE9E2715593000C94528 /* Kind.swift */,
 				A990DEA82716446700C94528 /* BooleanType.swift */,
+				A97362032737696000E1175A /* Arrays.swift */,
 			);
 			path = Symbols;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				A9955AA5271A10A700A5BC43 /* VirtualMemoryBlock.swift in Sources */,
 				A990DE9D270F779900C94528 /* SemanticTable.swift in Sources */,
 				A9955AAB271A5AA400A5BC43 /* VirtualMemorySemantic.swift in Sources */,
+				A97362042737696000E1175A /* Arrays.swift in Sources */,
 				A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */,
 				A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */,
 				A930EA2626FFBB1E0062BE51 /* OCFileInput.swift in Sources */,

@@ -21,7 +21,7 @@ class SemanticHandler : CustomStringConvertible {
     var constants: [String: Int] = [:]
     var functionAsMainThread : String? = nil
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
-    
+    var dimensionStack : Stack<(String, Int)> = []
     
     // MARK: - Initializer
     
@@ -63,9 +63,22 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
-    func insertArrayToST(_ id : NSString, _ dimension : (NSNumber, NSNumber), const : Bool = true, type: TypeSymbol  = .void){
+    func insertArrayToST(_ id : NSString, _ dimension : (NSNumber, NSNumber), _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void){
         let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
         
+        var temp = list.head
+        var dim = 1
+        var offset = 0
+        var size = r
+        var myR = r
+        while temp != nil{
+            temp!.m = myR/(temp?.limSup ?? 1 + 1)
+            myR = temp!.m
+            offset = offset + 0 * temp!.m
+            temp!.m = dim
+            temp = temp?.next
+            dim += 1
+        }
         
         self.addConstantInteger(dimension.0, saveOperand: false)
         self.addConstantInteger(dimension.1, saveOperand: false)
@@ -83,6 +96,69 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void){
+        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: -1, columns: -1)
+        
+        var temp = list.head
+        var dim = 1
+        var offset = 0
+        var size = r
+        var myR = r
+        while temp != nil{
+            self.addConstantInteger( NSNumber(value: temp!.limSup), saveOperand: false)
+            temp!.m = myR/(temp?.limSup ?? 1)
+            myR = temp!.m
+            offset = offset + 0 * temp!.m
+            temp!.dim = dim
+            temp = temp?.next
+            dim += 1
+        }
+        symbolToInsert.arrayList = list
+        symbolToInsert.dimension2D = (0, dim)
+
+        if (!symbolTable.insertInHashTable(symbolToInsert)){
+            delegate?.sendVariableRepeated(id: id as String)
+        }else{
+            if(symbolTable.onlyOneNode()){
+                symbolToInsert.address = newGlobalVariable(s: type, size: size)
+            }else{
+                symbolToInsert.address = newLocalVariable(t: type, size: size)
+            }
+        }
+    }
+    
+    fileprivate func assignArray(_ symbol: Symbol) {
+        symbol.assigned = true
+        let sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
+        if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
+            symbol.type = operationStack.operands.peek()?.1 ?? .void
+            let beforeAddres = symbol.address
+            if(symbolTable.onlyOneNode()){
+                symbol.address = self.newGlobalVariable(s: symbol.type, size: sizeArray)
+            }else{
+                symbol.address = self.newLocalVariable(t: symbol.type, size: sizeArray)
+            }
+        }
+    }
+    
+    func assignOneCellArray(_ id : NSString){
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
+        if (!symbol.assigned && !symbol.constant){
+            assignArray(symbol)
+        }
+        
+        self.addOperand(symbol: symbol)
+        
+        do {
+            try generateQuadrupleAssignCellArray(symbol: symbol)
+        }catch(let error){
+            print(error.localizedDescription)
+        }
+       
+        
+        
+    }
+    
     func assignArray(_ id: NSString){
         
         
@@ -92,16 +168,7 @@ class SemanticHandler : CustomStringConvertible {
         guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); return }
     
         if(!symbol.assigned && !symbol.constant){
-            symbol.assigned = true
-            if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
-                symbol.type = operationStack.operands.peek()?.1 ?? .void
-                let beforeAddres = symbol.address
-                if(symbolTable.onlyOneNode()){
-                    symbol.address = self.newGlobalVariable(s: symbol.type, size: sizeArray)
-                }else{
-                    symbol.address = self.newLocalVariable(t: symbol.type, size: sizeArray)
-                }
-            }
+            assignArray(symbol)
         }
         
         let baseAddress = symbol.address
@@ -615,9 +682,112 @@ class SemanticHandler : CustomStringConvertible {
         }
         let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
         self.quadruples.append(generatedQuadruple)
-//        self.operationStack.operands.push(rightOperand)
-//        self.operationStack.types.push(rightType)
+    }
+    
+    func generateQuadrupleAssignCellArray(symbol: Symbol) throws {
         
+        let (symbolOperand, symbolType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        guard let dim = symbol.dimension2D else {print("No es un array");return}
+        var temp = symbol.arrayList?.head
+        var dimNow = 1
+        dimensionStack.push((symbol.identifier, dimNow))
+        operationStack.operands.reverse()
+        while(temp != nil){
+          
+            
+            let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
+            
+            if let lookUpAddress = lookUpAddressConstantTable(value: "\(temp!.limSup)") {
+                let quadrupleVerify = Quadruple(argument1: valueOperand, argument2: nil, op: .vrf, result: "\(lookUpAddress)")
+                self.quadruples.append(quadrupleVerify)
+            }else{
+                let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: 1)
+                /// Save the value and new address to the constant table
+                self.saveAddress(constant: temp?.limSup ?? 0, address: newAddress)
+                let quadrupleVerify = Quadruple(argument1: valueOperand, argument2: nil, op: .vrf, result: "\(newAddress)")
+                self.quadruples.append(quadrupleVerify)
+            }
+            
+            if(temp?.next != nil){
+                let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                
+                guard let resultType = semanticCube[SemCubeKey(op1: valueType, op2: .integer, o: .multiply)] else {
+                    /// If it is impossible, send an error
+                    delegate?.sendInvalidOperationBetween(t1: valueType, t2: .integer)
+                    return
+                }
+                
+                let tempAddress = memory.newTemporalAddress(type: resultType)
+                
+                let auxQ = Quadruple(argument1: valueOperand, argument2: "\(needConstantInt(value: temp!.m))", op: .multiply, result: "\(tempAddress)")
+                
+                self.quadruples.append(auxQ)
+                
+                
+                self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
+                
+                if(dimNow > 1){
+                    
+                    let (aux2Operand, aux2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                    let (aux1Operand, aux1Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                    
+                    
+                    guard let resultType2 = semanticCube[SemCubeKey(op1: aux2Type, op2: aux1Type, o: .sum)] else {
+                        /// If it is impossible, send an error
+                        delegate?.sendInvalidOperationBetween(t1: aux2Type, t2: aux1Type)
+                        return
+                    }
+                    
+                    let tempAddress2 = memory.newTemporalAddress(type: resultType2)
+                   
+                    let auxS = Quadruple(argument1: aux1Operand, argument2: aux2Operand, op: .sum, result: "\(tempAddress2)")
+                    self.quadruples.append(auxS)
+                    self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+                }
+            }
+            
+            dimNow += 1
+            temp = temp?.next
+        }
+        
+        let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let tempAddress3 = memory.newTemporalAddress(type: .integer)
+        let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(symbol.address)", op: .sumAd, result: "\(tempAddress3)")
+        self.quadruples.append(lastQuadruple)
+        self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
+        
+        
+
+    }
+    
+    func assignToPointer(){
+        
+        
+//        // ASSIGN - EQUIS in ADDRESS
+
+        guard operationStack.operands.size() > 1 else {
+            print("Error generating quadruple for line\(lex.line)")
+            return
+        }
+        let op : Operator = operationStack.operators.pop()!
+
+        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+
+        let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
+        self.quadruples.append(generatedQuadruple)
+        
+    }
+    
+    func needConstantInt(value : Int) -> Int{
+        if let lookUpAddress = lookUpAddressConstantTable(value: "\(value)") {
+            return lookUpAddress
+        }else{
+            let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: 1)
+            /// Save the value and new address to the constant table
+            self.saveAddress(constant: value, address: newAddress)
+            return newAddress
+        }
     }
     
     func returnSymbolByID(_ id: String) -> Symbol{

@@ -184,6 +184,8 @@ class VirtualMemoryBlock{
             break
         case .ID:
             break
+        case .pointer:
+            break
         }
         return -1
     }
@@ -211,6 +213,8 @@ class VirtualMemoryBlock{
         case .String:
             break
         case .ID:
+            break
+        case .pointer:
             break
         }
         

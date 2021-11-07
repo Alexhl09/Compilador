@@ -40,6 +40,10 @@ public struct Stack<Element> {
     public init(_ elements: [Element]) {
       storage = elements
     }
+    
+    public mutating func reverse(){
+        self.storage.reverse()
+    }
 }
 
 extension Stack: CustomStringConvertible {

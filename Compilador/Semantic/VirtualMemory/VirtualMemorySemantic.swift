@@ -134,6 +134,8 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
             break
         case .ID:
             break
+        case .pointer:
+            break
         }
         return -1
     }

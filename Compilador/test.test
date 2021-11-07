@@ -1,6 +1,7 @@
 var x = 10;
 var y = 20;
 var z = 30;
+var array[6] = { 12, 11, 13, 5, 6, 7 };
 // var x = 12;
 func float doble(float A, double p) {
     var x = 10 > 1;
@@ -74,6 +75,11 @@ func int mergeSort(bool arr, int pos, int size){
 main () {
     var array[6] = { 12, 11, 13, 5, 6, 7 };
     var array2[6][4] = { 12, 11, 13, 5, 6, 7 ;  12, 11, 13, 5, 6, 7;  12, 11, 13, 5, 6, 7 ;  12, 11, 13, 5, 6, 7};
+    array[1] = 10;
+    var arrayTest[2][2][3];
+    print("a");
+    arrayTest[1][1][2] = 0;
+    var arra[10][2][2];
     var arr = true;
     var arr_size = 6;
     print("a");

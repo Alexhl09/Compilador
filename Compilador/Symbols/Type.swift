@@ -18,5 +18,6 @@ enum TypeSymbol : Int {
     case Integer
     case String
     case ID
+    case pointer
 }
 
