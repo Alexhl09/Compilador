@@ -22,6 +22,7 @@ class SemanticHandler : CustomStringConvertible {
     var functionAsMainThread : String? = nil
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     var dimensionStack : Stack<(String, Int)> = []
+    var infoStack: InfoStack = InfoStack()
     
     // MARK: - Initializer
     
@@ -694,7 +695,6 @@ class SemanticHandler : CustomStringConvertible {
         operationStack.operands.reverse()
         while(temp != nil){
           
-            
             let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
             
             if let lookUpAddress = lookUpAddressConstantTable(value: "\(temp!.limSup)") {
@@ -941,6 +941,45 @@ class SemanticHandler : CustomStringConvertible {
         // Generar return cuadruple
         // Address of function
     }
+    
+    func fillInfoStack(params : [Symbol]) {
+        for symbol in params {
+            switch symbol.type {
+            case .String:
+                infoStack.numberStrings += 1
+                break
+            case .Integer:
+                infoStack.numberInts += 1
+                break
+            case .void:
+                infoStack.numberVoids += 1
+                break
+            case .integer:
+                infoStack.numberInts += 1
+                break
+            case .string:
+                infoStack.numberStrings += 1
+                break
+            case .boolean:
+                infoStack.numberBools += 1
+                break
+            case .float:
+                infoStack.numberFloats += 1
+                break
+            case .char:
+                infoStack.numberChars += 1
+                break
+            case .double:
+                infoStack.numberDoubles += 1
+                break
+            case .ID:
+                break
+            case .pointer:
+                break
+            }
+        }
+    }
+
     
     public var description: String {
         let q = quadruples.enumerated().reduce("", { res, q in

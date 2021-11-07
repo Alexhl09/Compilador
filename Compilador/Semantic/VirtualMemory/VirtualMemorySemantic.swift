@@ -8,7 +8,7 @@
 import Foundation
 
 class VirtualMemorySemantic : CustomStringConvertible {
-    let maxSize: Int = 24000
+    let maxSize: Int = 28000
     var sizeByBlock : Int
     var globalBlock : VirtualMemoryBlockSemantic
     var localBlock : VirtualMemoryBlockSemantic
@@ -78,6 +78,7 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
     var doubleBlocks : SemiBlockMemory
     var floatBlocks : SemiBlockMemory
     var charBlocks : SemiBlockMemory
+    var pointerBlocks : SemiBlockMemory
     
     
     init(sizeBlock: Int, initialAddress: Int){
@@ -89,6 +90,7 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
         self.boolBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 3), sizeSemiBlock: self.sizeBlock)
         self.floatBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 4), sizeSemiBlock: self.sizeBlock)
         self.charBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 5), sizeSemiBlock: self.sizeBlock)
+        self.pointerBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock * 6), sizeSemiBlock: self.sizeBlock)
     }
     
     func newIntAddress(sizeToReserve: Int) -> Int {
@@ -110,6 +112,10 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
     
     func newCharAddress(sizeToReserve: Int) -> Int {
         return self.charBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
+    }
+    
+    func newPointerAddress(sizeToReserve: Int) -> Int {
+        return self.pointerBlocks.newAddressInMemory(sizeToReserve: sizeToReserve)
     }
     
     func newAddress(type: TypeSymbol, size : Int) -> Int {
@@ -135,7 +141,7 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
         case .ID:
             break
         case .pointer:
-            break
+            return newPointerAddress(sizeToReserve: size)
         }
         return -1
     }

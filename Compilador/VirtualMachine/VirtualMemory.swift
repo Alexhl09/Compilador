@@ -9,8 +9,17 @@ import Foundation
 
 
 
-struct InfoStack {
-    let numberInts, numberFloats, numberBools, numberChars, numberDoubles, numberVoids : Int
+class InfoStack {
+    var numberInts, numberFloats, numberBools, numberChars, numberDoubles, numberVoids, numberStrings : Int
+    
+    init() {
+        numberInts = 0
+        numberFloats = 0
+        numberBools = 0
+        numberChars = 0
+        numberDoubles = 0
+        numberVoids = 0
+    }
 }
 
 
