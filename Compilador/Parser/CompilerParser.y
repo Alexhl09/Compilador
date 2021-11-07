@@ -348,7 +348,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    funcionesVoid : FUNC idFunc startNode params RPAREN cuerpo
        {
            semantic.insertSymbolToST($2, true, false, .void, .method, params: self.params)
-           semantic.fillInfoStack(prams)
+           semantic.fillInfoStack(params)
            semantic.endFunction()
            self.params.removeAll()
        }
