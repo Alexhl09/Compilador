@@ -231,6 +231,9 @@ class SemanticHandler : CustomStringConvertible {
      - Parameter s: The type of the symbol
     */
     func newGlobalVariable(s : TypeSymbol, size : Int = 1) -> Int {
+        if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
+            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: s)
+        }
         return memory.newGlobalAddress(type: s, size: size)
     }
     /**
@@ -238,7 +241,21 @@ class SemanticHandler : CustomStringConvertible {
      - Parameter t: The type of the symbol
     */
     func newLocalVariable(t: TypeSymbol, size : Int = 1) -> Int {
+        if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
+            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: t)
+        }
         return memory.newLocalAdress(type: t, sizeToReserve: size)
+    }
+    
+    /**
+     Ask to the memory for a new temporal address for a specific type
+     - Parameter t: The type of the symbol
+    */
+    func newTemporalAddress(p: TypeSymbol, size : Int = 1) -> Int {
+        if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
+            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: p)
+        }
+        return memory.newTemporalAddress(type: p)
     }
     
     // MARK: - Constants
@@ -942,41 +959,40 @@ class SemanticHandler : CustomStringConvertible {
         // Address of function
     }
     
-    func fillInfoStack(params : [Symbol]) {
-        for symbol in params {
-            switch symbol.type {
-            case .String:
-                infoStack.numberStrings += 1
-                break
-            case .Integer:
-                infoStack.numberInts += 1
-                break
-            case .void:
-                infoStack.numberVoids += 1
-                break
-            case .integer:
-                infoStack.numberInts += 1
-                break
-            case .string:
-                infoStack.numberStrings += 1
-                break
-            case .boolean:
-                infoStack.numberBools += 1
-                break
-            case .float:
-                infoStack.numberFloats += 1
-                break
-            case .char:
-                infoStack.numberChars += 1
-                break
-            case .double:
-                infoStack.numberDoubles += 1
-                break
-            case .ID:
-                break
-            case .pointer:
-                break
-            }
+    func fillInfoStack(functionSymbol: Symbol, varSymbolType : TypeSymbol) {
+        switch varSymbolType {
+        case .String:
+            functionSymbol.infoStack.numberStrings += 1
+            break
+        case .Integer:
+            functionSymbol.infoStack.numberInts += 1
+            break
+        case .void:
+            functionSymbol.infoStack.numberVoids += 1
+            break
+        case .integer:
+            functionSymbol.infoStack.numberInts += 1
+            break
+        case .string:
+            functionSymbol.infoStack.numberStrings += 1
+            break
+        case .boolean:
+            functionSymbol.infoStack.numberBools += 1
+            break
+        case .float:
+            functionSymbol.infoStack.numberFloats += 1
+            break
+        case .char:
+            functionSymbol.infoStack.numberChars += 1
+            break
+        case .double:
+            functionSymbol.infoStack.numberDoubles += 1
+            break
+        case .ID:
+            break
+        case .pointer:
+            functionSymbol.infoStack.numberPointers += 1
+            break
         }
     }
 

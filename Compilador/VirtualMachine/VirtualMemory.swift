@@ -10,7 +10,7 @@ import Foundation
 
 
 class InfoStack {
-    var numberInts, numberFloats, numberBools, numberChars, numberDoubles, numberVoids, numberStrings : Int
+    var numberInts, numberFloats, numberBools, numberChars, numberDoubles, numberVoids, numberStrings, numberPointers : Int
     
     init() {
         numberInts = 0
@@ -19,6 +19,8 @@ class InfoStack {
         numberChars = 0
         numberDoubles = 0
         numberVoids = 0
+        numberStrings = 0
+        numberPointers = 0
     }
 }
 
