@@ -231,9 +231,7 @@ class SemanticHandler : CustomStringConvertible {
      - Parameter s: The type of the symbol
     */
     func newGlobalVariable(s : TypeSymbol, size : Int = 1) -> Int {
-        if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
-            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: s)
-        }
+        fillInfoStack(infoStack: self.infoStack, varSymbolType: s)
         return memory.newGlobalAddress(type: s, size: size)
     }
     /**
@@ -242,7 +240,7 @@ class SemanticHandler : CustomStringConvertible {
     */
     func newLocalVariable(t: TypeSymbol, size : Int = 1) -> Int {
         if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
-            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: t)
+            fillInfoStack(infoStack: funcSymbol.localInfoStack, varSymbolType: t)
         }
         return memory.newLocalAdress(type: t, sizeToReserve: size)
     }
@@ -251,11 +249,11 @@ class SemanticHandler : CustomStringConvertible {
      Ask to the memory for a new temporal address for a specific type
      - Parameter t: The type of the symbol
     */
-    func newTemporalAddress(p: TypeSymbol, size : Int = 1) -> Int {
+    func newTemporalAddress(t: TypeSymbol, size : Int = 1) -> Int {
         if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
-            fillInfoStack(functionSymbol: funcSymbol, varSymbolType: p)
+            fillInfoStack(infoStack: funcSymbol.temporalInfoStack, varSymbolType: t)
         }
-        return memory.newTemporalAddress(type: p)
+        return memory.newTemporalAddress(type: t)
     }
     
     // MARK: - Constants
@@ -413,7 +411,7 @@ class SemanticHandler : CustomStringConvertible {
                 return
             }
             /// Ask for a temp memory for the result type
-            let tempAddress = memory.newTemporalAddress(type: resultType)
+            let tempAddress = newTemporalAddress(t: resultType)
             /// Add to the quadruples a new one, with the operation
             self.quadruples.append(Quadruple(argument1: leftOperand , argument2: rightOperand, op: op, result: "\(tempAddress)"))
             /// Add the temp result as an operand in th operands stack
@@ -502,7 +500,7 @@ class SemanticHandler : CustomStringConvertible {
                 return
             }
             
-            let tempAddress = memory.newTemporalAddress(type: resultType)
+            let tempAddress = newTemporalAddress(t: resultType)
             
             self.quadruples.append(Quadruple(argument1: rightOperand, argument2: leftOperand, op: op, result: "\(tempAddress)"))
             self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
@@ -734,7 +732,7 @@ class SemanticHandler : CustomStringConvertible {
                     return
                 }
                 
-                let tempAddress = memory.newTemporalAddress(type: resultType)
+                let tempAddress = newTemporalAddress(t: resultType)
                 
                 let auxQ = Quadruple(argument1: valueOperand, argument2: "\(needConstantInt(value: temp!.m))", op: .multiply, result: "\(tempAddress)")
                 
@@ -755,7 +753,7 @@ class SemanticHandler : CustomStringConvertible {
                         return
                     }
                     
-                    let tempAddress2 = memory.newTemporalAddress(type: resultType2)
+                    let tempAddress2 = newTemporalAddress(t: resultType2)
                    
                     let auxS = Quadruple(argument1: aux1Operand, argument2: aux2Operand, op: .sum, result: "\(tempAddress2)")
                     self.quadruples.append(auxS)
@@ -768,7 +766,7 @@ class SemanticHandler : CustomStringConvertible {
         }
         
         let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        let tempAddress3 = memory.newTemporalAddress(type: .integer)
+        let tempAddress3 = newTemporalAddress(t: .integer)
         let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(symbol.address)", op: .sumAd, result: "\(tempAddress3)")
         self.quadruples.append(lastQuadruple)
         self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
@@ -959,39 +957,39 @@ class SemanticHandler : CustomStringConvertible {
         // Address of function
     }
     
-    func fillInfoStack(functionSymbol: Symbol, varSymbolType : TypeSymbol) {
+    func fillInfoStack(infoStack: InfoStack, varSymbolType : TypeSymbol) {
         switch varSymbolType {
         case .String:
-            functionSymbol.infoStack.numberStrings += 1
+            infoStack.numberStrings += 1
             break
         case .Integer:
-            functionSymbol.infoStack.numberInts += 1
+            infoStack.numberInts += 1
             break
         case .void:
-            functionSymbol.infoStack.numberVoids += 1
+            infoStack.numberVoids += 1
             break
         case .integer:
-            functionSymbol.infoStack.numberInts += 1
+            infoStack.numberInts += 1
             break
         case .string:
-            functionSymbol.infoStack.numberStrings += 1
+            infoStack.numberStrings += 1
             break
         case .boolean:
-            functionSymbol.infoStack.numberBools += 1
+            infoStack.numberBools += 1
             break
         case .float:
-            functionSymbol.infoStack.numberFloats += 1
+            infoStack.numberFloats += 1
             break
         case .char:
-            functionSymbol.infoStack.numberChars += 1
+            infoStack.numberChars += 1
             break
         case .double:
-            functionSymbol.infoStack.numberDoubles += 1
+            infoStack.numberDoubles += 1
             break
         case .ID:
             break
         case .pointer:
-            functionSymbol.infoStack.numberPointers += 1
+            infoStack.numberPointers += 1
             break
         }
     }

@@ -20,7 +20,9 @@ public class Symbol {
     var arrayList : ArrayLinkedList?
     var assigned : Bool
     var params : [Symbol] = []
-    var infoStack: InfoStack = InfoStack()
+    var localInfoStack: InfoStack = InfoStack()
+    var temporalInfoStack: InfoStack = InfoStack()
+
 
     
     init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0){
