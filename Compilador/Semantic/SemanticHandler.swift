@@ -22,8 +22,8 @@ class SemanticHandler : CustomStringConvertible {
     var functionAsMainThread : String? = nil
     var memory : VirtualMemorySemantic = VirtualMemorySemantic()
     var dimensionStack : Stack<(String, Int)> = []
-    var infoStack: InfoStack = InfoStack()
-    
+    var globalInfoStack: InfoStack = InfoStack()
+    var constanstInfoStack : InfoStack = InfoStack()
     // MARK: - Initializer
     
     init() {
@@ -231,7 +231,7 @@ class SemanticHandler : CustomStringConvertible {
      - Parameter s: The type of the symbol
     */
     func newGlobalVariable(s : TypeSymbol, size : Int = 1) -> Int {
-        fillInfoStack(infoStack: self.infoStack, varSymbolType: s)
+        fillInfoStack(infoStack: self.globalInfoStack, varSymbolType: s,size: size)
         return memory.newGlobalAddress(type: s, size: size)
     }
     /**
@@ -240,7 +240,7 @@ class SemanticHandler : CustomStringConvertible {
     */
     func newLocalVariable(t: TypeSymbol, size : Int = 1) -> Int {
         if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
-            fillInfoStack(infoStack: funcSymbol.localInfoStack, varSymbolType: t)
+            fillInfoStack(infoStack: funcSymbol.localInfoStack, varSymbolType: t, size: size)
         }
         return memory.newLocalAdress(type: t, sizeToReserve: size)
     }
@@ -251,9 +251,14 @@ class SemanticHandler : CustomStringConvertible {
     */
     func newTemporalAddress(t: TypeSymbol, size : Int = 1) -> Int {
         if let funcSymbol = symbolTable.lookup(functionAsMainThread!) {
-            fillInfoStack(infoStack: funcSymbol.temporalInfoStack, varSymbolType: t)
+            fillInfoStack(infoStack: funcSymbol.temporalInfoStack, varSymbolType: t, size: size)
         }
         return memory.newTemporalAddress(type: t)
+    }
+    
+    func newConstantAddress(t: TypeSymbol, size: Int = 1) -> Int {
+        fillInfoStack(infoStack: self.constanstInfoStack, varSymbolType: t, size: size)
+        return memory.newConstantAddress(type: t, sizeToReserve: size)
     }
     
     // MARK: - Constants
@@ -272,7 +277,7 @@ class SemanticHandler : CustomStringConvertible {
             }
         }else{
             /// If not, ask for new constant address of integer type
-            let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: size)
+            let newAddress = self.newConstantAddress(t: .integer, size: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: integerValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -295,7 +300,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .float)
         }else{
             /// If not, ask for new constant address of float type
-            let newAddress = memory.newConstantAddress(type: .float, sizeToReserve: size)
+            let newAddress = self.newConstantAddress(t: .float, size: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: floatValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -316,7 +321,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .double)
         }else{
             /// If not, ask for new constant address of double type
-            let newAddress = memory.newConstantAddress(type: .double, sizeToReserve: size)
+            let newAddress = self.newConstantAddress(t: .double, size: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: doubleValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -336,7 +341,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .boolean)
         }else{
             /// If not, ask for new constant address of bool type
-            let newAddress = memory.newConstantAddress(type: .boolean, sizeToReserve: size)
+            let newAddress = self.newConstantAddress(t: .boolean, size: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: boolValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -356,7 +361,7 @@ class SemanticHandler : CustomStringConvertible {
             self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
         }else{
             /// If not, ask for new constant address of char type
-            let newAddress = memory.newConstantAddress(type: .char, sizeToReserve: size)
+            let newAddress = self.newConstantAddress(t: .char, size: size)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: charValue, address: newAddress)
             /// Add the new address as an operand in operands stack
@@ -716,7 +721,7 @@ class SemanticHandler : CustomStringConvertible {
                 let quadrupleVerify = Quadruple(argument1: valueOperand, argument2: nil, op: .vrf, result: "\(lookUpAddress)")
                 self.quadruples.append(quadrupleVerify)
             }else{
-                let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: 1)
+                let newAddress = self.newConstantAddress(t: .integer)
                 /// Save the value and new address to the constant table
                 self.saveAddress(constant: temp?.limSup ?? 0, address: newAddress)
                 let quadrupleVerify = Quadruple(argument1: valueOperand, argument2: nil, op: .vrf, result: "\(newAddress)")
@@ -798,7 +803,7 @@ class SemanticHandler : CustomStringConvertible {
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(value)") {
             return lookUpAddress
         }else{
-            let newAddress = memory.newConstantAddress(type: .integer, sizeToReserve: 1)
+            let newAddress = self.newConstantAddress(t: .integer)
             /// Save the value and new address to the constant table
             self.saveAddress(constant: value, address: newAddress)
             return newAddress
@@ -957,39 +962,39 @@ class SemanticHandler : CustomStringConvertible {
         // Address of function
     }
     
-    func fillInfoStack(infoStack: InfoStack, varSymbolType : TypeSymbol) {
+    func fillInfoStack(infoStack: InfoStack, varSymbolType : TypeSymbol, size : Int) {
         switch varSymbolType {
         case .String:
-            infoStack.numberStrings += 1
+            infoStack.numberStrings += size
             break
         case .Integer:
-            infoStack.numberInts += 1
+            infoStack.numberInts += size
             break
         case .void:
-            infoStack.numberVoids += 1
+            infoStack.numberVoids += size
             break
         case .integer:
-            infoStack.numberInts += 1
+            infoStack.numberInts += size
             break
         case .string:
-            infoStack.numberStrings += 1
+            infoStack.numberStrings += size
             break
         case .boolean:
-            infoStack.numberBools += 1
+            infoStack.numberBools += size
             break
         case .float:
-            infoStack.numberFloats += 1
+            infoStack.numberFloats += size
             break
         case .char:
-            infoStack.numberChars += 1
+            infoStack.numberChars += size
             break
         case .double:
-            infoStack.numberDoubles += 1
+            infoStack.numberDoubles += size
             break
         case .ID:
             break
         case .pointer:
-            infoStack.numberPointers += 1
+            infoStack.numberPointers += size
             break
         }
     }

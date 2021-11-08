@@ -74,6 +74,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             | MAIN startNode RPAREN cuerpo {semantic.endFunction()};
              
     startMain : MAIN {
+        semantic.startFunction("main" as NSString)
         semantic.insertSymbolToST("main", true, false, .void, .method)
         semantic.foundMain()
     };

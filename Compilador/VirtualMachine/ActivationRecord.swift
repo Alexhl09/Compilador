@@ -10,16 +10,27 @@ import AppKit
 
 class ActivationRecord{
     
-//    private var symbolFunction: Symbol
-//    private var index: Int
-//    private var nameFunction: String
-//    private var localMemory: VirtualMemoryBlock
-//    private var temporalMemory: VirtualMemoryBlock
-//
-//
-//    init(){
-//        self.index = 0
-//        self.nameFunction = ""
-//        self.localMemory = VirtualMemoryBlock(infoStack: <#T##InfoStack#>, sizeBlock: <#T##Int#>, kind: <#T##SegmentType#>)
-//    }
+    private var symbolFunction: Symbol
+    public var index: Int
+    public var localMemory: VirtualMemoryBlock
+    public var temporalMemory: VirtualMemoryBlock
+
+
+    init(quadrupleIndex: Int = 0, functionSymbol: Symbol){
+        self.index = quadrupleIndex
+        self.symbolFunction = functionSymbol
+        self.localMemory = VirtualMemoryBlock(infoStack: symbolFunction.localInfoStack, sizeBlock: 7000, kind: .Local)
+        self.temporalMemory = VirtualMemoryBlock(infoStack: symbolFunction.temporalInfoStack, sizeBlock: 7000, kind: .Temporal)
+    }
+    
+    func saveValue(address: Int, val : Any) throws {
+        switch address{
+        case 7000..<14000:
+            try? self.localMemory.insertInMemory(address: address, value: val)
+        case 14000..<21000:
+            try? self.temporalMemory.insertInMemory(address: address, value: val)
+        default:
+            break
+        }
+    }
 }

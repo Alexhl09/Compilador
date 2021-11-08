@@ -27,40 +27,51 @@ class InfoStack {
 
 
 class VirtualMemory {
-    let memorySize : Int = 24000
+    let memorySize : Int = 28000
     let memoryForEachStack : Int
     var globalStack : VirtualMemoryBlock
-    //var localStack : VirtualMemoryBlock
     var constantsStack : VirtualMemoryBlock
+    let activeMemory : ActivationRecord
 
-    init(globalInfo : InfoStack, constantsInfo : InfoStack){
+    init(globalInfo : InfoStack, constantsInfo : InfoStack, activeFunc : ActivationRecord, constants: [String: Int]){
         
         self.memoryForEachStack = memorySize / 4
         
         self.globalStack = VirtualMemoryBlock(infoStack: globalInfo, sizeBlock: memoryForEachStack,  kind: .Global)
         self.constantsStack = VirtualMemoryBlock(infoStack: constantsInfo, sizeBlock: memoryForEachStack, kind: .Constant)
-       
+        self.activeMemory = activeFunc
+        
+        for constant in constants {
+            let address : Int = constant.value
+            let value : Any = constant.key
+//            self.getType(address: address)
+            do{
+                try self.constantsStack.insertInMemory(address: address, value: value)
+            }catch let error{
+                print(error.localizedDescription)
+            }
+        }
+        
+//        self.temporalStack = VirtualMemoryBlock(infoStack: activeFunc, sizeBlock: memoryForEachStack, kind: .Constant)
+//        self.localStack = VirtualMemoryBlock(infoStack: localInfo, sizeBlock: memoryForEachStack, kind: .Constant)
     }
     
     
-    func getInfoByAddress(address: Int) throws -> Any{
+    func getInfoByAddress(address: Int) throws -> (Any?, TypeSymbol){
         do {
             switch try getType(address: address) {
             case .Global:
                 return try self.globalStack.readInfo(address: address)
             case .Local:
-              //  return self.globalStack.readInfo(address: address)
-                break
+                return try self.activeMemory.localMemory.readInfo(address: address)
             case .Temporal:
-               // return self.globalStack.readInfo(address: address)
-                break
+                return try self.activeMemory.temporalMemory.readInfo(address: address)
             case .Constant:
                 return try self.constantsStack.readInfo(address: address)
             }
         }catch(let error){
             throw error
         }
-        return -1 
     }
     
     func insertValue(address: Int, value : Any)  throws  {
@@ -69,9 +80,11 @@ class VirtualMemory {
             case .Global:
                 try self.globalStack.insertInMemory(address: address, value: value)
             case .Local:
+                try self.activeMemory.localMemory.insertInMemory(address: address, value: value)
               //  return self.globalStack.readInfo(address: address)
                 break
             case .Temporal:
+                try self.activeMemory.temporalMemory.insertInMemory(address: address, value: value)
                // return self.globalStack.readInfo(address: address)
                 break
             case .Constant:

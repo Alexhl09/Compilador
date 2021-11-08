@@ -82,7 +82,7 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
     
     
     init(sizeBlock: Int, initialAddress: Int){
-        self.sizeBlock = sizeBlock / 6
+        self.sizeBlock = sizeBlock / 7
         self.initialAddress = initialAddress
         self.intBlocks = SemiBlockMemory(initialAddress: initialAddress, sizeSemiBlock: self.sizeBlock)
         self.voidBlocks = SemiBlockMemory(initialAddress: initialAddress + (self.sizeBlock), sizeSemiBlock: self.sizeBlock)

@@ -19,19 +19,20 @@ class VirtualMemoryBlock{
     var charBlock : [Character]
     var doubleBlock : [Double]
     var voidBlock : [Any]
+    var pointerBlock : [Int]
     
     
     init(infoStack: InfoStack, sizeBlock : Int, kind : SegmentType)
     {
         self.sizeBlock = sizeBlock
         self.kind = kind
-        
         self.intBlock = Array.init(repeating: 0, count: infoStack.numberInts)
         self.floatBlock = Array.init(repeating: 0.0, count: infoStack.numberFloats)
         self.boolBlock = Array.init(repeating: false, count: infoStack.numberBools)
         self.doubleBlock = Array.init(repeating: 0.0, count: infoStack.numberDoubles)
-        self.charBlock = Array.init(repeating: Character.init(""), count: infoStack.numberChars)
+        self.charBlock = Array.init(repeating: Character.init("-"), count: infoStack.numberChars)
         self.voidBlock = Array.init(repeating: 0, count: infoStack.numberVoids)
+        self.pointerBlock = Array.init(repeating: 0, count: infoStack.numberPointers)
     }
     
     
@@ -51,23 +52,27 @@ class VirtualMemoryBlock{
                     return (address: address - 4000, type: .float)
                 case 5000..<6000:
                     return (address: address - 5000, type: .char)
+                case 6000..<7000:
+                    return (address: address - 6000, type: .pointer)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
         case .Local:
             switch address {
-                case 6000..<7000:
-                    return (address: address - 6000, type: .integer)
                 case 7000..<8000:
-                    return (address: address - 7000, type: .void)
+                    return (address: address - 7000, type: .integer)
                 case 8000..<9000:
-                    return (address: address - 8000, type: .double)
+                    return (address: address - 8000, type: .void)
                 case 9000..<10000:
-                    return (address: address - 9000, type: .boolean)
+                    return (address: address - 9000, type: .double)
                 case 10000..<11000:
-                    return (address: address - 10000, type: .float)
+                    return (address: address - 10000, type: .boolean)
                 case 11000..<12000:
-                    return (address: address - 11000, type: .char)
+                    return (address: address - 11000, type: .float)
+                case 12000..<13000:
+                    return (address: address - 12000, type: .char)
+                case 13000..<14000:
+                    return (address: address - 13000, type: .pointer)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
@@ -75,36 +80,40 @@ class VirtualMemoryBlock{
         case .Temporal:
             
             switch address {
-                case 12000..<13000:
-                    return (address: address - 12000, type: .integer)
-                case 13000..<14000:
-                    return (address: address - 13000, type: .void)
                 case 14000..<15000:
-                    return (address: address - 14000, type: .double)
+                    return (address: address - 14000, type: .integer)
                 case 15000..<16000:
-                    return (address: address - 15000, type: .boolean)
+                    return (address: address - 15000, type: .void)
                 case 16000..<17000:
-                    return (address: address - 16000, type: .float)
+                    return (address: address - 16000, type: .double)
                 case 17000..<18000:
-                    return (address: address - 17000, type: .char)
+                    return (address: address - 17000, type: .boolean)
+                case 18000..<19000:
+                    return (address: address - 18000, type: .float)
+                case 19000..<20000:
+                    return (address: address - 19000, type: .char)
+                case 20000..<21000:
+                    return (address: address - 20000, type: .char)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
            
         case .Constant:
             switch address {
-                case 18000..<19000:
-                    return (address: address - 18000, type: .integer)
-                case 19000..<20000:
-                    return (address: address - 19000, type: .void)
-                case 20000..<21000:
-                    return (address: address - 20000, type: .double)
                 case 21000..<22000:
-                    return (address: address - 21000, type: .boolean)
+                    return (address: address - 21000, type: .integer)
                 case 22000..<23000:
-                    return (address: address - 22000, type: .float)
+                    return (address: address - 22000, type: .void)
                 case 23000..<24000:
-                    return (address: address - 23000, type: .char)
+                    return (address: address - 23000, type: .double)
+                case 24000..<25000:
+                    return (address: address - 24000, type: .boolean)
+                case 25000..<26000:
+                    return (address: address - 25000, type: .float)
+                case 26000..<27000:
+                    return (address: address - 26000, type: .char)
+                case 27000..<28000:
+                    return (address: address - 27000, type: .integer)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
@@ -135,6 +144,10 @@ class VirtualMemoryBlock{
         self.charBlock[address] = value
     }
     
+    func useMemoryPointer(address: Int, value: Int) {
+        self.pointerBlock[address] = value
+    }
+    
     func getInfoInt(address : Int) -> Int {
         return self.intBlock[address]
     }
@@ -159,25 +172,29 @@ class VirtualMemoryBlock{
         return self.charBlock[address]
     }
     
-    func readInfo(address : Int) throws -> Any {
+    func getInfoPointer(address : Int) -> Int {
+        return self.pointerBlock[address]
+    }
+    
+    func readInfo(address : Int) throws -> (Any?, TypeSymbol) {
         
         let (myAddress, type) = try realMemoryAddress(address: address)
        
         switch type {
         case .void:
-            return self.getInfoVoid(address: myAddress)
+            return (self.getInfoVoid(address: myAddress),type)
         case .integer:
-            return self.getInfoInt(address: myAddress)
+            return (self.getInfoInt(address: myAddress),type)
         case .string:
             break
         case .boolean:
-            return self.getInfoBool(address: myAddress)
+            return (self.getInfoBool(address: myAddress),type)
         case .float:
-            return self.getInfoFloat(address: myAddress)
+            return (self.getInfoFloat(address: myAddress),type)
         case .char:
             break
         case .double:
-            return self.getInfoDouble(address: myAddress)
+            return (self.getInfoDouble(address: myAddress),type)
         case .Integer:
             break
         case .String:
@@ -185,29 +202,34 @@ class VirtualMemoryBlock{
         case .ID:
             break
         case .pointer:
-            break
+            return (self.getInfoPointer(address: myAddress),type)
         }
-        return -1
+        return (nil, .void)
     }
     
     func insertInMemory(address : Int, value : Any) throws {
         let (myAddress, type) = try realMemoryAddress(address: address)
         switch type {
         case .void:
-             self.useMemoryVoid(address: address, value: value)
+             self.useMemoryVoid(address: myAddress, value: value)
             break
         case .integer:
-             self.useMemoryInteger(address: address, value: value as! Int)
+            guard let v =  Int("\(value)") else {print("E"); return}
+             self.useMemoryInteger(address: myAddress, value: v)
         case .string:
             break
         case .boolean:
-             self.useMemoryBool(address: address, value: value as! Bool)
+            guard let v =  Bool("\(value)") else {print("E"); return}
+             self.useMemoryBool(address: myAddress, value: v)
         case .float:
-             self.useMemoryFloat(address: address, value: value as! Float)
+            guard let v =  Float("\(value)") else {print("E"); return}
+             self.useMemoryFloat(address: myAddress, value: v)
         case .char:
-             self.useMemoryChar(address: address, value: value as! Character)
+            guard let v =  ("\(value)").first else {print("E"); return}
+             self.useMemoryChar(address: myAddress, value: v)
         case .double:
-             self.useMemoryDouble(address: address, value: value as! Double)
+            guard let v =  Double("\(value)") else {print("E"); return}
+             self.useMemoryDouble(address: myAddress, value: v)
         case .Integer:
             break
         case .String:
@@ -215,7 +237,8 @@ class VirtualMemoryBlock{
         case .ID:
             break
         case .pointer:
-            break
+            guard let v =  Int("\(value)") else {print("E"); return}
+            self.useMemoryPointer(address: myAddress, value: v)
         }
         
     }
