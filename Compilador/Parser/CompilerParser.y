@@ -100,7 +100,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | VAR ID varsPrimaArreglosMulti SEMICOLON
         {
-            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r);
+            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false);
             linkedListArray = ArrayLinkedList();
             r = 1;
         }
@@ -212,13 +212,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         print("Assigned cell matrix")
         semantic.assignOneCellArray($1);
     }
-    | assigV varAssign {
-        print("Assigned multi");
-        semantic.assignToPointer();
-    };
-    
-    assigV: ID assMulti {
+    | ID assMulti varAssign {
         semantic.assignOneCellArray($1);
+        semantic.assignToPointer();
     };
     
     assMulti : LSBRAKE expresion RSBRAKE
@@ -450,6 +446,10 @@ factor : CTEI
        | ID
        {
            semantic.addIDAsQuadruple($1)
+       }
+       | ID assMulti
+       {
+           semantic.readOneCellArray($1)
        }
        | CTEC
        {

@@ -130,7 +130,10 @@ class SemanticHandler : CustomStringConvertible {
     
     fileprivate func assignArray(_ symbol: Symbol) {
         symbol.assigned = true
-        let sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
+        var sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
+        if(sizeArray == 0){
+            sizeArray = symbol.arrayList?.head?.r ?? 0
+        }
         if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
             symbol.type = operationStack.operands.peek()?.1 ?? .void
             let beforeAddres = symbol.address
@@ -151,13 +154,22 @@ class SemanticHandler : CustomStringConvertible {
         self.addOperand(symbol: symbol)
         
         do {
-            try generateQuadrupleAssignCellArray(symbol: symbol)
+            try generateQuadrupleAssignCellArray(symbol: symbol,withValue: true)
         }catch(let error){
             print(error.localizedDescription)
         }
+    }
+    
+    func readOneCellArray(_ id : NSString){
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
        
+        self.addOperand(symbol: symbol)
         
-        
+        do {
+            try generateQuadrupleAssignCellArray(symbol: symbol,withValue: false)
+        }catch(let error){
+            print(error.localizedDescription)
+        }
     }
     
     func assignArray(_ id: NSString){
@@ -354,7 +366,7 @@ class SemanticHandler : CustomStringConvertible {
     */
     func addConstantChar(_ character : NSString, size : Int = 1){
         // Takes the char value
-        let charValue = character.character(at: 0)
+        let charValue = character.character(at: 1)
         /// Looks for the address in the constant Table
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
             /// If found, add that address as an operand of type bool
@@ -705,9 +717,13 @@ class SemanticHandler : CustomStringConvertible {
         self.quadruples.append(generatedQuadruple)
     }
     
-    func generateQuadrupleAssignCellArray(symbol: Symbol) throws {
+    func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
         
         let (symbolOperand, symbolType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        
+        let baseAddress = self.needConstantInt(value: Int(symbolOperand)!)
+        
+        
         guard let dim = symbol.dimension2D else {print("No es un array");return}
         var temp = symbol.arrayList?.head
         var dimNow = 1
@@ -743,41 +759,60 @@ class SemanticHandler : CustomStringConvertible {
                 
                 self.quadruples.append(auxQ)
                 
-                
+                // PREVIOUS
+                let (topOperand, topType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
                 self.operationStack.addOperand(operand: "\(tempAddress)", type: resultType)
+                self.operationStack.addOperand(operand: "\(topOperand)", type: topType)
                 
-                if(dimNow > 1){
-                    
-                    let (aux2Operand, aux2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-                    let (aux1Operand, aux1Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-                    
-                    
-                    guard let resultType2 = semanticCube[SemCubeKey(op1: aux2Type, op2: aux1Type, o: .sum)] else {
-                        /// If it is impossible, send an error
-                        delegate?.sendInvalidOperationBetween(t1: aux2Type, t2: aux1Type)
-                        return
-                    }
-                    
-                    let tempAddress2 = newTemporalAddress(t: resultType2)
-                   
-                    let auxS = Quadruple(argument1: aux1Operand, argument2: aux2Operand, op: .sum, result: "\(tempAddress2)")
-                    self.quadruples.append(auxS)
-                    self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+            }
+            
+            if(dimNow > 1){
+                
+                let (aux2Operand, aux2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                let (aux1Operand, aux1Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                
+                
+                guard let resultType2 = semanticCube[SemCubeKey(op1: aux2Type, op2: aux1Type, o: .sum)] else {
+                    /// If it is impossible, send an error
+                    delegate?.sendInvalidOperationBetween(t1: aux2Type, t2: aux1Type)
+                    return
                 }
+                
+                let tempAddress2 = newTemporalAddress(t: resultType2)
+               
+                let auxS = Quadruple(argument1: aux1Operand, argument2: aux2Operand, op: .sum, result: "\(tempAddress2)")
+                self.quadruples.append(auxS)
+                // PREVIOUS
+                let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+                self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
             }
             
             dimNow += 1
             temp = temp?.next
         }
         
-        let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        let tempAddress3 = newTemporalAddress(t: .integer)
-        let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(symbol.address)", op: .sumAd, result: "\(tempAddress3)")
-        self.quadruples.append(lastQuadruple)
-        self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
+        if(withValue){
+            if(dimNow < 3){
+                self.operationStack.operands.reverse()
+            }
+            let (assignOperand, assignType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            
+            let tempAddress3 = newTemporalAddress(t: .pointer)
+            let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(baseAddress)", op: .sum, result: "\(tempAddress3)")
+            self.quadruples.append(lastQuadruple)
+            self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
+            self.operationStack.addOperand(operand: "\(assignOperand)", type: assignType)
+        }else{
+            let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            
+            let tempAddress3 = newTemporalAddress(t: .pointer)
+            let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(baseAddress)", op: .sum, result: "\(tempAddress3)")
+            self.quadruples.append(lastQuadruple)
+            self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
+        }
         
-        
-
     }
     
     func assignToPointer(){
@@ -789,12 +824,14 @@ class SemanticHandler : CustomStringConvertible {
             print("Error generating quadruple for line\(lex.line)")
             return
         }
+        
         let op : Operator = operationStack.operators.pop()!
+        
 
-        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (valOperand, valType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (pointerOperand, pointerType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
 
-        let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
+        let generatedQuadruple : Quadruple = Quadruple(argument1: valOperand , argument2: nil, op: op, result: pointerOperand)
         self.quadruples.append(generatedQuadruple)
         
     }
@@ -861,10 +898,6 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func endFunction(){
-        guard let symbolFunction = self.symbolTable.lookup(self.functionAsMainThread ?? "") else {
-            print("ERROR no function found")
-            return
-        }
         let endFunctionQuadruple = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
         self.quadruples.append(endFunctionQuadruple)
         self.memory.removeLocalAndTemporalMemory()

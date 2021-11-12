@@ -205,6 +205,13 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     SemCubeKey.init(op1: .Integer, op2: .integer, o: .sum) : .Integer,
     SemCubeKey.init(op1: .Integer, op2: .Integer, o: .sum) : .Integer,
     
+    // sum pointer
+    SemCubeKey.init(op1: .pointer, op2: .integer, o: .sum) : .integer,
+    SemCubeKey.init(op1: .pointer, op2: .Integer, o: .sum) : .integer,
+    SemCubeKey.init(op1: .pointer, op2: .integer, o: .multiply) : .integer,
+
+    
+    
     /// MARK : - multiply
     
     // multiply integer
@@ -231,6 +238,8 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     SemCubeKey.init(op1: .Integer, op2: .float, o: .multiply) : .float,
     SemCubeKey.init(op1: .Integer, op2: .integer, o: .multiply) : .Integer,
     SemCubeKey.init(op1: .Integer, op2: .Integer, o: .multiply) : .Integer,
+    
+    
     
     /// MARK : - Divisions
     

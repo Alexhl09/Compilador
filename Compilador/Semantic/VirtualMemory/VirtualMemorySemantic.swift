@@ -171,6 +171,9 @@ class VirtualMemoryBlockSemantic : CustomStringConvertible {
     |
     | CHARS:
     | \(charBlocks.description)
+    |
+    | Pointers:
+    | \(pointerBlocks.description)
     |___________________________________________________
     ----------------------------------------------------
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

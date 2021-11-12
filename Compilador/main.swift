@@ -14,6 +14,7 @@ let file = "test.test"
 let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
+
 //
 //Now read all the tokens.
 //    var tokenID = 0

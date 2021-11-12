@@ -47,9 +47,15 @@ class VirtualMachine {
             case .sum, .minus, .multiply, .division, .modulo, .intDivision:
                 self.basicOperation(op: op, arg1: arg1, arg2: arg2, res: result)
             case .assign:
+               
                 do{
-                    let v = try virtualMemory.getInfoByAddress(address: arg1!).0
-                    try virtualMemory.insertValue(address: result!, value: v!)
+                    var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
+                    var (resValue, resType) = try self.virtualMemory.getInfoByAddress(address: result!)
+
+                    if(resType != .pointer){
+                        resValue = result
+                    }
+                    try virtualMemory.insertValue(address: Int("\(resValue!)")!, value: firstValue!)
                 }catch let error{
                     print(error.localizedDescription)
                 }
@@ -69,8 +75,6 @@ class VirtualMachine {
             case .and:
                 break
             case .or:
-                break
-            case .assign:
                 break
             case .goto:
                 break
@@ -100,44 +104,51 @@ class VirtualMachine {
                 break
             }
             self.activeStack.peek()?.index += 1
-        }while(currentIndex < self.quadruples.count)
+        }while(currentIndex + 1 < self.quadruples.count)
+        print("")
     }
     
     func basicOperation(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
         
         //Operadores binarios
         do{
-            let firstValue = try self.virtualMemory.getInfoByAddress(address: arg1!)
-            let secondValue = try self.virtualMemory.getInfoByAddress(address: arg2!)
+            var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
+            if(firstType == .pointer){
+                firstValue = try self.virtualMemory.getInfoByAddress(address: Int("\(firstValue!)")!).0
+            }
+            var (secondValue, secondType) = try self.virtualMemory.getInfoByAddress(address: arg2!)
+            if(secondType == .pointer){
+                secondValue = try self.virtualMemory.getInfoByAddress(address: Int("\(secondValue!)")!).0
+            }
             let typeSecond = type(of: secondValue)
                   print(typeSecond)
             
-            
-            switch op {
-            case .sum:
-                print(type(of: firstValue.0))
-                makeOp(+, first: firstValue.0!, second: secondValue.0!, res: res)
-               
-               
-                break
-            case .minus:
-                makeOp(-, first: firstValue.0!, second: secondValue.0!, res: res)
-                break
-            case .multiply:
-                makeOp(*, first: firstValue.0!, second: secondValue.0!, res: res)
-                break
-            case .division:
-                makeOp(/, first: firstValue.0!, second: secondValue.0!, res: res)
-                break
-            case .modulo:
-                makeOp(%, first: firstValue.0!, second: secondValue.0!, res: res)
-                break
-            case .intDivision:
-                makeOp(/, first: firstValue.0!, second: secondValue.0!, res: res)
-                break
-            default:
-                break
-            }
+            makeOp(op: op, first: firstValue!, second: secondValue!, res: res)
+
+//            switch op {
+//            case .sum:
+//                print(type(of: firstValue!))
+//                makeOp(add, first: 1, second: 2, res: 3)
+//                makeOp(add, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            case .minus:
+//                makeOp(substract, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            case .multiply:
+//                makeOp(multiply, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            case .division:
+//                makeOp(division, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            case .modulo:
+//                makeOp(division, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            case .intDivision:
+//                makeOp(divisionInt, first: firstValue!, second: secondValue!, res: res)
+//                break
+//            default:
+//                break
+//            }
         }catch{
             
         }
@@ -146,19 +157,20 @@ class VirtualMachine {
     }
     
     
-    func makeOp(_ fun:((Int, Int) -> Int), first: Any, second : Any, res: Int?){
+    func makeOp(op:Operator, first: Any, second : Any, res: Int?){
+ 
         do{
             switch first {
             case let firstInt as Int:
                 switch second {
                 case let secondInt as Int:
-                    let r = firstInt + secondInt
+                    let r = aritOp(a: firstInt, b: secondInt, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondDouble as Double:
-                    let r = Double(firstInt) + secondDouble
+                    let r = aritOp(a: Double(firstInt), b: secondDouble, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondFloat as Float:
-                    let r = Float(firstInt) + secondFloat
+                    let r = aritOp(a: Float(firstInt), b: secondFloat, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 default:
                     break
@@ -166,13 +178,13 @@ class VirtualMachine {
             case let firstDouble as Double:
                 switch second {
                 case let secondInt as Int:
-                    let r = firstDouble + Double(secondInt)
+                    let r = aritOp(a: firstDouble, b: Double(secondInt), op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondDouble as Double:
-                    let r = firstDouble + secondDouble
+                    let r = aritOp(a: firstDouble, b: secondDouble, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondFloat as Float:
-                    let r = firstDouble + Double(secondFloat)
+                    let r = aritOp(a: firstDouble, b: Double(secondFloat), op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 default:
                     break
@@ -180,13 +192,13 @@ class VirtualMachine {
             case let firstFloat as Float:
                 switch second {
                 case let secondInt as Int:
-                    let r = firstFloat + Float(secondInt)
+                    let r = aritOp(a: firstFloat, b: Float(secondInt), op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondDouble as Double:
-                    let r = Double(firstFloat) + secondDouble
+                    let r = aritOp(a: Double(firstFloat), b: secondDouble, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 case let secondFloat as Float:
-                    let r = firstFloat + secondFloat
+                    let r = aritOp(a: firstFloat, b: secondFloat, op: op)
                     try virtualMemory.insertValue(address: res! , value: r)
                 default:
                     break
@@ -196,6 +208,16 @@ class VirtualMachine {
             }
         }catch let error{
             print(error.localizedDescription)
+        }
+    }
+    
+    func getContentAddressFromPointer(pointerAddress : Any)->Int?{
+        do{
+            let v = try virtualMemory.getInfoByAddress(address: Int("\(pointerAddress)")!).0
+            return Int("\(v!)")
+        }catch let error{
+            print(error.localizedDescription)
+            return nil
         }
     }
     
@@ -210,6 +232,72 @@ class VirtualMachine {
 //    }
 //    
     
+    func add<T: Arithmetic>(a: T, b: T) -> T {
+        return a + b
+    }
+
+    func substract<T: Arithmetic>(a: T, b: T) -> T {
+        return a - b
+    }
+
+    func division<T: Arithmetic>(a: T, b: T) -> T {
+        return a / b
+    }
+    
+    func multiply<T: Arithmetic>(a: T, b: T) -> T {
+        return a * b
+    }
+    func divisionInt<T: Arithmetic>(a: T, b: T) -> T {
+        return (Int("\(a / b)") ?? 0) as! T
+    }
+    func mod<T: Arithmetic>(a: T, b: T) -> T {
+        return ((a as! Float).truncatingRemainder(dividingBy: (b as! Float))) as! T
+    }
+    
+    func aritOp<T: Arithmetic>(a:T, b:T, op: Operator) -> T{
+        switch op {
+        case .sum:
+            return add(a: a, b: b)
+        case .minus:
+            return substract(a: a, b: b)
+        case .multiply:
+            return multiply(a: a, b: b)
+        case .division:
+            return division(a: a, b: b)
+        case .modulo:
+            return mod(a: a, b: b)
+        case .intDivision:
+            return divisionInt(a: a, b: b)
+        default:
+            return 0 as! T
+        }
+    }
     
 }
 
+protocol Arithmetic {
+    static func +(lhs: Self, rhs: Self) -> Self
+    static func -(lhs: Self, rhs: Self) -> Self
+    static func *(lhs: Self, rhs: Self) -> Self
+    static func /(lhs: Self, rhs: Self) -> Self
+}
+
+extension Int : Arithmetic {}
+extension Int8 : Arithmetic {}
+extension Int16 : Arithmetic {}
+extension Int32 : Arithmetic {}
+extension Int64 : Arithmetic {}
+
+extension UInt8 : Arithmetic {}
+extension UInt16 : Arithmetic {}
+extension UInt32 : Arithmetic {}
+extension UInt64 : Arithmetic {}
+
+extension Float80 : Arithmetic {}
+extension Float : Arithmetic {}
+extension Double : Arithmetic {}
+
+
+func add<T: Arithmetic>(a: T, b: T) -> T {
+    return a + b
+}

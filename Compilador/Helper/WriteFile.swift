@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 func writeSemanticAlex(semantic: SemanticHandler){
     if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
         let memoryText = semantic.description

@@ -93,7 +93,7 @@ class VirtualMemoryBlock{
                 case 19000..<20000:
                     return (address: address - 19000, type: .char)
                 case 20000..<21000:
-                    return (address: address - 20000, type: .char)
+                    return (address: address - 20000, type: .pointer)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
@@ -113,7 +113,7 @@ class VirtualMemoryBlock{
                 case 26000..<27000:
                     return (address: address - 26000, type: .char)
                 case 27000..<28000:
-                    return (address: address - 27000, type: .integer)
+                    return (address: address - 27000, type: .pointer)
                 default:
                     throw ErrorVirtualMemory.BadAccessMemory
             }
@@ -225,8 +225,9 @@ class VirtualMemoryBlock{
             guard let v =  Float("\(value)") else {print("E"); return}
              self.useMemoryFloat(address: myAddress, value: v)
         case .char:
-            guard let v =  ("\(value)").first else {print("E"); return}
-             self.useMemoryChar(address: myAddress, value: v)
+            guard let v =  Int("\(value)") else {print("E"); return}
+            let c = Character(UnicodeScalar(v)!)
+             self.useMemoryChar(address: myAddress, value: c)
         case .double:
             guard let v =  Double("\(value)") else {print("E"); return}
              self.useMemoryDouble(address: myAddress, value: v)
