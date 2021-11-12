@@ -904,43 +904,8 @@ class SemanticHandler : CustomStringConvertible {
         let quadrupleGosub = Quadruple(argument1: nil, argument2: nil, op: .gosub, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleGosub)
                     
-        // Check if return not void
-        let typeFunc = symbolFunction.type
-        if(typeFunc != .void && symbolFunction.kind == .method){
-      
-            let newAddresss = newLocalVariable(t: typeFunc)
-            self.operationStack.addOperand(operand: "\(newAddresss)", type: typeFunc)
-        
-            
-            
-            let quadrupleReturn = Quadruple(argument1: "\(symbolFunction.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
-            self.quadruples.append(quadrupleReturn)
-           // self.addOperandByMemory(memoryAddress: newAddresss, type: typeFunc)
-
-            
-//            switch typeFunc {
-//            case .void:
-//                break
-//            case .integer:
-//                break
-//            case .string:
-//                break
-//            case .boolean:
-//                break
-//            case .float:
-//                break
-//            case .char:
-//                break
-//            case .double:
-//                break
-//            case .Integer:
-//                break
-//            case .String:
-//                break
-//            case .ID:
-//                break
-//            }
-        }
+        // Check if return not void and parche G
+        fillParcheG(t: symbolFunction.type, funcName: symbolFunction.identifier)
     }
     
     func returnFunctions(){
@@ -996,6 +961,18 @@ class SemanticHandler : CustomStringConvertible {
         case .pointer:
             infoStack.numberPointers += size
             break
+        }
+    }
+    
+    // PARCHE GUADALUPANO
+    func fillParcheG(t: TypeSymbol, funcName: String){
+        guard let symbol = symbolTable.lookup(funcName) else {return}
+        if(symbol.type != .void && symbol.kind == .method){
+            let newAddresss = newLocalVariable(t: t)
+            self.operationStack.addOperand(operand: "\(newAddresss)", type: t)
+        
+            let quadrupleReturn = Quadruple(argument1: "\(symbol.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
+            self.quadruples.append(quadrupleReturn)
         }
     }
 
