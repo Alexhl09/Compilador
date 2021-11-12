@@ -28,3 +28,9 @@ Con esto mismo, el código ya está preparandose para las siguientes entregas pu
 Se realizó un avance muy importante pues se comenzó con la documentación del proyecto y con la generación de código de las últimas estructuras minimas indispensables para nuestro lenguaje. En esta entrega se agrega la generación de cuadruplos para funciones y ciclos (for y while). 
 
 También se trabajo en ir preparando maneras de analizar el comportamiento del compilador mediante la generación de un archivo de texto de salida cada vez que se ejecuta. Este archivo incluye los cuadruplos, direcciones de memoria y algunos otros datos sobre los nodos de contexto que el compilador genera.
+
+## Avance 5
+
+Durante esta semana, se trabajó en la realización de la estructura para la maquina virtual y en la ejecución de los cuadruplos para operaciones aritmeticas. Para lograr esto se hizo la generación del mapa de memoria.
+
+Asi mismo, se trabajo también en ir preparando las bases para el manejo de arreglos. 
