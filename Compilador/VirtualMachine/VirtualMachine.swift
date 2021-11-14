@@ -60,21 +60,8 @@ class VirtualMachine {
                     print(error.localizedDescription)
                 }
                
-            case .greaterThan:
-                break
-            case .lessThan:
-                break
-            case .greaterOrEqualThan:
-                break
-            case .lessOrEqualThan:
-                break
-            case .equal:
-                break
-            case .different:
-                break
-            case .and:
-                break
-            case .or:
+            case .greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or:
+                
                 break
             case .goto:
                 break
@@ -107,7 +94,7 @@ class VirtualMachine {
         }while(currentIndex + 1 < self.quadruples.count)
         print("")
     }
-    
+        
     func basicOperation(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
         
         //Operadores binarios
@@ -158,8 +145,64 @@ class VirtualMachine {
     
     
     func makeOp(op:Operator, first: Any, second : Any, res: Int?){
- 
+        
+        let boolOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or]
+        let boolNumericOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different]
         do{
+            if (boolOperators.contains(op)) {
+                if let firstBool = first as? Bool {
+                    let r = boolOp(a: firstBool, b: second as! Bool, op: op)
+                    try virtualMemory.insertValue(address: res! , value: r)
+                }
+            }
+            if (boolNumericOperators.contains(op)) {
+                switch first {
+                case let firstInt as Int:
+                    switch second {
+                    case let secondInt as Int:
+                        let r = boolNumericOp(a: firstInt, b: secondInt, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondDouble as Double:
+                        let r = boolNumericOp(a: Double(firstInt), b: secondDouble, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondFloat as Float:
+                        let r = boolNumericOp(a: Float(firstInt), b: secondFloat, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    default:
+                        break
+                    }
+                case let firstDouble as Double:
+                    switch second {
+                    case let secondInt as Int:
+                        let r = boolNumericOp(a: firstDouble, b: Double(secondInt), op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondDouble as Double:
+                        let r = boolNumericOp(a: firstDouble, b: secondDouble, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondFloat as Float:
+                        let r = boolNumericOp(a: firstDouble, b: Double(secondFloat), op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    default:
+                        break
+                    }
+                case let firstFloat as Float:
+                    switch second {
+                    case let secondInt as Int:
+                        let r = boolNumericOp(a: firstFloat, b: Float(secondInt), op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondDouble as Double:
+                        let r = boolNumericOp(a: Double(firstFloat), b: secondDouble, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    case let secondFloat as Float:
+                        let r = boolNumericOp(a: firstFloat, b: secondFloat, op: op)
+                        try virtualMemory.insertValue(address: res! , value: r)
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
+            }
             switch first {
             case let firstInt as Int:
                 switch second {
@@ -230,7 +273,48 @@ class VirtualMachine {
 //            let a = first.0 as! Int
 //        }
 //    }
-//    
+//
+    
+    
+    func greaterThan<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a > b;
+    }
+    
+    func lessThan<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a < b;
+    }
+    
+    func greaterOrEqualThan<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a >= b;
+    }
+    
+    func lessOrEqualThan<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a <= b;
+    }
+    
+    func different<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a != b;
+    }
+    
+    func different(_ a: Bool, _ b: Bool) -> Bool {
+        return a != b;
+    }
+    
+    func equal<T: Arithmetic>(_ a: T, _ b: T) -> Bool {
+        return a == b;
+    }
+    
+    func equal(_ a: Bool, _ b: Bool) -> Bool {
+        return a == b;
+    }
+    
+    func and(_ a: Bool, _ b: Bool) -> Bool {
+        return a && b;
+    }
+    
+    func or(_ a: Bool, _ b: Bool) -> Bool {
+        return a || b;
+    }
     
     func add<T: Arithmetic>(a: T, b: T) -> T {
         return a + b
@@ -273,9 +357,43 @@ class VirtualMachine {
         }
     }
     
+    func boolNumericOp<T: Arithmetic>(a: T, b: T, op: Operator) -> Bool {
+        switch op {
+        case .greaterThan:
+            return greaterThan(a, b)
+        case .greaterOrEqualThan:
+            return greaterOrEqualThan(a, b)
+        case .lessThan:
+            return lessThan(a, b)
+        case .lessOrEqualThan:
+            return lessOrEqualThan(a, b)
+        case .equal:
+            return equal(a, b)
+        case .different:
+            return different(a, b)
+        default:
+            return false
+        }
+    }
+    
+    func boolOp(a: Bool, b: Bool, op: Operator) -> Bool {
+        switch op {
+        case .equal:
+            return equal(a, b)
+        case .different:
+            return different(a, b)
+        case .and:
+            return and(a, b)
+        case .or:
+            return or(a, b)
+        default:
+            return false
+        }
+    }
+    
 }
 
-protocol Arithmetic {
+protocol Arithmetic: Comparable {
     static func +(lhs: Self, rhs: Self) -> Self
     static func -(lhs: Self, rhs: Self) -> Self
     static func *(lhs: Self, rhs: Self) -> Self
@@ -296,6 +414,14 @@ extension UInt64 : Arithmetic {}
 extension Float80 : Arithmetic {}
 extension Float : Arithmetic {}
 extension Double : Arithmetic {}
+
+
+protocol BoolP {
+    static func ==(_ lhs: Self, _ rhs: Self) -> Self
+    static func !=(lhs: Self, rhs: Self) -> Self
+}
+
+extension Bool : BoolP {}
 
 
 func add<T: Arithmetic>(a: T, b: T) -> T {
