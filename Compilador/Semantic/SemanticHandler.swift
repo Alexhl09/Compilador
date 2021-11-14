@@ -369,7 +369,9 @@ class SemanticHandler : CustomStringConvertible {
     */
     func addConstantChar(_ character : NSString, size : Int = 1){
         // Takes the char value
-        let charValue = character.character(at: 1)
+        var s = (character as String)
+        let index = s.index(s.startIndex, offsetBy: 1)
+        let charValue : Character = s[index]
         /// Looks for the address in the constant Table
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
             /// If found, add that address as an operand of type bool

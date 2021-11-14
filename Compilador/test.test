@@ -78,6 +78,7 @@ func int mergeSort(bool arr, int pos, int size){
 }
 
 main () {
+    print('a');
     print("BIENVENIDO AL COMPI");
     print("----------------------");
     var palabra[9] = "holamundo";
