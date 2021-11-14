@@ -53,11 +53,15 @@ class VirtualMachine {
             case .assign:
                
                 do{
-                    let (firstValue, _) = try self.virtualMemory.getInfoByAddress(address: arg1!)
+                    var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
                     var (resValue, resType) = try self.virtualMemory.getInfoByAddress(address: result!)
 
                     if(resType != .pointer){
                         resValue = result
+                    }
+                    
+                    if(firstType == .pointer){
+                        firstValue = try self.virtualMemory.getInfoByAddress(address: unwrap(firstValue) as! Int).0
                     }
                     
 

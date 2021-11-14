@@ -78,15 +78,30 @@ func int mergeSort(bool arr, int pos, int size){
 }
 
 main () {
-    const int t = suma(10, 11);
+    var myArrayNuevo[12] = {1,2,3,4,5,6,7,8,9,10,11,12};
+    print("p");
+    const int uu = myArrayNuevo[0];
+    print(uu);
+    const int t = suma(10, uu);
+    print("k");
     print(t);
     var myLimit = 0;
+    var con = 0;
+    print("-");
     while (myLimit < 12) {
         myLimit = myLimit + 1;
-        print(suma(myLimit, 10));
+        const int t = myArrayNuevo[con];
+        print(t);
+        print(myLimit);
+        print("r");
+        print(suma(myLimit, t));
+        con = con + 1;
+        for(var a = 0; a < 3; a = a + 1){
+            print("-");
+        }
     }
     
-    
+    print("-");
     for(var a = 0; a < 10; a = a + 2){
         a = a + 1;
         print(a);

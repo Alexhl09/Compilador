@@ -353,6 +353,9 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     SemCubeKey.init(op1: .void, op2: .void, o: .assign) : .void,
     SemCubeKey.init(op1: .char, op2: .char, o: .assign) : .char,
     
+    
+    SemCubeKey.init(op1: .integer, op2: .pointer, o: .assign) : .integer,
+    
     /// MARK : - greaterThan
     
     // greaterThan integer
