@@ -618,12 +618,10 @@ class SemanticHandler : CustomStringConvertible {
                     guard let o = Int(operand) else { return  }
                     self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(o + i)"))
                     if(t != .char){
-                        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
+                        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-2)"))
                     }
                 }
-                if(t == .char){
                 self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
-                }
                 return
             }
                 

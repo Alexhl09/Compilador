@@ -127,6 +127,8 @@ class VirtualMachine {
         if(res == -1){
             print(printRes)
             printRes = ""
+        }else if(res == -2){
+            printRes += ","
         }else{
             do{
                 guard let value = try self.virtualMemory.getInfoByAddress(address: res).0 else {return}
