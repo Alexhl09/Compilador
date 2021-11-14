@@ -31,7 +31,7 @@ class VirtualMemory {
     let memoryForEachStack : Int
     var globalStack : VirtualMemoryBlock
     var constantsStack : VirtualMemoryBlock
-    let activeMemory : ActivationRecord
+    var activeMemory : ActivationRecord
 
     init(globalInfo : InfoStack, constantsInfo : InfoStack, activeFunc : ActivationRecord, constants: [String: Int]){
         
@@ -44,16 +44,12 @@ class VirtualMemory {
         for constant in constants {
             let address : Int = constant.value
             let value : Any = constant.key
-//            self.getType(address: address)
             do{
                 try self.constantsStack.insertInMemory(address: address, value: value)
             }catch let error{
                 print(error.localizedDescription)
             }
         }
-        
-//        self.temporalStack = VirtualMemoryBlock(infoStack: activeFunc, sizeBlock: memoryForEachStack, kind: .Constant)
-//        self.localStack = VirtualMemoryBlock(infoStack: localInfo, sizeBlock: memoryForEachStack, kind: .Constant)
     }
     
     

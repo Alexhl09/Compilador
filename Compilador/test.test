@@ -3,11 +3,8 @@ var y = 20;
 var z = 30;
 var array[6] = { 12, 11, 13, 5, 6, 7 };
 // var x = 12;
-func float doble(float A, double p) {
-    var x = 10 > 1;
-    const int a = 10;
-    var S = 1;
-    return A * A - S;
+func int suma(int A, int p) {
+    return A + p;
 }
 func printArray(int A, bool B) {
     const double ju = 9.0;
@@ -39,6 +36,10 @@ func printArray(int A, bool B) {
     // GOTOF res
     // PILA DE SALTOS PARA MIGAJA
     
+    print(true);
+    print(true);
+    print(true);
+    
     for (int f : 0...9)
     {
         var abc; 
@@ -50,18 +51,22 @@ func printArray(int A, bool B) {
         // FILL(indexFalse, COUNT cuadruplos + 1)
         // f++
     }
+    
+    print(true);
+    print(true);
+    print(true);
+    
     while (a > 10) {
         print(b);
         a = 1;
     }
-    for(var a = 0; a > 10;a = a + 1){
-        a = a - 1;
-        print(a);
+    for(var a = 0; a < 10; a = a + 1){
+        print("c");
     }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     
     */
-    const float t = doble(x, ju);
+    const int t = suma(10, 11);
     print(t);
     a > 10 ? print(x) : print(y);
     a = a > 10 ? 10 + 2 : 2 + 4;
@@ -73,6 +78,23 @@ func int mergeSort(bool arr, int pos, int size){
 }
 
 main () {
+    const int t = suma(10, 11);
+    print(t);
+    var myLimit = 0;
+    while (myLimit < 12) {
+        myLimit = myLimit + 1;
+        print(suma(myLimit, 10));
+    }
+    
+    
+    for(var a = 0; a < 10; a = a + 2){
+        a = a + 1;
+        print(a);
+    }
+    
+    print(true);
+    print(true);
+    print(true);
    // var x = 10 + 2;
     var array[6] = { 12, 11, 13, 5, 6, 7 };
    // var array2[6][4] = { 12, 11, 13, 5, 6, 7 ;  12, 11, 13, 5, 6, 7;  12, 11, 13, 5, 6, 7 ;  12, 11, 13, 5, 6, 7};
@@ -85,7 +107,7 @@ main () {
     print(1);
     print(1);
     
-    if (true) {
+    if (true == false) {
         print(0);
     } else {
         print(10);

@@ -15,13 +15,15 @@ class VirtualMachine {
     var sleepStack: Stack<ActivationRecord> = []
     var readyStack: Stack<ActivationRecord> = []
     var virtualMemory : VirtualMemory
+    var startedFunc = false
     
     init(quadruples: [Quadruple], constants: [String: Int], symbolTable: SymbolTable, globalMemory : InfoStack, constantsInfo: InfoStack){
         self.quadruples = quadruples
         self.constants = constants
         self.symbolTable = symbolTable
         let firstInstruction = quadruples[0]
-        let firstStack = ActivationRecord(quadrupleIndex: Int(firstInstruction.result!) ?? 0, functionSymbol: self.symbolTable.lookup("main")!)
+        let firstStack = ActivationRecord(functionSymbol: self.symbolTable.lookup("main")!)
+        firstStack.index = 0
         self.activeStack.push(firstStack)
         virtualMemory = VirtualMemory(globalInfo: globalMemory, constantsInfo: constantsInfo, activeFunc : firstStack, constants: constants)
     }
@@ -37,7 +39,7 @@ class VirtualMachine {
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
-            
+            //print("Current qua \(currentIndex)")
             arg1 = Int(currentQuadruple.argument1 ?? "0")
             arg2  = Int(currentQuadruple.argument2 ?? "0")
             result = Int(currentQuadruple.result ?? "0")
@@ -51,13 +53,15 @@ class VirtualMachine {
             case .assign:
                
                 do{
-                    var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
+                    let (firstValue, _) = try self.virtualMemory.getInfoByAddress(address: arg1!)
                     var (resValue, resType) = try self.virtualMemory.getInfoByAddress(address: result!)
 
                     if(resType != .pointer){
                         resValue = result
                     }
-                    try virtualMemory.insertValue(address: Int("\(resValue!)")!, value: firstValue!)
+                    
+
+                    try virtualMemory.insertValue(address: Int("\(resValue!)")!, value: unwrap(firstValue))
                 }catch let error{
                     print(error.localizedDescription)
                 }
@@ -76,20 +80,21 @@ class VirtualMachine {
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .endFunc:
-                self.sigQuadruple(index: currentIndexStack() + 1)
+                endfunc()
                 break
             case .era:
                 eraStatement(res: currentQuadruple.result ?? "")
                 break
             case .gosub:
                 self.sigQuadruple(index: currentIndexStack() + 1)
-                
+                gosubStatement()
                 break
             case .param:
-                parameterStatement(arg1: arg1)
+                parameterStatement(arg1: arg1, res: result)
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .rtn:
+                returnStatement(arg1: arg1, res: result)
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .vrf:
@@ -124,21 +129,42 @@ class VirtualMachine {
     }
 
     func eraStatement(res: String){
-        let stack = ActivationRecord(quadrupleIndex: self.currentIndexStack() ?? 0, functionSymbol: self.symbolTable.lookup(res)!)
+        let stack = ActivationRecord(functionSymbol: self.symbolTable.lookup(res)!)
         self.readyStack.push(stack)
         self.sigQuadruple(index: self.currentIndexStack() + 1)
     }
     
-    func parameterStatement(arg1: Int?){
+    func returnStatement(arg1: Int?, res: Int?){
+        guard let arg1Address = arg1 else {return}
+        guard let resAddress = res else {return}
+        do{
+            guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Any, TypeSymbol) else {return}
+            try self.virtualMemory.insertValue(address: resAddress, value: unwrap(value))
+        } catch let error{
+            print(error)
+        }
+        
+    }
+    
+    func parameterStatement(arg1: Int?, res: Int?){
         guard let arg1Address = arg1 else {return}
         let readyActivationRecord = self.readyStack.peek()!
         do{
-            guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Bool, TypeSymbol) else {return}
-            try readyActivationRecord.saveValue(address: arg1Address, val: value)
+            guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Any, TypeSymbol) else {return}
+            
+            guard let resAddress = res else {return}
+            try readyActivationRecord.saveValue(address: resAddress, val: unwrap(value))
         }catch let error{
             print(error)
         }
     }
+    
+    func gosubStatement(){
+        let readyActivationRecord = self.readyStack.pop()!
+        self.activeStack.push(readyActivationRecord)
+        virtualMemory.activeMemory = readyActivationRecord
+    }
+ 
     
     func brincoIndex(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
         guard let resultAddress = res else {return}
@@ -171,6 +197,12 @@ class VirtualMachine {
         }
     }
     
+    func endfunc(){
+        self.activeStack.pop()
+        guard let newActiveMemory = self.activeStack.peek() else{return}
+        self.virtualMemory.activeMemory = newActiveMemory
+    }
+    
     func basicOperation(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
         
         //Operadores binarios
@@ -183,8 +215,8 @@ class VirtualMachine {
             if(secondType == .pointer){
                 secondValue = try self.virtualMemory.getInfoByAddress(address: Int("\(secondValue!)")!).0
             }
-            let typeSecond = type(of: secondValue)
-                  print(typeSecond)
+           // let typeSecond = type(of: secondValue)
+//                  print(typeSecond)
             
             makeOp(op: op, first: firstValue!, second: secondValue!, res: res)
 
@@ -201,13 +233,12 @@ class VirtualMachine {
         let boolOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or]
         let boolNumericOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different]
         do{
-            if (boolOperators.contains(op)) {
-                if let firstBool = first as? Bool {
-                    let r = boolOp(a: firstBool, b: second as! Bool, op: op)
-                    try virtualMemory.insertValue(address: res! , value: r)
-                }
+            if let firstBool = first as? Bool, let secondBool = first as? Bool, (boolOperators.contains(op)) {
+                    let r = boolOp(a: firstBool, b: secondBool, op: op)
+                    try? virtualMemory.insertValue(address: res! , value: r)
             }
-            if (boolNumericOperators.contains(op)) {
+           
+            if  (boolNumericOperators.contains(op)) {
                 switch first {
                 case let firstInt as Int:
                     switch second {
@@ -254,7 +285,9 @@ class VirtualMachine {
                 default:
                     break
                 }
+                return
             }
+            
             switch first {
             case let firstInt as Int:
                 switch second {
@@ -301,9 +334,10 @@ class VirtualMachine {
             default:
                 break
             }
-        }catch let error{
-            print(error.localizedDescription)
-        }
+            }catch let error{
+                print(error.localizedDescription)
+            }
+        
     }
     
     func getContentAddressFromPointer(pointerAddress : Any)->Int?{
@@ -478,4 +512,14 @@ extension Bool : BoolP {}
 
 func add<T: Arithmetic>(a: T, b: T) -> T {
     return a + b
+}
+
+
+func unwrap<T>(_ any: T) -> Any
+{
+    let mirror = Mirror(reflecting: any)
+    guard mirror.displayStyle == .optional, let first = mirror.children.first else {
+        return any
+    }
+    return first.value
 }

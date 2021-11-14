@@ -74,8 +74,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             | MAIN startNode RPAREN cuerpo {semantic.endFunction()};
              
     startMain : MAIN {
-        semantic.startFunction("main" as NSString)
         semantic.insertSymbolToST("main", true, false, .void, .method)
+        semantic.startFunction("main" as NSString)
         semantic.foundMain()
     };
              
@@ -201,6 +201,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 let symbol = semantic.returnSymbolByID($2 as String)
                 params.append(symbol)
             }
+            | ID {
+                
+            }
             ;
            
     asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)}
@@ -301,8 +304,12 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
         ;
    
-   cicloForIterador : FOR startNode cicloForIteradorP1 cicloForIteradorA cicloForIteradorP2 asignar RPAREN cuerpo {semantic.whileP3()}
-                    | FOR startNode cicloForIteradorP2 asignar RPAREN cuerpo {semantic.whileP3()};
+   cicloForIterador : FOR startNode cicloForIteradorP1 cicloForIteradorA cicloForIteradorP2 asignar RPAREN cuerpo {
+       semantic.whileP3()
+   }
+   | FOR startNode cicloForIteradorP2 asignar RPAREN cuerpo {
+        semantic.whileP3()
+   };
                     
    cicloForIteradorP1: vars {
        semantic.whileP1()
@@ -343,7 +350,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    
    funcionesVoid : FUNC idFunc startNode params RPAREN cuerpo
        {
-           semantic.insertSymbolToST($2, true, false, .void, .method, params: self.params)
+           semantic.returnSymbolByID($2 as String).params = params.reversed()
            semantic.endFunction()
            self.params.removeAll()
        }
@@ -353,11 +360,17 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             semantic.endFunction()
         };
         
-    idFunc : ID{semantic.startFunction($1); $$ = $1};
+    idFunc : ID{
+       
+        semantic.insertSymbolToST($1, true, false, .void, .method)
+        semantic.startFunction($1);
+        $$ = $1};
     
     idFuncReturn : tipoSimple ID{
-        semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void, .method)
-        ; semantic.startFunction($2); $$ = $2};
+        semantic.startFunction($2);
+        semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void, .method);
+        semantic.setCurrentCuadruple();
+        $$ = $2};
    
    flujoBloque : asignar SEMICOLON
                | llamada

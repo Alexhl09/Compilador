@@ -16,11 +16,11 @@ class ActivationRecord{
     public var temporalMemory: VirtualMemoryBlock
 
 
-    init(quadrupleIndex: Int = 0, functionSymbol: Symbol){
-        self.index = quadrupleIndex
+    init(functionSymbol: Symbol){
         self.symbolFunction = functionSymbol
         self.localMemory = VirtualMemoryBlock(infoStack: symbolFunction.localInfoStack, sizeBlock: 7000, kind: .Local)
         self.temporalMemory = VirtualMemoryBlock(infoStack: symbolFunction.temporalInfoStack, sizeBlock: 7000, kind: .Temporal)
+        self.index = symbolFunction.currentCuadruple
     }
     
     func saveValue(address: Int, val : Any) throws {

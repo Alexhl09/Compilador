@@ -485,4 +485,9 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     SemCubeKey.init(op1: .Integer, op2: .float, o: .equal) : .boolean,
     SemCubeKey.init(op1: .Integer, op2: .integer, o: .equal) : .boolean,
     SemCubeKey.init(op1: .Integer, op2: .Integer, o: .equal) : .boolean,
+    
+    SemCubeKey.init(op1: .boolean, op2: .boolean, o: .equal) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .boolean, o: .different) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .boolean, o: .and) : .boolean,
+    SemCubeKey.init(op1: .boolean, op2: .boolean, o: .or) : .boolean,
 ]

@@ -10,7 +10,7 @@ import Foundation
 class SemanticHandler : CustomStringConvertible {
     
     // MARK: - Properties
-    
+    var globalFinalIndex : Bool = false
     var delegate : SemanticErrorDelegate? = nil
     var quadruples : [Quadruple] = []
     var symbolTable : SymbolTable = SymbolTable()
@@ -28,8 +28,8 @@ class SemanticHandler : CustomStringConvertible {
     
     init() {
         
-        self.jumpStack.push(self.quadruples.count)
-        self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+      
+       
         functionAsMainThread = "main"
     }
     
@@ -602,9 +602,9 @@ class SemanticHandler : CustomStringConvertible {
         self.jumpStack.push(self.quadruples.count)
         
         if(range == "..."){
-            self.operationStack.operators.push(.lessOrEqualThan)
+            self.operationStack.operators.push(.greaterOrEqualThan)
         }else{
-            self.operationStack.operators.push(.lessThan)
+            self.operationStack.operators.push(.greaterThan)
         }
         // Agregar para validacion de for
         self.addOperand(symbol: returnSymbolByID(id) )
@@ -895,6 +895,19 @@ class SemanticHandler : CustomStringConvertible {
     
     func startFunction(_ id: NSString){
         self.functionAsMainThread = id as String
+        self.setCurrentCuadruple()
+    }
+    
+    func setCurrentCuadruple(){
+        if(globalFinalIndex == false){
+            globalFinalIndex = true
+            self.jumpStack.push(self.quadruples.count)
+            self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+        }
+        guard let symbolFunction = symbolTable.lookup(functionAsMainThread ?? "") else {
+            return
+        }
+        symbolFunction.currentCuadruple = self.quadruples.count
     }
     
     func endFunction(){
