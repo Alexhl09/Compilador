@@ -167,6 +167,7 @@ class SemanticHandler : CustomStringConvertible {
         
         do {
             try generateQuadrupleAssignCellArray(symbol: symbol,withValue: false)
+            fillParcheGArrays(t: symbol.type, nameArray: symbol.identifier)
         }catch(let error){
             print(error.localizedDescription)
         }
@@ -382,11 +383,46 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     // FIXME: - No constant string
-    func addConstantString(_ string : NSString){
+    func addConstantString(_ string : NSString,  size : Int = 1){
+        var s = (string as String)
+        s.removeFirst()
+        s.removeLast()
+        for (ind,ch) in s.enumerated(){
+            let index = s.index(s.startIndex, offsetBy: ind)
+            let charValue : Character = s[index]
+            if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
+                /// If found, add that address as an operand of type bool
+                self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
+            }else{
+                /// If not, ask for new constant address of char type
+                let newAddress = self.newConstantAddress(t: .char, size: size)
+                /// Save the value and new address to the constant table
+                self.saveAddress(constant: charValue, address: newAddress)
+                /// Add the new address as an operand in operands stack
+                self.addOperandByMemory(memoryAddress: newAddress, type: .char)
+            }
+//            print(sub)
+//            // Takes the char value
+//
+//            let charValue : Character = s[indexChar]
+//            /// Looks for the address in the constant Table
+//            if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
+//                /// If found, add that address as an operand of type bool
+//                self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
+//            }else{
+//                /// If not, ask for new constant address of char type
+//                let newAddress = self.newConstantAddress(t: .char, size: size)
+//                /// Save the value and new address to the constant table
+//                self.saveAddress(constant: charValue, address: newAddress)
+//                /// Add the new address as an operand in operands stack
+//                self.addOperandByMemory(memoryAddress: newAddress, type: .char)
+//            }
+        }
         
-        self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
-        numConstantes = numConstantes + 1
+            //self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
+      //  numConstantes = numConstantes + 1
     }
+
 
     /**
      Save address with a new constant and the address
@@ -784,9 +820,14 @@ class SemanticHandler : CustomStringConvertible {
                 let auxS = Quadruple(argument1: aux1Operand, argument2: aux2Operand, op: .sum, result: "\(tempAddress2)")
                 self.quadruples.append(auxS)
                 // PREVIOUS
-                let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-                self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
-                self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
+                if(withValue){
+                    let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                    self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+                    self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
+                }else{
+                    self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+                }
+               
             }
             
             dimNow += 1
@@ -1022,6 +1063,17 @@ class SemanticHandler : CustomStringConvertible {
             let quadrupleReturn = Quadruple(argument1: "\(symbol.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
             self.quadruples.append(quadrupleReturn)
         }
+    }
+    
+    
+//    // PARCHE GUADALUPANO
+    func fillParcheGArrays(t: TypeSymbol, nameArray: String){
+        guard let symbol = symbolTable.lookup(nameArray) else {return}
+        let newAddresss = newLocalVariable(t: t)
+        let (pointerOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        self.operationStack.addOperand(operand: "\(newAddresss)", type: t)
+        let quadrupleReturn = Quadruple(argument1: "\(pointerOperand)", argument2: nil, op: .assign, result: "\(newAddresss)")
+        self.quadruples.append(quadrupleReturn)
     }
 
     

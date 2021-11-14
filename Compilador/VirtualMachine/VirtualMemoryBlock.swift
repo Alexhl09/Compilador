@@ -246,7 +246,12 @@ class VirtualMemoryBlock{
         case .char:
             if value is Character{
                  self.useMemoryChar(address: myAddress, value: value as! Character)
-            }else{
+            }else if value is String{
+                guard let ascii =  value as? String else {print("E");  x = 1; return}
+                guard let c =  ascii.first else {print("E");  x = 1; return}
+                self.useMemoryChar(address: myAddress, value: c)
+           }
+            else{
                 guard let v =  Int("\(value)") else {print("E");  x = 1; return}
                 let c = Character(UnicodeScalar(v)!)
                  self.useMemoryChar(address: myAddress, value: c)

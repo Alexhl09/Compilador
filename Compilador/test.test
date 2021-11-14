@@ -11,7 +11,7 @@ func printArray(int A, bool B) {
     var a;
     var o;
     var x = 10.3;
-    var p = "a";
+    var p = 'a';
     
     
     o = 200;
@@ -61,7 +61,7 @@ func printArray(int A, bool B) {
         a = 1;
     }
     for(var a = 0; a < 10; a = a + 1){
-        print("c");
+        print('c');
     }
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     
@@ -78,30 +78,34 @@ func int mergeSort(bool arr, int pos, int size){
 }
 
 main () {
+    var palabra[9] = "holamundo";
+    //print("hola");
+    print(palabra[3]);
+    print(true);
     var myArrayNuevo[12] = {1,2,3,4,5,6,7,8,9,10,11,12};
-    print("p");
+    print('p');
     const int uu = myArrayNuevo[0];
     print(uu);
     const int t = suma(10, uu);
-    print("k");
+    print('k');
     print(t);
     var myLimit = 0;
     var con = 0;
-    print("-");
+    print('-');
     while (myLimit < 12) {
         myLimit = myLimit + 1;
         const int t = myArrayNuevo[con];
         print(t);
         print(myLimit);
-        print("r");
+        print('r');
         print(suma(myLimit, t));
         con = con + 1;
         for(var a = 0; a < 3; a = a + 1){
-            print("-");
+            print('-');
         }
     }
     
-    print("-");
+    print('-');
     for(var a = 0; a < 10; a = a + 2){
         a = a + 1;
         print(a);
@@ -132,17 +136,18 @@ main () {
     print(2);
     
     var arrayTest[2][2][3];
-    print("a");
+    print('a');
     arrayTest[1][1][array[array[0]]] = 3.4;
     var arra[10][2][2];
     var arr = true;
     var arr_size = 6;
-    print("a");
+          print('a');
     print(arr);
     printArray(4, arr);
     const int sorted = mergeSort(arr, 10 - 2, arr_size - 1);
     print(sorted);
-    print("a");
+    print('a');
     print(arr);
+    print(arrayTest[1][1][1]);
 }
     
