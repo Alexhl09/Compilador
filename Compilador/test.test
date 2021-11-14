@@ -82,6 +82,18 @@ main () {
     array[3] = 1;
     array[4] = 1;
     array[5] = 1;
+    print(1);
+    print(1);
+    
+    if (true) {
+        print(0);
+    } else {
+        print(10);
+    }
+    
+    print(2);
+    print(2);
+    
     var arrayTest[2][2][3];
     print("a");
     arrayTest[1][1][array[array[0]]] = 3.4;
