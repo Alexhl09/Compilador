@@ -232,8 +232,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    escribirA : escribirB
              | escribirB COMMA escribirA;
    
-   escribirB : expresion
-             | cadena;
+   escribirB : expresion;
              
 
   llamada : ID LPAREN llamadaA RPAREN {

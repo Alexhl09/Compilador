@@ -24,6 +24,7 @@ class SemanticHandler : CustomStringConvertible {
     var dimensionStack : Stack<(String, Int)> = []
     var globalInfoStack: InfoStack = InfoStack()
     var constanstInfoStack : InfoStack = InfoStack()
+    var addressArrays: [Int:  Int] = [:]
     // MARK: - Initializer
     
     init() {
@@ -143,6 +144,7 @@ class SemanticHandler : CustomStringConvertible {
                 symbol.address = self.newLocalVariable(t: symbol.type, size: sizeArray)
             }
         }
+        addressArrays[symbol.address] = sizeArray
     }
     
     func assignOneCellArray(_ id : NSString){
@@ -609,9 +611,29 @@ class SemanticHandler : CustomStringConvertible {
     
     func addPrint(){
         if(!operationStack.operands.isEmpty){
-            let (operand, _) = operationStack.getLastOperand() ?? ("", .void)
-            let op = operationStack.operators.pop() ?? .print
-            self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
+            let val = addressArrays[Int(operationStack.operands.peek()?.0 ?? "0") ?? 0]
+            if(val != nil){
+                let (operand, t) = operationStack.getLastOperand() ?? ("", .void)
+                for i in 0..<(val ?? 0){
+                    guard let o = Int(operand) else { return  }
+                    self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(o + i)"))
+                    if(t != .char){
+                        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
+                    }
+                }
+                if(t == .char){
+                self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
+                }
+                return
+            }
+                
+            operationStack.operands.reverse()
+            while(!operationStack.operands.isEmpty){
+                let (operand, _) = operationStack.getLastOperand() ?? ("", .void)
+                let op = operationStack.operators.pop() ?? .print
+                self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
+            }
+            self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
         }
     }
     

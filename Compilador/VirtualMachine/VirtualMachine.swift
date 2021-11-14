@@ -16,6 +16,7 @@ class VirtualMachine {
     var readyStack: Stack<ActivationRecord> = []
     var virtualMemory : VirtualMemory
     var startedFunc = false
+    var printRes = ""
     
     init(quadruples: [Quadruple], constants: [String: Int], symbolTable: SymbolTable, globalMemory : InfoStack, constantsInfo: InfoStack){
         self.quadruples = quadruples
@@ -39,7 +40,7 @@ class VirtualMachine {
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
-            print("Current qua \(currentIndex)")
+            //print("Current qua \(currentIndex)")
             arg1 = Int(currentQuadruple.argument1 ?? "0")
             arg2  = Int(currentQuadruple.argument2 ?? "0")
             result = Int(currentQuadruple.result ?? "0")
@@ -123,13 +124,19 @@ class VirtualMachine {
     }
     
     func printStatement(res: Int){
-        do{
-            guard let value = try self.virtualMemory.getInfoByAddress(address: res).0 else {return}
-            print("\(value)")
+        if(res == -1){
+            print(printRes)
+            printRes = ""
+        }else{
+            do{
+                guard let value = try self.virtualMemory.getInfoByAddress(address: res).0 else {return}
+                printRes += "\(value)"
+            }
+            catch let error{
+                print(error)
+            }
         }
-        catch let error{
-            print(error)
-        }
+        
     }
 
     func eraStatement(res: String){
