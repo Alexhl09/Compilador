@@ -45,7 +45,7 @@ class VirtualMachine {
             
             
             switch op {
-            case .sum, .minus, .multiply, .division, .modulo, .intDivision:
+            case .sum, .minus, .multiply, .division, .modulo, .intDivision, .greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or:
                 self.basicOperation(op: op, arg1: arg1, arg2: arg2, res: result)
                 self.sigQuadruple(index: currentIndexStack() + 1)
             case .assign:
@@ -61,10 +61,7 @@ class VirtualMachine {
                 }catch let error{
                     print(error.localizedDescription)
                 }
-               
-            case .greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or:
-                
-                break
+                self.sigQuadruple(index: currentIndexStack() + 1)
             case .goto,.gotof,.gotot:
                 brincoIndex(op: op, arg1: arg1, arg2: arg2, res: result)
                 break
