@@ -13,6 +13,7 @@ class VirtualMachine {
     var symbolTable: SymbolTable
     var activeStack: Stack<ActivationRecord> = []
     var sleepStack: Stack<ActivationRecord> = []
+    var readyStack: Stack<ActivationRecord> = []
     var virtualMemory : VirtualMemory
     
     init(quadruples: [Quadruple], constants: [String: Int], symbolTable: SymbolTable, globalMemory : InfoStack, constantsInfo: InfoStack){
@@ -46,6 +47,7 @@ class VirtualMachine {
             switch op {
             case .sum, .minus, .multiply, .division, .modulo, .intDivision:
                 self.basicOperation(op: op, arg1: arg1, arg2: arg2, res: result)
+                self.sigQuadruple(index: currentIndexStack() + 1)
             case .assign:
                
                 do{
@@ -63,38 +65,115 @@ class VirtualMachine {
             case .greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or:
                 
                 break
-            case .goto:
-                break
-            case .gotof:
-                break
-            case .gotot:
+            case .goto,.gotof,.gotot:
+                brincoIndex(op: op, arg1: arg1, arg2: arg2, res: result)
                 break
             case .read:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .print:
+                self.printStatement(res: result ?? 0)
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .noNil:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .endFunc:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .era:
+                eraStatement(res: currentQuadruple.result ?? "")
                 break
             case .gosub:
+                self.sigQuadruple(index: currentIndexStack() + 1)
+                
                 break
             case .param:
+                parameterStatement(arg1: arg1)
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .rtn:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .vrf:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .sumAd:
+                self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             }
-            self.activeStack.peek()?.index += 1
+            //self.sigQuadruple(index: currentIndexStack() + 1)
         }while(currentIndex + 1 < self.quadruples.count)
         print("")
     }
-        
+    
+    func sigQuadruple(index: Int){
+        self.activeStack.peek()?.index = index
+    }
+    
+    func currentIndexStack() -> Int{
+        guard let indexStack = self.activeStack.peek()?.index else {return 0}
+        return indexStack
+    }
+    
+    func printStatement(res: Int){
+        do{
+            guard let value = try self.virtualMemory.getInfoByAddress(address: res).0 else {return}
+            print("\(value)")
+        }
+        catch let error{
+            print(error)
+        }
+    }
+
+    func eraStatement(res: String){
+        let stack = ActivationRecord(quadrupleIndex: self.currentIndexStack() ?? 0, functionSymbol: self.symbolTable.lookup(res)!)
+        self.readyStack.push(stack)
+        self.sigQuadruple(index: self.currentIndexStack() + 1)
+    }
+    
+    func parameterStatement(arg1: Int?){
+        guard let arg1Address = arg1 else {return}
+        let readyActivationRecord = self.readyStack.peek()!
+        do{
+            guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Bool, TypeSymbol) else {return}
+            try readyActivationRecord.saveValue(address: arg1Address, val: value)
+        }catch let error{
+            print(error)
+        }
+    }
+    
+    func brincoIndex(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
+        guard let resultAddress = res else {return}
+        if(op == .goto){
+            sigQuadruple(index: resultAddress)
+        }else if (op == .gotof){
+            goto(compareTo: false, arg1: arg1,  res: res)
+        } else if (op == .gotot){
+            goto(compareTo: true, arg1: arg1, res:res)
+        }
+    }
+    
+    func goto(compareTo: Bool, arg1: Int?, res: Int?){
+        do{
+            guard let arg1Address = arg1 else {return}
+            guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Bool, TypeSymbol) else {return}
+            
+            if(type == .pointer){
+                value = try self.virtualMemory.getInfoByAddress(address: value as! Int).0
+            }
+            let val = value as! Bool
+            if(val == compareTo){
+                guard let nextQuadrupleIndex : Int = res else {return}
+                sigQuadruple(index: nextQuadrupleIndex)
+            }else{
+                sigQuadruple(index: currentIndexStack() + 1)
+            }
+        }catch let error{
+            print(error)
+        }
+    }
+    
     func basicOperation(op : Operator, arg1 : Int?, arg2: Int?, res: Int?){
         
         //Operadores binarios
@@ -112,30 +191,6 @@ class VirtualMachine {
             
             makeOp(op: op, first: firstValue!, second: secondValue!, res: res)
 
-//            switch op {
-//            case .sum:
-//                print(type(of: firstValue!))
-//                makeOp(add, first: 1, second: 2, res: 3)
-//                makeOp(add, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            case .minus:
-//                makeOp(substract, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            case .multiply:
-//                makeOp(multiply, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            case .division:
-//                makeOp(division, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            case .modulo:
-//                makeOp(division, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            case .intDivision:
-//                makeOp(divisionInt, first: firstValue!, second: secondValue!, res: res)
-//                break
-//            default:
-//                break
-//            }
         }catch{
             
         }

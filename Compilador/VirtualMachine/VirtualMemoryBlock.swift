@@ -192,7 +192,7 @@ class VirtualMemoryBlock{
         case .float:
             return (self.getInfoFloat(address: myAddress),type)
         case .char:
-            break
+            return (self.getInfoChar(address: myAddress),type)
         case .double:
             return (self.getInfoDouble(address: myAddress),type)
         case .Integer:
