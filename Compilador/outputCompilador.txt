@@ -462,98 +462,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [-7803305497892865293: 
-
-   |===================================
-   |     Identifier : suma
-   |     Kind : method
-   |     Type : integer
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 5
-   |     Address : 9
-   |     Type parameters: integer	integer	
-    =================================== 
-, -4766738196802527924: 
-
-   |===================================
-   |     Identifier : x
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 1
-   |     Address : 0
-   |     Type parameters: 
-    =================================== 
-, 2136319081700678379: 
-
-   |===================================
-   |     Identifier : y
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 2
-   |     Address : 1
-   |     Type parameters: 
-    =================================== 
-, 4509786366483454174: 
-
-   |===================================
-   |     Identifier : printArray
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 8
-   |     Address : 1009
-   |     Type parameters: boolean	integer	
-    =================================== 
-, 3627312282716045533: 
-
-   |===================================
-   |     Identifier : main
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 79
-   |     Address : 1010
-   |     Type parameters: 
-    =================================== 
-, -6175396321125178969: 
-
-   |===================================
-   |     Identifier : array
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : true
-   |     Assigned : true
-   |     Line : 5
-   |     Address : 3
-   |     Type parameters: 
-    =================================== 
-, -8044086774924072107: 
-
-   |===================================
-   |     Identifier : mergeSort
-   |     Kind : method
-   |     Type : integer
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 75
-   |     Address : 10
-   |     Type parameters: integer	integer	boolean	
-    =================================== 
-, 8159538091729582531: 
+ [-8738791792294905102: 
 
    |===================================
    |     Identifier : z
@@ -566,38 +475,129 @@ Last SymbolTable:
    |     Address : 2
    |     Type parameters: 
     =================================== 
+, -7164248738837448017: 
+
+   |===================================
+   |     Identifier : mergeSort
+   |     Kind : method
+   |     Type : integer
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 75
+   |     Address : 10
+   |     Type parameters: integer	integer	boolean	
+    =================================== 
+, 2150784296711920052: 
+
+   |===================================
+   |     Identifier : x
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 1
+   |     Address : 0
+   |     Type parameters: 
+    =================================== 
+, 8248158956130557576: 
+
+   |===================================
+   |     Identifier : array
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : true
+   |     Assigned : true
+   |     Line : 5
+   |     Address : 3
+   |     Type parameters: 
+    =================================== 
+, 5979139646077213122: 
+
+   |===================================
+   |     Identifier : y
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 2
+   |     Address : 1
+   |     Type parameters: 
+    =================================== 
+, 1040754168799196905: 
+
+   |===================================
+   |     Identifier : suma
+   |     Kind : method
+   |     Type : integer
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 5
+   |     Address : 9
+   |     Type parameters: integer	integer	
+    =================================== 
+, -8757805409905568531: 
+
+   |===================================
+   |     Identifier : main
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 79
+   |     Address : 1010
+   |     Type parameters: 
+    =================================== 
+, -1064616358828765876: 
+
+   |===================================
+   |     Identifier : printArray
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 8
+   |     Address : 1009
+   |     Type parameters: boolean	integer	
+    =================================== 
 ]
 
 Constants: 
- Constant:[114]      Address: 26005
-Constant:[20]       Address: 21001
-Constant:[7000]     Address: 21017
+ Constant:[7021]     Address: 21018
+Constant:[45]       Address: 26004
+Constant:[5]        Address: 21006
 Constant:[9]        Address: 21012
-Constant:[107]      Address: 26003
-Constant:[99]       Address: 26001
-Constant:[3.4]      Address: 25002
-Constant:[7021]     Address: 21018
-Constant:[30]       Address: 21002
-Constant:[9.0]      Address: 25000
-Constant:[0]        Address: 21011
+Constant:[97]       Address: 26000
 Constant:[3]        Address: 21015
-Constant:[11000]    Address: 21019
+Constant:[112]      Address: 26002
+Constant:[30]       Address: 21002
+Constant:[12]       Address: 21003
+Constant:[3.4]      Address: 25002
+Constant:[7000]     Address: 21017
+Constant:[99]       Address: 26001
 Constant:[4]        Address: 21014
 Constant:[11]       Address: 21004
 Constant:[7]        Address: 21008
-Constant:[6]        Address: 21007
-Constant:[13]       Address: 21005
-Constant:[1]        Address: 21009
-Constant:[200]      Address: 21010
-Constant:[12]       Address: 21003
+Constant:[0]        Address: 21011
 Constant:[2]        Address: 21013
-Constant:[5]        Address: 21006
-Constant:[112]      Address: 26002
-Constant:[8]        Address: 21016
 Constant:[10.3]     Address: 25001
-Constant:[45]       Address: 26004
-Constant:[false]    Address: 24001
-Constant:[10]       Address: 21000
-Constant:[97]       Address: 26000
+Constant:[13]       Address: 21005
+Constant:[200]      Address: 21010
 Constant:[true]     Address: 24000
+Constant:[107]      Address: 26003
+Constant:[114]      Address: 26005
+Constant:[11000]    Address: 21019
+Constant:[9.0]      Address: 25000
+Constant:[false]    Address: 24001
+Constant:[20]       Address: 21001
+Constant:[10]       Address: 21000
+Constant:[8]        Address: 21016
+Constant:[6]        Address: 21007
+Constant:[1]        Address: 21009
 

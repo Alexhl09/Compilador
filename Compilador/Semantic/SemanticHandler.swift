@@ -146,7 +146,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func assignOneCellArray(_ id : NSString){
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada");exit(0); return}
         if (!symbol.assigned && !symbol.constant){
             assignArray(symbol)
         }
@@ -175,10 +175,10 @@ class SemanticHandler : CustomStringConvertible {
     func assignArray(_ id: NSString){
         
         
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); exit(0);return}
 
         let sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
-        guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); return }
+        guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); exit(0); return }
     
         if(!symbol.assigned && !symbol.constant){
             assignArray(symbol)
@@ -466,6 +466,7 @@ class SemanticHandler : CustomStringConvertible {
     
             if(rightType != .boolean){
                 print("ERROR type mismatch ternary")
+                exit(0)
             }
             
             self.quadruples.append(Quadruple(argument1: rightOperand, argument2: nil, op: .gotof, result: nil))
@@ -563,7 +564,7 @@ class SemanticHandler : CustomStringConvertible {
         // Agregar a la pila de saltos uno antes de ahorita, pila.append(tamano de cuadruplos menos 1)
         // Rellenar en Fill (inice, size de cuadruplos)
         self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
-        guard let end = jumpStack.pop() else {print("No hay algo en el jumpStack"); return}
+        guard let end = jumpStack.pop() else {print("No hay algo en el jumpStack"); exit(0); return}
         jumpStack.push(quadruples.count - 1)
         fillQuadruple(index: end, value: String(quadruples.count))
 
@@ -963,6 +964,7 @@ class SemanticHandler : CustomStringConvertible {
         let (operand, type) = operationStack.getLastOperand() ?? ("",.void)
         
         guard (returnTypeExpected == type) else {
+            delegate?.sendInvalidOperationBetween(t1: type, t2: returnTypeExpected)
             print("Mistmatch return and expected")
             return
         }

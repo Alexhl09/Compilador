@@ -43,5 +43,6 @@ class CompilerErrorDelegate: CompilerParserError {
             print("Error")
         }
         print(infoPrint + " en la linea: ", line + 1, " en la columna: ", column)
+        exit(0)
     }
 }
