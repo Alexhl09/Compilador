@@ -98,9 +98,12 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
-    func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void){
-        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: -1, columns: -1)
-        
+    func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void, _ dimension : (NSNumber, NSNumber) = (NSNumber(value: -1), NSNumber(value: -1))){
+        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
+        if(dimension.0 != -1 && dimension.1 != -1){
+            self.addConstantInteger(dimension.0, saveOperand: false)
+            self.addConstantInteger(dimension.1, saveOperand: false)
+        }
         var temp = list.head
         var dim = 1
         var offset = 0
@@ -180,7 +183,7 @@ class SemanticHandler : CustomStringConvertible {
         
         guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); exit(0);return}
 
-        let sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
+        let sizeArray = symbol.arrayList?.head?.r ?? 0
         guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); exit(0); return }
     
         if(!symbol.assigned && !symbol.constant){
@@ -777,7 +780,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
-        
+         
         let (symbolOperand, symbolType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
         
         let baseAddress = self.needConstantInt(value: Int(symbolOperand)!)
@@ -846,8 +849,10 @@ class SemanticHandler : CustomStringConvertible {
                     let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
                     self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
                     self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
-                }else{
+                }else {
+                   // let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
                     self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
+                    //self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
                 }
                
             }

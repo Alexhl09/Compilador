@@ -111,7 +111,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         }
    | VAR ID varsPrimaArreglos varAssign SEMICOLON
         {
-            semantic.insertArrayToST($2, $3 as! (NSNumber, NSNumber), linkedListArray, r: r, const : false);
+            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, $3 as! (NSNumber, NSNumber));
             linkedListArray = ArrayLinkedList();
             r = 1;
             semantic.assignArray($2);
@@ -208,7 +208,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
            
     asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)}
     | ID LSBRAKE expresion RSBRAKE varAssign {
-        print("Assigned cell array");
+        print("Assigned celle array");
         semantic.assignOneCellArray($1);
     }
     | ID LSBRAKE expresion RSBRAKE LSBRAKE expresion RSBRAKE varAssign {
@@ -461,7 +461,8 @@ factor : CTEI
        }
        | ID assMulti
        {
-           semantic.readOneCellArray($1)
+           semantic.readOneCellArray($1);
+           print("<holi")
        }
        | CTEC
        {

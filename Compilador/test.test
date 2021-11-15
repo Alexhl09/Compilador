@@ -13,7 +13,7 @@ func printArray(int A, bool B) {
     var x = 10.3;
     var p = 'a';
     
-    
+   
     o = 200;
     
     input(o);
@@ -78,6 +78,7 @@ func int mergeSort(bool arr, int pos, int size){
 }
 
 main () {
+    print(array[5]);
     print('a');
     print("BIENVENIDO AL COMPI");
     print("----------------------");
@@ -152,6 +153,6 @@ main () {
     print(sorted);
     print('a');
     print(arr);
-    print(arrayTest[1][1][1]);
+    print(arrayTest[1][1][2]);
 }
     
