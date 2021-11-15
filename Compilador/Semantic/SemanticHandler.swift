@@ -163,7 +163,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func readOneCellArray(_ id : NSString){
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); return}
+        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada");exit(0); return}
        
         self.addOperand(symbol: symbol)
         
@@ -172,6 +172,7 @@ class SemanticHandler : CustomStringConvertible {
             fillParcheGArrays(t: symbol.type, nameArray: symbol.identifier)
         }catch(let error){
             print(error.localizedDescription)
+            exit(0)
         }
     }
     
@@ -618,9 +619,11 @@ class SemanticHandler : CustomStringConvertible {
                 let (operand, t) = operationStack.getLastOperand() ?? ("", .void)
                 for i in 0..<(val ?? 0){
                     guard let o = Int(operand) else { return  }
-                    self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(o + i)"))
+                    
                     if(t != .char){
-                        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-2)"))
+                        self.quadruples.append( Quadruple(argument1: "\(-2)", argument2: nil, op: .print, result: "\(o + i)"))
+                    }else{
+                        self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(o + i)"))
                     }
                 }
                 self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
@@ -984,6 +987,7 @@ class SemanticHandler : CustomStringConvertible {
        
         guard let symbolFunction = symbolTable.lookup(idFunction as String) else {
             print("Not found function to be called")
+            
             return
         }
         
@@ -997,7 +1001,7 @@ class SemanticHandler : CustomStringConvertible {
         let typeArguments = args.map({$0.1}).reversed() as Array
         let typeParams = symbolFunction.params.map({$0.type})
         guard (typeArguments == typeParams) else{
-            print("error function paramaters type mismatch")
+            delegate?.sendBadParametersForFunc(id: idFunction)
             return
         }
         let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
@@ -1029,6 +1033,7 @@ class SemanticHandler : CustomStringConvertible {
         guard (returnTypeExpected == type) else {
             delegate?.sendInvalidOperationBetween(t1: type, t2: returnTypeExpected)
             print("Mistmatch return and expected")
+            
             return
         }
         
@@ -1138,4 +1143,5 @@ protocol SemanticErrorDelegate {
     func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol)
     func sendUndeclareVariable(id: NSString)
     func sendTypeMismatch()
+    func sendBadParametersForFunc(id: NSString)
 }

@@ -7,8 +7,8 @@ digit [0-9]
 id ({letter}|_)({letter}|{digit}|_)*
 CteI {digit}+
 CteF {digit}+(\.{digit}+)
-CteS \"+[A-Za-z0-9 \\^_\-%$()&*@#.']*\"+
-CteC \'+[A-Za-z0-9 \\^_\-%$()&*@#.']\'+
+CteS \"+[A-Za-z0-9 \\^_\-%$()&*@#.':]*\"+
+CteC \'+[A-Za-z0-9 \\^_\-%$()&*@#.':]\'+
 SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 
 %%
@@ -104,7 +104,9 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     value = NSString(string:text)
     return CompilerParser.CTEC}
 {CteS}  {
+    
     value = NSString(string:text)
+    print(value)
     return CompilerParser.CTES}
 {id}        {
     value = NSString(string:text)

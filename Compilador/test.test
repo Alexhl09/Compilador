@@ -77,8 +77,16 @@ func int mergeSort(bool arr, int pos, int size){
     return 10;
 }
 
+func int cube(int a){
+    return a * a * a;
+}
+
 main () {
     print('a');
+    
+    print("El cubo de 2 es :");
+    
+    print(cube(2));
     print("BIENVENIDO AL COMPI");
     print("----------------------");
     var palabra[9] = "holamundo";

@@ -21,6 +21,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     static let VAR_ALREADY_DECLARED = (CompilerParser.ERROR_STARTERRORID+2)
     static let TYPE_MISMATCH = (CompilerParser.ERROR_STARTERRORID+3)
     static let UNDECLARED_VAR = (CompilerParser.ERROR_STARTERRORID+4)
+    static let BAD_PARAMETERS = (CompilerParser.ERROR_STARTERRORID+5)
 }
 
 %{
@@ -47,6 +48,11 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     func sendTypeMismatch() {
         error(code: CompilerParser.TYPE_MISMATCH, data: [:])
     }
+    
+    func sendBadParametersForFunc(id: NSString){
+        error(code: CompilerParser.BAD_PARAMETERS, data: ["id": id])
+    }
+
 }
 
 

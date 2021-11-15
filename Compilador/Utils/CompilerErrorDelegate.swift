@@ -39,6 +39,10 @@ class CompilerErrorDelegate: CompilerParserError {
             guard let dicVariable : [String:NSString] = data as? [String:NSString] else {return}
             guard let undeclaredID = dicVariable["undeclaredVar"] as? String else {return}
             infoPrint += "Undeclared var \(undeclaredID)"
+        case 261:
+            guard let dicVariable : [String:NSString] = data as? [String:NSString] else {return}
+            guard let nameFunc = dicVariable["id"] as? String else {return}
+            infoPrint += "Bad parameters for \(nameFunc)"
         default:
             print("Error")
         }

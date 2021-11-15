@@ -78,7 +78,7 @@ class VirtualMachine {
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .print:
-                self.printStatement(res: result ?? 0)
+                self.printStatement(res: result ?? 0, arg1: arg1 ?? 0)
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .noNil:
@@ -123,12 +123,10 @@ class VirtualMachine {
         return indexStack
     }
     
-    func printStatement(res: Int){
+    func printStatement(res: Int, arg1: Int){
         if(res == -1){
             print(printRes)
             printRes = ""
-        }else if(res == -2){
-            printRes += ","
         }else{
             do{
                 guard let value = try self.virtualMemory.getInfoByAddress(address: res).0 else {return}
@@ -137,7 +135,12 @@ class VirtualMachine {
             catch let error{
                 print(error)
             }
+            if(arg1 == -2){
+                printRes += ","
+            }
         }
+        
+       
         
     }
 
