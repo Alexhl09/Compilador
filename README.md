@@ -34,3 +34,7 @@ También se trabajo en ir preparando maneras de analizar el comportamiento del c
 Durante esta semana, se trabajó en la realización de la estructura para la maquina virtual y en la ejecución de los cuadruplos para operaciones aritmeticas. Para lograr esto se hizo la generación del mapa de memoria.
 
 Asi mismo, se trabajo también en ir preparando las bases para el manejo de arreglos. 
+
+## Avance 6
+
+Este avance logró integrar toda la ejecución del compilador y sobre todo de la maquina virtual. Es decir, que en esta semana se trabajo en la máquina virtual y la ejecución de cuadruplos. A su vez, se trabajó con el código para manejar arreglos y funciones.

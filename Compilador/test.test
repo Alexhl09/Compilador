@@ -13,7 +13,7 @@ func printArray(int A, bool B) {
     var x = 10.3;
     var p = 'a';
     
-    
+   
     o = 200;
     
     input(o);
@@ -82,6 +82,7 @@ func int cube(int a){
 }
 
 main () {
+    print(array[5]);
     print('a');
     
     print("El cubo de 2 es :");
@@ -160,6 +161,6 @@ main () {
     print(sorted);
     print('a');
     print(arr);
-    print(arrayTest[1][1][1]);
+    print(arrayTest[1][1][2]);
 }
     

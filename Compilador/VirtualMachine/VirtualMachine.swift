@@ -40,7 +40,7 @@ class VirtualMachine {
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
-            //print("Current qua \(currentIndex)")
+            print("Current qua \(currentIndex)")
             arg1 = Int(currentQuadruple.argument1 ?? "0")
             arg2  = Int(currentQuadruple.argument2 ?? "0")
             result = Int(currentQuadruple.result ?? "0")
@@ -103,6 +103,15 @@ class VirtualMachine {
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .vrf:
+                do{
+                    var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
+                    var (resValue, resType) = try self.virtualMemory.getInfoByAddress(address: result!)
+                    
+                    print("arg1 \(firstValue!) - \(firstType) res \(resValue!) - \(resType)")
+                    verify(value: firstValue as! Int, in: resValue as! Int)
+                }catch let error{
+                    print(error.localizedDescription)
+                }
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .sumAd:
@@ -112,6 +121,12 @@ class VirtualMachine {
             //self.sigQuadruple(index: currentIndexStack() + 1)
         }while(currentIndex + 1 < self.quadruples.count)
         print("END")
+    }
+    
+    func verify(value arg1: Int, in res: Int) {
+        if (arg1 < 0 || arg1 >= res) {
+            exit(0)
+        }
     }
     
     func sigQuadruple(index: Int){

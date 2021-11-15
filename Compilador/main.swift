@@ -11,7 +11,7 @@ print("Nombre archivo: ")
 
 // let file = readLine()
 let file = "test.test"
-let p = readFromFile(file ?? "")
+let p = readFromFileJp(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
 
@@ -29,7 +29,7 @@ parser.errorDelegate = error
 if (parser.parse()) {
     let st = parser.semantic
     // print(st.symbolTable.description)
-    writeSemanticAlex(semantic: st)
+    writeSemanticJp(semantic: st)
     let VM = VirtualMachine(quadruples: st.quadruples, constants: st.constants, symbolTable: st.symbolTable, globalMemory: st.globalInfoStack, constantsInfo: st.constanstInfoStack)
     print("------------------------")
     VM.start()
