@@ -852,10 +852,12 @@ class SemanticHandler : CustomStringConvertible {
                     let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
                     self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
                     self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
-                }else {
-                   // let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+                }else if(dimNow < symbol.arrayList?.count ?? 0) {
+                    let (top2Operand, top2Type) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
                     self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
-                    //self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
+                    self.operationStack.addOperand(operand: "\(top2Operand)", type: top2Type)
+                }else{
+                    self.operationStack.addOperand(operand: "\(tempAddress2)", type: resultType2)
                 }
                
             }

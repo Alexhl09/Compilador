@@ -339,57 +339,57 @@ Cuadruplos:
 [92] - Op: *        Address1: 7000      Address2: 14000     Result: 14001
 [93] - Op: RETURN   Address1: 14001     Address2:           Result: 11
 [94] - Op: ENDFUNC  Address1:           Address2:           Result: 
-[95] - Op: PRINT    Address1:           Address2:           Result: 26000
-[96] - Op: PRINT    Address1:           Address2:           Result: -1
-[97] - Op: PRINT    Address1:           Address2:           Result: 26002
-[98] - Op: PRINT    Address1:           Address2:           Result: 26003
-[99] - Op: PRINT    Address1:           Address2:           Result: 26004
-[100] - Op: PRINT   Address1:           Address2:           Result: 26001
-[101] - Op: PRINT   Address1:           Address2:           Result: 26005
-[102] - Op: PRINT   Address1:           Address2:           Result: 26006
-[103] - Op: PRINT   Address1:           Address2:           Result: 26007
+[95] - Op: VERIFY   Address1: 21006     Address2:           Result: 21007
+[96] - Op: +        Address1: 21006     Address2: 21015     Result: 20000
+[97] - Op: =        Address1: 20000     Address2:           Result: 7000
+[98] - Op: PRINT    Address1:           Address2:           Result: 7000
+[99] - Op: PRINT    Address1:           Address2:           Result: -1
+[100] - Op: PRINT   Address1:           Address2:           Result: 26000
+[101] - Op: PRINT   Address1:           Address2:           Result: -1
+[102] - Op: PRINT   Address1:           Address2:           Result: 26002
+[103] - Op: PRINT   Address1:           Address2:           Result: 26003
 [104] - Op: PRINT   Address1:           Address2:           Result: 26004
-[105] - Op: PRINT   Address1:           Address2:           Result: 26008
-[106] - Op: PRINT   Address1:           Address2:           Result: 26009
-[107] - Op: PRINT   Address1:           Address2:           Result: 26004
-[108] - Op: PRINT   Address1:           Address2:           Result: 21013
+[105] - Op: PRINT   Address1:           Address2:           Result: 26001
+[106] - Op: PRINT   Address1:           Address2:           Result: 26005
+[107] - Op: PRINT   Address1:           Address2:           Result: 26006
+[108] - Op: PRINT   Address1:           Address2:           Result: 26007
 [109] - Op: PRINT   Address1:           Address2:           Result: 26004
-[110] - Op: PRINT   Address1:           Address2:           Result: 26009
-[111] - Op: PRINT   Address1:           Address2:           Result: 26010
+[110] - Op: PRINT   Address1:           Address2:           Result: 26008
+[111] - Op: PRINT   Address1:           Address2:           Result: 26009
 [112] - Op: PRINT   Address1:           Address2:           Result: 26004
-[113] - Op: PRINT   Address1:           Address2:           Result: 26011
-[114] - Op: PRINT   Address1:           Address2:           Result: -1
-[115] - Op: ERA     Address1:           Address2:           Result: cube
-[116] - Op: PARAM   Address1: 21013     Address2:           Result: 7000
-[117] - Op: GOSUB   Address1:           Address2:           Result: cube
-[118] - Op: =       Address1: 11        Address2:           Result: 7000
-[119] - Op: PRINT   Address1:           Address2:           Result: 7000
-[120] - Op: PRINT   Address1:           Address2:           Result: -1
-[121] - Op: PRINT   Address1:           Address2:           Result: 26012
-[122] - Op: PRINT   Address1:           Address2:           Result: 26013
-[123] - Op: PRINT   Address1:           Address2:           Result: 26002
-[124] - Op: PRINT   Address1:           Address2:           Result: 26014
-[125] - Op: PRINT   Address1:           Address2:           Result: 26015
-[126] - Op: PRINT   Address1:           Address2:           Result: 26002
-[127] - Op: PRINT   Address1:           Address2:           Result: 26014
-[128] - Op: PRINT   Address1:           Address2:           Result: 26013
-[129] - Op: PRINT   Address1:           Address2:           Result: 26016
-[130] - Op: PRINT   Address1:           Address2:           Result: 26017
-[131] - Op: PRINT   Address1:           Address2:           Result: 26004
-[132] - Op: PRINT   Address1:           Address2:           Result: 26018
-[133] - Op: PRINT   Address1:           Address2:           Result: 26019
-[134] - Op: PRINT   Address1:           Address2:           Result: 26004
-[135] - Op: PRINT   Address1:           Address2:           Result: 26020
-[136] - Op: PRINT   Address1:           Address2:           Result: 26017
-[137] - Op: PRINT   Address1:           Address2:           Result: 26021
-[138] - Op: PRINT   Address1:           Address2:           Result: 26022
-[139] - Op: PRINT   Address1:           Address2:           Result: 26013
-[140] - Op: PRINT   Address1:           Address2:           Result: -1
-[141] - Op: PRINT   Address1:           Address2:           Result: 26023
-[142] - Op: PRINT   Address1:           Address2:           Result: 26023
-[143] - Op: PRINT   Address1:           Address2:           Result: 26023
-[144] - Op: PRINT   Address1:           Address2:           Result: 26023
-[145] - Op: PRINT   Address1:           Address2:           Result: 26023
+[113] - Op: PRINT   Address1:           Address2:           Result: 21013
+[114] - Op: PRINT   Address1:           Address2:           Result: 26004
+[115] - Op: PRINT   Address1:           Address2:           Result: 26009
+[116] - Op: PRINT   Address1:           Address2:           Result: 26010
+[117] - Op: PRINT   Address1:           Address2:           Result: 26004
+[118] - Op: PRINT   Address1:           Address2:           Result: 26011
+[119] - Op: PRINT   Address1:           Address2:           Result: -1
+[120] - Op: ERA     Address1:           Address2:           Result: cube
+[121] - Op: PARAM   Address1: 21013     Address2:           Result: 7000
+[122] - Op: GOSUB   Address1:           Address2:           Result: cube
+[123] - Op: =       Address1: 11        Address2:           Result: 7001
+[124] - Op: PRINT   Address1:           Address2:           Result: 7001
+[125] - Op: PRINT   Address1:           Address2:           Result: -1
+[126] - Op: PRINT   Address1:           Address2:           Result: 26012
+[127] - Op: PRINT   Address1:           Address2:           Result: 26013
+[128] - Op: PRINT   Address1:           Address2:           Result: 26002
+[129] - Op: PRINT   Address1:           Address2:           Result: 26014
+[130] - Op: PRINT   Address1:           Address2:           Result: 26015
+[131] - Op: PRINT   Address1:           Address2:           Result: 26002
+[132] - Op: PRINT   Address1:           Address2:           Result: 26014
+[133] - Op: PRINT   Address1:           Address2:           Result: 26013
+[134] - Op: PRINT   Address1:           Address2:           Result: 26016
+[135] - Op: PRINT   Address1:           Address2:           Result: 26017
+[136] - Op: PRINT   Address1:           Address2:           Result: 26004
+[137] - Op: PRINT   Address1:           Address2:           Result: 26018
+[138] - Op: PRINT   Address1:           Address2:           Result: 26019
+[139] - Op: PRINT   Address1:           Address2:           Result: 26004
+[140] - Op: PRINT   Address1:           Address2:           Result: 26020
+[141] - Op: PRINT   Address1:           Address2:           Result: 26017
+[142] - Op: PRINT   Address1:           Address2:           Result: 26021
+[143] - Op: PRINT   Address1:           Address2:           Result: 26022
+[144] - Op: PRINT   Address1:           Address2:           Result: 26013
+[145] - Op: PRINT   Address1:           Address2:           Result: -1
 [146] - Op: PRINT   Address1:           Address2:           Result: 26023
 [147] - Op: PRINT   Address1:           Address2:           Result: 26023
 [148] - Op: PRINT   Address1:           Address2:           Result: 26023
@@ -407,31 +407,31 @@ Cuadruplos:
 [160] - Op: PRINT   Address1:           Address2:           Result: 26023
 [161] - Op: PRINT   Address1:           Address2:           Result: 26023
 [162] - Op: PRINT   Address1:           Address2:           Result: 26023
-[163] - Op: PRINT   Address1:           Address2:           Result: -1
-[164] - Op: =       Address1: 26024     Address2:           Result: 12000
-[165] - Op: =       Address1: 26007     Address2:           Result: 12001
-[166] - Op: =       Address1: 26003     Address2:           Result: 12002
-[167] - Op: =       Address1: 26000     Address2:           Result: 12003
-[168] - Op: =       Address1: 26025     Address2:           Result: 12004
-[169] - Op: =       Address1: 26005     Address2:           Result: 12005
-[170] - Op: =       Address1: 26026     Address2:           Result: 12006
-[171] - Op: =       Address1: 26008     Address2:           Result: 12007
-[172] - Op: =       Address1: 26007     Address2:           Result: 12008
-[173] - Op: PRINT   Address1:           Address2:           Result: 12000
-[174] - Op: PRINT   Address1:           Address2:           Result: 12001
-[175] - Op: PRINT   Address1:           Address2:           Result: 12002
-[176] - Op: PRINT   Address1:           Address2:           Result: 12003
-[177] - Op: PRINT   Address1:           Address2:           Result: 12004
-[178] - Op: PRINT   Address1:           Address2:           Result: 12005
-[179] - Op: PRINT   Address1:           Address2:           Result: 12006
-[180] - Op: PRINT   Address1:           Address2:           Result: 12007
-[181] - Op: PRINT   Address1:           Address2:           Result: 12008
-[182] - Op: PRINT   Address1:           Address2:           Result: -1
-[183] - Op: PRINT   Address1:           Address2:           Result: 26023
-[184] - Op: PRINT   Address1:           Address2:           Result: 26023
-[185] - Op: PRINT   Address1:           Address2:           Result: 26023
-[186] - Op: PRINT   Address1:           Address2:           Result: 26023
-[187] - Op: PRINT   Address1:           Address2:           Result: 26023
+[163] - Op: PRINT   Address1:           Address2:           Result: 26023
+[164] - Op: PRINT   Address1:           Address2:           Result: 26023
+[165] - Op: PRINT   Address1:           Address2:           Result: 26023
+[166] - Op: PRINT   Address1:           Address2:           Result: 26023
+[167] - Op: PRINT   Address1:           Address2:           Result: 26023
+[168] - Op: PRINT   Address1:           Address2:           Result: -1
+[169] - Op: =       Address1: 26024     Address2:           Result: 12000
+[170] - Op: =       Address1: 26007     Address2:           Result: 12001
+[171] - Op: =       Address1: 26003     Address2:           Result: 12002
+[172] - Op: =       Address1: 26000     Address2:           Result: 12003
+[173] - Op: =       Address1: 26025     Address2:           Result: 12004
+[174] - Op: =       Address1: 26005     Address2:           Result: 12005
+[175] - Op: =       Address1: 26026     Address2:           Result: 12006
+[176] - Op: =       Address1: 26008     Address2:           Result: 12007
+[177] - Op: =       Address1: 26007     Address2:           Result: 12008
+[178] - Op: PRINT   Address1:           Address2:           Result: 12000
+[179] - Op: PRINT   Address1:           Address2:           Result: 12001
+[180] - Op: PRINT   Address1:           Address2:           Result: 12002
+[181] - Op: PRINT   Address1:           Address2:           Result: 12003
+[182] - Op: PRINT   Address1:           Address2:           Result: 12004
+[183] - Op: PRINT   Address1:           Address2:           Result: 12005
+[184] - Op: PRINT   Address1:           Address2:           Result: 12006
+[185] - Op: PRINT   Address1:           Address2:           Result: 12007
+[186] - Op: PRINT   Address1:           Address2:           Result: 12008
+[187] - Op: PRINT   Address1:           Address2:           Result: -1
 [188] - Op: PRINT   Address1:           Address2:           Result: 26023
 [189] - Op: PRINT   Address1:           Address2:           Result: 26023
 [190] - Op: PRINT   Address1:           Address2:           Result: 26023
@@ -449,191 +449,207 @@ Cuadruplos:
 [202] - Op: PRINT   Address1:           Address2:           Result: 26023
 [203] - Op: PRINT   Address1:           Address2:           Result: 26023
 [204] - Op: PRINT   Address1:           Address2:           Result: 26023
-[205] - Op: PRINT   Address1:           Address2:           Result: -1
-[206] - Op: +       Address1: 21015     Address2: 21016     Result: 20000
-[207] - Op: =       Address1: 20000     Address2:           Result: 12009
-[208] - Op: PRINT   Address1:           Address2:           Result: 12009
-[209] - Op: PRINT   Address1:           Address2:           Result: -1
-[210] - Op: PRINT   Address1:           Address2:           Result: 24000
-[211] - Op: PRINT   Address1:           Address2:           Result: -1
-[212] - Op: =       Address1: 21009     Address2:           Result: 7001
-[213] - Op: =       Address1: 21013     Address2:           Result: 7002
-[214] - Op: =       Address1: 21015     Address2:           Result: 7003
-[215] - Op: =       Address1: 21014     Address2:           Result: 7004
-[216] - Op: =       Address1: 21006     Address2:           Result: 7005
-[217] - Op: =       Address1: 21007     Address2:           Result: 7006
-[218] - Op: =       Address1: 21008     Address2:           Result: 7007
-[219] - Op: =       Address1: 21017     Address2:           Result: 7008
-[220] - Op: =       Address1: 21012     Address2:           Result: 7009
-[221] - Op: =       Address1: 21000     Address2:           Result: 7010
-[222] - Op: =       Address1: 21004     Address2:           Result: 7011
-[223] - Op: =       Address1: 21003     Address2:           Result: 7012
-[224] - Op: PRINT   Address1: -2        Address2:           Result: 7001
-[225] - Op: PRINT   Address1: -2        Address2:           Result: 7002
-[226] - Op: PRINT   Address1: -2        Address2:           Result: 7003
-[227] - Op: PRINT   Address1: -2        Address2:           Result: 7004
-[228] - Op: PRINT   Address1: -2        Address2:           Result: 7005
-[229] - Op: PRINT   Address1: -2        Address2:           Result: 7006
-[230] - Op: PRINT   Address1: -2        Address2:           Result: 7007
-[231] - Op: PRINT   Address1: -2        Address2:           Result: 7008
-[232] - Op: PRINT   Address1: -2        Address2:           Result: 7009
-[233] - Op: PRINT   Address1: -2        Address2:           Result: 7010
-[234] - Op: PRINT   Address1: -2        Address2:           Result: 7011
-[235] - Op: PRINT   Address1: -2        Address2:           Result: 7012
-[236] - Op: PRINT   Address1:           Address2:           Result: -1
-[237] - Op: +       Address1: 21011     Address2: 21018     Result: 20001
-[238] - Op: =       Address1: 20001     Address2:           Result: 7013
-[239] - Op: =       Address1: 7013      Address2:           Result: 7014
-[240] - Op: PRINT   Address1:           Address2:           Result: 7014
-[241] - Op: PRINT   Address1:           Address2:           Result: -1
-[242] - Op: ERA     Address1:           Address2:           Result: suma
-[243] - Op: PARAM   Address1: 21000     Address2:           Result: 7001
-[244] - Op: PARAM   Address1: 7014      Address2:           Result: 7000
-[245] - Op: GOSUB   Address1:           Address2:           Result: suma
-[246] - Op: =       Address1: 9         Address2:           Result: 7015
-[247] - Op: =       Address1: 7015      Address2:           Result: 7016
-[248] - Op: PRINT   Address1:           Address2:           Result: 26027
-[249] - Op: PRINT   Address1:           Address2:           Result: -1
-[250] - Op: PRINT   Address1:           Address2:           Result: 7016
-[251] - Op: PRINT   Address1:           Address2:           Result: -1
-[252] - Op: =       Address1: 21011     Address2:           Result: 7017
-[253] - Op: =       Address1: 21011     Address2:           Result: 7018
-[254] - Op: PRINT   Address1:           Address2:           Result: 26023
-[255] - Op: PRINT   Address1:           Address2:           Result: -1
-[256] - Op: <       Address1: 7017      Address2: 21003     Result: 17000
-[257] - Op: GOTOF   Address1: 17000     Address2:           Result: 287
-[258] - Op: +       Address1: 7017      Address2: 21009     Result: 14000
-[259] - Op: =       Address1: 14000     Address2:           Result: 7017
-[260] - Op: +       Address1: 7018      Address2: 21018     Result: 20002
-[261] - Op: =       Address1: 20002     Address2:           Result: 7019
-[262] - Op: =       Address1: 7019      Address2:           Result: 7020
-[263] - Op: PRINT   Address1:           Address2:           Result: 7020
-[264] - Op: PRINT   Address1:           Address2:           Result: -1
-[265] - Op: PRINT   Address1:           Address2:           Result: 7017
-[266] - Op: PRINT   Address1:           Address2:           Result: -1
-[267] - Op: PRINT   Address1:           Address2:           Result: 26028
-[268] - Op: PRINT   Address1:           Address2:           Result: -1
-[269] - Op: ERA     Address1:           Address2:           Result: suma
-[270] - Op: PARAM   Address1: 7017      Address2:           Result: 7001
-[271] - Op: PARAM   Address1: 7020      Address2:           Result: 7000
-[272] - Op: GOSUB   Address1:           Address2:           Result: suma
-[273] - Op: =       Address1: 9         Address2:           Result: 7021
-[274] - Op: PRINT   Address1:           Address2:           Result: 7021
-[275] - Op: PRINT   Address1:           Address2:           Result: -1
-[276] - Op: +       Address1: 7018      Address2: 21009     Result: 14001
-[277] - Op: =       Address1: 14001     Address2:           Result: 7018
-[278] - Op: =       Address1: 21011     Address2:           Result: 7022
-[279] - Op: <       Address1: 7022      Address2: 21015     Result: 17001
-[280] - Op: GOTOF   Address1: 17001     Address2:           Result: 286
-[281] - Op: +       Address1: 7022      Address2: 21009     Result: 14002
-[282] - Op: =       Address1: 14002     Address2:           Result: 7022
-[283] - Op: PRINT   Address1:           Address2:           Result: 26023
-[284] - Op: PRINT   Address1:           Address2:           Result: -1
-[285] - Op: GOTO    Address1:           Address2:           Result: 279
-[286] - Op: GOTO    Address1:           Address2:           Result: 256
-[287] - Op: PRINT   Address1:           Address2:           Result: 26023
-[288] - Op: PRINT   Address1:           Address2:           Result: -1
-[289] - Op: =       Address1: 21011     Address2:           Result: 7023
-[290] - Op: <       Address1: 7023      Address2: 21000     Result: 17002
-[291] - Op: GOTOF   Address1: 17002     Address2:           Result: 299
-[292] - Op: +       Address1: 7023      Address2: 21013     Result: 14003
-[293] - Op: =       Address1: 14003     Address2:           Result: 7023
-[294] - Op: +       Address1: 7023      Address2: 21009     Result: 14004
-[295] - Op: =       Address1: 14004     Address2:           Result: 7023
-[296] - Op: PRINT   Address1:           Address2:           Result: 7023
-[297] - Op: PRINT   Address1:           Address2:           Result: -1
-[298] - Op: GOTO    Address1:           Address2:           Result: 290
-[299] - Op: PRINT   Address1:           Address2:           Result: 24000
-[300] - Op: PRINT   Address1:           Address2:           Result: -1
-[301] - Op: PRINT   Address1:           Address2:           Result: 24000
-[302] - Op: PRINT   Address1:           Address2:           Result: -1
-[303] - Op: PRINT   Address1:           Address2:           Result: 24000
-[304] - Op: PRINT   Address1:           Address2:           Result: -1
-[305] - Op: =       Address1: 21003     Address2:           Result: 7024
-[306] - Op: =       Address1: 21004     Address2:           Result: 7025
-[307] - Op: =       Address1: 21005     Address2:           Result: 7026
-[308] - Op: =       Address1: 21006     Address2:           Result: 7027
-[309] - Op: =       Address1: 21007     Address2:           Result: 7028
-[310] - Op: =       Address1: 21008     Address2:           Result: 7029
-[311] - Op: +       Address1: 21011     Address2: 21019     Result: 20003
-[312] - Op: =       Address1: 21009     Address2:           Result: 20003
-[313] - Op: +       Address1: 21009     Address2: 21019     Result: 20004
-[314] - Op: =       Address1: 21009     Address2:           Result: 20004
-[315] - Op: +       Address1: 21013     Address2: 21019     Result: 20005
-[316] - Op: =       Address1: 21009     Address2:           Result: 20005
-[317] - Op: +       Address1: 21015     Address2: 21019     Result: 20006
-[318] - Op: =       Address1: 21009     Address2:           Result: 20006
-[319] - Op: +       Address1: 21014     Address2: 21019     Result: 20007
-[320] - Op: =       Address1: 21009     Address2:           Result: 20007
-[321] - Op: +       Address1: 21006     Address2: 21019     Result: 20008
-[322] - Op: =       Address1: 21009     Address2:           Result: 20008
-[323] - Op: PRINT   Address1:           Address2:           Result: 21009
-[324] - Op: PRINT   Address1:           Address2:           Result: -1
-[325] - Op: PRINT   Address1:           Address2:           Result: 21009
-[326] - Op: PRINT   Address1:           Address2:           Result: -1
-[327] - Op: ==      Address1: 24000     Address2: 24001     Result: 17003
-[328] - Op: GOTOF   Address1: 17003     Address2:           Result: 332
-[329] - Op: PRINT   Address1:           Address2:           Result: 21011
-[330] - Op: PRINT   Address1:           Address2:           Result: -1
-[331] - Op: GOTO    Address1:           Address2:           Result: 334
-[332] - Op: PRINT   Address1:           Address2:           Result: 21000
-[333] - Op: PRINT   Address1:           Address2:           Result: -1
-[334] - Op: PRINT   Address1:           Address2:           Result: 21013
-[335] - Op: PRINT   Address1:           Address2:           Result: -1
-[336] - Op: PRINT   Address1:           Address2:           Result: 21013
-[337] - Op: PRINT   Address1:           Address2:           Result: -1
-[338] - Op: PRINT   Address1:           Address2:           Result: 26000
-[339] - Op: PRINT   Address1:           Address2:           Result: -1
-[340] - Op: +       Address1: 21009     Address2: 21019     Result: 20009
-[341] - Op: =       Address1: 20009     Address2:           Result: 7030
-[342] - Op: +       Address1: 21011     Address2: 21019     Result: 20010
-[343] - Op: =       Address1: 20010     Address2:           Result: 7031
-[344] - Op: VERIFY  Address1: 7030      Address2:           Result: 21013
-[345] - Op: *       Address1: 7030      Address2: 21007     Result: 14005
-[346] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
-[347] - Op: *       Address1: 21009     Address2: 21015     Result: 14006
-[348] - Op: +       Address1: 14006     Address2: 14005     Result: 14007
-[349] - Op: VERIFY  Address1: 7031      Address2:           Result: 21015
-[350] - Op: +       Address1: 14007     Address2: 7031      Result: 14008
-[351] - Op: +       Address1: 14008     Address2: 21020     Result: 20011
-[352] - Op: =       Address1: 25002     Address2:           Result: 20011
-[353] - Op: =       Address1: 24000     Address2:           Result: 10000
-[354] - Op: =       Address1: 21007     Address2:           Result: 7032
-[355] - Op: PRINT   Address1:           Address2:           Result: 26000
-[356] - Op: PRINT   Address1:           Address2:           Result: -1
-[357] - Op: PRINT   Address1:           Address2:           Result: 10000
-[358] - Op: PRINT   Address1:           Address2:           Result: -1
-[359] - Op: ERA     Address1:           Address2:           Result: printArray
-[360] - Op: PARAM   Address1: 21014     Address2:           Result: 7000
-[361] - Op: PARAM   Address1: 10000     Address2:           Result: 10000
-[362] - Op: GOSUB   Address1:           Address2:           Result: printArray
-[363] - Op: -       Address1: 21000     Address2: 21013     Result: 14009
-[364] - Op: -       Address1: 7032      Address2: 21009     Result: 14010
-[365] - Op: ERA     Address1:           Address2:           Result: mergeSort
-[366] - Op: PARAM   Address1: 10000     Address2:           Result: 10000
-[367] - Op: PARAM   Address1: 14009     Address2:           Result: 7001
-[368] - Op: PARAM   Address1: 14010     Address2:           Result: 7000
-[369] - Op: GOSUB   Address1:           Address2:           Result: mergeSort
-[370] - Op: =       Address1: 10        Address2:           Result: 7033
-[371] - Op: =       Address1: 7033      Address2:           Result: 7034
-[372] - Op: PRINT   Address1:           Address2:           Result: 7034
-[373] - Op: PRINT   Address1:           Address2:           Result: -1
-[374] - Op: PRINT   Address1:           Address2:           Result: 26000
-[375] - Op: PRINT   Address1:           Address2:           Result: -1
-[376] - Op: PRINT   Address1:           Address2:           Result: 10000
-[377] - Op: PRINT   Address1:           Address2:           Result: -1
-[378] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
-[379] - Op: *       Address1: 21009     Address2: 21007     Result: 14011
-[380] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
-[381] - Op: *       Address1: 21009     Address2: 21015     Result: 14012
-[382] - Op: +       Address1: 14012     Address2: 14011     Result: 14013
-[383] - Op: VERIFY  Address1: 14013     Address2:           Result: 21015
-[384] - Op: +       Address1: 21009     Address2: 14013     Result: 14014
-[385] - Op: +       Address1: 14014     Address2: 21020     Result: 20012
-[386] - Op: =       Address1: 20012     Address2:           Result: 11012
-[387] - Op: PRINT   Address1:           Address2:           Result: 11012
-[388] - Op: PRINT   Address1:           Address2:           Result: -1
-[389] - Op: ENDFUNC Address1:           Address2:           Result: 
+[205] - Op: PRINT   Address1:           Address2:           Result: 26023
+[206] - Op: PRINT   Address1:           Address2:           Result: 26023
+[207] - Op: PRINT   Address1:           Address2:           Result: 26023
+[208] - Op: PRINT   Address1:           Address2:           Result: 26023
+[209] - Op: PRINT   Address1:           Address2:           Result: 26023
+[210] - Op: PRINT   Address1:           Address2:           Result: -1
+[211] - Op: VERIFY  Address1: 21015     Address2:           Result: 21012
+[212] - Op: +       Address1: 21015     Address2: 21016     Result: 20001
+[213] - Op: =       Address1: 20001     Address2:           Result: 12009
+[214] - Op: PRINT   Address1:           Address2:           Result: 12009
+[215] - Op: PRINT   Address1:           Address2:           Result: -1
+[216] - Op: PRINT   Address1:           Address2:           Result: 24000
+[217] - Op: PRINT   Address1:           Address2:           Result: -1
+[218] - Op: =       Address1: 21009     Address2:           Result: 7002
+[219] - Op: =       Address1: 21013     Address2:           Result: 7003
+[220] - Op: =       Address1: 21015     Address2:           Result: 7004
+[221] - Op: =       Address1: 21014     Address2:           Result: 7005
+[222] - Op: =       Address1: 21006     Address2:           Result: 7006
+[223] - Op: =       Address1: 21007     Address2:           Result: 7007
+[224] - Op: =       Address1: 21008     Address2:           Result: 7008
+[225] - Op: =       Address1: 21017     Address2:           Result: 7009
+[226] - Op: =       Address1: 21012     Address2:           Result: 7010
+[227] - Op: =       Address1: 21000     Address2:           Result: 7011
+[228] - Op: =       Address1: 21004     Address2:           Result: 7012
+[229] - Op: =       Address1: 21003     Address2:           Result: 7013
+[230] - Op: PRINT   Address1: -2        Address2:           Result: 7002
+[231] - Op: PRINT   Address1: -2        Address2:           Result: 7003
+[232] - Op: PRINT   Address1: -2        Address2:           Result: 7004
+[233] - Op: PRINT   Address1: -2        Address2:           Result: 7005
+[234] - Op: PRINT   Address1: -2        Address2:           Result: 7006
+[235] - Op: PRINT   Address1: -2        Address2:           Result: 7007
+[236] - Op: PRINT   Address1: -2        Address2:           Result: 7008
+[237] - Op: PRINT   Address1: -2        Address2:           Result: 7009
+[238] - Op: PRINT   Address1: -2        Address2:           Result: 7010
+[239] - Op: PRINT   Address1: -2        Address2:           Result: 7011
+[240] - Op: PRINT   Address1: -2        Address2:           Result: 7012
+[241] - Op: PRINT   Address1: -2        Address2:           Result: 7013
+[242] - Op: PRINT   Address1:           Address2:           Result: -1
+[243] - Op: VERIFY  Address1: 21011     Address2:           Result: 21003
+[244] - Op: +       Address1: 21011     Address2: 21018     Result: 20002
+[245] - Op: =       Address1: 20002     Address2:           Result: 7014
+[246] - Op: =       Address1: 7014      Address2:           Result: 7015
+[247] - Op: PRINT   Address1:           Address2:           Result: 7015
+[248] - Op: PRINT   Address1:           Address2:           Result: -1
+[249] - Op: ERA     Address1:           Address2:           Result: suma
+[250] - Op: PARAM   Address1: 21000     Address2:           Result: 7001
+[251] - Op: PARAM   Address1: 7015      Address2:           Result: 7000
+[252] - Op: GOSUB   Address1:           Address2:           Result: suma
+[253] - Op: =       Address1: 9         Address2:           Result: 7016
+[254] - Op: =       Address1: 7016      Address2:           Result: 7017
+[255] - Op: PRINT   Address1:           Address2:           Result: 26027
+[256] - Op: PRINT   Address1:           Address2:           Result: -1
+[257] - Op: PRINT   Address1:           Address2:           Result: 7017
+[258] - Op: PRINT   Address1:           Address2:           Result: -1
+[259] - Op: =       Address1: 21011     Address2:           Result: 7018
+[260] - Op: =       Address1: 21011     Address2:           Result: 7019
+[261] - Op: PRINT   Address1:           Address2:           Result: 26023
+[262] - Op: PRINT   Address1:           Address2:           Result: -1
+[263] - Op: <       Address1: 7018      Address2: 21003     Result: 17000
+[264] - Op: GOTOF   Address1: 17000     Address2:           Result: 295
+[265] - Op: +       Address1: 7018      Address2: 21009     Result: 14000
+[266] - Op: =       Address1: 14000     Address2:           Result: 7018
+[267] - Op: VERIFY  Address1: 7019      Address2:           Result: 21003
+[268] - Op: +       Address1: 7019      Address2: 21018     Result: 20003
+[269] - Op: =       Address1: 20003     Address2:           Result: 7020
+[270] - Op: =       Address1: 7020      Address2:           Result: 7021
+[271] - Op: PRINT   Address1:           Address2:           Result: 7021
+[272] - Op: PRINT   Address1:           Address2:           Result: -1
+[273] - Op: PRINT   Address1:           Address2:           Result: 7018
+[274] - Op: PRINT   Address1:           Address2:           Result: -1
+[275] - Op: PRINT   Address1:           Address2:           Result: 26028
+[276] - Op: PRINT   Address1:           Address2:           Result: -1
+[277] - Op: ERA     Address1:           Address2:           Result: suma
+[278] - Op: PARAM   Address1: 7018      Address2:           Result: 7001
+[279] - Op: PARAM   Address1: 7021      Address2:           Result: 7000
+[280] - Op: GOSUB   Address1:           Address2:           Result: suma
+[281] - Op: =       Address1: 9         Address2:           Result: 7022
+[282] - Op: PRINT   Address1:           Address2:           Result: 7022
+[283] - Op: PRINT   Address1:           Address2:           Result: -1
+[284] - Op: +       Address1: 7019      Address2: 21009     Result: 14001
+[285] - Op: =       Address1: 14001     Address2:           Result: 7019
+[286] - Op: =       Address1: 21011     Address2:           Result: 7023
+[287] - Op: <       Address1: 7023      Address2: 21015     Result: 17001
+[288] - Op: GOTOF   Address1: 17001     Address2:           Result: 294
+[289] - Op: +       Address1: 7023      Address2: 21009     Result: 14002
+[290] - Op: =       Address1: 14002     Address2:           Result: 7023
+[291] - Op: PRINT   Address1:           Address2:           Result: 26023
+[292] - Op: PRINT   Address1:           Address2:           Result: -1
+[293] - Op: GOTO    Address1:           Address2:           Result: 287
+[294] - Op: GOTO    Address1:           Address2:           Result: 263
+[295] - Op: PRINT   Address1:           Address2:           Result: 26023
+[296] - Op: PRINT   Address1:           Address2:           Result: -1
+[297] - Op: =       Address1: 21011     Address2:           Result: 7024
+[298] - Op: <       Address1: 7024      Address2: 21000     Result: 17002
+[299] - Op: GOTOF   Address1: 17002     Address2:           Result: 307
+[300] - Op: +       Address1: 7024      Address2: 21013     Result: 14003
+[301] - Op: =       Address1: 14003     Address2:           Result: 7024
+[302] - Op: +       Address1: 7024      Address2: 21009     Result: 14004
+[303] - Op: =       Address1: 14004     Address2:           Result: 7024
+[304] - Op: PRINT   Address1:           Address2:           Result: 7024
+[305] - Op: PRINT   Address1:           Address2:           Result: -1
+[306] - Op: GOTO    Address1:           Address2:           Result: 298
+[307] - Op: PRINT   Address1:           Address2:           Result: 24000
+[308] - Op: PRINT   Address1:           Address2:           Result: -1
+[309] - Op: PRINT   Address1:           Address2:           Result: 24000
+[310] - Op: PRINT   Address1:           Address2:           Result: -1
+[311] - Op: PRINT   Address1:           Address2:           Result: 24000
+[312] - Op: PRINT   Address1:           Address2:           Result: -1
+[313] - Op: =       Address1: 21003     Address2:           Result: 7025
+[314] - Op: =       Address1: 21004     Address2:           Result: 7026
+[315] - Op: =       Address1: 21005     Address2:           Result: 7027
+[316] - Op: =       Address1: 21006     Address2:           Result: 7028
+[317] - Op: =       Address1: 21007     Address2:           Result: 7029
+[318] - Op: =       Address1: 21008     Address2:           Result: 7030
+[319] - Op: VERIFY  Address1: 21011     Address2:           Result: 21007
+[320] - Op: +       Address1: 21011     Address2: 21019     Result: 20004
+[321] - Op: =       Address1: 21009     Address2:           Result: 20004
+[322] - Op: VERIFY  Address1: 21009     Address2:           Result: 21007
+[323] - Op: +       Address1: 21009     Address2: 21019     Result: 20005
+[324] - Op: =       Address1: 21009     Address2:           Result: 20005
+[325] - Op: VERIFY  Address1: 21013     Address2:           Result: 21007
+[326] - Op: +       Address1: 21013     Address2: 21019     Result: 20006
+[327] - Op: =       Address1: 21009     Address2:           Result: 20006
+[328] - Op: VERIFY  Address1: 21015     Address2:           Result: 21007
+[329] - Op: +       Address1: 21015     Address2: 21019     Result: 20007
+[330] - Op: =       Address1: 21009     Address2:           Result: 20007
+[331] - Op: VERIFY  Address1: 21014     Address2:           Result: 21007
+[332] - Op: +       Address1: 21014     Address2: 21019     Result: 20008
+[333] - Op: =       Address1: 21009     Address2:           Result: 20008
+[334] - Op: VERIFY  Address1: 21006     Address2:           Result: 21007
+[335] - Op: +       Address1: 21006     Address2: 21019     Result: 20009
+[336] - Op: =       Address1: 21009     Address2:           Result: 20009
+[337] - Op: PRINT   Address1:           Address2:           Result: 21009
+[338] - Op: PRINT   Address1:           Address2:           Result: -1
+[339] - Op: PRINT   Address1:           Address2:           Result: 21009
+[340] - Op: PRINT   Address1:           Address2:           Result: -1
+[341] - Op: ==      Address1: 24000     Address2: 24001     Result: 17003
+[342] - Op: GOTOF   Address1: 17003     Address2:           Result: 346
+[343] - Op: PRINT   Address1:           Address2:           Result: 21011
+[344] - Op: PRINT   Address1:           Address2:           Result: -1
+[345] - Op: GOTO    Address1:           Address2:           Result: 348
+[346] - Op: PRINT   Address1:           Address2:           Result: 21000
+[347] - Op: PRINT   Address1:           Address2:           Result: -1
+[348] - Op: PRINT   Address1:           Address2:           Result: 21013
+[349] - Op: PRINT   Address1:           Address2:           Result: -1
+[350] - Op: PRINT   Address1:           Address2:           Result: 21013
+[351] - Op: PRINT   Address1:           Address2:           Result: -1
+[352] - Op: PRINT   Address1:           Address2:           Result: 26000
+[353] - Op: PRINT   Address1:           Address2:           Result: -1
+[354] - Op: VERIFY  Address1: 21009     Address2:           Result: 21007
+[355] - Op: +       Address1: 21009     Address2: 21019     Result: 20010
+[356] - Op: =       Address1: 20010     Address2:           Result: 7031
+[357] - Op: VERIFY  Address1: 21011     Address2:           Result: 21007
+[358] - Op: +       Address1: 21011     Address2: 21019     Result: 20011
+[359] - Op: =       Address1: 20011     Address2:           Result: 7032
+[360] - Op: VERIFY  Address1: 7031      Address2:           Result: 21013
+[361] - Op: *       Address1: 7031      Address2: 21007     Result: 14005
+[362] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
+[363] - Op: *       Address1: 21009     Address2: 21015     Result: 14006
+[364] - Op: +       Address1: 14006     Address2: 14005     Result: 14007
+[365] - Op: VERIFY  Address1: 7032      Address2:           Result: 21015
+[366] - Op: +       Address1: 14007     Address2: 7032      Result: 14008
+[367] - Op: +       Address1: 14008     Address2: 21020     Result: 20012
+[368] - Op: =       Address1: 25002     Address2:           Result: 20012
+[369] - Op: =       Address1: 24000     Address2:           Result: 10000
+[370] - Op: =       Address1: 21007     Address2:           Result: 7033
+[371] - Op: PRINT   Address1:           Address2:           Result: 26000
+[372] - Op: PRINT   Address1:           Address2:           Result: -1
+[373] - Op: PRINT   Address1:           Address2:           Result: 10000
+[374] - Op: PRINT   Address1:           Address2:           Result: -1
+[375] - Op: ERA     Address1:           Address2:           Result: printArray
+[376] - Op: PARAM   Address1: 21014     Address2:           Result: 7000
+[377] - Op: PARAM   Address1: 10000     Address2:           Result: 10000
+[378] - Op: GOSUB   Address1:           Address2:           Result: printArray
+[379] - Op: -       Address1: 21000     Address2: 21013     Result: 14009
+[380] - Op: -       Address1: 7033      Address2: 21009     Result: 14010
+[381] - Op: ERA     Address1:           Address2:           Result: mergeSort
+[382] - Op: PARAM   Address1: 10000     Address2:           Result: 10000
+[383] - Op: PARAM   Address1: 14009     Address2:           Result: 7001
+[384] - Op: PARAM   Address1: 14010     Address2:           Result: 7000
+[385] - Op: GOSUB   Address1:           Address2:           Result: mergeSort
+[386] - Op: =       Address1: 10        Address2:           Result: 7034
+[387] - Op: =       Address1: 7034      Address2:           Result: 7035
+[388] - Op: PRINT   Address1:           Address2:           Result: 7035
+[389] - Op: PRINT   Address1:           Address2:           Result: -1
+[390] - Op: PRINT   Address1:           Address2:           Result: 26000
+[391] - Op: PRINT   Address1:           Address2:           Result: -1
+[392] - Op: PRINT   Address1:           Address2:           Result: 10000
+[393] - Op: PRINT   Address1:           Address2:           Result: -1
+[394] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
+[395] - Op: *       Address1: 21009     Address2: 21007     Result: 14011
+[396] - Op: VERIFY  Address1: 21009     Address2:           Result: 21013
+[397] - Op: *       Address1: 21009     Address2: 21015     Result: 14012
+[398] - Op: +       Address1: 14012     Address2: 14011     Result: 14013
+[399] - Op: VERIFY  Address1: 21013     Address2:           Result: 21015
+[400] - Op: +       Address1: 14013     Address2: 21013     Result: 14014
+[401] - Op: +       Address1: 14014     Address2: 21020     Result: 20013
+[402] - Op: =       Address1: 20013     Address2:           Result: 11012
+[403] - Op: PRINT   Address1:           Address2:           Result: 11012
+[404] - Op: PRINT   Address1:           Address2:           Result: -1
+[405] - Op: ENDFUNC Address1:           Address2:           Result: 
 
 
 JumpStack:
@@ -652,72 +668,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [-4353039991034510521: 
-
-   |===================================
-   |     Identifier : array
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : true
-   |     Assigned : true
-   |     Line : 5
-   |     Address : 3
-   |     Type parameters: 
-    =================================== 
-, 5196897570099416499: 
-
-   |===================================
-   |     Identifier : suma
-   |     Kind : method
-   |     Type : integer
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 5
-   |     Address : 9
-   |     Type parameters: integer	integer	
-    =================================== 
-, -1897575603958622320: 
-
-   |===================================
-   |     Identifier : printArray
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 8
-   |     Address : 1009
-   |     Type parameters: boolean	integer	
-    =================================== 
-, -1724903452966687383: 
-
-   |===================================
-   |     Identifier : z
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 3
-   |     Address : 2
-   |     Type parameters: 
-    =================================== 
-, -6990777908194560839: 
-
-   |===================================
-   |     Identifier : y
-   |     Kind : field
-   |     Type : integer
-   |     Constant : false
-   |     Array : false
-   |     Assigned : true
-   |     Line : 2
-   |     Address : 1
-   |     Type parameters: 
-    =================================== 
-, 4005709024521273586: 
+ [-6613959355884792007: 
 
    |===================================
    |     Identifier : main
@@ -730,7 +681,20 @@ Last SymbolTable:
    |     Address : 1010
    |     Type parameters: 
     =================================== 
-, 1841496463303474199: 
+, -1052493653157775112: 
+
+   |===================================
+   |     Identifier : suma
+   |     Kind : method
+   |     Type : integer
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 5
+   |     Address : 9
+   |     Type parameters: integer	integer	
+    =================================== 
+, -4736744239563864604: 
 
    |===================================
    |     Identifier : x
@@ -743,20 +707,46 @@ Last SymbolTable:
    |     Address : 0
    |     Type parameters: 
     =================================== 
-, 5978462689248815546: 
+, -1991451638442333750: 
 
    |===================================
-   |     Identifier : cube
-   |     Kind : method
+   |     Identifier : z
+   |     Kind : field
    |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 3
+   |     Address : 2
+   |     Type parameters: 
+    =================================== 
+, 1350383478328545679: 
+
+   |===================================
+   |     Identifier : printArray
+   |     Kind : method
+   |     Type : void
    |     Constant : true
    |     Array : false
    |     Assigned : false
-   |     Line : 79
-   |     Address : 11
-   |     Type parameters: integer	
+   |     Line : 8
+   |     Address : 1009
+   |     Type parameters: boolean	integer	
     =================================== 
-, 7706320072930554829: 
+, 9087800540260046649: 
+
+   |===================================
+   |     Identifier : y
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : false
+   |     Assigned : true
+   |     Line : 2
+   |     Address : 1
+   |     Type parameters: 
+    =================================== 
+, -8875566849244647496: 
 
    |===================================
    |     Identifier : mergeSort
@@ -769,62 +759,88 @@ Last SymbolTable:
    |     Address : 10
    |     Type parameters: integer	integer	boolean	
     =================================== 
+, -7614914980531257932: 
+
+   |===================================
+   |     Identifier : cube
+   |     Kind : method
+   |     Type : integer
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 79
+   |     Address : 11
+   |     Type parameters: integer	
+    =================================== 
+, -4327493527124292213: 
+
+   |===================================
+   |     Identifier : array
+   |     Kind : field
+   |     Type : integer
+   |     Constant : false
+   |     Array : true
+   |     Assigned : true
+   |     Line : 5
+   |     Address : 3
+   |     Type parameters: 
+    =================================== 
 ]
 
 Constants: 
- Constant:[A]        Address: 26018
-Constant:[false]    Address: 24001
-Constant:[4]        Address: 21014
-Constant:[c]        Address: 26001
-Constant:[k]        Address: 26027
-Constant:[7]        Address: 21008
-Constant:[7024]     Address: 21019
-Constant:[3]        Address: 21015
-Constant:[O]        Address: 26017
-Constant:[V]        Address: 26015
-Constant:[9.0]      Address: 25000
-Constant:[h]        Address: 26024
-Constant:[D]        Address: 26016
-Constant:[N]        Address: 26014
-Constant:[1]        Address: 21009
-Constant:[5]        Address: 21006
-Constant:[L]        Address: 26019
-Constant:[11000]    Address: 21020
-Constant:[-]        Address: 26023
-Constant:[I]        Address: 26013
-Constant:[P]        Address: 26022
-Constant:[n]        Address: 26026
+ Constant:[m]        Address: 26025
 Constant:[30]       Address: 21002
-Constant:[B]        Address: 26012
-Constant:[m]        Address: 26025
-Constant:[7001]     Address: 21018
-Constant:[13]       Address: 21005
-Constant:[l]        Address: 26003
-Constant:[10]       Address: 21000
-Constant:[M]        Address: 26021
-Constant:[r]        Address: 26028
-Constant:[e]        Address: 26009
-Constant:[true]     Address: 24000
-Constant:[6]        Address: 21007
-Constant:[10.3]     Address: 25001
-Constant:[9]        Address: 21012
-Constant:[2]        Address: 21013
-Constant:[s]        Address: 26010
-Constant:[a]        Address: 26000
-Constant:[8]        Address: 21017
-Constant:[u]        Address: 26005
-Constant:[E]        Address: 26002
-Constant:[3.4]      Address: 25002
+Constant:[h]        Address: 26024
+Constant:[k]        Address: 26027
+Constant:[false]    Address: 24001
 Constant:[o]        Address: 26007
-Constant:[20]       Address: 21001
-Constant:[C]        Address: 26020
-Constant:[11]       Address: 21004
-Constant:[d]        Address: 26008
-Constant:[12]       Address: 21003
+Constant:[E]        Address: 26002
+Constant:[2]        Address: 21013
+Constant:[11000]    Address: 21020
+Constant:[M]        Address: 26021
+Constant:[10]       Address: 21000
+Constant:[r]        Address: 26028
+Constant:[10.3]     Address: 25001
 Constant:[b]        Address: 26006
-Constant:[ ]        Address: 26004
-Constant:[:]        Address: 26011
+Constant:[7]        Address: 21008
+Constant:[A]        Address: 26018
+Constant:[n]        Address: 26026
+Constant:[9]        Address: 21012
+Constant:[20]       Address: 21001
+Constant:[11]       Address: 21004
 Constant:[12000]    Address: 21016
 Constant:[0]        Address: 21011
+Constant:[1]        Address: 21009
+Constant:[a]        Address: 26000
+Constant:[C]        Address: 26020
+Constant:[13]       Address: 21005
+Constant:[O]        Address: 26017
+Constant:[9.0]      Address: 25000
+Constant:[P]        Address: 26022
+Constant:[:]        Address: 26011
+Constant:[B]        Address: 26012
+Constant:[L]        Address: 26019
+Constant:[12]       Address: 21003
+Constant:[N]        Address: 26014
+Constant:[V]        Address: 26015
+Constant:[3]        Address: 21015
+Constant:[d]        Address: 26008
+Constant:[-]        Address: 26023
+Constant:[7002]     Address: 21018
+Constant:[8]        Address: 21017
 Constant:[200]      Address: 21010
+Constant:[7025]     Address: 21019
+Constant:[true]     Address: 24000
+Constant:[D]        Address: 26016
+Constant:[ ]        Address: 26004
+Constant:[4]        Address: 21014
+Constant:[s]        Address: 26010
+Constant:[I]        Address: 26013
+Constant:[3.4]      Address: 25002
+Constant:[u]        Address: 26005
+Constant:[c]        Address: 26001
+Constant:[6]        Address: 21007
+Constant:[5]        Address: 21006
+Constant:[l]        Address: 26003
+Constant:[e]        Address: 26009
 
