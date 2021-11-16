@@ -14,6 +14,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     var arguments : [(String, TypeSymbol)] = []
     var linkedListArray = ArrayLinkedList()
     var r : Int = 1
+    var currentFuncName : String = ""
 }
 
 %errors {
@@ -189,6 +190,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 | cicloForEach
                 | cicloForIterador
                 | ternary SEMICOLON
+                | RTN expresion SEMICOLON {semantic.returnFunctions()}
                 | error { error(code: CompilerParser.ERROR_SYNTAX) }
                 ;
                 
@@ -329,9 +331,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    ()
    assignCTEI : EQ CTEI;
    
-   funcionesReturn : FUNC idFuncReturn startNode params RPAREN LBRACE cuerpoReturn popNode
+   funcionesReturn : FUNC idFuncReturn startNode params endParams LBRACE cuerpoReturn popNode
        {
-           semantic.returnSymbolByID($2 as String).params = params.reversed()
+       //    semantic.returnSymbolByID($2 as String).params = params.reversed()
            semantic.endFunction()
            self.params.removeAll()
        }
@@ -354,25 +356,32 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
    array : arrayA |
             arrayA arrayA;
    
-   funcionesVoid : FUNC idFunc startNode params RPAREN cuerpo
+   funcionesVoid : FUNC idFunc startNode params endParams cuerpo
        {
-           semantic.returnSymbolByID($2 as String).params = params.reversed()
+           
+           //semantic.returnSymbolByID($2 as String).params = params.reversed()
            semantic.endFunction()
            self.params.removeAll()
-       }
-    | FUNC idFunc startNode RPAREN cuerpo
-        {
-            semantic.insertSymbolToST($2, true, false, .void, .method)
-            semantic.endFunction()
-        };
+       } | FUNC idFunc startNode RPAREN cuerpo
+       {
+           //semantic.insertSymbolToST($2, true, false, .void, .method)
+           semantic.endFunction()
+       };
+    
+    endParams : RPAREN {
+        semantic.returnSymbolByID(currentFuncName).params = params.reversed()
+    };
+       
+    
         
     idFunc : ID{
-       
+        currentFuncName = $1 as String
         semantic.insertSymbolToST($1, true, false, .void, .method)
         semantic.startFunction($1);
         $$ = $1};
     
     idFuncReturn : tipoSimple ID{
+        currentFuncName = $2 as String
         semantic.startFunction($2);
         semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void, .method);
         semantic.setCurrentCuadruple();
@@ -474,7 +483,7 @@ factor : CTEI
        {
            semantic.addConstantChar($1)
        }
-       | ID LPAREN expresion RPAREN
+       | llamada
        | LPAREN megaExpression RPAREN
        | NLL;
        

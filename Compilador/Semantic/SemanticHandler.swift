@@ -1043,6 +1043,8 @@ class SemanticHandler : CustomStringConvertible {
         
         let quadruploReturn = Quadruple(argument1: operand, argument2: nil, op: .rtn, result: "\(symbolFunction.address)")
         self.quadruples.append(quadruploReturn)
+        let quadruploEnd = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
+        self.quadruples.append(quadruploEnd)
         // Generar return cuadruple
         // Address of function
     }

@@ -120,7 +120,6 @@ class VirtualMachine {
             }
             //self.sigQuadruple(index: currentIndexStack() + 1)
         }while(currentIndex + 1 < self.quadruples.count)
-        print("END")
     }
     
     func verify(value arg1: Int, in res: Int) {

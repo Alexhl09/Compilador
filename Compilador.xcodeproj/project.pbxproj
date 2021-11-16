@@ -86,6 +86,8 @@
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
 		A94A1722274317E400B84449 /* fibonnacci.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = fibonnacci.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A94A17232743801E00B84449 /* fibonacciRecursive.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = fibonacciRecursive.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A96CA89527445082008E2FEE /* bubbleSort.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = bubbleSort.aj; sourceTree = "<group>"; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
 		A97362032737696000E1175A /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
@@ -155,6 +157,8 @@
 				A990DE3F27095A3900C94528 /* diagramas.pdf */,
 				313FBE6A2724992E00A5BA1D /* outputCompilador.txt */,
 				A94A1722274317E400B84449 /* fibonnacci.aj */,
+				A94A17232743801E00B84449 /* fibonacciRecursive.aj */,
+				A96CA89527445082008E2FEE /* bubbleSort.aj */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";
