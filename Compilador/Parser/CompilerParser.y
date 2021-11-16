@@ -2,7 +2,7 @@
 %token <NSString> ID CTES CTEC CPTRG INCPTRG
 %token VAR ELSE PRINT IF COMMA EQ DIF LT
 GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPUT CONST RTN WHILE FOR LSBRAKE RSBRAKE NEW AND OR QM NLL NOT DOT FUNC PGR
-%token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF
+%token <NSNumber> INT FLOAT DOUBLE CHAR BOOLEAN STR INTEGERCLASS STRINGCLASS F T CTEI CTEF PNT
 %type <NSNumber> tipoSimple tipoCompuesto tipo booleanValue
 %type <Symbol> vars const funcionesVoid funcionesReturn
 %type <NSString> range declareVarCiclo idFunc idFuncReturn
@@ -76,8 +76,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 %%
     
     programa : programaPrimo funciones startMain startNode RPAREN cuerpo {semantic.endFunction()}
-            | funciones MAIN startNode RPAREN cuerpo {semantic.endFunction()}
-            | MAIN startNode RPAREN cuerpo {semantic.endFunction()};
+            | funciones startMain startNode RPAREN cuerpo {semantic.endFunction()}
+            | programaPrimo startMain startNode RPAREN cuerpo {semantic.endFunction()}
+            | startMain startNode RPAREN cuerpo {semantic.endFunction()};
              
     startMain : MAIN {
         semantic.insertSymbolToST("main", true, false, .void, .method)
@@ -98,7 +99,8 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 CHAR {$$ = $1} |
                 BOOLEAN {$$ = $1}  |
                 STR {$$ = $1}  |
-                VOID {$$ = $1} ;
+                VOID {$$ = $1} |
+                PNT {$$ = $1};
    
    vars : VAR ID SEMICOLON
         {
@@ -468,7 +470,6 @@ factor : CTEI
        | ID assMulti
        {
            semantic.readOneCellArray($1);
-           print("<holi")
        }
        | CTEC
        {

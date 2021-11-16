@@ -60,6 +60,9 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     value = NSNumber(integerLiteral:BooleanType.F.rawValue)
     return CompilerParser.F}
 "if"         {return CompilerParser.IF}
+"pointer" {
+    value = NSNumber(integerLiteral:TypeSymbol.pointer.rawValue)
+    return CompilerParser.PNT}
 "else"    { return CompilerParser.ELSE }
 "null"    { return CompilerParser.NLL }
 ","           {return CompilerParser.COMMA}
@@ -70,6 +73,8 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 "!"       {return CompilerParser.NOT}
 "<"         {return CompilerParser.LT}
 ">"         {return CompilerParser.GT}
+"<="         {return CompilerParser.LE}
+">="         {return CompilerParser.GE}
 "{"          {
     return CompilerParser.LBRACE}
 "}"          {

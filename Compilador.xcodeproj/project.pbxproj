@@ -85,6 +85,7 @@
 		A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerStream.swift; sourceTree = "<group>"; };
 		A930EA2A26FFBB260062BE51 /* CompilerLex.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = CompilerLex.l; sourceTree = "<group>"; };
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
+		A94A1722274317E400B84449 /* fibonnacci.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = fibonnacci.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
 		A97362032737696000E1175A /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 				A9FA5EA926FFBF9D00425354 /* test.test */,
 				A990DE3F27095A3900C94528 /* diagramas.pdf */,
 				313FBE6A2724992E00A5BA1D /* outputCompilador.txt */,
+				A94A1722274317E400B84449 /* fibonnacci.aj */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";
@@ -482,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -493,6 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

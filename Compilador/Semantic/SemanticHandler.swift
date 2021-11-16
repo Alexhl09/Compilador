@@ -485,6 +485,11 @@ class SemanticHandler : CustomStringConvertible {
      When the main is found
     */
     func foundMain(){
+        if(globalFinalIndex == false){
+            globalFinalIndex = true
+            self.jumpStack.push(self.quadruples.count)
+            self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+        }
         /// Pop jump stack and take that as the index where the goto main isntruction is
         let indexMain = jumpStack.pop() ?? 0
         /// Use the funtion fill to add the information need fot the main to jump
@@ -743,14 +748,7 @@ class SemanticHandler : CustomStringConvertible {
                     symbol.address = newLocalVariable(t: symbol.type)
                 }
             }
-            
-//            switch symbol.type {
-//                case .integer:
-//
-//                case
-//                default:
-//                break
-//            }
+
         }
         
         self.addOperand(symbol: symbol)
@@ -764,22 +762,21 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func generateQuadruple() throws {
+            guard operationStack.operands.size() > 1 else {
+                print("Error generating quadruple for line\(lex.line)")
+                return
+            }
+            let op : Operator = operationStack.operators.pop()!
 
-        guard operationStack.operands.size() > 1 else {
-            print("Error generating quadruple for line\(lex.line)")
-            return
-        }
-        let op : Operator = operationStack.operators.pop()!
-
-        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        
-        guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
-            print("ERROR")
-            throw ErrorCompiler.TypeMismatch
-        }
-        let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
-        self.quadruples.append(generatedQuadruple)
+            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            
+            guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
+                print("ERROR")
+                throw ErrorCompiler.TypeMismatch
+            }
+            let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
+            self.quadruples.append(generatedQuadruple)
     }
     
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
@@ -789,7 +786,7 @@ class SemanticHandler : CustomStringConvertible {
         let baseAddress = self.needConstantInt(value: Int(symbolOperand)!)
         
         
-        guard let dim = symbol.dimension2D else {print("No es un array");return}
+        guard let dim = symbol.dimension2D else {print("No es un array"); exit(0); return}
         var temp = symbol.arrayList?.head
         var dimNow = 1
         dimensionStack.push((symbol.identifier, dimNow))
