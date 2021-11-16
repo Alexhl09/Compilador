@@ -107,7 +107,7 @@ class VirtualMachine {
                     var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: arg1!)
                     var (resValue, resType) = try self.virtualMemory.getInfoByAddress(address: result!)
                     
-                    print("arg1 \(firstValue!) - \(firstType) res \(resValue!) - \(resType)")
+                //    print("arg1 \(firstValue!) - \(firstType) res \(resValue!) - \(resType)")
                     verify(value: firstValue as! Int, in: resValue as! Int)
                 }catch let error{
                     print(error.localizedDescription)

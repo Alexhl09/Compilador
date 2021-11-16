@@ -200,20 +200,36 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             {
                 let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
                 semantic.insertSymbolToST($2, true, false, type);
-                let symbol = semantic.returnSymbolByID($2 as String)
-                params.append(symbol)
+                let symbol = semantic.returnSymbolByID($2 as String);
+                params.append(symbol);
             }
             | tipoSimple ID COMMA params
             {
                 let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
                 semantic.insertSymbolToST($2, true, false, type);
-                let symbol = semantic.returnSymbolByID($2 as String)
-                params.append(symbol)
+                let symbol = semantic.returnSymbolByID($2 as String);
+                params.append(symbol);
             }
-            | ID {
-                
+            | tipoSimple ID paramsArreglosMulti {
+                let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, type: type);
+                let symbol = semantic.returnSymbolByID($2 as String);
+                params.append(symbol);
+                linkedListArray = ArrayLinkedList();
+                r = 1;
             }
             ;
+            
+    paramsArreglosMulti : LSBRAKE CTEI RSBRAKE {
+                let lS = $2.intValue
+                r = (lS) * r
+                linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
+            }
+    | LSBRAKE CTEI RSBRAKE paramsArreglosMulti {
+        let lS = $2.intValue
+        r = (lS) * r
+        linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
+    };
            
     asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)}
     | ID LSBRAKE expresion RSBRAKE varAssign {

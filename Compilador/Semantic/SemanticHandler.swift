@@ -1001,6 +1001,7 @@ class SemanticHandler : CustomStringConvertible {
         ///
         /// SINO SE MANDA ERROR
         ///
+        ///
         
         let typeArguments = args.map({$0.1}).reversed() as Array
         let typeParams = symbolFunction.params.map({$0.type})
@@ -1008,13 +1009,30 @@ class SemanticHandler : CustomStringConvertible {
             delegate?.sendBadParametersForFunc(id: idFunction)
             return
         }
+                
         let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleEra)
         
         // FIXME: - Pass paramaters as quadruples
         for (index, arg) in args.enumerated().reversed() {
-            let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address)")
-            self.quadruples.append(quadrupleParam)
+            if let argAddress = Int(arg.0){
+                let numberArray = addressArrays[argAddress]
+               
+                if(numberArray != nil){
+                    if(symbolFunction.params.reversed()[index].arrayList?.head?.r == numberArray){
+                        for i in 0..<numberArray!{
+                            let quadrupleParam = Quadruple(argument1: "\(argAddress + i)", argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address + i)")
+                            self.quadruples.append(quadrupleParam)
+                        }
+                    }else{
+                        delegate?.sendBadParametersForFunc(id: idFunction)
+                    }
+                    
+                }else{
+                    let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address)")
+                    self.quadruples.append(quadrupleParam)
+                }
+            }
         }
         
         

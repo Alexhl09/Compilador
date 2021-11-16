@@ -81,8 +81,15 @@ func int cube(int a){
     return a * a * a;
 }
 
+func example(int arr[6]){
+    for (int i : 0..<6) {
+        print(arr[i]);
+    }
+}
+
 
 main () {
+    example(array);
     print(array[0]);
     const int myP = array[2];
     print(myP);
