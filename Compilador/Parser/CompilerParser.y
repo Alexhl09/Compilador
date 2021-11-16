@@ -99,8 +99,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 CHAR {$$ = $1} |
                 BOOLEAN {$$ = $1}  |
                 STR {$$ = $1}  |
-                VOID {$$ = $1} |
-                PNT {$$ = $1};
+                VOID {$$ = $1};
    
    vars : VAR ID SEMICOLON
         {
