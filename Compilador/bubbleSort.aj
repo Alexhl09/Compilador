@@ -16,22 +16,9 @@ func int[7] bubbleSort(int arr[7], int n)
     }
     return arr;
 }
-//
-///* Function to print an array */
-//func printArray(int arr[7], int size)
-//{
-//    var p = 0;
-//   // print(arr);
-////    for (var i = 0; i < size; p = 1 ){
-////        print(arr[i]);
-////        i = i + 1;
-////    }
-//}
- 
+
 main()
 {
-
-   
     var arr[7] = {64, 34, 25, 12, 22, 11, 90};
     print("Unsorted array:");
     print(arr);

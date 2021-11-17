@@ -134,9 +134,7 @@ class SemanticHandler : CustomStringConvertible {
             }
         }
         
-        if(const){
-            addressArrays[symbolToInsert.address] = size
-        }
+        addressArrays[symbolToInsert.address] = size
     }
     
     fileprivate func assignArray(_ symbol: Symbol) {
@@ -192,9 +190,24 @@ class SemanticHandler : CustomStringConvertible {
         guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); exit(0);return}
 
         let sizeArray = symbol.arrayList?.head?.r ?? 0
-        guard self.operationStack.operands.size() >= sizeArray else {
+        
+        
+        
+        let sizeArrayToTake = self.addressArrays[Int(self.operationStack.operands.peek()?.0 ?? "0")!]
+        
+        guard self.operationStack.operands.size() >= sizeArray || sizeArrayToTake != nil else {
             print("Faltan operandos"); exit(0);
-            return }
+            return
+        }
+        
+        if(sizeArrayToTake ?? 0 > 0){
+            let operand : (String, TypeSymbol) = self.operationStack.getLastOperand()!
+            for i in 0..<sizeArrayToTake!{
+                self.operationStack.addOperand(operand: "\(Int(operand.0 ?? "0")! + i)", type: operand.1)
+            }
+        }
+       
+       
     
         if(!symbol.assigned && !symbol.constant){
             assignArray(symbol)
@@ -650,11 +663,29 @@ class SemanticHandler : CustomStringConvertible {
 
         print("Filled Quadruple ELSE \(end) with address \(quadruples.count - 1)")
     }
+    func isArray(address: Int) -> Int?{
+        var temp = self.symbolTable.head
+        
+        while(temp != nil){
+            var p = temp?.symbols.filter({ (key, value) in
+                return value.array == true && value.address == address
+            }).map({ (k,v) in
+                return v.address
+            })
+            if(p?.count ?? 0 > 0){
+                return p?.first
+            }
+            temp = temp?.next
+        }
+        return nil
+        
+    }
     
     func addPrint(){
         if(!operationStack.operands.isEmpty){
-            let val = addressArrays[Int(operationStack.operands.peek()?.0 ?? "0") ?? 0]
-            if(val != nil){
+            let address = (isArray(address: Int(operationStack.operands.peek()?.0 ?? "0") ?? 0))
+            let val = self.addressArrays[address ?? 0]
+            if(val != nil && address != nil){
                 let (operand, t) = operationStack.getLastOperand() ?? ("", .void)
                 for i in 0..<(val ?? 0){
                     guard let o = Int(operand) else { return  }
@@ -667,15 +698,16 @@ class SemanticHandler : CustomStringConvertible {
                 }
                 self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
                 return
+            }else{
+                operationStack.operands.reverse()
+                while(!operationStack.operands.isEmpty){
+                    let (operand, _) = operationStack.getLastOperand() ?? ("", .void)
+                    let op = operationStack.operators.pop() ?? .print
+                    self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
+                }
+                self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
             }
-                
-            operationStack.operands.reverse()
-            while(!operationStack.operands.isEmpty){
-                let (operand, _) = operationStack.getLastOperand() ?? ("", .void)
-                let op = operationStack.operators.pop() ?? .print
-                self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: op, result: operand))
-            }
-            self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .print, result: "\(-1)"))
+            
         }
     }
     
@@ -797,6 +829,12 @@ class SemanticHandler : CustomStringConvertible {
             
             guard operationStack.operands.size() > 1 else {
                 print("Error generating quadruple for line\(lex.line)")
+                exit(0)
+                return
+            }
+            guard operationStack.operators.size() >= 1 else {
+                print("Error generating quadruple for line\(lex.line)")
+                exit(0)
                 return
             }
             let op : Operator = operationStack.operators.pop()!
@@ -1054,18 +1092,15 @@ class SemanticHandler : CustomStringConvertible {
         // FIXME: - Pass paramaters as quadruples
         for (index, arg) in args.enumerated().reversed() {
             if let argAddress = Int(arg.0){
-                let numberArray = addressArrays[argAddress]
-               
-                if(numberArray != nil){
-                    if(symbolFunction.params.reversed()[index].arrayList?.head?.r == numberArray){
-                        for i in 0..<numberArray!{
+                if let numberArray = isArray(address: argAddress),let size = addressArrays[numberArray ?? 0] {
+                    if(symbolFunction.params.reversed()[index].arrayList?.head?.r == size){
+                        for i in 0..<size{
                             let quadrupleParam = Quadruple(argument1: "\(argAddress + i)", argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address + i)")
                             self.quadruples.append(quadrupleParam)
                         }
                     }else{
                         delegate?.sendBadParametersForFunc(id: idFunction)
                     }
-                    
                 }else{
                     let quadrupleParam = Quadruple(argument1: arg.0, argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address)")
                     self.quadruples.append(quadrupleParam)

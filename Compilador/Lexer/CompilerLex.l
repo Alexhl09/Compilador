@@ -5,8 +5,8 @@ ws {salto}+
 letter [A-Za-z]
 digit [0-9]
 id ({letter}|_)({letter}|{digit}|_)*
-CteI {digit}+
-CteF {digit}+(\.{digit}+)
+CteI (+|-)*{digit}+
+CteF (+|-)*{digit}+(\.{digit}+)
 CteS \"+[A-Za-z0-9 \\^_\-%$()&*@#.':]*\"+
 CteC \'+[A-Za-z0-9 \\^_\-%$()&*@#.':]\'+
 SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])

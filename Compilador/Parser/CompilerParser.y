@@ -212,7 +212,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             }
             | tipoSimple ID paramsArreglosMulti COMMA params {
                 let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
-                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, type: type);
+                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : true, type: type);
                 let symbol = semantic.returnSymbolByID($2 as String);
                 params.append(symbol);
                 linkedListArray = ArrayLinkedList();
@@ -220,7 +220,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             }
             | tipoSimple ID paramsArreglosMulti  {
                 let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
-                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, type: type);
+                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : true, type: type);
                 let symbol = semantic.returnSymbolByID($2 as String);
                 params.append(symbol);
                 linkedListArray = ArrayLinkedList();
