@@ -111,7 +111,6 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
 {CteS}  {
     
     value = NSString(string:text)
-    print(value)
     return CompilerParser.CTES}
 {id}        {
     value = NSString(string:text)

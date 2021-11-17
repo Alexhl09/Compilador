@@ -40,7 +40,7 @@ class VirtualMachine {
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
-         //   print("Current qua \(currentIndex)")
+           //print("Current qua \(currentIndex)")
             arg1 = Int(currentQuadruple.argument1 ?? "0")
             arg2  = Int(currentQuadruple.argument2 ?? "0")
             result = Int(currentQuadruple.result ?? "0")
@@ -124,6 +124,7 @@ class VirtualMachine {
     
     func verify(value arg1: Int, in res: Int) {
         if (arg1 < 0 || arg1 >= res) {
+            print("Index out of bounce \(arg1)")
             exit(0)
         }
     }

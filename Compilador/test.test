@@ -7,7 +7,7 @@ func int suma(int A, int p) {
     return A + p;
 }
 func printArray(int A, bool B) {
-    const double ju = 9.0;
+    //const double ju = 9.0;
     var a;
     var o;
     var x = 10.3;
@@ -66,7 +66,7 @@ func printArray(int A, bool B) {
     /* Agregar pila de saltos y resolver para poner a donde salta en el cuadruplo
     
     */
-    const int t = suma(10, 11);
+    var t = suma(10, 11);
     print(t);
     a > 10 ? print(x) : print(y);
     a = a > 10 ? 10 + 2 : 2 + 4;
@@ -87,8 +87,15 @@ func example(int arr[6]){
     }
 }
 
+func int[6] myProblem() {
+    const int holi[6] = {1,2,3,4,5,6};
+    return holi;
+}
+
 
 main () {
+    const int iu[6] = myProblem();
+    print(iu[2]);
     example(array);
     print(array[0]);
     const int myP = array[2];
@@ -176,6 +183,6 @@ main () {
     print(sorted);
     print('a');
     print(arr);
-    print(arrayTest[1][1][2]);
+    print(arrayTest[1][1][1]);
 }
     

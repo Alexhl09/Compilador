@@ -25,6 +25,11 @@ public struct Queue<T> : QueueProtocol {
         return leftStack.isEmpty && rightStack.isEmpty
     }
     
+    public var size:Int{
+        return leftStack.count + rightStack.count
+    
+    }
+    
     // Para ver el primer dato ingresado
     // Si esta vacio el de la izquierda, es el primero del derecho
     // Si no esta vacio el de la izquierda, es el ultimo dato del izquierdo

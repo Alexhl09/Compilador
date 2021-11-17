@@ -129,9 +129,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             semantic.insertSymbolToST($2, false, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void);
             semantic.saveValueVariable(id : $2 as String)
         }
-   | CONST tipoSimple ID varsPrimaArreglos varsPrima varAssign SEMICOLON
+   | CONST tipo ID varsPrimaArreglos varAssign SEMICOLON
         {
-            semantic.insertArrayToST($3, $4 as! (NSNumber, NSNumber), linkedListArray, r: r, type: TypeSymbol.init(rawValue: $2.intValue) ?? .void);
+            semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, const : true, type:  TypeSymbol.init(rawValue: $2.intValue) ?? .void, $4 as! (NSNumber, NSNumber));
             linkedListArray = ArrayLinkedList();
             r = 1;
             semantic.assignArray($3);
@@ -210,7 +210,15 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 let symbol = semantic.returnSymbolByID($2 as String);
                 params.append(symbol);
             }
-            | tipoSimple ID paramsArreglosMulti {
+            | tipoSimple ID paramsArreglosMulti COMMA params {
+                let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+                semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, type: type);
+                let symbol = semantic.returnSymbolByID($2 as String);
+                params.append(symbol);
+                linkedListArray = ArrayLinkedList();
+                r = 1;
+            }
+            | tipoSimple ID paramsArreglosMulti  {
                 let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
                 semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, type: type);
                 let symbol = semantic.returnSymbolByID($2 as String);
@@ -231,7 +239,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
     };
            
-    asignar : ID varAssign {semantic.saveValueVariable(id : $1 as String)}
+    asignar : ID varAssign {
+        semantic.saveValueVariable(id : $1 as String)
+    }
     | ID LSBRAKE expresion RSBRAKE varAssign {
         print("Assigned celle array");
         semantic.assignOneCellArray($1);
@@ -397,11 +407,21 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         $$ = $1};
     
     idFuncReturn : tipoSimple ID{
-        currentFuncName = $2 as String
+        currentFuncName = $2 as String;
         semantic.startFunction($2);
         semantic.insertSymbolToST($2, true, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void, .method);
         semantic.setCurrentCuadruple();
-        $$ = $2};
+        $$ = $2}
+    | tipoSimple varsPrimaArreglosMulti ID  {
+        currentFuncName = $3 as String;
+        semantic.startFunction($3);
+        semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, type: TypeSymbol.init(rawValue: $1.intValue) ?? .void, kind: .method);
+        linkedListArray = ArrayLinkedList();
+        r = 1;
+        semantic.setCurrentCuadruple();
+        $$ = $3;
+    }
+    ;
    
    flujoBloque : asignar SEMICOLON
                | llamada
@@ -458,7 +478,7 @@ comparisonOperators : EQ EQ {semantic.addOperator(op: Operator.equal)}
         ;
        
 megaExpression : termino
-                | termino o1 megaExpression {semantic.addQuadruple()};
+                | megaExpression o1 termino {semantic.addQuadruple()};
 
 o1 : PLUS {semantic.addOperator(op: Operator.sum)}
         | MINUS {semantic.addOperator(op:Operator.minus)};

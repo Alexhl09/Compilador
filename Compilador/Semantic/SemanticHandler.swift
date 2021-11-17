@@ -98,12 +98,15 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
-    func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void, _ dimension : (NSNumber, NSNumber) = (NSNumber(value: -1), NSNumber(value: -1))){
-        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
+    func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void, _ dimension : (NSNumber, NSNumber) = (NSNumber(value: -1), NSNumber(value: -1)), kind : Kind = .field){
+        let symbolToInsert = Symbol(lex.line, id, kind, type, const, true, false, rows: dimension.0, columns: dimension.1)
         if(dimension.0 != -1 && dimension.1 != -1){
             self.addConstantInteger(dimension.0, saveOperand: false)
             self.addConstantInteger(dimension.1, saveOperand: false)
         }
+        
+        
+        
         var temp = list.head
         var dim = 1
         var offset = 0
@@ -129,6 +132,10 @@ class SemanticHandler : CustomStringConvertible {
             }else{
                 symbolToInsert.address = newLocalVariable(t: type, size: size)
             }
+        }
+        
+        if(const){
+            addressArrays[symbolToInsert.address] = size
         }
     }
     
@@ -185,7 +192,9 @@ class SemanticHandler : CustomStringConvertible {
         guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); exit(0);return}
 
         let sizeArray = symbol.arrayList?.head?.r ?? 0
-        guard self.operationStack.operands.size() >= sizeArray else {print("Faltan operandos"); exit(0); return }
+        guard self.operationStack.operands.size() >= sizeArray else {
+            print("Faltan operandos"); exit(0);
+            return }
     
         if(!symbol.assigned && !symbol.constant){
             assignArray(symbol)
@@ -230,8 +239,30 @@ class SemanticHandler : CustomStringConvertible {
      Adds a new operand to the operands stack (a stack made of tuple (Operand, Type))
      - Parameter symbol: The symbol to be inserted in the operands stack
     */
-    func addOperand(symbol : Symbol){
-        operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
+    func addOperand(symbol : Symbol, save: Bool = false){
+        if(save){
+            if(symbol.array){
+                guard let size = symbol.arrayList?.head?.r else { operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type); return}
+                if(operationStack.operands.size() >= size){
+                    operationStack.operators.pop()
+                    let o : [(String, TypeSymbol)] = operationStack.getLastNOperands(size).reversed()
+                    for i in 0..<size{
+                        operationStack.addOperand(operand: o[i].0, type: o[i].1)
+                        operationStack.addOperand(operand: "\(symbol.address + i)", type: symbol.type)
+                        operationStack.addOperator(op: .assign)
+                    }
+                }else{
+                    operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
+                }
+                
+            }else{
+                operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
+            }
+        }else{
+            operationStack.addOperand(operand: "\(symbol.address)", type: symbol.type)
+        }
+        
+        
     }
     
     /**
@@ -734,7 +765,7 @@ class SemanticHandler : CustomStringConvertible {
     
     
     func saveValueVariable(id: String){
-        guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); return}
+        guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); exit(0); return}
         // Add to operands stack
         
         if(!symbol.assigned && !symbol.constant){
@@ -751,7 +782,7 @@ class SemanticHandler : CustomStringConvertible {
 
         }
         
-        self.addOperand(symbol: symbol)
+        self.addOperand(symbol: symbol, save: true)
         
         do {
            try generateQuadruple()
@@ -762,6 +793,8 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func generateQuadruple() throws {
+        repeat{
+            
             guard operationStack.operands.size() > 1 else {
                 print("Error generating quadruple for line\(lex.line)")
                 return
@@ -777,6 +810,7 @@ class SemanticHandler : CustomStringConvertible {
             }
             let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)
+        }while(operationStack.operands.size() > 1 )
     }
     
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
@@ -790,7 +824,11 @@ class SemanticHandler : CustomStringConvertible {
         var temp = symbol.arrayList?.head
         var dimNow = 1
         dimensionStack.push((symbol.identifier, dimNow))
-        operationStack.operands.reverse()
+        if(withValue){
+            operationStack.operands.reverse()
+        }else{
+            operationStack.operands.reverseFirst(n: symbol.arrayList?.count ?? 100)
+        }
         while(temp != nil){
           
             let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
@@ -1059,10 +1097,28 @@ class SemanticHandler : CustomStringConvertible {
             return
         }
         
-        let quadruploReturn = Quadruple(argument1: operand, argument2: nil, op: .rtn, result: "\(symbolFunction.address)")
-        self.quadruples.append(quadruploReturn)
-        let quadruploEnd = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
-        self.quadruples.append(quadruploEnd)
+        if let sizeArray = self.addressArrays[symbolFunction.address], let sizeArrayFunc = self.addressArrays[Int(operand) ?? 0]{
+            if(sizeArray != sizeArrayFunc){
+                delegate?.sendInvalidOperationBetween(t1: type, t2: returnTypeExpected)
+            }else{
+                for i in 0..<sizeArray{
+                    let opAddress = Int(operand) ?? 0
+                    let quadruploReturn = Quadruple(argument1: "\(opAddress + i)", argument2: nil, op: .rtn, result: "\(symbolFunction.address + i)")
+                    self.quadruples.append(quadruploReturn)
+                  
+                }
+                let quadruploEnd = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
+                self.quadruples.append(quadruploEnd)
+            }
+            
+        }else{
+            let quadruploReturn = Quadruple(argument1: operand, argument2: nil, op: .rtn, result: "\(symbolFunction.address)")
+            self.quadruples.append(quadruploReturn)
+            let quadruploEnd = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
+            self.quadruples.append(quadruploEnd)
+        }
+        
+       
         // Generar return cuadruple
         // Address of function
     }
@@ -1108,11 +1164,25 @@ class SemanticHandler : CustomStringConvertible {
     func fillParcheG(t: TypeSymbol, funcName: String){
         guard let symbol = symbolTable.lookup(funcName) else {return}
         if(symbol.type != .void && symbol.kind == .method){
-            let newAddresss = newLocalVariable(t: t)
-            self.operationStack.addOperand(operand: "\(newAddresss)", type: t)
+            if let sizeArray = symbol.arrayList?.head?.r {
+                let newAddresss = newTemporalAddress(t: t,size: sizeArray)
+                for i in 0..<sizeArray{
+                   
+                    self.operationStack.addOperand(operand: "\(newAddresss + i)", type: t)
+                
+                    let quadrupleReturn = Quadruple(argument1: "\(symbol.address + i)", argument2: nil, op: .assign, result: "\(newAddresss + i)")
+                    self.quadruples.append(quadrupleReturn)
+                }
         
-            let quadrupleReturn = Quadruple(argument1: "\(symbol.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
-            self.quadruples.append(quadrupleReturn)
+            }else{
+                let newAddresss = newTemporalAddress(t: t)
+                self.operationStack.addOperand(operand: "\(newAddresss)", type: t)
+            
+                let quadrupleReturn = Quadruple(argument1: "\(symbol.address)", argument2: nil, op: .assign, result: "\(newAddresss)")
+                self.quadruples.append(quadrupleReturn)
+            }
+            
+            
         }
     }
     
