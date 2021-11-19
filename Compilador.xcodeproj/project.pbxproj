@@ -93,6 +93,7 @@
 		A97362032737696000E1175A /* Arrays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
 		A981CED72744DE17004CB1E1 /* smallest.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = smallest.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A981CED82744E269004CB1E1 /* catalanNumber.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = catalanNumber.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A981CED92745C0D0004CB1E1 /* func.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = func.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -163,6 +164,7 @@
 				A96CA89527445082008E2FEE /* bubbleSort.aj */,
 				A981CED72744DE17004CB1E1 /* smallest.aj */,
 				A981CED82744E269004CB1E1 /* catalanNumber.aj */,
+				A981CED92745C0D0004CB1E1 /* func.aj */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";

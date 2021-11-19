@@ -103,9 +103,14 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                 VOID {$$ = $1};
    
    vars : VAR ID SEMICOLON
-        {
-            semantic.insertSymbolToST($2, false, false)
-        }
+    {
+        semantic.insertSymbolToST($2, false, false)
+    }
+    | VAR ID COLON tipo SEMICOLON
+    {
+        let type = TypeSymbol.init(rawValue: $4.intValue) ?? .void
+        semantic.insertSymbolToST($2, false, false, type)
+    }
    | VAR ID varsPrimaArreglosMulti SEMICOLON
         {
             semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false);

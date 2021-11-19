@@ -75,6 +75,15 @@ class VirtualMachine {
                 brincoIndex(op: op, arg1: arg1, arg2: arg2, res: result)
                 break
             case .read:
+                let line = readLine() ?? " "
+                var delimiter = " "
+                var token = line.components(separatedBy: delimiter)
+                print (token[0])
+                do{
+                    try self.virtualMemory.insertValue(address: result!, value: token[0])
+                }catch let error{
+                    print(error.localizedDescription)
+                }
                 self.sigQuadruple(index: currentIndexStack() + 1)
                 break
             case .print:

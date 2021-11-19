@@ -796,11 +796,10 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     
-    func saveValueVariable(id: String){
-        guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); exit(0); return}
+    fileprivate func assignVar(_ symbol: Symbol) {
         // Add to operands stack
         
-        if(!symbol.assigned && !symbol.constant){
+        if(!symbol.assigned && symbol.type == .void){
             symbol.assigned = true
             if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
                 symbol.type = operationStack.operands.peek()?.1 ?? .void
@@ -811,8 +810,25 @@ class SemanticHandler : CustomStringConvertible {
                     symbol.address = newLocalVariable(t: symbol.type)
                 }
             }
-
+        } else if(!symbol.assigned){
+            symbol.assigned = true
+            if(symbolTable.onlyOneNode()){
+                symbol.address = newGlobalVariable(s: symbol.type)
+            }else{
+                symbol.address = newLocalVariable(t: symbol.type)
+            }
+        } else if(symbol.assigned && symbol.constant){
+            print("CONSTANT \(symbol.identifier) ALREADY ASSIGNED")
+            exit(0)
+        }else{
+            // print("WTF")
         }
+    }
+    
+    func saveValueVariable(id: String){
+        guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); exit(0); return}
+        
+        assignVar(symbol)
         
         self.addOperand(symbol: symbol, save: true)
         
@@ -843,7 +859,7 @@ class SemanticHandler : CustomStringConvertible {
             let (leftOperand, leftType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
             
             guard let resultType = semanticCube[SemCubeKey(op1: rightType, op2: leftType, o: op)] else {
-                print("ERROR")
+                delegate?.sendInvalidOperationBetween(t1: rightType, t2: leftType)
                 throw ErrorCompiler.TypeMismatch
             }
             let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
@@ -945,7 +961,6 @@ class SemanticHandler : CustomStringConvertible {
             }
             let (assignOperand, assignType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
             let (lastAuxOperand, lastAuxType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-            
             let tempAddress3 = newTemporalAddress(t: .pointer)
             let lastQuadruple = Quadruple(argument1: "\(lastAuxOperand)", argument2: "\(baseAddress)", op: .sum, result: "\(tempAddress3)")
             self.quadruples.append(lastQuadruple)
@@ -1002,6 +1017,8 @@ class SemanticHandler : CustomStringConvertible {
         self.addOperator(op: .read)
         
         self.addIDAsQuadruple(id)
+        
+       // assignVar(returnSymbolByID(id as String))
         
         if(!operationStack.operators.isEmpty){
             let op : Operator = operationStack.operators.pop()!

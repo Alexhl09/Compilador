@@ -211,9 +211,8 @@ class VirtualMemoryBlock{
         var x = 0
         defer{
             if(x == 1){
-                print(address)
-                print(value)
-                print("OOOPS")
+                print("Bad value for address")
+                exit(0)
             }
         }
         let (myAddress, type) = try realMemoryAddress(address: address)

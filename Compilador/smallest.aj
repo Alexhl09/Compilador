@@ -3,8 +3,8 @@ func int[5] bubbleSort(int arr[5], int n)
 {
     var a = 8;
 
-    for (var i = 0; i < n-1; a = 1){
-        for (var j = 0; j < n-i-1; a = 1){
+    for (var i = 0; i < n - 1; a = 1){
+        for (var j = 0; j < n - i - 1; a = 1){
             if (arr[j] > arr[j+1]){
                 var temp = arr[j];
                 arr[j] = arr[j+1];
