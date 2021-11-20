@@ -1,4 +1,4 @@
-func float suma(int a, float b){
+func float suma(int a, float b) {
     return a + b;
 }
 
@@ -6,13 +6,19 @@ main(){
     var a[10];
     a[2] = 10;
     
+    int var x;
+    int var y;
+    
+    input(x,y);
+    print(x,y);
+    
     for (int i : 0..<10){
-        var x : int;
+        int var x;
         input(x);
         a[i] = x;
     }
     print(a);
-    var b : float;
+    float var b;
     input(b);
     
     const int c = a[1];

@@ -106,10 +106,10 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     {
         semantic.insertSymbolToST($2, false, false)
     }
-    | VAR ID COLON tipo SEMICOLON
+    | tipo VAR ID SEMICOLON
     {
-        let type = TypeSymbol.init(rawValue: $4.intValue) ?? .void
-        semantic.insertSymbolToST($2, false, false, type)
+        let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+        semantic.insertSymbolToST($3, false, false, type)
     }
    | VAR ID varsPrimaArreglosMulti SEMICOLON
         {
@@ -532,11 +532,14 @@ factor : CTEI
 booleanValue : T {$$ = $1}| F {$$ = $1};
 
 
-leer : INPUT LPAREN ID RPAREN
-    {
-        semantic.readID($3)
-    }
-;
+leer : INPUT LPAREN leerR RPAREN;
+
+leerR : ID {
+    semantic.readID($1)
+}
+| leerR COMMA ID{
+    semantic.readID($3)
+};
            
 //   lvalue : ID
 //           | ID LSBRAKE expresion RSBRAKE

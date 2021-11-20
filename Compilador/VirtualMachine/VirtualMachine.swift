@@ -78,7 +78,6 @@ class VirtualMachine {
                 let line = readLine() ?? " "
                 var delimiter = " "
                 var token = line.components(separatedBy: delimiter)
-                print (token[0])
                 do{
                     try self.virtualMemory.insertValue(address: result!, value: token[0])
                 }catch let error{
