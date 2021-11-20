@@ -27,7 +27,7 @@ struct DetailView : View{
             #if os(iOS)
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    print("Build")
+                    build()
                 } label: {
                     HStack(spacing: 10) {
                             Image(systemName: "wrench.fill")
@@ -35,7 +35,12 @@ struct DetailView : View{
                     }
                 }
                 Button {
-                    print("Play")
+                    build()
+                    if(VM != nil){
+                        execute()
+                    }else{
+                        self.text = ""
+                    }
                 } label: {
                     HStack(spacing: 10) {
                             Image(systemName: "play.circle.fill")

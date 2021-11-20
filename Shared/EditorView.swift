@@ -19,7 +19,7 @@ struct EditorView: View{
         #if os(iOS)
         if idiom == .phone {
             VStack{
-                DetailView(document: $document, showInspector: $showInspector,  VM: $VM, text: textoConsola)
+                DetailView(document: $document, showInspector: $showInspector,  VM: $VM, text: $textoConsola)
                 if showInspector {
                     HStack{
                         Sidebar(VM: $VM)
@@ -29,7 +29,7 @@ struct EditorView: View{
             }
         }else{
             HStack{
-                DetailView(document: $document, showInspector: $showInspector,  VM: $VM, text: textoConsola)
+                DetailView(document: $document, showInspector: $showInspector,  VM: $VM, text: $textoConsola)
                 if showInspector {
                     VStack{
                         Sidebar(VM: $VM)

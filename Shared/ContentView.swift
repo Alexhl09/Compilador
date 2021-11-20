@@ -29,7 +29,6 @@ struct ContentView: View {
             EditorView(document: $document, textoConsola: $settings.texto)
         }.onAppear {
             openConsolePipe()
-            oePipe()
         }
         #endif
         

@@ -1,6 +1,11 @@
 
 
+#if os(macOS)
 import Cocoa
+#else
+import UIKit
+#endif
+
 
 class CompilerErrorDelegate: CompilerParserError {
     func error(parser: CompilerParser, line: Int, column: Int, filename: String?, errorCode: Int, data: [String : AnyObject]?) {

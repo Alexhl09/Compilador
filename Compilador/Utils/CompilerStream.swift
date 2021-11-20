@@ -4,8 +4,11 @@
 //
 //  Created by Alejandro Hernández López on 28/08/21.
 //
-
+#if os(macOS)
 import Cocoa
+#else
+import UIKit
+#endif
 
 class CompilerStream : OCFileInput
 {
