@@ -24,6 +24,10 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     static let TYPE_MISMATCH = (CompilerParser.ERROR_STARTERRORID+3)
     static let UNDECLARED_VAR = (CompilerParser.ERROR_STARTERRORID+4)
     static let BAD_PARAMETERS = (CompilerParser.ERROR_STARTERRORID+5)
+    static let BAD_OPERANDOS = (CompilerParser.ERROR_STARTERRORID+6)
+    static let JUMP_STACK_EMPTY = (CompilerParser.ERROR_STARTERRORID+7)
+    static let CONSTANT_ASSIGNED = (CompilerParser.ERROR_STARTERRORID+8)
+    static let NOT_ARRAY = (CompilerParser.ERROR_STARTERRORID+8)
 }
 
 %{
@@ -37,6 +41,22 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
 %local {
     func sendVariableRepeated(id : String){
         error(code: CompilerParser.VAR_ALREADY_DECLARED, data: ["varRep": id as AnyObject])
+    }
+
+    func faltanOperandos(){
+        error(code: CompilerParser.BAD_OPERANDOS, data: [:])
+    }
+
+    func badJumpStackEmpty(){
+        error(code: CompilerParser.JUMP_STACK_EMPTY, data: [:])
+    }
+
+    func constantAlreadyAssigned(id: String){
+        error(code: CompilerParser.CONSTANT_ASSIGNED, data: ["id":id as AnyObject])
+    }
+
+    func notArray(id: String){
+        error(code: CompilerParser.NOT_ARRAY, data: ["id":id as AnyObject])
     }
 
     func sendInvalidOperationBetween(t1 : TypeSymbol, t2: TypeSymbol){

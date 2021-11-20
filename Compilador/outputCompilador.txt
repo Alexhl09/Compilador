@@ -316,7 +316,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [3217354439294608184: 
+ [-4868854716213921990: 
 
    |===================================
    |     Identifier : suma
@@ -329,7 +329,7 @@ Last SymbolTable:
    |     Address : 4000
    |     Type parameters: float	integer	
     =================================== 
-, -7438023417309225141: 
+, 567182118887293964: 
 
    |===================================
    |     Identifier : main
@@ -338,17 +338,17 @@ Last SymbolTable:
    |     Constant : true
    |     Array : false
    |     Assigned : false
-   |     Line : 4
+   |     Line : 0
    |     Address : 1000
    |     Type parameters: 
     =================================== 
 ]
 
 Constants: 
- Constant:[2]        Address: 21001
-Constant:[2.4]      Address: 25000
-Constant:[0]        Address: 21003
+ Constant:[10]       Address: 21000
 Constant:[7000]     Address: 21002
+Constant:[0]        Address: 21003
+Constant:[2.4]      Address: 25000
 Constant:[1]        Address: 21004
-Constant:[10]       Address: 21000
+Constant:[2]        Address: 21001
 

@@ -161,7 +161,9 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func assignOneCellArray(_ id : NSString){
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada");exit(0); return}
+        guard let symbol = symbolTable.lookup(id as String) else {
+            delegate?.sendUndeclareVariable(id: id);
+            return}
         if (!symbol.assigned && !symbol.constant){
             assignArray(symbol)
         }
@@ -176,7 +178,10 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func readOneCellArray(_ id : NSString){
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada");exit(0); return}
+        guard let symbol = symbolTable.lookup(id as String) else {
+            delegate?.sendUndeclareVariable(id: id);
+            return
+        }
        
         self.addOperand(symbol: symbol)
         
@@ -185,14 +190,16 @@ class SemanticHandler : CustomStringConvertible {
             fillParcheGArrays(t: symbol.type, nameArray: symbol.identifier)
         }catch(let error){
             print(error.localizedDescription)
-            exit(0)
+           // exit(0)
         }
     }
     
     func assignArray(_ id: NSString){
         
         
-        guard let symbol = symbolTable.lookup(id as String) else {print("No se puede inicializar var, no encontrada"); exit(0);return}
+        guard let symbol = symbolTable.lookup(id as String) else {
+            delegate?.sendUndeclareVariable(id: id);
+            return}
 
         let sizeArray = symbol.arrayList?.head?.r ?? 0
         
@@ -201,7 +208,7 @@ class SemanticHandler : CustomStringConvertible {
         let sizeArrayToTake = self.addressArrays[Int(self.operationStack.operands.peek()?.0 ?? "0")!]
         
         guard self.operationStack.operands.size() >= sizeArray || sizeArrayToTake != nil else {
-            print("Faltan operandos"); exit(0);
+            delegate?.faltanOperandos()
             return
         }
         
@@ -458,26 +465,9 @@ class SemanticHandler : CustomStringConvertible {
                 /// Add the new address as an operand in operands stack
                 self.addOperandByMemory(memoryAddress: newAddress, type: .char)
             }
-//            print(sub)
-//            // Takes the char value
-//
-//            let charValue : Character = s[indexChar]
-//            /// Looks for the address in the constant Table
-//            if let lookUpAddress = lookUpAddressConstantTable(value: "\(charValue)") {
-//                /// If found, add that address as an operand of type bool
-//                self.addOperandByMemory(memoryAddress: lookUpAddress, type: .char)
-//            }else{
-//                /// If not, ask for new constant address of char type
-//                let newAddress = self.newConstantAddress(t: .char, size: size)
-//                /// Save the value and new address to the constant table
-//                self.saveAddress(constant: charValue, address: newAddress)
-//                /// Add the new address as an operand in operands stack
-//                self.addOperandByMemory(memoryAddress: newAddress, type: .char)
-//            }
+
         }
         
-            //self.addOperand(symbol: Symbol(0, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
-      //  numConstantes = numConstantes + 1
     }
 
 
@@ -563,8 +553,7 @@ class SemanticHandler : CustomStringConvertible {
             let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("",.void)
     
             if(rightType != .boolean){
-                print("ERROR type mismatch ternary")
-                exit(0)
+                delegate?.sendTypeMismatch()
             }
             
             self.quadruples.append(Quadruple(argument1: rightOperand, argument2: nil, op: .gotof, result: nil))
@@ -637,7 +626,6 @@ class SemanticHandler : CustomStringConvertible {
         }
         
         self.quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
-        print("Inserted Quadruple \(quadruples.count)")
         jumpStack.push(quadruples.count - 1)
     }
     
@@ -647,7 +635,6 @@ class SemanticHandler : CustomStringConvertible {
         // Fill (indice al cual ir, size de cuadruplos)
         let end = jumpStack.pop() ?? 0
         fillQuadruple(index: end, value: String(quadruples.count))
-        print("Filled Quadruple \(end) with address \(quadruples.count)")
     }
     
     func fillQuadruple(index: Int, value : String){
@@ -662,11 +649,11 @@ class SemanticHandler : CustomStringConvertible {
         // Agregar a la pila de saltos uno antes de ahorita, pila.append(tamano de cuadruplos menos 1)
         // Rellenar en Fill (inice, size de cuadruplos)
         self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
-        guard let end = jumpStack.pop() else {print("No hay algo en el jumpStack"); exit(0); return}
+        guard let end = jumpStack.pop() else {
+            delegate?.badJumpStackEmpty()
+            return}
         jumpStack.push(quadruples.count - 1)
         fillQuadruple(index: end, value: String(quadruples.count))
-
-        print("Filled Quadruple ELSE \(end) with address \(quadruples.count - 1)")
     }
     func isArray(address: Int) -> Int?{
         var temp = self.symbolTable.head
@@ -823,15 +810,16 @@ class SemanticHandler : CustomStringConvertible {
                 symbol.address = newLocalVariable(t: symbol.type)
             }
         } else if(symbol.assigned && symbol.constant){
-            print("CONSTANT \(symbol.identifier) ALREADY ASSIGNED")
-            exit(0)
+            delegate?.constantAlreadyAssigned(id: symbol.identifier)
         }else{
             // print("WTF")
         }
     }
     
     func saveValueVariable(id: String){
-        guard let symbol = symbolTable.lookup(id) else {print("No se puede inicializar var, no encontrada"); exit(0); return}
+        guard let symbol = symbolTable.lookup(id) else {
+            delegate?.sendUndeclareVariable(id: id as NSString);
+            return}
         
         assignVar(symbol)
         
@@ -850,12 +838,12 @@ class SemanticHandler : CustomStringConvertible {
             
             guard operationStack.operands.size() > 1 else {
                // print("Error generating quadruple for line\(0)")
-                exit(0)
+                delegate?.faltanOperandos()
                 return
             }
             guard operationStack.operators.size() >= 1 else {
+                delegate?.faltanOperandos()
                // print("Error generating quadruple for line\(0)")
-                exit(0)
                 return
             }
             let op : Operator = operationStack.operators.pop()!
@@ -879,7 +867,10 @@ class SemanticHandler : CustomStringConvertible {
         let baseAddress = self.needConstantInt(value: Int(symbolOperand)!)
         
         
-        guard let dim = symbol.dimension2D else {print("No es un array"); exit(0); return}
+        guard let dim = symbol.dimension2D else {
+            delegate?.notArray(id: symbol.identifier)
+            return
+        }
         var temp = symbol.arrayList?.head
         var dimNow = 1
         dimensionStack.push((symbol.identifier, dimNow))
@@ -1295,4 +1286,8 @@ protocol SemanticErrorDelegate {
     func sendUndeclareVariable(id: NSString)
     func sendTypeMismatch()
     func sendBadParametersForFunc(id: NSString)
+    func faltanOperandos()
+    func badJumpStackEmpty()
+    func constantAlreadyAssigned(id: String)
+    func notArray(id: String)
 }

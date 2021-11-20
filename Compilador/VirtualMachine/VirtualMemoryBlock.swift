@@ -212,7 +212,7 @@ class VirtualMemoryBlock{
         defer{
             if(x == 1){
                 print("Bad value for address")
-                exit(0)
+                
             }
         }
         let (myAddress, type) = try realMemoryAddress(address: address)
@@ -221,7 +221,7 @@ class VirtualMemoryBlock{
              self.useMemoryVoid(address: myAddress, value: value)
             break
         case .integer:
-            guard let v =  Int("\(value)") else {print("E"); x = 1; return}
+            guard let v =  Int("\(value)") else {x = 1; throw ErrorCompiler.TypeMismatch}
              self.useMemoryInteger(address: myAddress, value: v)
         case .string:
             break
@@ -235,29 +235,29 @@ class VirtualMemoryBlock{
                     self.useMemoryBool(address: myAddress, value: true)
                 }
             }else{
-                guard let v =  Bool("\(value)") else {print("E"); x = 1; return}
+                guard let v =  Bool("\(value)") else { x = 1; throw ErrorCompiler.TypeMismatch}
                  self.useMemoryBool(address: myAddress, value: v)
             }
             
         case .float:
-            guard let v =  Float("\(value)") else {print("E");  x = 1; return}
+            guard let v =  Float("\(value)") else { x = 1; throw ErrorCompiler.TypeMismatch}
              self.useMemoryFloat(address: myAddress, value: v)
         case .char:
             if value is Character{
                  self.useMemoryChar(address: myAddress, value: value as! Character)
             }else if value is String{
-                guard let ascii =  value as? String else {print("E");  x = 1; return}
-                guard let c =  ascii.first else {print("E");  x = 1; return}
+                guard let ascii =  value as? String else { x = 1; throw ErrorCompiler.TypeMismatch}
+                guard let c =  ascii.first else { x = 1; return}
                 self.useMemoryChar(address: myAddress, value: c)
            }
             else{
-                guard let v =  Int("\(value)") else {print("E");  x = 1; return}
+                guard let v =  Int("\(value)") else { x = 1; throw ErrorCompiler.TypeMismatch}
                 let c = Character(UnicodeScalar(v)!)
                  self.useMemoryChar(address: myAddress, value: c)
             }
             
         case .double:
-            guard let v =  Double("\(value)") else {print("E");  x = 1; return}
+            guard let v =  Double("\(value)") else {  x = 1; throw ErrorCompiler.TypeMismatch}
              self.useMemoryDouble(address: myAddress, value: v)
         case .Integer:
             break
@@ -266,7 +266,7 @@ class VirtualMemoryBlock{
         case .ID:
             break
         case .pointer:
-            guard let v =  Int("\(value)") else {print("E"); x = 1; return}
+            guard let v =  Int("\(value)") else {x = 1; throw ErrorCompiler.TypeMismatch}
             self.useMemoryPointer(address: myAddress, value: v)
         }
         

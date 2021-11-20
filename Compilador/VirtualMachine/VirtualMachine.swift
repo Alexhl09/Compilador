@@ -17,6 +17,7 @@ class VirtualMachine {
     var virtualMemory : VirtualMemory
     var startedFunc = false
     var printRes = ""
+    var lock = DispatchSemaphore(value: 0)
     
     init(quadruples: [Quadruple], constants: [String: Int], symbolTable: SymbolTable, globalMemory : InfoStack, constantsInfo: InfoStack){
         self.quadruples = quadruples
@@ -75,12 +76,28 @@ class VirtualMachine {
                 brincoIndex(op: op, arg1: arg1, arg2: arg2, res: result)
                 break
             case .read:
-                let line = readLine() ?? " "
-                var delimiter = " "
-                var token = line.components(separatedBy: delimiter)
+               
+                
+                lock.wait()
+                sleep(1)
+                guard let line = readInput() else {
+                    print("Error stdin value")
+                    Thread().cancel()
+                    return
+                }
+                
+                if(line == "" || line == " "){
+                    print("Error stdin value")
+                    Thread().cancel()
+                    currentIndex = 10000000
+                }
+                
+                let delimiter = " "
+                let token = line.components(separatedBy: delimiter)
                 do{
                     try self.virtualMemory.insertValue(address: result!, value: token[0])
                 }catch let error{
+                    Thread().cancel()
                     print(error.localizedDescription)
                 }
                 self.sigQuadruple(index: currentIndexStack() + 1)
@@ -133,7 +150,7 @@ class VirtualMachine {
     func verify(value arg1: Int, in res: Int) {
         if (arg1 < 0 || arg1 >= res) {
             print("Index out of bounce \(arg1)")
-            exit(0)
+            Thread().cancel()
         }
     }
     
@@ -181,6 +198,7 @@ class VirtualMachine {
             guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Any, TypeSymbol) else {return}
             try self.virtualMemory.insertValue(address: resAddress, value: unwrap(value))
         } catch let error{
+            Thread().cancel()
             print(error)
         }
         
@@ -195,6 +213,7 @@ class VirtualMachine {
             guard let resAddress = res else {return}
             try readyActivationRecord.saveValue(address: resAddress, val: unwrap(value))
         }catch let error{
+            Thread().cancel()
             print(error)
         }
     }
@@ -233,6 +252,7 @@ class VirtualMachine {
                 sigQuadruple(index: currentIndexStack() + 1)
             }
         }catch let error{
+            Thread().cancel()
             print(error)
         }
     }
@@ -375,6 +395,7 @@ class VirtualMachine {
                 break
             }
             }catch let error{
+                Thread().cancel()
                 print(error.localizedDescription)
             }
         
@@ -385,6 +406,7 @@ class VirtualMachine {
             let v = try virtualMemory.getInfoByAddress(address: Int("\(pointerAddress)")!).0
             return Int("\(v!)")
         }catch let error{
+            Thread().cancel()
             print(error.localizedDescription)
             return nil
         }

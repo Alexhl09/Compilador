@@ -8,231 +8,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TextFile : FileDocument {
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = Data(text.utf8)
-        return FileWrapper(regularFileWithContents: data)
-    }
-    
-    static var readableContentTypes = [UTType.plainText]
-    
-    var text = ""
-    
-    init(initialText: String = "") {
-        self.text = initialText
-    }
-    
-    init(configuration: ReadConfiguration) throws {
-        if let data = configuration.file.regularFileContents {
-            text = String(decoding: data, as: UTF8.self)
-            
-        }
-    }
-}
-
-struct Sidebar : View{
-    var body: some View {
-        List(1..<100){ i in
-            Text("Archivo \(i)")
-        }
-            #if os(macOS)
-            .listStyle(SidebarListStyle())
-            #else
-            .navigationViewStyle(DefaultNavigationViewStyle())
-            #endif
-    }
-}
-
-struct PrimaryView  : View{
-   // @Binding var textCompi
-    @Binding var textoConsola : String
-    var body: some View {
-        Text(textoConsola).frame(maxWidth: .infinity, minHeight: 100, maxHeight: 200, alignment: .leading).foregroundColor(Color.white).background(Color.black).padding()
-    }
-}
-
-struct DetailView : View{
-    @Binding var document : TextFile
-    @Binding var showInspector : Bool
-    @State private var VM : VirtualMachine!
-    @Binding var text: String
-   
-    //openConsolePipe()
-    
-    #if os(iOS)
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    #endif
-    
-//    func changeColor() -> NSMutableAttributedString{
-//        let color = UIColor.red
-//        let attrsString =  NSMutableAttributedString(string:document.text)
-//        let keywords : [String] = ["func", "main", "var", "int", "double", "char"]
-//        for k in keywords {
-//            let indices = document.text.indicesOf(string: k)
-//            for i in indices{
-//                attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
-//            }
-//        }
-//        return attrsString
-//    }
-//
-    var body: some View {
-        ZStack{
-            Color.black
-            VStack{
-                TextEditor(text: $document.text).cornerRadius(10).padding()
-//                VStack{
-//                    UIKLabel {
-//                            $0.attributedText = changeColor()
-//                        }
-//                }.background(Color.white)
-            }
-        }.cornerRadius(10).navigationTitle("Editor").toolbar {
-            #if os(iOS)
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    print("Build")
-                } label: {
-                    HStack(spacing: 10) {
-                            Image(systemName: "wrench.fill")
-                            Text("Build")
-                    }
-                }
-                Button {
-                    print("Play")
-                } label: {
-                    HStack(spacing: 10) {
-                            Image(systemName: "play.circle.fill")
-                            Text("Play")
-                           
-                    }
-                }
-            }
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                Button(action: { showInspector.toggle() }) {
-                    if idiom == .pad{
-                        Label("Toggle Inspector", systemImage: "sidebar.right")
-                    }else{
-                        if !showInspector {
-                            Label("Toggle Inspector", systemImage: "menubar.arrow.up.rectangle")
-                        }else{
-                            Label("Toggle Inspector", systemImage: "menubar.arrow.down.rectangle")
-                        }
-                    }
-                }
-                
-            }
-            #else
-            Button {
-                let stream = CompilerStream.init(string: document.text)
-                let lex = CompilerLex.init(stream: stream)
-
-                //
-                //Now read all the tokens.
-                //    var tokenID = 0
-                //    while (-1 != tokenID) {
-                //        tokenID = lex.lex()
-                //        print("\(lex.line):\(lex.column) Token: \(tokenID) - \(lex.text) , value \(lex.value)\n");
-                //    }
-                //var dest = LogDestination()
-                //print("A", to: &dest)
-                let parser = CompilerParser.init(lexer: lex)
-                let error = CompilerErrorDelegate.init()
-                parser.errorDelegate = error
-                if (parser.parse()) {
-
-                    let st = parser.semantic
-                    self.VM = VirtualMachine(quadruples: st.quadruples, constants: st.constants, symbolTable: st.symbolTable, globalMemory: st.globalInfoStack, constantsInfo: st.constanstInfoStack)
-                   // if(par)
-                }else{
-                    self.VM = nil
-                }
-               
-               // print(document.text)
-            } label: {
-                HStack(spacing: 10) {
-                        Image(systemName: "wrench.fill")
-                        Text("Build")
-                }
-            }
-            Button {
-               // print("Play")
-                if(VM != nil){
-                let start = DispatchTime.now() // <<<<<<<<<< Start time
-                VM.start()
-                let end = DispatchTime.now()   // <<<<<<<<<<   end time
-                print("Parseo exitoso")
-                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
-                let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
-                print("Time to evaluate problem : \(timeInterval) seconds")
-                }
-                text = ""
-            } label: {
-                HStack(spacing: 10) {
-                        Image(systemName: "play.circle.fill")
-                        Text("Play")
-                       
-                }
-            }
-            Button(action: { showInspector.toggle() }) {
-                Label("Toggle Inspector", systemImage: "sidebar.right")
-            }
-            
-            #endif
-            
-            
-        }
-       
-    }
-    
-    
-}
-
-
-
-struct EditorView: View{
-    @Binding var document : TextFile
-    @State var showInspector : Bool = true
-    @Binding var textoConsola : String
-    #if os(iOS)
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    #endif
-
-    var body: some View {
-        #if os(iOS)
-        if idiom == .phone {
-            VStack{
-                DetailView(document: $document, showInspector: $showInspector, text: textoConsola)
-                if showInspector {
-                    HStack{
-                        Sidebar()
-                        PrimaryView(textoConsola: textoConsola)
-                    }.padding()
-                }
-            }
-        }else{
-            HStack{
-                DetailView(document: $document, showInspector: $showInspector, text: textoConsola)
-                if showInspector {
-                    VStack{
-                        Sidebar()
-                        PrimaryView(textoConsola: textoConsola)
-                    }.padding()
-                }
-            }
-        }
-        #else
-        DetailView(document: $document, showInspector: $showInspector, text: $textoConsola)
-            if showInspector {
-                VStack{
-                    Sidebar()
-                    PrimaryView(textoConsola: $textoConsola)
-                }.padding()
-            }
-        #endif
-    }
-
-}
 
 struct ContentView: View {
     var pipe = Pipe()
@@ -254,6 +29,7 @@ struct ContentView: View {
             EditorView(document: $document, textoConsola: $settings.texto)
         }.onAppear {
             openConsolePipe()
+            oePipe()
         }
         #endif
         
@@ -272,6 +48,7 @@ struct ContentView: View {
         }
       }
     }
+    
 }
 
 
@@ -280,6 +57,10 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(document: .constant(TextFile()))
     }
 }
+
+
+
+
 //
 //struct UIKLabel: UIViewRepresentable {
 //
@@ -340,20 +121,18 @@ struct ContentView_Previews: PreviewProvider {
 //    }
 //}
 
-extension String {
-    func indicesOf(string: String) -> [Int] {
-        var indices = [Int]()
-        var searchStartIndex = self.startIndex
 
-        while searchStartIndex < self.endIndex,
-            let range = self.range(of: string, range: searchStartIndex..<self.endIndex),
-            !range.isEmpty
-        {
-            let index = distance(from: self.startIndex, to: range.lowerBound)
-            indices.append(index)
-            searchStartIndex = range.upperBound
-        }
 
-        return indices
-    }
-}
+//    func changeColor() -> NSMutableAttributedString{
+//        let color = UIColor.red
+//        let attrsString =  NSMutableAttributedString(string:document.text)
+//        let keywords : [String] = ["func", "main", "var", "int", "double", "char"]
+//        for k in keywords {
+//            let indices = document.text.indicesOf(string: k)
+//            for i in indices{
+//                attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
+//            }
+//        }
+//        return attrsString
+//    }
+//

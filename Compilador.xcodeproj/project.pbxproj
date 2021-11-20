@@ -67,12 +67,22 @@
 		A982EE4027489AB00066E995 /* CompilerErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2326FFBB1E0062BE51 /* CompilerErrorDelegate.swift */; };
 		A982EE4127489AB50066E995 /* OCFileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */; };
 		A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */; };
-		A982EE5627489F600066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5427489F5F0066E995 /* CompilerParser.swift */; };
-		A982EE5727489F600066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5427489F5F0066E995 /* CompilerParser.swift */; };
-		A982EE5827489F600066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5527489F5F0066E995 /* CompilerLex.swift */; };
-		A982EE5927489F600066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5527489F5F0066E995 /* CompilerLex.swift */; };
 		A982EE5B27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
 		A982EE5C27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
+		A982EE602748E5D70066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5E2748E5D70066E995 /* CompilerParser.swift */; };
+		A982EE612748E5D70066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5E2748E5D70066E995 /* CompilerParser.swift */; };
+		A982EE622748E5D70066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5F2748E5D70066E995 /* CompilerLex.swift */; };
+		A982EE632748E5D70066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5F2748E5D70066E995 /* CompilerLex.swift */; };
+		A982EE652748E6090066E995 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE642748E6090066E995 /* TextFile.swift */; };
+		A982EE662748E6090066E995 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE642748E6090066E995 /* TextFile.swift */; };
+		A982EE682748E62F0066E995 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE672748E62F0066E995 /* SideBar.swift */; };
+		A982EE692748E62F0066E995 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE672748E62F0066E995 /* SideBar.swift */; };
+		A982EE6B2748E6400066E995 /* PrimaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE6A2748E6400066E995 /* PrimaryView.swift */; };
+		A982EE6C2748E6400066E995 /* PrimaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE6A2748E6400066E995 /* PrimaryView.swift */; };
+		A982EE6E2748E6570066E995 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE6D2748E6570066E995 /* DetailView.swift */; };
+		A982EE6F2748E6570066E995 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE6D2748E6570066E995 /* DetailView.swift */; };
+		A982EE712748E6730066E995 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE702748E6730066E995 /* EditorView.swift */; };
+		A982EE722748E6730066E995 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE702748E6730066E995 /* EditorView.swift */; };
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
@@ -180,10 +190,15 @@
 		A982EDD4274890F60066E995 /* CompiladorUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompiladorUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A982EDD9274890F60066E995 /* CompiladorUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompiladorUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A982EDDB274890F60066E995 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		A982EE5327489F5F0066E995 /* Compilador-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compilador-Swift.h"; sourceTree = "<group>"; };
-		A982EE5427489F5F0066E995 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
-		A982EE5527489F5F0066E995 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
 		A982EE5A27489F7A0066E995 /* OCLexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCLexInput.swift; path = Compilador/Lexer/OCLexInput.swift; sourceTree = SOURCE_ROOT; };
+		A982EE5D2748E5D70066E995 /* Compilador-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compilador-Swift.h"; sourceTree = "<group>"; };
+		A982EE5E2748E5D70066E995 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
+		A982EE5F2748E5D70066E995 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
+		A982EE642748E6090066E995 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
+		A982EE672748E62F0066E995 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		A982EE6A2748E6400066E995 /* PrimaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryView.swift; sourceTree = "<group>"; };
+		A982EE6D2748E6570066E995 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		A982EE702748E6730066E995 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -281,12 +296,17 @@
 			isa = PBXGroup;
 			children = (
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
-				A982EE5327489F5F0066E995 /* Compilador-Swift.h */,
-				A982EE5527489F5F0066E995 /* CompilerLex.swift */,
-				A982EE5427489F5F0066E995 /* CompilerParser.swift */,
+				A982EE5D2748E5D70066E995 /* Compilador-Swift.h */,
+				A982EE5F2748E5D70066E995 /* CompilerLex.swift */,
+				A982EE5E2748E5D70066E995 /* CompilerParser.swift */,
 				A982EDCD274890F50066E995 /* CompiladorUIApp.swift */,
 				A982EDCE274890F50066E995 /* ContentView.swift */,
 				A982EDCF274890F60066E995 /* Assets.xcassets */,
+				A982EE642748E6090066E995 /* TextFile.swift */,
+				A982EE672748E62F0066E995 /* SideBar.swift */,
+				A982EE6A2748E6400066E995 /* PrimaryView.swift */,
+				A982EE6D2748E6570066E995 /* DetailView.swift */,
+				A982EE702748E6730066E995 /* EditorView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -573,19 +593,24 @@
 				A982EDDE274890F60066E995 /* ContentView.swift in Sources */,
 				A982EE2327489A520066E995 /* SemanticHandler.swift in Sources */,
 				A982EE1D27489A490066E995 /* VirtualMachine.swift in Sources */,
+				A982EE652748E6090066E995 /* TextFile.swift in Sources */,
 				A982EE3327489A6B0066E995 /* Arrays.swift in Sources */,
 				A982EE3127489A680066E995 /* BooleanType.swift in Sources */,
+				A982EE6B2748E6400066E995 /* PrimaryView.swift in Sources */,
 				A982EE2727489A580066E995 /* OperatorStack.swift in Sources */,
 				A982EE3527489A890066E995 /* ReadFromFile.swift in Sources */,
 				A982EE1F27489A4C0066E995 /* ActivationRecord.swift in Sources */,
+				A982EE712748E6730066E995 /* EditorView.swift in Sources */,
 				A982EE1727489A2C0066E995 /* VirtualMemoryBlock.swift in Sources */,
+				A982EE682748E62F0066E995 /* SideBar.swift in Sources */,
 				A982EDDC274890F60066E995 /* CompiladorUIApp.swift in Sources */,
-				A982EE5827489F600066E995 /* CompilerLex.swift in Sources */,
+				A982EE6E2748E6570066E995 /* DetailView.swift in Sources */,
 				A982EE3D27489AAD0066E995 /* CompilerStream.swift in Sources */,
+				A982EE622748E5D70066E995 /* CompilerLex.swift in Sources */,
 				A982EE2D27489A610066E995 /* SemanticTable.swift in Sources */,
 				A982EE2F27489A640066E995 /* Kind.swift in Sources */,
-				A982EE5627489F600066E995 /* CompilerParser.swift in Sources */,
 				A982EE3927489A920066E995 /* Stack.swift in Sources */,
+				A982EE602748E5D70066E995 /* CompilerParser.swift in Sources */,
 				A982EE2527489A560066E995 /* Quadruple.swift in Sources */,
 				A982EE2927489A5C0066E995 /* Type.swift in Sources */,
 				A982EE4127489AB50066E995 /* OCFileInput.swift in Sources */,
@@ -607,19 +632,24 @@
 				A982EE2427489A530066E995 /* SemanticHandler.swift in Sources */,
 				A982EDDD274890F60066E995 /* CompiladorUIApp.swift in Sources */,
 				A982EE1E27489A4A0066E995 /* VirtualMachine.swift in Sources */,
+				A982EE662748E6090066E995 /* TextFile.swift in Sources */,
 				A982EE3427489A6B0066E995 /* Arrays.swift in Sources */,
 				A982EE3227489A680066E995 /* BooleanType.swift in Sources */,
+				A982EE6C2748E6400066E995 /* PrimaryView.swift in Sources */,
 				A982EE2827489A590066E995 /* OperatorStack.swift in Sources */,
 				A982EE3627489A8A0066E995 /* ReadFromFile.swift in Sources */,
 				A982EE2027489A4C0066E995 /* ActivationRecord.swift in Sources */,
+				A982EE722748E6730066E995 /* EditorView.swift in Sources */,
 				A982EE1627489A2A0066E995 /* VirtualMemory.swift in Sources */,
+				A982EE692748E62F0066E995 /* SideBar.swift in Sources */,
 				A982EE1827489A2D0066E995 /* VirtualMemoryBlock.swift in Sources */,
-				A982EE5927489F600066E995 /* CompilerLex.swift in Sources */,
+				A982EE6F2748E6570066E995 /* DetailView.swift in Sources */,
 				A982EE3E27489AAD0066E995 /* CompilerStream.swift in Sources */,
+				A982EE632748E5D70066E995 /* CompilerLex.swift in Sources */,
 				A982EE2E27489A620066E995 /* SemanticTable.swift in Sources */,
 				A982EE3027489A650066E995 /* Kind.swift in Sources */,
-				A982EE5727489F600066E995 /* CompilerParser.swift in Sources */,
 				A982EE3A27489A930066E995 /* Stack.swift in Sources */,
+				A982EE612748E5D70066E995 /* CompilerParser.swift in Sources */,
 				A982EE2627489A560066E995 /* Quadruple.swift in Sources */,
 				A982EE2A27489A5C0066E995 /* Type.swift in Sources */,
 				A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */,

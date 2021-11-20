@@ -171,14 +171,14 @@ extension SymbolTable{
         guard !isEmpty else {
             let node = Node(symbols: [index: symbol])
             push(node)
-            print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
+            //print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
             return true
         }
         
     
         if(self.head!.symbols[index] == nil){
             self.head!.symbols[index] = symbol
-            print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
+           // print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
             return true
         }else{
             return false

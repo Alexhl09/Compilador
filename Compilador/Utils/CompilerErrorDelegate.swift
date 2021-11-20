@@ -41,12 +41,26 @@ class CompilerErrorDelegate: CompilerParserError {
             infoPrint += "Undeclared var \(undeclaredID)"
         case 261:
             guard let dicVariable : [String:NSString] = data as? [String:NSString] else {return}
-            guard let nameFunc = dicVariable["id"] as? String else {return}
+            guard let nameFunc = dicVariable["id"] else {return}
             infoPrint += "Bad parameters for \(nameFunc)"
+        case 262:
+            infoPrint += "Not sufficient operands"
+        case 263:
+            infoPrint += "Jump stack empty"
+        case 264:
+            guard let dicVariable : [String:String] = data as? [String:String] else {return}
+            guard let nameC = dicVariable["id"] else {return}
+            infoPrint += "Constant \(nameC) already assigned"
+        case 265:
+            guard let dicVariable : [String:String] = data as? [String:String] else {return}
+            guard let nameC = dicVariable["id"] else {return}
+            infoPrint += "\(nameC) is not an array"
         default:
             print("Error")
         }
         print(infoPrint + " en la linea: ", line + 1, " en la columna: ", column)
-        exit(0)
+        //exit(0)
+        Thread().cancel()
+        //cancel()
     }
 }

@@ -1,6 +1,6 @@
 
 main() {
-    var n = 100;
+    var n = 50;
     var t1 = 0;
     var t2 = 1;
     var nextTerm = 0;
