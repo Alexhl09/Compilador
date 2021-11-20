@@ -15,6 +15,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     var linkedListArray = ArrayLinkedList()
     var r : Int = 1
     var currentFuncName : String = ""
+    
 }
 
 %errors {

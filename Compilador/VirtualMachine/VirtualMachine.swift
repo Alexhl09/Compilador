@@ -148,6 +148,7 @@ class VirtualMachine {
     
     func printStatement(res: Int, arg1: Int){
         if(res == -1){
+            //print(
             print(printRes)
             printRes = ""
         }else{
@@ -561,4 +562,23 @@ func unwrap<T>(_ any: T) -> Any
         return any
     }
     return first.value
+}
+
+final class LogDestination: TextOutputStream {
+  private let path: String
+  init() {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+      let fileURL = paths.first!.appendingPathComponent("Tec").appendingPathComponent("9o semestre").appendingPathComponent("compis").appendingPathComponent("Compilador").appendingPathComponent("Compilador").appendingPathComponent("stdout.aj")
+      path = fileURL.absoluteString
+  }
+
+  func write(_ string: String) {
+    if let data = string.data(using: .utf8), let fileHandle = FileHandle(forWritingAtPath: path) {
+      defer {
+        fileHandle.closeFile()
+      }
+      fileHandle.seekToEndOfFile()
+      fileHandle.write(data)
+    }
+  }
 }

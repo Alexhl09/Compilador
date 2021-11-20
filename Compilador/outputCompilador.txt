@@ -316,20 +316,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [-4741923970379359140: 
-
-   |===================================
-   |     Identifier : main
-   |     Kind : method
-   |     Type : void
-   |     Constant : true
-   |     Array : false
-   |     Assigned : false
-   |     Line : 4
-   |     Address : 1000
-   |     Type parameters: 
-    =================================== 
-, 6749766803423511292: 
+ [3217354439294608184: 
 
    |===================================
    |     Identifier : suma
@@ -342,13 +329,26 @@ Last SymbolTable:
    |     Address : 4000
    |     Type parameters: float	integer	
     =================================== 
+, -7438023417309225141: 
+
+   |===================================
+   |     Identifier : main
+   |     Kind : method
+   |     Type : void
+   |     Constant : true
+   |     Array : false
+   |     Assigned : false
+   |     Line : 4
+   |     Address : 1000
+   |     Type parameters: 
+    =================================== 
 ]
 
 Constants: 
- Constant:[10]       Address: 21000
-Constant:[2]        Address: 21001
-Constant:[0]        Address: 21003
-Constant:[1]        Address: 21004
+ Constant:[2]        Address: 21001
 Constant:[2.4]      Address: 25000
+Constant:[0]        Address: 21003
 Constant:[7000]     Address: 21002
+Constant:[1]        Address: 21004
+Constant:[10]       Address: 21000
 

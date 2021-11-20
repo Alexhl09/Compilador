@@ -17,6 +17,62 @@
 		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
 		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
 		A97362042737696000E1175A /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
+		A982EDDC274890F60066E995 /* CompiladorUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EDCD274890F50066E995 /* CompiladorUIApp.swift */; };
+		A982EDDD274890F60066E995 /* CompiladorUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EDCD274890F50066E995 /* CompiladorUIApp.swift */; };
+		A982EDDE274890F60066E995 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EDCE274890F50066E995 /* ContentView.swift */; };
+		A982EDDF274890F60066E995 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EDCE274890F50066E995 /* ContentView.swift */; };
+		A982EDE0274890F60066E995 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A982EDCF274890F60066E995 /* Assets.xcassets */; };
+		A982EDE1274890F60066E995 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A982EDCF274890F60066E995 /* Assets.xcassets */; };
+		A982EE1527489A290066E995 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */; };
+		A982EE1627489A2A0066E995 /* VirtualMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA2271A0EE100A5BC43 /* VirtualMemory.swift */; };
+		A982EE1727489A2C0066E995 /* VirtualMemoryBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */; };
+		A982EE1827489A2D0066E995 /* VirtualMemoryBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA4271A10A700A5BC43 /* VirtualMemoryBlock.swift */; };
+		A982EE1B27489A470066E995 /* SegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA6271A119B00A5BC43 /* SegmentType.swift */; };
+		A982EE1C27489A470066E995 /* SegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AA6271A119B00A5BC43 /* SegmentType.swift */; };
+		A982EE1D27489A490066E995 /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
+		A982EE1E27489A4A0066E995 /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
+		A982EE1F27489A4C0066E995 /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
+		A982EE2027489A4C0066E995 /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
+		A982EE2127489A4F0066E995 /* VirtualMemorySemantic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */; };
+		A982EE2227489A500066E995 /* VirtualMemorySemantic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */; };
+		A982EE2327489A520066E995 /* SemanticHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA427162F3700C94528 /* SemanticHandler.swift */; };
+		A982EE2427489A530066E995 /* SemanticHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA427162F3700C94528 /* SemanticHandler.swift */; };
+		A982EE2527489A560066E995 /* Quadruple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA12715597400C94528 /* Quadruple.swift */; };
+		A982EE2627489A560066E995 /* Quadruple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA12715597400C94528 /* Quadruple.swift */; };
+		A982EE2727489A580066E995 /* OperatorStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA62716395B00C94528 /* OperatorStack.swift */; };
+		A982EE2827489A590066E995 /* OperatorStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA62716395B00C94528 /* OperatorStack.swift */; };
+		A982EE2927489A5C0066E995 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE98270CE7D700C94528 /* Type.swift */; };
+		A982EE2A27489A5C0066E995 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE98270CE7D700C94528 /* Type.swift */; };
+		A982EE2B27489A5E0066E995 /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9A270CED6000C94528 /* SymbolTable.swift */; };
+		A982EE2C27489A5F0066E995 /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9A270CED6000C94528 /* SymbolTable.swift */; };
+		A982EE2D27489A610066E995 /* SemanticTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9C270F779900C94528 /* SemanticTable.swift */; };
+		A982EE2E27489A620066E995 /* SemanticTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9C270F779900C94528 /* SemanticTable.swift */; };
+		A982EE2F27489A640066E995 /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9E2715593000C94528 /* Kind.swift */; };
+		A982EE3027489A650066E995 /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE9E2715593000C94528 /* Kind.swift */; };
+		A982EE3127489A680066E995 /* BooleanType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA82716446700C94528 /* BooleanType.swift */; };
+		A982EE3227489A680066E995 /* BooleanType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DEA82716446700C94528 /* BooleanType.swift */; };
+		A982EE3327489A6B0066E995 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
+		A982EE3427489A6B0066E995 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
+		A982EE3527489A890066E995 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
+		A982EE3627489A8A0066E995 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
+		A982EE3727489A900066E995 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
+		A982EE3827489A900066E995 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
+		A982EE3927489A920066E995 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
+		A982EE3A27489A930066E995 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
+		A982EE3B27489A950066E995 /* WriteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AC8271FC28100A5BC43 /* WriteFile.swift */; };
+		A982EE3C27489A960066E995 /* WriteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AC8271FC28100A5BC43 /* WriteFile.swift */; };
+		A982EE3D27489AAD0066E995 /* CompilerStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */; };
+		A982EE3E27489AAD0066E995 /* CompilerStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */; };
+		A982EE3F27489AB00066E995 /* CompilerErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2326FFBB1E0062BE51 /* CompilerErrorDelegate.swift */; };
+		A982EE4027489AB00066E995 /* CompilerErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2326FFBB1E0062BE51 /* CompilerErrorDelegate.swift */; };
+		A982EE4127489AB50066E995 /* OCFileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */; };
+		A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */; };
+		A982EE5627489F600066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5427489F5F0066E995 /* CompilerParser.swift */; };
+		A982EE5727489F600066E995 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5427489F5F0066E995 /* CompilerParser.swift */; };
+		A982EE5827489F600066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5527489F5F0066E995 /* CompilerLex.swift */; };
+		A982EE5927489F600066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5527489F5F0066E995 /* CompilerLex.swift */; };
+		A982EE5B27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
+		A982EE5C27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
@@ -61,6 +117,30 @@
 			);
 			script = "/usr/local/bin/oclex -l swift -o \"$DERIVED_SOURCES_DIR/$INPUT_FILE_BASE\" \"$INPUT_FILE_PATH\"\n\n";
 		};
+		A982EE0D274898E40066E995 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.lex;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$DERIVED_SOURCES_DIR/$(INPUT_FILE_BASE).swift",
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/oclex -l swift -o \"$DERIVED_SOURCES_DIR/$INPUT_FILE_BASE\" \"$INPUT_FILE_PATH\"\n";
+		};
+		A982EE0E2748991D0066E995 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.yacc;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift",
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/ocyacc -l swift -o \"$DERIVED_SOURCES_DIR/$INPUT_FILE_BASE\" \"$INPUT_FILE_PATH\"\n";
+		};
 /* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +174,16 @@
 		A981CED72744DE17004CB1E1 /* smallest.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = smallest.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A981CED82744E269004CB1E1 /* catalanNumber.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = catalanNumber.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A981CED92745C0D0004CB1E1 /* func.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = func.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A982EDCD274890F50066E995 /* CompiladorUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompiladorUIApp.swift; sourceTree = "<group>"; };
+		A982EDCE274890F50066E995 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A982EDCF274890F60066E995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A982EDD4274890F60066E995 /* CompiladorUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompiladorUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A982EDD9274890F60066E995 /* CompiladorUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompiladorUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A982EDDB274890F60066E995 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		A982EE5327489F5F0066E995 /* Compilador-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compilador-Swift.h"; sourceTree = "<group>"; };
+		A982EE5427489F5F0066E995 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
+		A982EE5527489F5F0066E995 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
+		A982EE5A27489F7A0066E995 /* OCLexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCLexInput.swift; path = Compilador/Lexer/OCLexInput.swift; sourceTree = SOURCE_ROOT; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -124,6 +214,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A982EDD1274890F60066E995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A982EDD6274890F60066E995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -131,6 +235,8 @@
 			isa = PBXGroup;
 			children = (
 				A930EA1226FFB9E10062BE51 /* Compilador */,
+				A982EDCC274890F50066E995 /* Shared */,
+				A982EDDA274890F60066E995 /* macOS */,
 				A930EA1126FFB9E10062BE51 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -139,6 +245,8 @@
 			isa = PBXGroup;
 			children = (
 				A930EA1026FFB9E10062BE51 /* Compilador */,
+				A982EDD4274890F60066E995 /* CompiladorUI.app */,
+				A982EDD9274890F60066E995 /* CompiladorUI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,6 +275,28 @@
 				A981CED92745C0D0004CB1E1 /* func.aj */,
 			);
 			path = Compilador;
+			sourceTree = "<group>";
+		};
+		A982EDCC274890F50066E995 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
+				A982EE5327489F5F0066E995 /* Compilador-Swift.h */,
+				A982EE5527489F5F0066E995 /* CompilerLex.swift */,
+				A982EE5427489F5F0066E995 /* CompilerParser.swift */,
+				A982EDCD274890F50066E995 /* CompiladorUIApp.swift */,
+				A982EDCE274890F50066E995 /* ContentView.swift */,
+				A982EDCF274890F60066E995 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A982EDDA274890F60066E995 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				A982EDDB274890F60066E995 /* macOS.entitlements */,
+			);
+			path = macOS;
 			sourceTree = "<group>";
 		};
 		A990DE93270CE74900C94528 /* Symbols */ = {
@@ -282,6 +412,42 @@
 			productReference = A930EA1026FFB9E10062BE51 /* Compilador */;
 			productType = "com.apple.product-type.tool";
 		};
+		A982EDD3274890F60066E995 /* CompiladorUI (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A982EDE6274890F60066E995 /* Build configuration list for PBXNativeTarget "CompiladorUI (iOS)" */;
+			buildPhases = (
+				A982EDD0274890F60066E995 /* Sources */,
+				A982EDD1274890F60066E995 /* Frameworks */,
+				A982EDD2274890F60066E995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CompiladorUI (iOS)";
+			productName = "CompiladorUI (iOS)";
+			productReference = A982EDD4274890F60066E995 /* CompiladorUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A982EDD8274890F60066E995 /* CompiladorUI (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A982EDE7274890F60066E995 /* Build configuration list for PBXNativeTarget "CompiladorUI (macOS)" */;
+			buildPhases = (
+				A982EDD5274890F60066E995 /* Sources */,
+				A982EDD6274890F60066E995 /* Frameworks */,
+				A982EDD7274890F60066E995 /* Resources */,
+			);
+			buildRules = (
+				A982EE0E2748991D0066E995 /* PBXBuildRule */,
+				A982EE0D274898E40066E995 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "CompiladorUI (macOS)";
+			productName = "CompiladorUI (macOS)";
+			productReference = A982EDD9274890F60066E995 /* CompiladorUI.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -289,11 +455,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					A930EA0F26FFB9E10062BE51 = {
 						CreatedOnToolsVersion = 13.0;
+					};
+					A982EDD3274890F60066E995 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					A982EDD8274890F60066E995 = {
+						CreatedOnToolsVersion = 13.1;
 					};
 				};
 			};
@@ -311,9 +483,30 @@
 			projectRoot = "";
 			targets = (
 				A930EA0F26FFB9E10062BE51 /* Compilador */,
+				A982EDD3274890F60066E995 /* CompiladorUI (iOS) */,
+				A982EDD8274890F60066E995 /* CompiladorUI (macOS) */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A982EDD2274890F60066E995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A982EDE0274890F60066E995 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A982EDD7274890F60066E995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A982EDE1274890F60066E995 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		A9955AC7271FAB8500A5BC43 /* ShellScript */ = {
@@ -367,6 +560,74 @@
 				A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */,
 				A9955AA3271A0EE100A5BC43 /* VirtualMemory.swift in Sources */,
 				A990DE9F2715593000C94528 /* Kind.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A982EDD0274890F60066E995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A982EE2127489A4F0066E995 /* VirtualMemorySemantic.swift in Sources */,
+				A982EE3727489A900066E995 /* Queue.swift in Sources */,
+				A982EE1527489A290066E995 /* VirtualMemory.swift in Sources */,
+				A982EDDE274890F60066E995 /* ContentView.swift in Sources */,
+				A982EE2327489A520066E995 /* SemanticHandler.swift in Sources */,
+				A982EE1D27489A490066E995 /* VirtualMachine.swift in Sources */,
+				A982EE3327489A6B0066E995 /* Arrays.swift in Sources */,
+				A982EE3127489A680066E995 /* BooleanType.swift in Sources */,
+				A982EE2727489A580066E995 /* OperatorStack.swift in Sources */,
+				A982EE3527489A890066E995 /* ReadFromFile.swift in Sources */,
+				A982EE1F27489A4C0066E995 /* ActivationRecord.swift in Sources */,
+				A982EE1727489A2C0066E995 /* VirtualMemoryBlock.swift in Sources */,
+				A982EDDC274890F60066E995 /* CompiladorUIApp.swift in Sources */,
+				A982EE5827489F600066E995 /* CompilerLex.swift in Sources */,
+				A982EE3D27489AAD0066E995 /* CompilerStream.swift in Sources */,
+				A982EE2D27489A610066E995 /* SemanticTable.swift in Sources */,
+				A982EE2F27489A640066E995 /* Kind.swift in Sources */,
+				A982EE5627489F600066E995 /* CompilerParser.swift in Sources */,
+				A982EE3927489A920066E995 /* Stack.swift in Sources */,
+				A982EE2527489A560066E995 /* Quadruple.swift in Sources */,
+				A982EE2927489A5C0066E995 /* Type.swift in Sources */,
+				A982EE4127489AB50066E995 /* OCFileInput.swift in Sources */,
+				A982EE2B27489A5E0066E995 /* SymbolTable.swift in Sources */,
+				A982EE3B27489A950066E995 /* WriteFile.swift in Sources */,
+				A982EE1B27489A470066E995 /* SegmentType.swift in Sources */,
+				A982EE5B27489F7A0066E995 /* OCLexInput.swift in Sources */,
+				A982EE3F27489AB00066E995 /* CompilerErrorDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A982EDD5274890F60066E995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A982EE2227489A500066E995 /* VirtualMemorySemantic.swift in Sources */,
+				A982EE3827489A900066E995 /* Queue.swift in Sources */,
+				A982EDDF274890F60066E995 /* ContentView.swift in Sources */,
+				A982EE2427489A530066E995 /* SemanticHandler.swift in Sources */,
+				A982EDDD274890F60066E995 /* CompiladorUIApp.swift in Sources */,
+				A982EE1E27489A4A0066E995 /* VirtualMachine.swift in Sources */,
+				A982EE3427489A6B0066E995 /* Arrays.swift in Sources */,
+				A982EE3227489A680066E995 /* BooleanType.swift in Sources */,
+				A982EE2827489A590066E995 /* OperatorStack.swift in Sources */,
+				A982EE3627489A8A0066E995 /* ReadFromFile.swift in Sources */,
+				A982EE2027489A4C0066E995 /* ActivationRecord.swift in Sources */,
+				A982EE1627489A2A0066E995 /* VirtualMemory.swift in Sources */,
+				A982EE1827489A2D0066E995 /* VirtualMemoryBlock.swift in Sources */,
+				A982EE5927489F600066E995 /* CompilerLex.swift in Sources */,
+				A982EE3E27489AAD0066E995 /* CompilerStream.swift in Sources */,
+				A982EE2E27489A620066E995 /* SemanticTable.swift in Sources */,
+				A982EE3027489A650066E995 /* Kind.swift in Sources */,
+				A982EE5727489F600066E995 /* CompilerParser.swift in Sources */,
+				A982EE3A27489A930066E995 /* Stack.swift in Sources */,
+				A982EE2627489A560066E995 /* Quadruple.swift in Sources */,
+				A982EE2A27489A5C0066E995 /* Type.swift in Sources */,
+				A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */,
+				A982EE2C27489A5F0066E995 /* SymbolTable.swift in Sources */,
+				A982EE3C27489A960066E995 /* WriteFile.swift in Sources */,
+				A982EE1C27489A470066E995 /* SegmentType.swift in Sources */,
+				A982EE5C27489F7A0066E995 /* OCLexInput.swift in Sources */,
+				A982EE4027489AB00066E995 /* CompilerErrorDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +773,123 @@
 			};
 			name = Release;
 		};
+		A982EDE2274890F60066E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.com.CompiladorUI;
+				PRODUCT_NAME = CompiladorUI;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A982EDE3274890F60066E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.com.CompiladorUI;
+				PRODUCT_NAME = CompiladorUI;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A982EDE4274890F60066E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.com.CompiladorUI;
+				PRODUCT_NAME = CompiladorUI;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A982EDE5274890F60066E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.com.CompiladorUI;
+				PRODUCT_NAME = CompiladorUI;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -529,6 +907,24 @@
 			buildConfigurations = (
 				A930EA1826FFB9E10062BE51 /* Debug */,
 				A930EA1926FFB9E10062BE51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A982EDE6274890F60066E995 /* Build configuration list for PBXNativeTarget "CompiladorUI (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A982EDE2274890F60066E995 /* Debug */,
+				A982EDE3274890F60066E995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A982EDE7274890F60066E995 /* Build configuration list for PBXNativeTarget "CompiladorUI (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A982EDE4274890F60066E995 /* Debug */,
+				A982EDE5274890F60066E995 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

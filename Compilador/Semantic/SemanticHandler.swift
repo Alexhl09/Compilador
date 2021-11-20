@@ -25,6 +25,7 @@ class SemanticHandler : CustomStringConvertible {
     var globalInfoStack: InfoStack = InfoStack()
     var constanstInfoStack : InfoStack = InfoStack()
     var addressArrays: [Int:  Int] = [:]
+  //  private var lex: OCLexInput
     // MARK: - Initializer
     
     init() {
@@ -33,6 +34,10 @@ class SemanticHandler : CustomStringConvertible {
        
         functionAsMainThread = "main"
     }
+    
+//    public func setLex(lex: OCLex){
+//
+//    }
     
     // MARK: - SymbolTable
     
@@ -49,7 +54,7 @@ class SemanticHandler : CustomStringConvertible {
     */
     func insertSymbolToST(_ id : NSString, _ constant: Bool, _ array : Bool, _ type: TypeSymbol = .void, _ kind : Kind = .field, params: [Symbol] = []){
         
-        let symbolToInsert = Symbol(lex.line, id, kind, type, constant, array, false)
+        let symbolToInsert = Symbol(0, id, kind, type, constant, array, false)
         
         if (!symbolTable.insertInHashTable(symbolToInsert)){
             delegate?.sendVariableRepeated(id: id as String)
@@ -66,7 +71,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func insertArrayToST(_ id : NSString, _ dimension : (NSNumber, NSNumber), _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void){
-        let symbolToInsert = Symbol(lex.line, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
+        let symbolToInsert = Symbol(0, id, .field, type, const, true, false, rows: dimension.0, columns: dimension.1)
         
         var temp = list.head
         var dim = 1
@@ -99,7 +104,7 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func insertArrayMultiDimToST(_ id : NSString, _ list: ArrayLinkedList, r: Int, const : Bool = true, type: TypeSymbol  = .void, _ dimension : (NSNumber, NSNumber) = (NSNumber(value: -1), NSNumber(value: -1)), kind : Kind = .field){
-        let symbolToInsert = Symbol(lex.line, id, kind, type, const, true, false, rows: dimension.0, columns: dimension.1)
+        let symbolToInsert = Symbol(0, id, kind, type, const, true, false, rows: dimension.0, columns: dimension.1)
         if(dimension.0 != -1 && dimension.1 != -1){
             self.addConstantInteger(dimension.0, saveOperand: false)
             self.addConstantInteger(dimension.1, saveOperand: false)
@@ -471,7 +476,7 @@ class SemanticHandler : CustomStringConvertible {
 //            }
         }
         
-            //self.addOperand(symbol: Symbol(lex.line, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
+            //self.addOperand(symbol: Symbol(0, "const\(numConstantes)" as NSString, .field, .string, true, false, true))
       //  numConstantes = numConstantes + 1
     }
 
@@ -844,12 +849,12 @@ class SemanticHandler : CustomStringConvertible {
         repeat{
             
             guard operationStack.operands.size() > 1 else {
-                print("Error generating quadruple for line\(lex.line)")
+               // print("Error generating quadruple for line\(0)")
                 exit(0)
                 return
             }
             guard operationStack.operators.size() >= 1 else {
-                print("Error generating quadruple for line\(lex.line)")
+               // print("Error generating quadruple for line\(0)")
                 exit(0)
                 return
             }
@@ -983,7 +988,7 @@ class SemanticHandler : CustomStringConvertible {
 //        // ASSIGN - EQUIS in ADDRESS
 
         guard operationStack.operands.size() > 1 else {
-            print("Error generating quadruple for line\(lex.line)")
+           // print("Error generating quadruple for line\(0)")
             return
         }
         
@@ -1042,7 +1047,7 @@ class SemanticHandler : CustomStringConvertible {
             delegate?.sendTypeMismatch()
             return
         }
-        print("Added Q for while on \(quadruples.count)")
+      //  print("Added Q for while on \(quadruples.count)")
         quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         jumpStack.push(quadruples.count - 1)
     }
