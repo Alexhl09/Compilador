@@ -6,46 +6,93 @@
 //
 
 import SwiftUI
+import Combine
 import UniformTypeIdentifiers
 
 
 struct ContentView: View {
+    @State private var selection = 0
+    @Binding var document : TextFile
+    
+    var body: some View {
+        TabView(selection: $selection) {
+            
+            HStack {
+                Spacer()
+                VStack {
+                    TextEditorAJ(document: $document)
+                }
+                Spacer()
+            }
+            .tabItem {
+                Image(systemName: "doc.text.fill")
+                Text("Editor de texto")
+            }
+            .tag(0)
+            
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    Text("Second Tab!")
+                    Spacer()
+                }
+                Spacer()
+            }
+            .background(Color.red)
+            .tabItem {
+                Image(systemName: "doc.text.fill")
+                Text("Tab 2")
+            }
+            .tag(1)
+        }.font(.headline)
+        
+    }
+    
+    
+}
+
+struct TextEditorAJ : View{
     var pipe = Pipe()
     @StateObject var settings = ConsoleSettings()
-    
     @Binding var document : TextFile
     @State var showInspector = true
     
     var body: some View {
-        
         #if os(macOS)
-        HSplitView{
-            EditorView(document: $document, textoConsola: $settings.texto)
-        }.onAppear {
-            openConsolePipe()
-        }
+            HSplitView{
+                EditorView(document: $document, textoConsola: $settings.texto)
+            }.onAppear {
+                openConsolePipe()
+            }
         #else
-        NavigationView{
-            EditorView(document: $document, textoConsola: $settings.texto)
-        }.onAppear {
-            openConsolePipe()
-        }
+            NavigationView{
+                VStack{
+                    EditorView(document: $document, textoConsola: $settings.texto)
+                    .navigationTitle("Editor de texto")
+                    
+                }
+            }.onAppear {
+                openConsolePipe()
+            }.navigationViewStyle(StackNavigationViewStyle())
         #endif
-        
     }
+    
     public func openConsolePipe () {
-      //  **setvbuf(stdout, nil, _IONBF, 0).** //<--------- !
+        setvbuf(stdout, nil, _IONBF, 0)
+        
+        //.** //<--------- !
         dup2(pipe.fileHandleForWriting.fileDescriptor,
-            STDOUT_FILENO)
+             STDOUT_FILENO)
         // listening on the readabilityHandler
         pipe.fileHandleForReading.readabilityHandler = {
-         handle in
-        let data = handle.availableData
-        let str = String(data: data, encoding: .ascii) ?? "<Non-ascii data of size\(data.count)>\n"
-        DispatchQueue.main.async {
-            self.settings.texto += str
+            handle in
+            let data = handle.availableData
+            let str = String(data: data, encoding: .ascii) ?? "<Non-ascii data of size\(data.count)>\n"
+            DispatchQueue.main.async {
+                self.settings.texto += str
+            }
         }
-      }
     }
     
 }

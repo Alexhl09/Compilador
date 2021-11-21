@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 class ConsoleSettings: ObservableObject {
     @Published var texto = ""
@@ -13,13 +14,21 @@ class ConsoleSettings: ObservableObject {
 
 @main
 struct CompiladorUIApp: App {
-    @EnvironmentObject var textConsola: ConsoleSettings
+    
+    var body: some Scene {
+        DocumentScene()
+        
+       // CustomScene()
+        
+    }
+}
+
+struct DocumentScene: Scene {
+    private let exportCommand = PassthroughSubject<Void, Never>()
+
     var body: some Scene {
         DocumentGroup(newDocument: TextFile()) { file in
             ContentView(document: file.$document)
         }
-        
-       // CustomScene()
-        
     }
 }

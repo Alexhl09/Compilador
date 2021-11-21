@@ -23,7 +23,13 @@ struct DetailView : View{
         ZStack{
             Color.black
             VStack{
-                TextEditor(text: $document.text).font(.custom("HelveticaNeue", size: 20)).lineSpacing(3).cornerRadius(10).padding()
+                TextEditor(text: $document.text)
+                    .font(.custom("HelveticaNeue", size: 20))
+                    .lineSpacing(3)
+                    .cornerRadius(10)
+                    .padding()
+                
+                //Text(makeAttributedString())
             }
         }.cornerRadius(10).navigationTitle("Editor").toolbar {
             #if os(iOS)
@@ -90,7 +96,7 @@ struct DetailView : View{
                         Image(systemName: "wrench.fill")
                         Text("Build")
                 }
-            }.keyboardShortcut("b")
+            }.keyboardShortcut("b", modifiers: .command)
             Button {
                 build()
                 if(VM != nil){
@@ -105,7 +111,7 @@ struct DetailView : View{
                         Text("Play")
                        
                 }
-            }.keyboardShortcut("r")
+            }.keyboardShortcut("r", modifiers: .command)
             if showStop {
                 Button{
                     queue.async {
@@ -123,14 +129,16 @@ struct DetailView : View{
             }
             Button(action: { showInspector.toggle() }) {
                 Label("Toggle Inspector", systemImage: "sidebar.right")
-            }.keyboardShortcut("h")
+            }.keyboardShortcut("h", modifiers: .command)
             
             #endif
             
             
         }
-       
     }
+    
+    
+    
     
     func build(){
         self.text = ""
@@ -172,3 +180,56 @@ extension Thread {
         print("\r⚡️: \(Thread.current)\r" + "🏭: \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
     }
 }
+
+//
+//extension View {
+//    func attributed(with text: String) -> some View {
+//        modifier(Watermark(text: text))
+//    }
+//}
+//
+//
+//struct Watermark: ViewModifier {
+//    var text: String
+//
+//    func body(content: Content) -> some View {
+//        ZStack(alignment: .bottomTrailing) {
+//            content
+//            Text(makeAttributedString())
+//                .font(.caption)
+//                .foregroundColor(.white)
+//                .padding(5)
+//                .background(.black)
+//        }
+//    }
+//
+////    func makeAttributedString() -> AttributedString {
+////
+////        let color = Color.red
+////       // let attrsString =  NSMutableAttributedString(string:document.text)
+////        let keywords : [String] = ["func", "main", "var", "int", "double", "char"]
+////        //        for k in keywords {
+////        //            let indices = document.text.indicesOf(string: k)
+////        //            for i in indices{
+////        //                attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
+////        //            }
+////        //        }
+////
+////        var string = AttributedString(self.text)
+////            string.foregroundColor = .blue
+////
+////            for k in keywords {
+////
+////                if let range = string.range(of: k) { /// here!
+////                    string[range].foregroundColor = .red
+////                }
+////
+//////                let indices = document.text.indicesOf(string: k)
+//////                for i in indices{
+//////                    attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
+//////                }
+////            }
+////
+////            return string
+////        }
+//}
