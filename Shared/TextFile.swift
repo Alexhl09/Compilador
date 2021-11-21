@@ -8,13 +8,21 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+
+extension UTType {
+    static var ajImported: UTType{
+        UTType(importedAs:"alex.com.CompiladorUI.aj")
+    }
+    static let ajDocument = UTType(exportedAs: "alex.com.CompiladorUI.aj")
+}
+
 struct TextFile : FileDocument {
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let data = Data(text.utf8)
         return FileWrapper(regularFileWithContents: data)
     }
     
-    static var readableContentTypes = [UTType.plainText]
+    static var readableContentTypes = [UTType.ajImported, .plainText, .ajDocument]
     
     var text = ""
     

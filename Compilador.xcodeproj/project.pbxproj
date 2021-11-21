@@ -83,6 +83,8 @@
 		A982EE6F2748E6570066E995 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE6D2748E6570066E995 /* DetailView.swift */; };
 		A982EE712748E6730066E995 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE702748E6730066E995 /* EditorView.swift */; };
 		A982EE722748E6730066E995 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE702748E6730066E995 /* EditorView.swift */; };
+		A982EE792749D4410066E995 /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = A982EE782749D4410066E995 /* swift.png */; };
+		A982EE7A2749D4410066E995 /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = A982EE782749D4410066E995 /* swift.png */; };
 		A990DE8E270BC0DE00C94528 /* useOfStacksAndQueues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */; };
 		A990DE90270BC11800C94528 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE8F270BC11800C94528 /* Queue.swift */; };
 		A990DE92270BC12300C94528 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990DE91270BC12300C94528 /* Stack.swift */; };
@@ -199,6 +201,9 @@
 		A982EE6A2748E6400066E995 /* PrimaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryView.swift; sourceTree = "<group>"; };
 		A982EE6D2748E6570066E995 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		A982EE702748E6730066E995 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		A982EE762749D07D0066E995 /* CompiladorUI--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CompiladorUI--macOS--Info.plist"; sourceTree = "<group>"; };
+		A982EE772749D3D60066E995 /* CompiladorUI--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "CompiladorUI--iOS--Info.plist"; sourceTree = "<group>"; };
+		A982EE782749D4410066E995 /* swift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift.png; sourceTree = "<group>"; };
 		A990DE3F27095A3900C94528 /* diagramas.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = diagramas.pdf; sourceTree = "<group>"; };
 		A990DE8D270BC0DE00C94528 /* useOfStacksAndQueues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = useOfStacksAndQueues.swift; sourceTree = "<group>"; };
 		A990DE8F270BC11800C94528 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -249,6 +254,8 @@
 		A930EA0726FFB9E10062BE51 = {
 			isa = PBXGroup;
 			children = (
+				A982EE772749D3D60066E995 /* CompiladorUI--iOS--Info.plist */,
+				A982EE762749D07D0066E995 /* CompiladorUI--macOS--Info.plist */,
 				A930EA1226FFB9E10062BE51 /* Compilador */,
 				A982EDCC274890F50066E995 /* Shared */,
 				A982EDDA274890F60066E995 /* macOS */,
@@ -295,6 +302,7 @@
 		A982EDCC274890F50066E995 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				A982EE782749D4410066E995 /* swift.png */,
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
 				A982EE5D2748E5D70066E995 /* Compilador-Swift.h */,
 				A982EE5F2748E5D70066E995 /* CompilerLex.swift */,
@@ -515,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A982EDE0274890F60066E995 /* Assets.xcassets in Resources */,
+				A982EE792749D4410066E995 /* swift.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A982EDE1274890F60066E995 /* Assets.xcassets in Resources */,
+				A982EE7A2749D4410066E995 /* swift.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +823,7 @@
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CompiladorUI--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -843,6 +854,7 @@
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CompiladorUI--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -877,6 +889,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CompiladorUI--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -905,6 +918,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CompiladorUI--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

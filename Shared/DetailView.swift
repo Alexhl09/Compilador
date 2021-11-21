@@ -53,7 +53,7 @@ struct DetailView : View{
                 if showStop {
                     Button{
                         queue.async {
-                            VM = nil
+                            VM?.stop()
                             DispatchQueue.main.async {
                                 self.text = ""
                             }
@@ -109,7 +109,7 @@ struct DetailView : View{
             if showStop {
                 Button{
                     queue.async {
-                        VM = nil
+                        VM?.stop()
                         DispatchQueue.main.async {
                             self.text = ""
                         }

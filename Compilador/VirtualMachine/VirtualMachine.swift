@@ -17,6 +17,7 @@ class VirtualMachine {
     var virtualMemory : VirtualMemory
     var startedFunc = false
     var printRes = ""
+    var running : Bool = true
     var lock = DispatchSemaphore(value: 0)
     
     init(quadruples: [Quadruple], constants: [String: Int], symbolTable: SymbolTable, globalMemory : InfoStack, constantsInfo: InfoStack){
@@ -144,7 +145,7 @@ class VirtualMachine {
                 break
             }
             //self.sigQuadruple(index: currentIndexStack() + 1)
-        }while(currentIndex + 1 < self.quadruples.count)
+        }while(currentIndex + 1 < self.quadruples.count && running)
     }
     
     func verify(value arg1: Int, in res: Int) {
@@ -152,6 +153,10 @@ class VirtualMachine {
             print("Index out of bounce \(arg1)")
             Thread().cancel()
         }
+    }
+    
+    func stop(){
+        running = false
     }
     
     func sigQuadruple(index: Int){
