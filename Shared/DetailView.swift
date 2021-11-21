@@ -10,8 +10,10 @@ import SwiftUI
 struct DetailView : View{
     @Binding var document : TextFile
     @Binding var showInspector : Bool
+    @State var showStop : Bool = false
     @Binding var VM : VirtualMachine?
     @Binding var text: String
+    private let queue = DispatchQueue(label: "vm", qos: DispatchQoS.utility)
 
     #if os(iOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
@@ -48,6 +50,21 @@ struct DetailView : View{
                            
                     }
                 }
+                if showStop {
+                    Button{
+                        queue.async {
+                            VM = nil
+                            DispatchQueue.main.async {
+                                self.text = ""
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 10){
+                            Image(systemName: "stop.fill")
+                            Text("Stop")
+                        }
+                    }
+                }
             }
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: { showInspector.toggle() }) {
@@ -63,6 +80,7 @@ struct DetailView : View{
                 }
                 
             }
+            
             #else
             Button {
                 build()
@@ -88,6 +106,21 @@ struct DetailView : View{
                        
                 }
             }.keyboardShortcut("r")
+            if showStop {
+                Button{
+                    queue.async {
+                        VM = nil
+                        DispatchQueue.main.async {
+                            self.text = ""
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 10){
+                        Image(systemName: "stop.fill")
+                        Text("Stop")
+                    }
+                }
+            }
             Button(action: { showInspector.toggle() }) {
                 Label("Toggle Inspector", systemImage: "sidebar.right")
             }.keyboardShortcut("h")
@@ -117,8 +150,9 @@ struct DetailView : View{
     }
     
     func execute(){
-        let vm = DispatchQueue(label: "vm", qos: DispatchQoS.utility)
-            vm.async {
+        showStop = true
+        
+        queue.async {
                 let start = DispatchTime.now()
                 VM?.start()
                 let end = DispatchTime.now()
@@ -126,7 +160,7 @@ struct DetailView : View{
                 let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
                 let timeInterval = Double(nanoTime) / 1_000_000_000
                 print("Time to evaluate problem : \(timeInterval) seconds")
-                
+                showStop = false
             }
     }
     
