@@ -21,9 +21,10 @@ struct DetailView : View{
   
     var body: some View {
         ZStack{
-            Color.black
+            Color.clear
             VStack{
                 TextEditor(text: $document.text)
+                    .background(.clear)
                     .focused($focusedField)
                     .font(.custom("HelveticaNeue", size: 20))
                     .lineSpacing(3)
@@ -82,14 +83,15 @@ struct DetailView : View{
             }
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: { showInspector.toggle() }) {
-                    if idiom == .pad{
-                        Label("Toggle Inspector", systemImage: "sidebar.right")
-                    }else{
+                    if idiom == .phone && UIDevice.current.orientation.isPortrait{
                         if !showInspector {
                             Label("Toggle Inspector", systemImage: "menubar.arrow.up.rectangle")
                         }else{
                             Label("Toggle Inspector", systemImage: "menubar.arrow.down.rectangle")
                         }
+                       
+                    }else{
+                        Label("Toggle Inspector", systemImage: "sidebar.right")
                     }
                 }
                 

@@ -34,15 +34,15 @@ struct ContentView: View {
                 Spacer()
                 VStack {
                     Spacer()
-                    Text("Second Tab!")
+                    Text("Manual de usuario")
                     Spacer()
                 }
                 Spacer()
             }
             .background(Color.red)
             .tabItem {
-                Image(systemName: "doc.text.fill")
-                Text("Tab 2")
+                Image(systemName: "text.book.closed.fill")
+                Text("Manual de usuario")
             }
             .tag(1)
         }.font(.headline)

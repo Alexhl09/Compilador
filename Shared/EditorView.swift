@@ -17,7 +17,7 @@ struct EditorView: View{
 
     var body: some View {
         #if os(iOS)
-        if idiom == .phone {
+        if idiom == .phone && UIDevice.current.orientation.isPortrait {
             VStack{
                 DetailView(document: $document, showInspector: $showInspector,  VM: $VM, text: $textoConsola)
                 if showInspector {

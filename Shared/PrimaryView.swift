@@ -32,9 +32,7 @@ struct PrimaryView  : View{
 //
                     // do whatever you want here
                 })
-
-        return
-        VStack{
+        VStack(){
             GeometryReader{ geo in
                // Text("\(geo.size.width)")
                 VStack{
@@ -43,12 +41,10 @@ struct PrimaryView  : View{
                             Text(textoConsola).lineLimit(nil).fixedSize(horizontal: false, vertical: true).frame(width: geo.size.width, alignment: .leading)
                         }
                     }.frame(width: geo.size.width, height: geo.size.height, alignment: .leading)
-                    .foregroundColor(Color.white).background(Color.black)
                 }
             }.padding()
-            TextField("Standard Input", text: binding, prompt: Text("stdin")).padding()
+            TextField("Standard Input", text: binding, prompt: Text("stdin"))
         }
-       
     }
 }
 

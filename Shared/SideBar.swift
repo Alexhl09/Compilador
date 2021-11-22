@@ -14,14 +14,27 @@ extension Collection {
 
 struct Sidebar : View{
     @Binding var VM : VirtualMachine?
+#if os(iOS)
+private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+#endif
     var body: some View {
-        List(Array(VM?.quadruples.enumeratedArray() ?? []), id: \.element.id){ (index, i) in
-            Text("\(index) - \(i.description)").font(.system(size: 10))
-        }
+        
             #if os(macOS)
-            .listStyle(SidebarListStyle())
+            List(Array(VM?.quadruples.enumeratedArray() ?? []), id: \.element.id){ (index, i) in
+                Text("\(index) - \(i.description)").font(.system(size: 10))
+            }
+            .listStyle(SidebarListStyle()).cornerRadius(10)
             #else
-            .navigationViewStyle(DefaultNavigationViewStyle())
+        if(idiom == .phone){
+            List(Array(VM?.quadruples.enumeratedArray() ?? []), id: \.element.id){ (index, i) in
+                Text("\(index) - \(i.description)").font(.system(size: 10))
+            }.navigationViewStyle(DefaultNavigationViewStyle()).cornerRadius(10)
+        }else{
+            List(Array(VM?.quadruples.enumeratedArray() ?? []), id: \.element.id){ (index, i) in
+                Text("\(index) - \(i.description)").font(.system(size: 10))
+            }.listStyle(SidebarListStyle()).cornerRadius(10)
+        }
+        
             #endif
     }
 }
