@@ -18,6 +18,8 @@
 		A94E3F57274C29F100B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */; };
 		A94E3F58274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
 		A94E3F59274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
+		A94E3F5F274C440D00B5A8E2 /* AJ_1024.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */; };
+		A94E3F60274C440D00B5A8E2 /* AJ_1024.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */; };
 		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
 		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
 		A97362042737696000E1175A /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
@@ -184,6 +186,7 @@
 		A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
 		A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
 		A94E3F5A274C2DB300B5A8E2 /* matrix */ = {isa = PBXFileReference; lastKnownFileType = text; path = matrix; sourceTree = "<group>"; };
+		A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AJ_1024.icns; sourceTree = "<group>"; };
 		A96CA89527445082008E2FEE /* bubbleSort.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = bubbleSort.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
@@ -309,6 +312,7 @@
 				A982EE782749D4410066E995 /* swift.png */,
 				A94E3F53274C29F100B5A8E2 /* Compilador-Swift.h */,
 				A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */,
+				A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */,
 				A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */,
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
 				A982EDCD274890F50066E995 /* CompiladorUIApp.swift */,
@@ -526,6 +530,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94E3F5F274C440D00B5A8E2 /* AJ_1024.icns in Resources */,
 				A982EDE0274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE792749D4410066E995 /* swift.png in Resources */,
 			);
@@ -535,6 +540,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94E3F60274C440D00B5A8E2 /* AJ_1024.icns in Resources */,
 				A982EDE1274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE7A2749D4410066E995 /* swift.png in Resources */,
 			);
@@ -797,7 +803,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				DEVELOPMENT_TEAM = ALTY44U358;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -809,7 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				DEVELOPMENT_TEAM = ALTY44U358;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -822,6 +828,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
@@ -853,6 +860,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
@@ -885,6 +893,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -914,6 +923,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
