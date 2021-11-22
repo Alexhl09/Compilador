@@ -65,7 +65,7 @@ class CompilerErrorDelegate: CompilerParserError {
         }
         print(infoPrint + " en la linea: ", line + 1, " en la columna: ", column)
         //exit(0)
-        Thread().cancel()
+        //Thread().cancel()
         //cancel()
     }
 }

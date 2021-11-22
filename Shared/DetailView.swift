@@ -14,7 +14,7 @@ struct DetailView : View{
     @Binding var VM : VirtualMachine?
     @Binding var text: String
     private let queue = DispatchQueue(label: "vm", qos: DispatchQoS.utility)
-
+    @FocusState private var focusedField: Bool
     #if os(iOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #endif
@@ -24,12 +24,20 @@ struct DetailView : View{
             Color.black
             VStack{
                 TextEditor(text: $document.text)
+                    .focused($focusedField)
                     .font(.custom("HelveticaNeue", size: 20))
                     .lineSpacing(3)
                     .cornerRadius(10)
                     .padding()
+
                 
                 //Text(makeAttributedString())
+            }.toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    Button("Done") {
+                        focusedField = false
+                    }
+                }
             }
         }.cornerRadius(10).navigationTitle("Editor").toolbar {
             #if os(iOS)
@@ -167,7 +175,7 @@ struct DetailView : View{
                 //print("Parseo exitoso")
                 let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
                 let timeInterval = Double(nanoTime) / 1_000_000_000
-                print("Time to evaluate problem : \(timeInterval) seconds")
+                if(VM?.running == true){ print("Time to evaluate problem : \(timeInterval) seconds")}
                 showStop = false
             }
     }

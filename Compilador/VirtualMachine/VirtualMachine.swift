@@ -42,7 +42,7 @@ class VirtualMachine {
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
-           //print("Current qua \(currentIndex)")
+          // print("Current qua \(currentIndex)")
             arg1 = Int(currentQuadruple.argument1 ?? "0")
             arg2  = Int(currentQuadruple.argument2 ?? "0")
             result = Int(currentQuadruple.result ?? "0")
@@ -83,21 +83,31 @@ class VirtualMachine {
                 sleep(1)
                 guard let line = readInput() else {
                     print("Error stdin value")
+                    running = false
                     Thread().cancel()
                     return
                 }
-                
+
                 if(line == "" || line == " "){
                     print("Error stdin value")
+                    running = false
                     Thread().cancel()
                     currentIndex = 10000000
                 }
-                
+                //let line = readLine() ?? ""
                 let delimiter = " "
                 let token = line.components(separatedBy: delimiter)
                 do{
-                    try self.virtualMemory.insertValue(address: result!, value: token[0])
+                    var (firstValue, firstType) = try self.virtualMemory.getInfoByAddress(address: result!)
+                    if(firstType == .pointer){
+                        let a = unwrap(firstValue) as! Int
+                        try self.virtualMemory.insertValue(address: a, value: token[0])
+                    }else{
+                        try self.virtualMemory.insertValue(address: result!, value: token[0])
+                    }
+                    
                 }catch let error{
+                    running = false
                     Thread().cancel()
                     print(error.localizedDescription)
                 }
@@ -151,6 +161,7 @@ class VirtualMachine {
     func verify(value arg1: Int, in res: Int) {
         if (arg1 < 0 || arg1 >= res) {
             print("Index out of bounce \(arg1)")
+            running = false
             Thread().cancel()
         }
     }
@@ -203,6 +214,7 @@ class VirtualMachine {
             guard var (value,type) : (Any, TypeSymbol) = try self.virtualMemory.getInfoByAddress(address: arg1Address) as? (Any, TypeSymbol) else {return}
             try self.virtualMemory.insertValue(address: resAddress, value: unwrap(value))
         } catch let error{
+            running = false
             Thread().cancel()
             print(error)
         }
@@ -218,6 +230,7 @@ class VirtualMachine {
             guard let resAddress = res else {return}
             try readyActivationRecord.saveValue(address: resAddress, val: unwrap(value))
         }catch let error{
+            running = false
             Thread().cancel()
             print(error)
         }
@@ -257,6 +270,7 @@ class VirtualMachine {
                 sigQuadruple(index: currentIndexStack() + 1)
             }
         }catch let error{
+            running = false
             Thread().cancel()
             print(error)
         }
@@ -400,6 +414,7 @@ class VirtualMachine {
                 break
             }
             }catch let error{
+                running = false
                 Thread().cancel()
                 print(error.localizedDescription)
             }
@@ -411,6 +426,7 @@ class VirtualMachine {
             let v = try virtualMemory.getInfoByAddress(address: Int("\(pointerAddress)")!).0
             return Int("\(v!)")
         }catch let error{
+            running = false
             Thread().cancel()
             print(error.localizedDescription)
             return nil
@@ -563,8 +579,9 @@ extension UInt8 : Arithmetic {}
 extension UInt16 : Arithmetic {}
 extension UInt32 : Arithmetic {}
 extension UInt64 : Arithmetic {}
-
+#if !os(iOS)
 extension Float80 : Arithmetic {}
+#endif
 extension Float : Arithmetic {}
 extension Double : Arithmetic {}
 

@@ -150,6 +150,14 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             r = 1;
             semantic.assignArray($2);
         }
+    | tipo VAR ID varsPrimaArreglos varAssign SEMICOLON
+        {
+            let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
+            semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, const : false, type : type, $4 as! (NSNumber, NSNumber));
+            linkedListArray = ArrayLinkedList();
+            r = 1;
+            semantic.assignArray($3);
+        }
    | tipoCompuesto ID varAssign SEMICOLON
         {
             semantic.insertSymbolToST($2, false, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void);
@@ -459,6 +467,16 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
                | factor
                | ternary;
                
+   flujoBloqueTernary : asignar
+                           | llamada
+                           | escribir
+                           | condicion
+                           | cicloWhile
+                           | cicloForIterador
+                           | cicloForEach
+                           | factor
+                           | ternary;
+               
    cuerpoReturn : cuerpoLista cuerpoReturn |
    returnCuerpo SEMICOLON cuerpoReturn |
    returnCuerpo SEMICOLON;
@@ -492,7 +510,7 @@ hiperExpression : superExpression
     
     ternaryFalse : COLON {semantic.colonTernaryOperator()};
        
-    ternaryBloque : flujoBloque
+    ternaryBloque : flujoBloqueTernary
                     | expresion;
        
 comparisonOperators : EQ EQ {semantic.addOperator(op: Operator.equal)}
@@ -560,7 +578,15 @@ leerR : ID {
 }
 | leerR COMMA ID{
     semantic.readID($3)
-};
+}
+|
+ID assMulti {
+    semantic.readIDMulti($1)
+}
+| leerR COMMA ID assMulti {
+    semantic.readIDMulti($3)
+}
+;
            
 //   lvalue : ID
 //           | ID LSBRAKE expresion RSBRAKE

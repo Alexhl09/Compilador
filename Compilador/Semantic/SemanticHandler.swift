@@ -562,22 +562,12 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     func colonTernaryOperator(){
-        if(operationStack.operands.size() >= 1){
-            let indexToFill = self.jumpStack.pop() ?? 0
-            
-//            do{
-//                try self.generateQuadruple()
-//            }catch(let error){
-//                print(error.localizedDescription)
-//            }
-//
-            
-            self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
-            self.jumpStack.push(self.quadruples.count - 1)
-            
-            self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
-            
-        }
+        let indexToFill = self.jumpStack.pop() ?? 0
+        
+        self.quadruples.append(Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
+        self.jumpStack.push(self.quadruples.count - 1)
+        
+        self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
     }
     
     func endTernaryOperator(){
@@ -1024,6 +1014,32 @@ class SemanticHandler : CustomStringConvertible {
             let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)
         }
+    }
+    
+    func readIDMulti(_ id: NSString){
+        self.addOperator(op: .read)
+        
+       // self.addIDAsQuadruple(id)
+        guard let symbol = symbolTable.lookup(id as String) else {
+            delegate?.sendUndeclareVariable(id: id);
+            return
+        }
+       
+        self.addOperand(symbol: symbol)
+        
+        do {
+            try generateQuadrupleAssignCellArray(symbol: symbol,withValue: false)
+        }catch{
+            
+        }
+       // assignVar(returnSymbolByID(id as String))
+//
+        let op : Operator = operationStack.operators.pop()!
+
+        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+
+        let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
+        self.quadruples.append(generatedQuadruple)
     }
     
     func whileP1() {

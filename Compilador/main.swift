@@ -10,7 +10,7 @@ import Foundation
 print("Nombre archivo: ")
 
 // let file = readLine()
-let file = "func.aj"
+let file = "smallest.aj"
 let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)
@@ -35,7 +35,7 @@ if (parser.parse()) {
     let start = DispatchTime.now() // <<<<<<<<<< Start time
     VM.start()
     let end = DispatchTime.now()   // <<<<<<<<<<   end time
-    print("Parseo exitoso")
+   // print("Parseo exitoso")
     let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
     let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
     print("Time to evaluate problem : \(timeInterval) seconds")
