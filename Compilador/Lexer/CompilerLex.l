@@ -117,7 +117,7 @@ SingleComment \/\/[^\n\r]+?(?:\*\)|[\n\r])
     return CompilerParser.ID}
 .            {
                 /* All else, return character value as token ID. */
-                print("ERROR")
+                print("ERROR unrecognized token")
                 print(text)
                 return Int(text.unicodeScalars.first?.value ?? 0)
             }

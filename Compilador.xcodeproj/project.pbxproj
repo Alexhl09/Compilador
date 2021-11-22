@@ -14,8 +14,10 @@
 		A930EA2926FFBB1E0062BE51 /* CompilerStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2426FFBB1E0062BE51 /* CompilerStream.swift */; };
 		A930EA2C26FFBB260062BE51 /* CompilerLex.l in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2A26FFBB260062BE51 /* CompilerLex.l */; };
 		A930EA2D26FFBB260062BE51 /* CompilerParser.y in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2B26FFBB260062BE51 /* CompilerParser.y */; };
-		A94E3F49274B18B800B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F48274B18B800B5A8E2 /* CompilerParser.swift */; };
-		A94E3F4A274B18B800B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F48274B18B800B5A8E2 /* CompilerParser.swift */; };
+		A94E3F56274C29F100B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */; };
+		A94E3F57274C29F100B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */; };
+		A94E3F58274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
+		A94E3F59274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
 		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
 		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
 		A97362042737696000E1175A /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
@@ -71,8 +73,6 @@
 		A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */; };
 		A982EE5B27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
 		A982EE5C27489F7A0066E995 /* OCLexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5A27489F7A0066E995 /* OCLexInput.swift */; };
-		A982EE622748E5D70066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5F2748E5D70066E995 /* CompilerLex.swift */; };
-		A982EE632748E5D70066E995 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE5F2748E5D70066E995 /* CompilerLex.swift */; };
 		A982EE652748E6090066E995 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE642748E6090066E995 /* TextFile.swift */; };
 		A982EE662748E6090066E995 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE642748E6090066E995 /* TextFile.swift */; };
 		A982EE682748E62F0066E995 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982EE672748E62F0066E995 /* SideBar.swift */; };
@@ -179,7 +179,11 @@
 		A930EA2B26FFBB260062BE51 /* CompilerParser.y */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = CompilerParser.y; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.yacc; };
 		A94A1722274317E400B84449 /* fibonnacci.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = fibonnacci.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A94A17232743801E00B84449 /* fibonacciRecursive.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = fibonacciRecursive.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		A94E3F48274B18B800B5A8E2 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
+		A94E3F4B274C155700B5A8E2 /* find */ = {isa = PBXFileReference; lastKnownFileType = text; path = find; sourceTree = "<group>"; };
+		A94E3F53274C29F100B5A8E2 /* Compilador-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compilador-Swift.h"; sourceTree = "<group>"; };
+		A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
+		A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
+		A94E3F5A274C2DB300B5A8E2 /* matrix */ = {isa = PBXFileReference; lastKnownFileType = text; path = matrix; sourceTree = "<group>"; };
 		A96CA89527445082008E2FEE /* bubbleSort.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = bubbleSort.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
@@ -194,8 +198,6 @@
 		A982EDD9274890F60066E995 /* CompiladorUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompiladorUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A982EDDB274890F60066E995 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		A982EE5A27489F7A0066E995 /* OCLexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OCLexInput.swift; path = Compilador/Lexer/OCLexInput.swift; sourceTree = SOURCE_ROOT; };
-		A982EE5D2748E5D70066E995 /* Compilador-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compilador-Swift.h"; sourceTree = "<group>"; };
-		A982EE5F2748E5D70066E995 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
 		A982EE642748E6090066E995 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		A982EE672748E62F0066E995 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		A982EE6A2748E6400066E995 /* PrimaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryView.swift; sourceTree = "<group>"; };
@@ -295,6 +297,8 @@
 				A981CED72744DE17004CB1E1 /* smallest.aj */,
 				A981CED82744E269004CB1E1 /* catalanNumber.aj */,
 				A981CED92745C0D0004CB1E1 /* func.aj */,
+				A94E3F4B274C155700B5A8E2 /* find */,
+				A94E3F5A274C2DB300B5A8E2 /* matrix */,
 			);
 			path = Compilador;
 			sourceTree = "<group>";
@@ -303,10 +307,10 @@
 			isa = PBXGroup;
 			children = (
 				A982EE782749D4410066E995 /* swift.png */,
+				A94E3F53274C29F100B5A8E2 /* Compilador-Swift.h */,
+				A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */,
+				A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */,
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
-				A982EE5D2748E5D70066E995 /* Compilador-Swift.h */,
-				A94E3F48274B18B800B5A8E2 /* CompilerParser.swift */,
-				A982EE5F2748E5D70066E995 /* CompilerLex.swift */,
 				A982EDCD274890F50066E995 /* CompiladorUIApp.swift */,
 				A982EDCE274890F50066E995 /* ContentView.swift */,
 				A982EDCF274890F60066E995 /* Assets.xcassets */,
@@ -613,14 +617,14 @@
 				A982EE712748E6730066E995 /* EditorView.swift in Sources */,
 				A982EE1727489A2C0066E995 /* VirtualMemoryBlock.swift in Sources */,
 				A982EE682748E62F0066E995 /* SideBar.swift in Sources */,
+				A94E3F58274C29F100B5A8E2 /* CompilerLex.swift in Sources */,
 				A982EDDC274890F60066E995 /* CompiladorUIApp.swift in Sources */,
 				A982EE6E2748E6570066E995 /* DetailView.swift in Sources */,
 				A982EE3D27489AAD0066E995 /* CompilerStream.swift in Sources */,
-				A982EE622748E5D70066E995 /* CompilerLex.swift in Sources */,
+				A94E3F56274C29F100B5A8E2 /* CompilerParser.swift in Sources */,
 				A982EE2D27489A610066E995 /* SemanticTable.swift in Sources */,
 				A982EE2F27489A640066E995 /* Kind.swift in Sources */,
 				A982EE3927489A920066E995 /* Stack.swift in Sources */,
-				A94E3F49274B18B800B5A8E2 /* CompilerParser.swift in Sources */,
 				A982EE2527489A560066E995 /* Quadruple.swift in Sources */,
 				A982EE2927489A5C0066E995 /* Type.swift in Sources */,
 				A982EE4127489AB50066E995 /* OCFileInput.swift in Sources */,
@@ -652,14 +656,14 @@
 				A982EE722748E6730066E995 /* EditorView.swift in Sources */,
 				A982EE1627489A2A0066E995 /* VirtualMemory.swift in Sources */,
 				A982EE692748E62F0066E995 /* SideBar.swift in Sources */,
+				A94E3F59274C29F100B5A8E2 /* CompilerLex.swift in Sources */,
 				A982EE1827489A2D0066E995 /* VirtualMemoryBlock.swift in Sources */,
 				A982EE6F2748E6570066E995 /* DetailView.swift in Sources */,
 				A982EE3E27489AAD0066E995 /* CompilerStream.swift in Sources */,
-				A982EE632748E5D70066E995 /* CompilerLex.swift in Sources */,
+				A94E3F57274C29F100B5A8E2 /* CompilerParser.swift in Sources */,
 				A982EE2E27489A620066E995 /* SemanticTable.swift in Sources */,
 				A982EE3027489A650066E995 /* Kind.swift in Sources */,
 				A982EE3A27489A930066E995 /* Stack.swift in Sources */,
-				A94E3F4A274B18B800B5A8E2 /* CompilerParser.swift in Sources */,
 				A982EE2627489A560066E995 /* Quadruple.swift in Sources */,
 				A982EE2A27489A5C0066E995 /* Type.swift in Sources */,
 				A982EE4227489AB50066E995 /* OCFileInput.swift in Sources */,

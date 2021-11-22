@@ -24,7 +24,7 @@ struct DetailView : View{
             Color.clear
             VStack{
                 TextEditor(text: $document.text)
-                    .background(.clear)
+                    .disableAutocorrection(true)
                     .focused($focusedField)
                     .font(.custom("HelveticaNeue", size: 20))
                     .lineSpacing(3)

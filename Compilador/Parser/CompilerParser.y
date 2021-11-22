@@ -134,6 +134,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     }
    | VAR ID varsPrimaArreglosMulti SEMICOLON
         {
+         
             semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false);
             linkedListArray = ArrayLinkedList();
             r = 1;
@@ -143,17 +144,19 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             semantic.insertSymbolToST($2, false, false);
             semantic.saveValueVariable(id : $2 as String);
         }
-   | VAR ID varsPrimaArreglos varAssign SEMICOLON
+   | VAR ID varsPrimaArreglosMulti varAssign SEMICOLON
         {
-            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false, $3 as! (NSNumber, NSNumber));
+            
+            semantic.insertArrayMultiDimToST($2, linkedListArray, r: r, const : false);
             linkedListArray = ArrayLinkedList();
             r = 1;
             semantic.assignArray($2);
         }
-    | tipo VAR ID varsPrimaArreglos varAssign SEMICOLON
+    | tipo VAR ID varsPrimaArreglosMulti varAssign SEMICOLON
         {
+           
             let type = TypeSymbol.init(rawValue: $1.intValue) ?? .void
-            semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, const : false, type : type, $4 as! (NSNumber, NSNumber));
+            semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, const : false, type : type);
             linkedListArray = ArrayLinkedList();
             r = 1;
             semantic.assignArray($3);
@@ -163,7 +166,7 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
             semantic.insertSymbolToST($2, false, false, TypeSymbol.init(rawValue: $1.intValue) ?? .void);
             semantic.saveValueVariable(id : $2 as String)
         }
-   | CONST tipo ID varsPrimaArreglos varAssign SEMICOLON
+   | CONST tipo ID varsPrimaArreglosMulti varAssign SEMICOLON
         {
             semantic.insertArrayMultiDimToST($3, linkedListArray, r: r, const : true, type:  TypeSymbol.init(rawValue: $2.intValue) ?? .void, $4 as! (NSNumber, NSNumber));
             linkedListArray = ArrayLinkedList();
@@ -179,12 +182,14 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
     varsPrimaArreglos : LSBRAKE CTEI RSBRAKE {
         let lS = $2.intValue
         r = (lS) * r
+
         linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r: r))
         $$ = ($2, 1) as! AnyObject
     }
     | LSBRAKE CTEI RSBRAKE LSBRAKE CTEI RSBRAKE {
         let lS = $2.intValue
         r = (lS) * r
+   
         linkedListArray.push(ArrayNode(limSup : lS, m: 1, dim : 1, r : r))
         $$ = ($2, $5) as! AnyObject
     };
@@ -277,11 +282,9 @@ GT LBRACE RBRACE DIVIDE TIMES LPAREN RPAREN PLUS MINUS SEMICOLON COLON MAIN INPU
         semantic.saveValueVariable(id : $1 as String)
     }
     | ID LSBRAKE expresion RSBRAKE varAssign {
-        print("Assigned celle array");
         semantic.assignOneCellArray($1);
     }
     | ID LSBRAKE expresion RSBRAKE LSBRAKE expresion RSBRAKE varAssign {
-        print("Assigned cell matrix")
         semantic.assignOneCellArray($1);
     }
     | ID assMulti varAssign {

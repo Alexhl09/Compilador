@@ -1,11 +1,6 @@
 //	CompilerLex
 
-#if os(macOS)
 import Cocoa
-#else
-import UIKit
-#endif
-
 
 
 
@@ -1571,7 +1566,7 @@ class CompilerLex: OCLexInput {
                 value = NSString(string:text)
     return CompilerParser.ID
             case 58:
-                print("ERROR")
+                print("ERROR unrecognized token")
                 print(text)
                 return Int(text.unicodeScalars.first?.value ?? 0)
             

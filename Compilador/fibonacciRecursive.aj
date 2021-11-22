@@ -9,12 +9,6 @@ func int fib(int n) {
  
 main ()
 {
-    var p = 10;
-    p >= 100 ? p = 100 :  p = -1;
-    print(p);
-    for (int i : 0..<10){
-        print(i);
-    }
-    var n = 10;
+    var n = 7;
     print(fib(n));
 }

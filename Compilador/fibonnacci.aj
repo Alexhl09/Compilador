@@ -5,8 +5,8 @@ main() {
     var t2 = 1;
     var nextTerm = 0;
     var a = 0;
-    for (var i = 1; i <= n; a = a + 1) {
-        if(i == 1) {
+    for(int i : 1..<n){
+	if(i == 1) {
             print(t1);
         } else{
             if  (i == 2)  {
@@ -18,7 +18,5 @@ main() {
                 print(nextTerm);
             }
         }
-        i = i + 1;
-    }
-    
+    }    
 }

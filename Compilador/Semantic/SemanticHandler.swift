@@ -144,10 +144,10 @@ class SemanticHandler : CustomStringConvertible {
     
     fileprivate func assignArray(_ symbol: Symbol) {
         symbol.assigned = true
-        var sizeArray = Int(symbol.dimension2D?.1 ?? 0) * Int(symbol.dimension2D?.0 ?? 0)
-        if(sizeArray == 0){
-            sizeArray = symbol.arrayList?.head?.r ?? 0
-        }
+        var sizeArray = symbol.arrayList?.head?.r ?? 0
+//        if(sizeArray == 0){
+//            sizeArray =
+//        }
         if(symbol.type != operationStack.operands.peek()?.1 ?? .void){
             symbol.type = operationStack.operands.peek()?.1 ?? .void
             let beforeAddres = symbol.address
@@ -847,7 +847,7 @@ class SemanticHandler : CustomStringConvertible {
             }
             let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)
-        }while(operationStack.operands.size() > 1 )
+        }while(operationStack.operands.size() > 1 && operationStack.operators.size() > 1)
     }
     
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
@@ -864,11 +864,17 @@ class SemanticHandler : CustomStringConvertible {
         var temp = symbol.arrayList?.head
         var dimNow = 1
         dimensionStack.push((symbol.identifier, dimNow))
+        
+        
         if(withValue){
             operationStack.operands.reverse()
+            //a[1][2] = 2;
         }else{
-            operationStack.operands.reverseFirst(n: symbol.arrayList?.count ?? 100)
+            operationStack.operands.reverseTop(n: symbol.arrayList?.count ?? 100)
         }
+        
+       
+        
         while(temp != nil){
           
             let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
@@ -961,6 +967,23 @@ class SemanticHandler : CustomStringConvertible {
             self.operationStack.addOperand(operand: "\(tempAddress3)", type: .pointer)
         }
         
+     
+        
+    }
+    
+    func countO() -> Int{
+        var s = operationStack.operators
+        var re = 0
+        while(!s.isEmpty){
+            switch s.pop(){
+            case .sum, .minus, .multiply, .modulo, .division:
+                re += 1
+            default:
+                break
+            }
+            
+        }
+        return re
     }
     
     func assignToPointer(){
