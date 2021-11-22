@@ -847,7 +847,7 @@ class SemanticHandler : CustomStringConvertible {
             }
             let generatedQuadruple : Quadruple = Quadruple(argument1: leftOperand , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)
-        }while(operationStack.operands.size() > 1 && operationStack.operators.size() > 1)
+        }while(operationStack.operands.size() > 1 && operationStack.operators.size() > 0)
     }
     
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {

@@ -187,6 +187,14 @@
 		A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
 		A94E3F5A274C2DB300B5A8E2 /* matrix */ = {isa = PBXFileReference; lastKnownFileType = text; path = matrix; sourceTree = "<group>"; };
 		A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AJ_1024.icns; sourceTree = "<group>"; };
+		A94E3F61274C4A6E00B5A8E2 /* catalanNumber.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = catalanNumber.aj; sourceTree = "<group>"; };
+		A94E3F62274C4A6E00B5A8E2 /* func.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = func.aj; sourceTree = "<group>"; };
+		A94E3F63274C4A6E00B5A8E2 /* fibonnacci.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fibonnacci.aj; sourceTree = "<group>"; };
+		A94E3F64274C4A6E00B5A8E2 /* find */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = find; sourceTree = "<group>"; };
+		A94E3F65274C4A6E00B5A8E2 /* matrix */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = matrix; sourceTree = "<group>"; };
+		A94E3F66274C4A6E00B5A8E2 /* smallest.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smallest.aj; sourceTree = "<group>"; };
+		A94E3F67274C4A6E00B5A8E2 /* bubbleSort.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bubbleSort.aj; sourceTree = "<group>"; };
+		A94E3F68274C4A6F00B5A8E2 /* fibonacciRecursive.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fibonacciRecursive.aj; sourceTree = "<group>"; };
 		A96CA89527445082008E2FEE /* bubbleSort.aj */ = {isa = PBXFileReference; lastKnownFileType = text; path = bubbleSort.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A97361E4273383DE00E1175A /* VirtualMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachine.swift; sourceTree = "<group>"; };
 		A97361E62733841C00E1175A /* ActivationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRecord.swift; sourceTree = "<group>"; };
@@ -282,6 +290,14 @@
 			isa = PBXGroup;
 			children = (
 				A9955ADD2724920700A5BC43 /* outputCompilador.txt */,
+				A94E3F67274C4A6E00B5A8E2 /* bubbleSort.aj */,
+				A94E3F61274C4A6E00B5A8E2 /* catalanNumber.aj */,
+				A94E3F68274C4A6F00B5A8E2 /* fibonacciRecursive.aj */,
+				A94E3F63274C4A6E00B5A8E2 /* fibonnacci.aj */,
+				A94E3F64274C4A6E00B5A8E2 /* find */,
+				A94E3F62274C4A6E00B5A8E2 /* func.aj */,
+				A94E3F65274C4A6E00B5A8E2 /* matrix */,
+				A94E3F66274C4A6E00B5A8E2 /* smallest.aj */,
 				A9955AA1271A0ED100A5BC43 /* VirtualMachine */,
 				A990DEA327162F2700C94528 /* Semantic */,
 				A990DEA02715596700C94528 /* Cuadruples */,
