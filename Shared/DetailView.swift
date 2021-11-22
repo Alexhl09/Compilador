@@ -191,6 +191,15 @@ extension Thread {
     }
 }
 
+#if os(macOS)
+extension NSTextView {
+    open override var frame: CGRect {
+        didSet {
+            self.isAutomaticQuoteSubstitutionEnabled = false
+        }
+    }
+}
+#endif
 //
 //extension View {
 //    func attributed(with text: String) -> some View {

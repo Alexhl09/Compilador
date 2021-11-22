@@ -7,7 +7,10 @@
 
 import Foundation
 
-class ActivationRecord{
+/**
+ The *ActivationRecord* class is used to create a temporal memory block and scope during the execution of the 
+ */
+class ActivationRecord {
     
     private var symbolFunction: Symbol
     public var index: Int
