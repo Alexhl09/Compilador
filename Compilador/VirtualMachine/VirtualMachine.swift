@@ -312,7 +312,7 @@ class VirtualMachine {
         let boolOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or]
         let boolNumericOperators: [Operator] = [.greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different]
         do{
-            if let firstBool = first as? Bool, let secondBool = first as? Bool, (boolOperators.contains(op)) {
+            if let firstBool = first as? Bool, let secondBool = second as? Bool, (boolOperators.contains(op)) {
                     let r = boolOp(a: firstBool, b: secondBool, op: op)
                     try? virtualMemory.insertValue(address: res! , value: r)
             }
