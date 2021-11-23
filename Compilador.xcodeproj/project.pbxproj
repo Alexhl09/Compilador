@@ -18,8 +18,8 @@
 		A94E3F57274C29F100B5A8E2 /* CompilerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */; };
 		A94E3F58274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
 		A94E3F59274C29F100B5A8E2 /* CompilerLex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */; };
-		A94E3F5F274C440D00B5A8E2 /* AJ_1024.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */; };
-		A94E3F60274C440D00B5A8E2 /* AJ_1024.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */; };
+		A94E3F5F274C440D00B5A8E2 /* Icon_2.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* Icon_2.icns */; };
+		A94E3F60274C440D00B5A8E2 /* Icon_2.icns in Resources */ = {isa = PBXBuildFile; fileRef = A94E3F5E274C440C00B5A8E2 /* Icon_2.icns */; };
 		A97361E5273383DE00E1175A /* VirtualMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E4273383DE00E1175A /* VirtualMachine.swift */; };
 		A97361E72733841C00E1175A /* ActivationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97361E62733841C00E1175A /* ActivationRecord.swift */; };
 		A97362042737696000E1175A /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97362032737696000E1175A /* Arrays.swift */; };
@@ -171,6 +171,7 @@
 
 /* Begin PBXFileReference section */
 		313FBE6A2724992E00A5BA1D /* outputCompilador.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = outputCompilador.txt; sourceTree = "<group>"; };
+		A90B3200274DB01600D0F0A3 /* matrixMulti.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = matrixMulti.aj; sourceTree = "<group>"; };
 		A930EA1026FFB9E10062BE51 /* Compilador */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Compilador; sourceTree = BUILT_PRODUCTS_DIR; };
 		A930EA1326FFB9E10062BE51 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A930EA2026FFBB1E0062BE51 /* OCFileInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCFileInput.swift; sourceTree = "<group>"; };
@@ -186,8 +187,8 @@
 		A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerParser.swift; sourceTree = "<group>"; };
 		A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompilerLex.swift; sourceTree = "<group>"; };
 		A94E3F5A274C2DB300B5A8E2 /* matrix */ = {isa = PBXFileReference; lastKnownFileType = text; path = matrix; sourceTree = "<group>"; };
-		A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AJ_1024.icns; sourceTree = "<group>"; };
-		A94E3F61274C4A6E00B5A8E2 /* catalanNumber.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = catalanNumber.aj; sourceTree = "<group>"; };
+		A94E3F5E274C440C00B5A8E2 /* Icon_2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon_2.icns; sourceTree = "<group>"; };
+		A94E3F61274C4A6E00B5A8E2 /* catalanNumber.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = catalanNumber.aj; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A94E3F62274C4A6E00B5A8E2 /* func.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = func.aj; sourceTree = "<group>"; };
 		A94E3F63274C4A6E00B5A8E2 /* fibonnacci.aj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fibonnacci.aj; sourceTree = "<group>"; };
 		A94E3F64274C4A6E00B5A8E2 /* find */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = find; sourceTree = "<group>"; };
@@ -294,6 +295,7 @@
 				A94E3F61274C4A6E00B5A8E2 /* catalanNumber.aj */,
 				A94E3F68274C4A6F00B5A8E2 /* fibonacciRecursive.aj */,
 				A94E3F63274C4A6E00B5A8E2 /* fibonnacci.aj */,
+				A90B3200274DB01600D0F0A3 /* matrixMulti.aj */,
 				A94E3F64274C4A6E00B5A8E2 /* find */,
 				A94E3F62274C4A6E00B5A8E2 /* func.aj */,
 				A94E3F65274C4A6E00B5A8E2 /* matrix */,
@@ -328,7 +330,7 @@
 				A982EE782749D4410066E995 /* swift.png */,
 				A94E3F53274C29F100B5A8E2 /* Compilador-Swift.h */,
 				A94E3F55274C29F100B5A8E2 /* CompilerLex.swift */,
-				A94E3F5E274C440C00B5A8E2 /* AJ_1024.icns */,
+				A94E3F5E274C440C00B5A8E2 /* Icon_2.icns */,
 				A94E3F54274C29F100B5A8E2 /* CompilerParser.swift */,
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
 				A982EDCD274890F50066E995 /* CompiladorUIApp.swift */,
@@ -546,7 +548,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94E3F5F274C440D00B5A8E2 /* AJ_1024.icns in Resources */,
+				A94E3F5F274C440D00B5A8E2 /* Icon_2.icns in Resources */,
 				A982EDE0274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE792749D4410066E995 /* swift.png in Resources */,
 			);
@@ -556,7 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A94E3F60274C440D00B5A8E2 /* AJ_1024.icns in Resources */,
+				A94E3F60274C440D00B5A8E2 /* Icon_2.icns in Resources */,
 				A982EDE1274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE7A2749D4410066E995 /* swift.png in Resources */,
 			);
@@ -819,7 +821,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ALTY44U358;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -831,7 +833,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ALTY44U358;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Compilador/info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";

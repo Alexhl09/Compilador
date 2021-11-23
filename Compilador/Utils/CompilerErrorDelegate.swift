@@ -13,7 +13,7 @@ class CompilerErrorDelegate: CompilerParserError {
         var infoPrint = ""
         switch errorCode {
         case 1:
-            infoPrint += "Error de sintaxis"
+            infoPrint += "Sintax error"
         case 2:
             let tokens : [String] = data?["tokens"] as! [String]
             infoPrint += "ERROR_MISSINGTOKEN, posible token: \(tokens.first ?? "")"
@@ -63,7 +63,7 @@ class CompilerErrorDelegate: CompilerParserError {
         default:
             print("Error")
         }
-        print(infoPrint + " en la linea: ", line + 1, " en la columna: ", column)
+        print(infoPrint + " line: ", line + 1, " column: ", column)
         //exit(0)
         //Thread().cancel()
         //cancel()
