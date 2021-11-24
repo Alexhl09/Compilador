@@ -6,7 +6,7 @@ import Cocoa
 import UIKit
 #endif
 
-
+/// CompilerErrorDelegate is a delegate that send messeges to the user indicating where is the problem during compilation.
 class CompilerErrorDelegate: CompilerParserError {
     func error(parser: CompilerParser, line: Int, column: Int, filename: String?, errorCode: Int, data: [String : AnyObject]?) {
         // Report error
