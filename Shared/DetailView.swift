@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/// Has the textEditor to edit the text and has all the toolbar buttons to be used, like run or compile
 struct DetailView : View{
     @Binding var document : TextFile
     @Binding var showInspector : Bool
@@ -200,55 +200,3 @@ extension NSTextView {
     }
 }
 #endif
-//
-//extension View {
-//    func attributed(with text: String) -> some View {
-//        modifier(Watermark(text: text))
-//    }
-//}
-//
-//
-//struct Watermark: ViewModifier {
-//    var text: String
-//
-//    func body(content: Content) -> some View {
-//        ZStack(alignment: .bottomTrailing) {
-//            content
-//            Text(makeAttributedString())
-//                .font(.caption)
-//                .foregroundColor(.white)
-//                .padding(5)
-//                .background(.black)
-//        }
-//    }
-//
-////    func makeAttributedString() -> AttributedString {
-////
-////        let color = Color.red
-////       // let attrsString =  NSMutableAttributedString(string:document.text)
-////        let keywords : [String] = ["func", "main", "var", "int", "double", "char"]
-////        //        for k in keywords {
-////        //            let indices = document.text.indicesOf(string: k)
-////        //            for i in indices{
-////        //                attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
-////        //            }
-////        //        }
-////
-////        var string = AttributedString(self.text)
-////            string.foregroundColor = .blue
-////
-////            for k in keywords {
-////
-////                if let range = string.range(of: k) { /// here!
-////                    string[range].foregroundColor = .red
-////                }
-////
-//////                let indices = document.text.indicesOf(string: k)
-//////                for i in indices{
-//////                    attrsString.addAttribute(NSAttributedString.Key.foregroundColor,value:color,range: NSRange(i...(i + (k.count - 1))))
-//////                }
-////            }
-////
-////            return string
-////        }
-//}

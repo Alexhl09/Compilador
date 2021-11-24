@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
+/// Primary View has the console view with the prints and also has a view for standard input
 struct PrimaryView  : View{
-   // @Binding var textCompi
     @Binding var textoConsola : String
     @State var t: String = ""
     @Binding var VM : VirtualMachine?
@@ -29,12 +29,9 @@ struct PrimaryView  : View{
                         self.t = ""
                         
                     }
-//
-                    // do whatever you want here
                 })
         VStack(){
             GeometryReader{ geo in
-               // Text("\(geo.size.width)")
                 VStack{
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 20) {
@@ -47,8 +44,4 @@ struct PrimaryView  : View{
         }
     }
 }
-
-
-//
-
 

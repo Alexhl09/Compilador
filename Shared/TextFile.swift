@@ -15,7 +15,7 @@ extension UTType {
     }
     static let ajDocument = UTType(exportedAs: "alex.com.CompiladorUI.aj")
 }
-
+/// Work with text files in user interface
 struct TextFile : FileDocument {
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let data = Data(text.utf8)

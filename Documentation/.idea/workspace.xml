@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5758c2b5-aa39-426d-9557-9373be2be007" name="Default Changelist" comment="" />
+    <list default="true" id="5758c2b5-aa39-426d-9557-9373be2be007" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ArrayLinkedList.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ArrayLinkedList_Index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ArrayNode.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Compilador.xcodeproj/project.xcworkspace/xcuserdata/alejandro.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../Compilador.xcodeproj/project.xcworkspace/xcuserdata/alejandro.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Home.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Node.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Queue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../QueueProtocol.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Stack.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Symbol.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SymbolTable.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SymbolTable_Index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_Footer.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../_Sidebar.md" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,8 +37,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5758c2b5-aa39-426d-9557-9373be2be007" name="Default Changelist" comment="" />
@@ -30,7 +53,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637733671828</updated>
-      <workItem from="1637733673779" duration="260000" />
+      <workItem from="1637733673779" duration="444000" />
+      <workItem from="1637768073430" duration="14000" />
     </task>
     <servers />
   </component>
@@ -47,5 +71,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

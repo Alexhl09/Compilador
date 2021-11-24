@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import UniformTypeIdentifiers
 
-
+/// First view with the document file interface
 struct ContentView: View {
     @State private var selection = 0
     @Binding var document : TextFile
@@ -51,7 +51,7 @@ struct ContentView: View {
     
     
 }
-
+/// Opens the editorview with the open document
 struct TextEditorAJ : View{
     var pipe = Pipe()
     @StateObject var settings = ConsoleSettings()
@@ -77,7 +77,7 @@ struct TextEditorAJ : View{
             }.navigationViewStyle(StackNavigationViewStyle())
         #endif
     }
-    
+    /// Function that redirects the standard output to the variable settings texto
     public func openConsolePipe () {
         setvbuf(stdout, nil, _IONBF, 0)
         

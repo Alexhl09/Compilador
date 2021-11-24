@@ -617,6 +617,8 @@ class SemanticHandler : CustomStringConvertible {
         self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
     }
     
+    
+    /// At the end of a ternary operator, we generare the quadruples of the operations
     func endTernaryOperator(){
         let indexToFill = self.jumpStack.pop() ?? 0
         self.fillQuadruple(index: indexToFill, value: "\(self.quadruples.count)")
@@ -640,6 +642,10 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    /// When a condition is added we get the last operand and it should be a boolean,
+    ///  In case of error, send a type mismatch
+    ///  Add the GOTOF with the result of the last operand
+    ///    Finally we add the current index of quadruple to the jump stack to resolve latter
     func addCondicional(){
         let (result,t) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
         
@@ -653,15 +659,20 @@ class SemanticHandler : CustomStringConvertible {
         jumpStack.push(quadruples.count - 1)
     }
     
+    /// At the end of a conditional we fill the GOTOF that was still pending
     func endCondicional(){
         let end = jumpStack.pop() ?? 0
         fillQuadruple(index: end, value: String(quadruples.count))
     }
     
+    /// Fill Quadruple is a function that sets the "result" property of a quadruple
+    /// - Parameter index:Index in the array of qaudruples to modify
+    /// - Parameter value: Value to insert as result in quadruple
     func fillQuadruple(index: Int, value : String){
         quadruples[index].result = value
     }
     
+    /// In case of else add a GOTO quadruple, add the current quadruple to be filled latter and fill the GOTOF that was created at the beginning of conditional
     func addElse(){
         self.quadruples.append( Quadruple(argument1: nil, argument2: nil, op: .goto, result: nil))
         guard let end = jumpStack.pop() else {
@@ -670,10 +681,13 @@ class SemanticHandler : CustomStringConvertible {
         jumpStack.push(quadruples.count - 1)
         fillQuadruple(index: end, value: String(quadruples.count))
     }
+    
+    ///  This functions detects if an address is an array
+    ///  - Parameter address: Address to check if it is an array
     func isArray(address: Int) -> Int?{
         var temp = self.symbolTable.head
         while(temp != nil){
-            var p = temp?.symbols.filter({ (key, value) in
+            let p = temp?.symbols.filter({ (key, value) in
                 return value.array == true && value.address == address
             }).map({ (k,v) in
                 return v.address
@@ -686,7 +700,7 @@ class SemanticHandler : CustomStringConvertible {
         return nil
         
     }
-    
+    /// Add print is a function that creates the print quadruple in case of a single value, or multiple prints in case of an array
     func addPrint(){
         if(!operationStack.operands.isEmpty){
             let address = (isArray(address: Int(operationStack.operands.peek()?.0 ?? "0") ?? 0))
@@ -717,7 +731,9 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
-    
+    /// This function add the quadruples needed to evaluate a for each statement.
+    ///  - Parameter range: String ... if close range, ..< if not close range
+    ///  - Parameter id: String with the identifier of the variable that is going to change its value during iteration
     func addForEachRange(range: String, id: String){
         
         // Save id to iterate in st
@@ -757,7 +773,7 @@ class SemanticHandler : CustomStringConvertible {
         self.jumpStack.push(self.quadruples.count - 1)
         
     }
-    
+    /// At the end we add 1 to the value of the id in the for each operation
     func plusplusOneRange(id: String){
         self.operationStack.operators.push(.sum)
         self.addOperand(symbol: self.symbolTable.lookup(id)!)
@@ -767,6 +783,7 @@ class SemanticHandler : CustomStringConvertible {
         self.saveValueVariable(id: id)
     }
     
+    /// Call plusplusOneRange and add the GOTO at the end of iteration to verify again the operations
     func endForEachRange(id: NSString){
         
         self.plusplusOneRange(id: id as String)
@@ -778,16 +795,11 @@ class SemanticHandler : CustomStringConvertible {
         
     }
     
-    func getResultFromQuadruple(index: Int) -> String{
-        return self.quadruples[index].argument2 ?? ""
-    }
-    
-    
-    func changeArgument1Quadruple(arg1: String, index : Int){
-        quadruples[index].argument1 = arg1
-    }
-    
-    
+    /**
+        For variables, when we know that it is void and hasn't been assigned, we can assign them. Set the property assign to true and change the data type of the symbol to the one that is going to be assigned, asking for a memory address of this new type
+            If it is a constant and has been assigned, we send an error indicating that a constant cannot be assigned again
+            - Parameter symbol: Symbol that is going to be assigned
+     */
     fileprivate func assignVar(_ symbol: Symbol) {
         if(!symbol.assigned && symbol.type == .void){
             symbol.assigned = true
@@ -812,6 +824,10 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
+    /**
+        Given an identifier we get the symbol, add the symbol as an operand and finally the quadruple of assignment is generated
+        - Parameter id: Identifier of variable that is going to be assigned
+     */
     func saveValueVariable(id: String){
         guard let symbol = symbolTable.lookup(id) else {
             delegate?.sendUndeclareVariable(id: id as NSString);
@@ -827,7 +843,9 @@ class SemanticHandler : CustomStringConvertible {
         }
        
     }
-    
+    /**
+             While the are operands and operators we take 2 operands ans 1 operator. Check if it is valid with the semanticCube and generate the quadruple. If there is an error an invalid operation message is sent throught the delegate.
+     */
     func generateQuadruple() throws {
         repeat{
             
@@ -853,6 +871,10 @@ class SemanticHandler : CustomStringConvertible {
         }while(operationStack.operands.size() > 1 && operationStack.operators.size() > 0)
     }
     
+    /// In order to get at the end the memory address  of an array, we generate the verify quadruples and calculate the final position to jump to get the right address.
+    /// At the end we add as an operand the pointer indicating which address we want to access.
+    /// - Parameter symbol: Array in which we are going to be calculaling the final address
+    /// - Parameter withValue: Flag that indicates if we are only reading or writing the address
     func generateQuadrupleAssignCellArray(symbol: Symbol, withValue: Bool) throws {
          
         let (symbolOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
@@ -875,7 +897,7 @@ class SemanticHandler : CustomStringConvertible {
 
         while(temp != nil){
           
-            let (valueOperand, valueType) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
+            let (valueOperand, _) : (String, TypeSymbol) = operationStack.operands.peek() ?? ("", .void)
             
             if let lookUpAddress = lookUpAddressConstantTable(value: "\(temp!.limSup)") {
                 let quadrupleVerify = Quadruple(argument1: valueOperand, argument2: nil, op: .vrf, result: "\(lookUpAddress)")
@@ -984,27 +1006,27 @@ class SemanticHandler : CustomStringConvertible {
         return re
     }
     
+    /// When we want to assign a value to a pointer, it is set with this function
+    /// That takes the last operands and operator to assign the result to the pointer
     func assignToPointer(){
-        
-        
-//        // ASSIGN - EQUIS in ADDRESS
-
         guard operationStack.operands.size() > 1 else {
-           // print("Error generating quadruple for line\(0)")
             return
         }
         
         let op : Operator = operationStack.operators.pop()!
         
 
-        let (valOperand, valType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-        let (pointerOperand, pointerType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (valOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+        let (pointerOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
 
         let generatedQuadruple : Quadruple = Quadruple(argument1: valOperand , argument2: nil, op: op, result: pointerOperand)
         self.quadruples.append(generatedQuadruple)
         
     }
     
+    /// When a constant for an integer is needed we look for it in the constant table, if it was already there, we sent the address
+    /// If not a new address is requested
+    /// - Parameter value: Value to get the address
     func needConstantInt(value : Int) -> Int{
         if let lookUpAddress = lookUpAddressConstantTable(value: "\(value)") {
             return lookUpAddress
@@ -1015,32 +1037,30 @@ class SemanticHandler : CustomStringConvertible {
             return newAddress
         }
     }
-    
+    /// This function returns the symbol given a certain identifier
     func returnSymbolByID(_ id: String) -> Symbol{
         return self.symbolTable.lookup(id) ?? Symbol()
     }
-    
+    /// To read a simple variable the read operator is added and the quadruples are generated using the operator and the address to be read
     func readID(_ id: NSString){
         self.addOperator(op: .read)
-        
         self.addIDAsQuadruple(id)
-        
-       // assignVar(returnSymbolByID(id as String))
-        
         if(!operationStack.operators.isEmpty){
             let op : Operator = operationStack.operators.pop()!
             
-            let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
+            let (rightOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
             
             let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
             self.quadruples.append(generatedQuadruple)
         }
     }
     
+    /**
+     To read (input) a multidimensional array, the operator add is taken and add the symbol as operand, getting the final address of the array as pointer. Finally we create the read quadruple for that pointer
+     */
     func readIDMulti(_ id: NSString){
         self.addOperator(op: .read)
         
-       // self.addIDAsQuadruple(id)
         guard let symbol = symbolTable.lookup(id as String) else {
             delegate?.sendUndeclareVariable(id: id);
             return
@@ -1053,20 +1073,17 @@ class SemanticHandler : CustomStringConvertible {
         }catch{
             
         }
-       // assignVar(returnSymbolByID(id as String))
-//
         let op : Operator = operationStack.operators.pop()!
-
-        let (rightOperand, rightType) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
-
+        let (rightOperand, _) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
         let generatedQuadruple : Quadruple = Quadruple(argument1: nil , argument2: nil, op: op, result: rightOperand)
         self.quadruples.append(generatedQuadruple)
     }
-    
+    /// When the while operation starts, it is added to the jump stack to be filled latter
     func whileP1() {
         jumpStack.push(quadruples.count)
     }
-    
+    /// The GOTOF is added with the result of a boolean expression
+    /// If the last expression was not a boolean it sends an error
     func whileP2() {
         let (result,t) : (String, TypeSymbol) = operationStack.getLastOperand() ?? ("", .void)
         
@@ -1075,11 +1092,10 @@ class SemanticHandler : CustomStringConvertible {
             delegate?.sendTypeMismatch()
             return
         }
-      //  print("Added Q for while on \(quadruples.count)")
         quadruples.append(Quadruple(argument1: result, argument2: nil, op: .gotof, result: nil))
         jumpStack.push(quadruples.count - 1)
     }
-    
+    /// We create the GOTO to the beginning of the while and fill the quadruple that we left ath the begining with the GOTOF
     func whileP3() {
         let end = jumpStack.pop() ?? -1
         let result = jumpStack.pop() ?? -1
@@ -1089,12 +1105,12 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     // MARK: - FUNCTIONS
-    
+    /// When a funtion starts the current function property is set to the id of the new function
     func startFunction(_ id: NSString){
         self.functionAsMainThread = id as String
         self.setCurrentCuadruple()
     }
-    
+    /// Saves the count of quadruples where all the functions begin
     func setCurrentCuadruple(){
         if(globalFinalIndex == false){
             globalFinalIndex = true
@@ -1106,29 +1122,26 @@ class SemanticHandler : CustomStringConvertible {
         }
         symbolFunction.currentCuadruple = self.quadruples.count
     }
-    
+    /// When a funtion is ended with create the endFunc quadruple
+    /// And reset the local and temporal memory
     func endFunction(){
         let endFunctionQuadruple = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
         self.quadruples.append(endFunctionQuadruple)
         self.memory.removeLocalAndTemporalMemory()
     }
-    
+    /**
+        When a function is called, we get the id of the function and its arguments.
+        Check the type of the arguments and the sign of the function and check if they are the same, if there is an error we send the bad params message through the delegate
+        The era quadruple is generated and send all the args as params in several quadruples
+        At the end creates the gosub rutine quadruple to start executing the function
+     - Parameter idFunction: Identifier of the function
+     - Parameter args: Address and Type of each argument
+     */
     func functionCall(_ idFunction : NSString, args : [(String, TypeSymbol)]){
-       
         guard let symbolFunction = symbolTable.lookup(idFunction as String) else {
             print("Not found function to be called")
-            
             return
         }
-        
-        // FIXME: - Validate parameters
-        /// Validate number parameters
-        /// Agarrar los tipos de los argumentos pasados, con los que deberian estar en symbolFunction
-        ///
-        /// SINO SE MANDA ERROR
-        ///
-        ///
-        
         let typeArguments = args.map({$0.1}).reversed() as Array
         let typeParams = symbolFunction.params.map({$0.type})
         guard (typeArguments == typeParams) else{
@@ -1139,10 +1152,9 @@ class SemanticHandler : CustomStringConvertible {
         let quadrupleEra = Quadruple(argument1: nil, argument2: nil, op: .era, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleEra)
         
-        // FIXME: - Pass paramaters as quadruples
         for (index, arg) in args.enumerated().reversed() {
             if let argAddress = Int(arg.0){
-                if let numberArray = isArray(address: argAddress),let size = addressArrays[numberArray ?? 0] {
+                if let numberArray = isArray(address: argAddress),let size = addressArrays[numberArray] {
                     if(symbolFunction.params.reversed()[index].arrayList?.head?.r == size){
                         for i in 0..<size{
                             let quadrupleParam = Quadruple(argument1: "\(argAddress + i)", argument2: nil, op: .param, result: "\(symbolFunction.params.reversed()[index].address + i)")
@@ -1159,7 +1171,7 @@ class SemanticHandler : CustomStringConvertible {
         }
         
         
-        // CRAETE GOSUB
+        // CREATE GOSUB
         let quadrupleGosub = Quadruple(argument1: nil, argument2: nil, op: .gosub, result: symbolFunction.identifier)
         self.quadruples.append(quadrupleGosub)
                     
@@ -1167,6 +1179,9 @@ class SemanticHandler : CustomStringConvertible {
         fillParcheG(t: symbolFunction.type, funcName: symbolFunction.identifier)
     }
     
+    /// When the function returns something we check taht the expression that is going to be sent is of the same type of the function
+    /// Then generate return quadruple for the expression and in case of an array, we send all the values
+    /// At the end generate the endFunc quadruple
     func returnFunctions(){
         guard let symbolFunction = symbolTable.lookup(functionAsMainThread ?? "") else {
             return
@@ -1202,12 +1217,12 @@ class SemanticHandler : CustomStringConvertible {
             let quadruploEnd = Quadruple(argument1: nil, argument2: nil, op: .endFunc, result: nil)
             self.quadruples.append(quadruploEnd)
         }
-        
-       
-        // Generar return cuadruple
-        // Address of function
     }
     
+    /// The information of the stack is filled adding the number of addresses to be used
+    /// - Parameter infoStack: stack to be filled
+    /// - Parameter varSymbolTable: The type of the symbol that is used
+    /// - Parameter size: Size to be reserved
     func fillInfoStack(infoStack: InfoStack, varSymbolType : TypeSymbol, size : Int) {
         switch varSymbolType {
         case .String:
@@ -1245,7 +1260,7 @@ class SemanticHandler : CustomStringConvertible {
         }
     }
     
-    // PARCHE GUADALUPANO
+    /// At the end of a function call the value is saved in a temporal variable in order to used it latter.
     func fillParcheG(t: TypeSymbol, funcName: String){
         guard let symbol = symbolTable.lookup(funcName) else {return}
         if(symbol.type != .void && symbol.kind == .method){
@@ -1272,7 +1287,6 @@ class SemanticHandler : CustomStringConvertible {
     }
     
     
-//    // PARCHE GUADALUPANO
     func fillParcheGArrays(t: TypeSymbol, nameArray: String){
         guard let symbol = symbolTable.lookup(nameArray) else {return}
         let newAddresss = newLocalVariable(t: t)
