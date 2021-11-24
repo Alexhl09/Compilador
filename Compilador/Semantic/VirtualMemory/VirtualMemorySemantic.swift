@@ -7,7 +7,7 @@
 
 import Foundation
 
-class VirtualMemorySemantic : CustomStringConvertible {
+public class VirtualMemorySemantic : CustomStringConvertible {
     let maxSize: Int = 28000
     var sizeByBlock : Int
     var globalBlock : VirtualMemoryBlockSemantic

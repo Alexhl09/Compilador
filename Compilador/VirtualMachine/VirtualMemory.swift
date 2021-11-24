@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class InfoStack {
+public class InfoStack {
     var numberInts, numberFloats, numberBools, numberChars, numberDoubles, numberVoids, numberStrings, numberPointers : Int
     
     init() {

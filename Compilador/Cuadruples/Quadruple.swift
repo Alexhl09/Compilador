@@ -7,8 +7,8 @@
 
 import Foundation
 /// Struct that saves 4 elements, arg1, arg2, op and result. Basic quadruple
-struct Quadruple : Identifiable{
-    var id: UUID = UUID()
+public struct Quadruple : Identifiable{
+    public var id: UUID = UUID()
     var argument1 : String?
     let argument2 : String?
     let op : Operator

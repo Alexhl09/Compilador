@@ -8,7 +8,7 @@
 import Foundation
 
 /// Operation stack  is a structure that has 2 properties, operands and operators.
-struct OperatorStack {
+public struct OperatorStack {
     /// Operators is a stack of Operators
     var operators : Stack<Operator>
     /// Operators is a stack of a tuple (String, TypeSymbol) String for the address and TypeSymbol for type

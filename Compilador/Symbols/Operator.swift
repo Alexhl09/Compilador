@@ -1,7 +1,7 @@
 
 
 /// Enum with all the possible Operators to be sent in quadruples
-enum Operator : Int {
+public enum Operator : Int {
     case sum
     case minus
     case multiply

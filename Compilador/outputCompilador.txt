@@ -325,7 +325,7 @@ Operands:
 ----------
     
 Last SymbolTable:
- [5659812911071409980: 
+ [4851900743903392735: 
 
    |===================================
    |     Identifier : main
@@ -341,17 +341,17 @@ Last SymbolTable:
 ]
 
 Constants: 
- Constant:[7008]     Address: 21010
-Constant:[2]        Address: 21001
-Constant:[7004]     Address: 21012
+ Constant:[1]        Address: 21000
 Constant:[10]       Address: 21004
-Constant:[6]        Address: 21003
-Constant:[7000]     Address: 21011
-Constant:[20]       Address: 21006
-Constant:[0]        Address: 21008
-Constant:[11]       Address: 21005
-Constant:[1]        Address: 21000
 Constant:[4]        Address: 21002
+Constant:[6]        Address: 21003
+Constant:[7004]     Address: 21012
+Constant:[7008]     Address: 21010
+Constant:[11]       Address: 21005
+Constant:[20]       Address: 21006
 Constant:[-1]       Address: 21009
+Constant:[2]        Address: 21001
+Constant:[7000]     Address: 21011
+Constant:[0]        Address: 21008
 Constant:[21]       Address: 21007
 

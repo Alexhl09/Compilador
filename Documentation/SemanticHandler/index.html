@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador - SemanticHandler</title>
+    <link rel="stylesheet" type="text/css" href="/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/">
+            <strong>
+                Compilador
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#semantichandler.globalfinalindex">global​Final​Index</a></li><li class="variable"><a href="#semantichandler.delegate">delegate</a></li><li class="variable"><a href="#semantichandler.quadruples">quadruples</a></li><li class="variable"><a href="#semantichandler.symboltable">symbol​Table</a></li><li class="variable"><a href="#semantichandler.jumpstack">jump​Stack</a></li><li class="variable"><a href="#semantichandler.operationstack">operation​Stack</a></li><li class="variable"><a href="#semantichandler.constants">constants</a></li><li class="variable"><a href="#semantichandler.functionasmainthread">function​AsMain​Thread</a></li><li class="variable"><a href="#semantichandler.memory">memory</a></li><li class="variable"><a href="#semantichandler.globalinfostack">global​Info​Stack</a></li><li class="variable"><a href="#semantichandler.constanstinfostack">constanst​Info​Stack</a></li><li class="variable"><a href="#semantichandler.addressarrays">address​Arrays</a></li><li class="variable"><a href="#semantichandler.description">description</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#semantichandler.insertsymboltost(_:_:_:_:_:params:)">insert​Symbol​ToST(_:​_:​_:​_:​_:​params:​)</a></li><li class="function"><a href="#semantichandler.insertarraytost(_:_:_:r:const:type:)">insert​Array​ToST(_:​_:​_:​r:​const:​type:​)</a></li><li class="function"><a href="#semantichandler.insertarraymultidimtost(_:_:r:const:type:_:kind:)">insert​Array​Multi​Dim​ToST(_:​_:​r:​const:​type:​_:​kind:​)</a></li><li class="function"><a href="#semantichandler.readonecellarray(_:)">read​One​Cell​Array(_:​)</a></li><li class="function"><a href="#semantichandler.assignarray(_:)">assign​Array(_:​)</a></li><li class="function"><a href="#semantichandler.startscope()">start​Scope()</a></li><li class="function"><a href="#semantichandler.endscope()">end​Scope()</a></li><li class="function"><a href="#semantichandler.addoperator(op:)">add​Operator(op:​)</a></li><li class="function"><a href="#semantichandler.addoperandbymemory(memoryaddress:type:)">add​Operand​ByMemory(memory​Address:​type:​)</a></li><li class="function"><a href="#semantichandler.newglobalvariable(s:size:)">new​Global​Variable(s:​size:​)</a></li><li class="function"><a href="#semantichandler.newlocalvariable(t:size:)">new​Local​Variable(t:​size:​)</a></li><li class="function"><a href="#semantichandler.newtemporaladdress(t:size:)">new​Temporal​Address(t:​size:​)</a></li><li class="function"><a href="#semantichandler.newconstantaddress(t:size:)">new​Constant​Address(t:​size:​)</a></li><li class="function"><a href="#semantichandler.addconstantinteger(_:size:saveoperand:)">add​Constant​Integer(_:​size:​save​Operand:​)</a></li><li class="function"><a href="#semantichandler.addconstantfloat(_:size:)">add​Constant​Float(_:​size:​)</a></li><li class="function"><a href="#semantichandler.addconstantdouble(_:size:)">add​Constant​Double(_:​size:​)</a></li><li class="function"><a href="#semantichandler.addconstantbool(_:size:)">add​Constant​Bool(_:​size:​)</a></li><li class="function"><a href="#semantichandler.addconstantstring(_:size:)">add​Constant​String(_:​size:​)</a></li><li class="function"><a href="#semantichandler.saveaddress(constant:address:)">save​Address(constant:​address:​)</a></li><li class="function"><a href="#semantichandler.lookupaddressconstanttable(value:)">look​UpAddress​Constant​Table(value:​)</a></li><li class="function"><a href="#semantichandler.addquadruple()">add​Quadruple()</a></li><li class="function"><a href="#semantichandler.foundmain()">found​Main()</a></li><li class="function"><a href="#semantichandler.addidasquadruple(_:)">add​IDAsQuadruple(_:​)</a></li><li class="function"><a href="#semantichandler.addquadruplewithternaryoperator()">add​Quadruple​With​Ternary​Operator()</a></li><li class="function"><a href="#semantichandler.colonternaryoperator()">colon​Ternary​Operator()</a></li><li class="function"><a href="#semantichandler.endternaryoperator()">end​Ternary​Operator()</a></li><li class="function"><a href="#semantichandler.addcondicional()">add​Condicional()</a></li><li class="function"><a href="#semantichandler.endcondicional()">end​Condicional()</a></li><li class="function"><a href="#semantichandler.fillquadruple(index:value:)">fill​Quadruple(index:​value:​)</a></li><li class="function"><a href="#semantichandler.addelse()">add​Else()</a></li><li class="function"><a href="#semantichandler.isarray(address:)">is​Array(address:​)</a></li><li class="function"><a href="#semantichandler.addprint()">add​Print()</a></li><li class="function"><a href="#semantichandler.addforeachrange(range:id:)">add​For​Each​Range(range:​id:​)</a></li><li class="function"><a href="#semantichandler.plusplusonerange(id:)">plusplus​One​Range(id:​)</a></li><li class="function"><a href="#semantichandler.endforeachrange(id:)">end​For​Each​Range(id:​)</a></li><li class="function"><a href="#semantichandler.savevaluevariable(id:)">save​Value​Variable(id:​)</a></li><li class="function"><a href="#semantichandler.generatequadruple()">generate​Quadruple()</a></li><li class="function"><a href="#semantichandler.generatequadrupleassigncellarray(symbol:withvalue:)">generate​Quadruple​Assign​Cell​Array(symbol:​with​Value:​)</a></li><li class="function"><a href="#semantichandler.counto()">count​O()</a></li><li class="function"><a href="#semantichandler.assigntopointer()">assign​ToPointer()</a></li><li class="function"><a href="#semantichandler.needconstantint(value:)">need​Constant​Int(value:​)</a></li><li class="function"><a href="#semantichandler.returnsymbolbyid(_:)">return​Symbol​ByID(_:​)</a></li><li class="function"><a href="#semantichandler.readid(_:)">read​ID(_:​)</a></li><li class="function"><a href="#semantichandler.readidmulti(_:)">read​IDMulti(_:​)</a></li><li class="function"><a href="#semantichandler.whilep1()">while​P1()</a></li><li class="function"><a href="#semantichandler.whilep2()">while​P2()</a></li><li class="function"><a href="#semantichandler.whilep3()">while​P3()</a></li><li class="function"><a href="#semantichandler.startfunction(_:)">start​Function(_:​)</a></li><li class="function"><a href="#semantichandler.setcurrentcuadruple()">set​Current​Cuadruple()</a></li><li class="function"><a href="#semantichandler.endfunction()">end​Function()</a></li><li class="function"><a href="#semantichandler.functioncall(_:args:)">function​Call(_:​args:​)</a></li><li class="function"><a href="#semantichandler.returnfunctions()">return​Functions()</a></li><li class="function"><a href="#semantichandler.fillinfostack(infostack:varsymboltype:size:)">fill​Info​Stack(info​Stack:​var​Symbol​Type:​size:​)</a></li><li class="function"><a href="#semantichandler.fillparcheg(t:funcname:)">fill​Parche​G(t:​func​Name:​)</a></li><li class="function"><a href="#semantichandler.fillparchegarrays(t:namearray:)">fill​Parche​GArrays(t:​name​Array:​)</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">Semantic​Handler</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">SemanticHandler</span> : <span class="type">CustomStringConvertible</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The SemanticHandler is an special classs that manages the semantic actions of the compiler.</p>
+
+</div>
+<div class="discussion">
+    <aside class="note" title="Note">
+    <p>This class is initilizated in the parser and uses the informacion of certail tokens or expresions to execute some functions</p>
+
+</aside>
+</div>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        <figure>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.49.3 (20211023.0002)
+ -->
+<!-- Pages: 1 -->
+<svg width="872pt" height="116pt"
+ viewBox="0.00 0.00 872.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 868,-112 868,4 -4,4"/>
+<!-- SemanticHandler -->
+<g id="node1" class="node class current">
+<title>SemanticHandler</title>
+<g id="a_node1"><a xlink:href="/SemanticHandler" xlink:title="SemanticHandler">
+<path fill="none" stroke="black" stroke-width="3" d="M528,-108C528,-108 336,-108 336,-108 330,-108 324,-102 324,-96 324,-96 324,-84 324,-84 324,-78 330,-72 336,-72 336,-72 528,-72 528,-72 534,-72 540,-78 540,-84 540,-84 540,-96 540,-96 540,-102 534,-108 528,-108"/>
+<text text-anchor="middle" x="432" y="-86.3" font-family="Menlo" font-size="14.00">SemanticHandler</text>
+</a>
+</g>
+</g>
+<!-- CustomStringConvertible -->
+<g id="node2" class="node unknown">
+<title>CustomStringConvertible</title>
+<path fill="none" stroke="black" d="M528,-36C528,-36 336,-36 336,-36 330,-36 324,-30 324,-24 324,-24 324,-12 324,-12 324,-6 330,0 336,0 336,0 528,0 528,0 534,0 540,-6 540,-12 540,-12 540,-24 540,-24 540,-30 534,-36 528,-36"/>
+<text text-anchor="middle" x="432" y="-14.3" font-family="Menlo" font-size="14.00">CustomStringConvertible</text>
+</g>
+<!-- SemanticHandler&#45;&gt;CustomStringConvertible -->
+<g id="edge1" class="edge conformsTo">
+<title>SemanticHandler&#45;&gt;CustomStringConvertible</title>
+<path fill="none" stroke="black" d="M432,-71.7C432,-63.98 432,-54.71 432,-46.11"/>
+<polygon fill="black" stroke="black" points="435.5,-46.1 432,-36.1 428.5,-46.1 435.5,-46.1"/>
+</g>
+</g>
+</svg>
+
+
+    <figcaption hidden>Inheritance graph for SemanticHandler.</figcaption>
+</figure>
+        <h3>Conforms To</h3>
+<dl>
+    <dt class="unknown"><code>CustomStringConvertible</code></dt>
+</dl>
+</section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="semantichandler.globalfinalindex">
+    <h3>
+        <code><a href="#semantichandler.globalfinalindex">global​Final​Index</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">globalFinalIndex</span> : <span class="type">Bool</span> = <span class="keyword">false</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The globalFinalIndex keeps track of the last instruction of global statements</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.delegate">
+    <h3>
+        <code><a href="#semantichandler.delegate">delegate</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">delegate</span> : <a href="/SemanticErrorDelegate"><span class="type">SemanticErrorDelegate</span></a>? = <span class="keyword">nil</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The delagate is used to send an error message with certain informacion to the user</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.quadruples">
+    <h3>
+        <code><a href="#semantichandler.quadruples">quadruples</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">quadruples</span> : [<a href="/Quadruple"><span class="type">Quadruple</span></a>] = [] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The array of quadruples generated during the compilation</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.symboltable">
+    <h3>
+        <code><a href="#semantichandler.symboltable">symbol​Table</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">symbolTable</span> : <a href="/SymbolTable"><span class="type">SymbolTable</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Symbol table that keeps track of each variable, function or constant declared in the program</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.jumpstack">
+    <h3>
+        <code><a href="#semantichandler.jumpstack">jump​Stack</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">jumpStack</span> : <a href="/Stack"><span class="type">Stack</span></a>&lt;<span class="type">Int</span>&gt; = [] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The jump stack keeps track of the qaudruples like GOTO, GOTOF, that needs to be filled when the statement has finished</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.operationstack">
+    <h3>
+        <code><a href="#semantichandler.operationstack">operation​Stack</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">operationStack</span> : <a href="/OperatorStack"><span class="type">OperatorStack</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The operationStack keeps track of the operands and operators found</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.constants">
+    <h3>
+        <code><a href="#semantichandler.constants">constants</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">constants</span>: [<span class="type">String</span>: <span class="type">Int</span>] = [:] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The constants is a dictionary that contains the address and the value to do not repeat the same address for the same value</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.functionasmainthread">
+    <h3>
+        <code><a href="#semantichandler.functionasmainthread">function​AsMain​Thread</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">functionAsMainThread</span> : <span class="type">String</span>? = <span class="keyword">nil</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The name of the current function to be reviewed</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.memory">
+    <h3>
+        <code><a href="#semantichandler.memory">memory</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">memory</span> : <a href="/VirtualMemorySemantic"><span class="type">VirtualMemorySemantic</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This is the memory class that handles the management of addresses depending on the kind of segment and the data type</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.globalinfostack">
+    <h3>
+        <code><a href="#semantichandler.globalinfostack">global​Info​Stack</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">globalInfoStack</span>: <a href="/InfoStack"><span class="type">InfoStack</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The globalInfoStack saves the number of addresses requested as global</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.constanstinfostack">
+    <h3>
+        <code><a href="#semantichandler.constanstinfostack">constanst​Info​Stack</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">constanstInfoStack</span> : <a href="/InfoStack"><span class="type">InfoStack</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The constanstInfoStack saves the number of addresses requested as constants</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.addressarrays">
+    <h3>
+        <code><a href="#semantichandler.addressarrays">address​Arrays</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">addressArrays</span>: [<span class="type">Int</span>:  <span class="type">Int</span>] = [:] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The addressArrays saves the address of each array and number of elements</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="semantichandler.description">
+    <h3>
+        <code><a href="#semantichandler.description">description</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">description</span>: <span class="type">String</span>  </body></html></code></pre>
+</div>
+</div>
+    </section>
+    <section id="methods">
+        <h2>Methods</h2>
+
+        <div role="article" class="function" id="semantichandler.insertsymboltost(_:_:_:_:_:params:)">
+    <h3>
+        <code><a href="#semantichandler.insertsymboltost(_:_:_:_:_:params:)">insert​Symbol​ToST(_:​_:​_:​_:​_:​params:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">insertSymbolToST</span>(<span class="keyword">_</span> <span class="variable">id</span> : <span class="type">NSString</span>, <span class="keyword">_</span> <span class="variable">constant</span>: <span class="type">Bool</span>, <span class="keyword">_</span> <span class="variable">array</span> : <span class="type">Bool</span>, <span class="keyword">_</span> <span class="variable">type</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a> = .<span class="variable">void</span>, <span class="keyword">_</span> <span class="variable">kind</span> : <a href="/Kind"><span class="type">Kind</span></a> = .<span class="variable">field</span>, <span class="variable">params</span>: [<a href="/Symbol"><span class="type">Symbol</span></a>] = []) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function inserts in the symbol table an identifier and its properties, like the type, kind, and more. If it wasn't possible to insert it to the symbol table, it sends an error indicating that the variable was already declared.</p>
+
+</div>
+<div class="discussion">
+    <aside class="note" title="Note">
+    <p>When it was inserted it asks for a local or global address in memory depending on the deepth of the symbol table</p>
+
+</aside>
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The identifier to be inserted in the symbolTable</p>
+</td>
+</tr>
+<tr>
+    <th>constant</th>
+    <td><code class="type">Bool</code></td>
+    <td><p>Add a flag indicating if the symbol is constant</p>
+</td>
+</tr>
+<tr>
+    <th>array</th>
+    <td><code class="type">Bool</code></td>
+    <td><p>Add a flag indicating if the symbol is an array</p>
+</td>
+</tr>
+<tr>
+    <th>type</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>Add the type of the symbol, by default is void</p>
+</td>
+</tr>
+<tr>
+    <th>kind</th>
+    <td><code class="type">Kind</code></td>
+    <td><p>Add the kind of the symbol (field or method), by default is a field</p>
+</td>
+</tr>
+<tr>
+    <th>params</th>
+    <td><code class="type">[Symbol]</code></td>
+    <td><p>The symbols that are received as parameters in case of a function, the default value is an empty array []</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.insertarraytost(_:_:_:r:const:type:)">
+    <h3>
+        <code><a href="#semantichandler.insertarraytost(_:_:_:r:const:type:)">insert​Array​ToST(_:​_:​_:​r:​const:​type:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">insertArrayToST</span>(<span class="keyword">_</span> <span class="variable">id</span> : <span class="type">NSString</span>, <span class="keyword">_</span> <span class="variable">dimension</span> : (<span class="type">NSNumber</span>, <span class="type">NSNumber</span>), <span class="keyword">_</span> <span class="variable">list</span>: <a href="/ArrayLinkedList"><span class="type">ArrayLinkedList</span></a>, <span class="variable">r</span>: <span class="type">Int</span>, <span class="variable">const</span> : <span class="type">Bool</span> = <span class="keyword">true</span>, <span class="variable">type</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>  = .<span class="variable">void</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function inserts in the symbol table a 2d array with identifier and its properties, like the type, kind, and more. If it wasn't possible to insert it to the symbol table, it sends an error indicating that the variable was already declared.</p>
+
+</div>
+<div class="discussion">
+    <aside class="note" title="Note">
+    <p>When it was inserted it asks for a local or global address in memory depending on the deepth of the symbol table</p>
+
+</aside>
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The identifier to be inserted in the symbolTable</p>
+</td>
+</tr>
+<tr>
+    <th>dimension</th>
+    <td><code class="type">(NSNumber, NSNumber)</code></td>
+    <td><p>The dimension of the array in case of a 2D array</p>
+</td>
+</tr>
+<tr>
+    <th>const</th>
+    <td><code class="type">Bool</code></td>
+    <td><p>Add a flag indicating if the symbol is constant</p>
+</td>
+</tr>
+<tr>
+    <th>type</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>Add the type of the symbol, by default is void</p>
+</td>
+</tr>
+<tr>
+    <th>list</th>
+    <td><code class="type">Array​Linked​List</code></td>
+    <td><p>The data structure that saves the nodes of each dimension to make the addresses linear</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.insertarraymultidimtost(_:_:r:const:type:_:kind:)">
+    <h3>
+        <code><a href="#semantichandler.insertarraymultidimtost(_:_:r:const:type:_:kind:)">insert​Array​Multi​Dim​ToST(_:​_:​r:​const:​type:​_:​kind:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">insertArrayMultiDimToST</span>(<span class="keyword">_</span> <span class="variable">id</span> : <span class="type">NSString</span>, <span class="keyword">_</span> <span class="variable">list</span>: <a href="/ArrayLinkedList"><span class="type">ArrayLinkedList</span></a>, <span class="variable">r</span>: <span class="type">Int</span>, <span class="variable">const</span> : <span class="type">Bool</span> = <span class="keyword">true</span>, <span class="variable">type</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>  = .<span class="variable">void</span>, <span class="keyword">_</span> <span class="variable">dimension</span> : (<span class="type">NSNumber</span>, <span class="type">NSNumber</span>) = (<span class="variable">NSNumber</span>(<span class="variable">value</span>: -<span class="number literal">1</span>), <span class="variable">NSNumber</span>(<span class="variable">value</span>: -<span class="number literal">1</span>)), <span class="variable">kind</span> : <a href="/Kind"><span class="type">Kind</span></a> = .<span class="variable">field</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function inserts in the symbol table a N dimension array with identifier and its properties, like the type, kind, and more. If it wasn't possible to insert it to the symbol table, it sends an error indicating that the variable was already declared.</p>
+
+</div>
+<div class="discussion">
+    <aside class="note" title="Note">
+    <p>When it was inserted it asks for a local or global address in memory depending on the deepth of the symbol table</p>
+
+</aside>
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The identifier to be inserted in the symbolTable</p>
+</td>
+</tr>
+<tr>
+    <th>dimension</th>
+    <td><code class="type">(NSNumber, NSNumber)</code></td>
+    <td><p>The dimension of the array in case of a 2D array</p>
+</td>
+</tr>
+<tr>
+    <th>const</th>
+    <td><code class="type">Bool</code></td>
+    <td><p>Add a flag indicating if the symbol is constant</p>
+</td>
+</tr>
+<tr>
+    <th>type</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>Add the type of the symbol, by default is void</p>
+</td>
+</tr>
+<tr>
+    <th>list</th>
+    <td><code class="type">Array​Linked​List</code></td>
+    <td><p>The data structure that saves the nodes of each dimension to make the addresses linear</p>
+</td>
+</tr>
+<tr>
+    <th>r</th>
+    <td><code class="type">Int</code></td>
+    <td><p>Number of total elements in the array</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.readonecellarray(_:)">
+    <h3>
+        <code><a href="#semantichandler.readonecellarray(_:)">read​One​Cell​Array(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">readOneCellArray</span>(<span class="keyword">_</span> <span class="variable">id</span> : <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function read a value to only one cell of an array. It adds the symbol and push it to the operands stack and finally generates the quadruple. At the end it saves the value of the final address in a temporal value.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The name of the array to be read</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.assignarray(_:)">
+    <h3>
+        <code><a href="#semantichandler.assignarray(_:)">assign​Array(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">assignArray</span>(<span class="keyword">_</span> <span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function assigns a value to one 2D array. It adds the symbol and push it to the operands stack and finally generates the quadruple.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The name of the array to be assigned</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.startscope()">
+    <h3>
+        <code><a href="#semantichandler.startscope()">start​Scope()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">startScope</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function creates a new node at the beginning of the symbol table (Implemeted as a linked list with dictionaries)</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.endscope()">
+    <h3>
+        <code><a href="#semantichandler.endscope()">end​Scope()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">endScope</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function removes the node first node of the symbol table</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.addoperator(op:)">
+    <h3>
+        <code><a href="#semantichandler.addoperator(op:)">add​Operator(op:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addOperator</span>(<span class="variable">op</span> : <a href="/Operator"><span class="type">Operator</span></a>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Adds a new operator to the operators stack</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>op</th>
+    <td><code class="type">Operator</code></td>
+    <td><p>The operator to be inserted in the operator stack</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addoperandbymemory(memoryaddress:type:)">
+    <h3>
+        <code><a href="#semantichandler.addoperandbymemory(memoryaddress:type:)">add​Operand​ByMemory(memory​Address:​type:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addOperandByMemory</span>(<span class="variable">memoryAddress</span>: <span class="type">Int</span>, <span class="variable">type</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>)  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Adds a new operand to the operands stack (a stack made of tuple (Operand, Type))</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>memory​Address</th>
+    <td><code class="type">Int</code></td>
+    <td><p>The operand to be inserted in the operands stack</p>
+</td>
+</tr>
+<tr>
+    <th>type</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>The type of the operand to be inserted in the operands stack</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.newglobalvariable(s:size:)">
+    <h3>
+        <code><a href="#semantichandler.newglobalvariable(s:size:)">new​Global​Variable(s:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">newGlobalVariable</span>(<span class="variable">s</span> : <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) -&gt; <span class="type">Int</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Ask to the memory for a new global address for a specific type</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>s</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>The type of the symbol</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.newlocalvariable(t:size:)">
+    <h3>
+        <code><a href="#semantichandler.newlocalvariable(t:size:)">new​Local​Variable(t:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">newLocalVariable</span>(<span class="variable">t</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) -&gt; <span class="type">Int</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Ask to the memory for a new local address for a specific type</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>t</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>The type of the symbol</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.newtemporaladdress(t:size:)">
+    <h3>
+        <code><a href="#semantichandler.newtemporaladdress(t:size:)">new​Temporal​Address(t:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">newTemporalAddress</span>(<span class="variable">t</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) -&gt; <span class="type">Int</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Ask to the memory for a new temporal address for a specific type</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>t</th>
+    <td><code class="type">Type​Symbol</code></td>
+    <td><p>The type of the symbol</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.newconstantaddress(t:size:)">
+    <h3>
+        <code><a href="#semantichandler.newconstantaddress(t:size:)">new​Constant​Address(t:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">newConstantAddress</span>(<span class="variable">t</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">size</span>: <span class="type">Int</span> = <span class="number literal">1</span>) -&gt; <span class="type">Int</span>  </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.addconstantinteger(_:size:saveoperand:)">
+    <h3>
+        <code><a href="#semantichandler.addconstantinteger(_:size:saveoperand:)">add​Constant​Integer(_:​size:​save​Operand:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addConstantInteger</span>(<span class="keyword">_</span> <span class="variable">number</span> :<span class="type">NSNumber</span>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>, <span class="variable">saveOperand</span> : <span class="type">Bool</span> = <span class="keyword">true</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look for the address of an specific value of integer, and save that as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>number</th>
+    <td><code class="type">NSNumber</code></td>
+    <td><p>The object number</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addconstantfloat(_:size:)">
+    <h3>
+        <code><a href="#semantichandler.addconstantfloat(_:size:)">add​Constant​Float(_:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addConstantFloat</span>(<span class="keyword">_</span> <span class="variable">number</span> : <span class="type">NSNumber</span>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look for the address of an specific value of float, and save that as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>number</th>
+    <td><code class="type">NSNumber</code></td>
+    <td><p>The object number</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addconstantdouble(_:size:)">
+    <h3>
+        <code><a href="#semantichandler.addconstantdouble(_:size:)">add​Constant​Double(_:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addConstantDouble</span>(<span class="keyword">_</span> <span class="variable">number</span> : <span class="type">NSNumber</span>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look for the address of an specific value of double, and save that as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>number</th>
+    <td><code class="type">NSNumber</code></td>
+    <td><p>The object number</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addconstantbool(_:size:)">
+    <h3>
+        <code><a href="#semantichandler.addconstantbool(_:size:)">add​Constant​Bool(_:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addConstantBool</span>(<span class="keyword">_</span> <span class="variable">number</span> : <span class="type">NSNumber</span>, <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look for the address of an specific value of bool, and save that as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>number</th>
+    <td><code class="type">NSNumber</code></td>
+    <td><p>The object number</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addconstantstring(_:size:)">
+    <h3>
+        <code><a href="#semantichandler.addconstantstring(_:size:)">add​Constant​String(_:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addConstantString</span>(<span class="keyword">_</span> <span class="variable">string</span> : <span class="type">NSString</span>,  <span class="variable">size</span> : <span class="type">Int</span> = <span class="number literal">1</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look for the address of an specific value of string, and save that as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>string</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The object nsstring</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>And optional value, that sets the number of spaces to take, by default is 1</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.saveaddress(constant:address:)">
+    <h3>
+        <code><a href="#semantichandler.saveaddress(constant:address:)">save​Address(constant:​address:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">saveAddress</span>(<span class="variable">constant</span>: <span class="keyword">Any</span>, <span class="variable">address</span>: <span class="type">Int</span>)  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Save address with a new constant and the address</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>constant</th>
+    <td><code class="type">Any</code></td>
+    <td><p>The value to be used as index in cosntant table</p>
+</td>
+</tr>
+<tr>
+    <th>address</th>
+    <td><code class="type">Int</code></td>
+    <td><p>The address of the value</p>
+</td>
+</tr>
+  </tbody>
+</table>
+  <h4>Returns</h4>
+  <p>An optional address for a value</p>
+
+</div>
+<div role="article" class="function" id="semantichandler.lookupaddressconstanttable(value:)">
+    <h3>
+        <code><a href="#semantichandler.lookupaddressconstanttable(value:)">look​UpAddress​Constant​Table(value:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">lookUpAddressConstantTable</span>(<span class="variable">value</span>: <span class="type">String</span>) -&gt; <span class="type">Int</span>?  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Look in the constant table for an address in a specified index</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>value</th>
+    <td><code class="type">String</code></td>
+    <td><p>The value to be searched in constant table</p>
+</td>
+</tr>
+  </tbody>
+</table>
+  <h4>Returns</h4>
+  <p>An optional address for a value</p>
+
+</div>
+<div role="article" class="function" id="semantichandler.addquadruple()">
+    <h3>
+        <code><a href="#semantichandler.addquadruple()">add​Quadruple()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addQuadruple</span>()  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function creates the quadruples for 2 operands.</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.foundmain()">
+    <h3>
+        <code><a href="#semantichandler.foundmain()">found​Main()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">foundMain</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When the main is found, if the globalFinalIndex flag was still false it creates the quadruple GOTO to main. Now it has been found main, it fills the GOTO quadruple.</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.addidasquadruple(_:)">
+    <h3>
+        <code><a href="#semantichandler.addidasquadruple(_:)">add​IDAsQuadruple(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addIDAsQuadruple</span>(<span class="keyword">_</span> <span class="variable">id</span> : <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function adds a symbol as an operand</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>The identifier of the symbol</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addquadruplewithternaryoperator()">
+    <h3>
+        <code><a href="#semantichandler.addquadruplewithternaryoperator()">add​Quadruple​With​Ternary​Operator()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addQuadrupleWithTernaryOperator</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function adds a GOTOF like an IF statement for ternary operations</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td></td>
+    <td><p>The identifier of the symbol</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.colonternaryoperator()">
+    <h3>
+        <code><a href="#semantichandler.colonternaryoperator()">colon​Ternary​Operator()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">colonTernaryOperator</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function adds a GOTO like an IF statement for ternary operations and fills the quadruple GOTOF for next statement</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td></td>
+    <td><p>The identifier of the symbol</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.endternaryoperator()">
+    <h3>
+        <code><a href="#semantichandler.endternaryoperator()">end​Ternary​Operator()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">endTernaryOperator</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>At the end of a ternary operator, we generare the quadruples of the operations</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.addcondicional()">
+    <h3>
+        <code><a href="#semantichandler.addcondicional()">add​Condicional()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addCondicional</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When a condition is added we get the last operand and it should be a boolean,
+In case of error, send a type mismatch
+Add the GOTOF with the result of the last operand
+Finally we add the current index of quadruple to the jump stack to resolve latter</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.endcondicional()">
+    <h3>
+        <code><a href="#semantichandler.endcondicional()">end​Condicional()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">endCondicional</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>At the end of a conditional we fill the GOTOF that was still pending</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.fillquadruple(index:value:)">
+    <h3>
+        <code><a href="#semantichandler.fillquadruple(index:value:)">fill​Quadruple(index:​value:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fillQuadruple</span>(<span class="variable">index</span>: <span class="type">Int</span>, <span class="variable">value</span> : <span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Fill Quadruple is a function that sets the &quot;result&quot; property of a quadruple</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>index</th>
+    <td><code class="type">Int</code></td>
+    <td><p>Index in the array of qaudruples to modify</p>
+</td>
+</tr>
+<tr>
+    <th>value</th>
+    <td><code class="type">String</code></td>
+    <td><p>Value to insert as result in quadruple</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addelse()">
+    <h3>
+        <code><a href="#semantichandler.addelse()">add​Else()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addElse</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>In case of else add a GOTO quadruple, add the current quadruple to be filled latter and fill the GOTOF that was created at the beginning of conditional</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.isarray(address:)">
+    <h3>
+        <code><a href="#semantichandler.isarray(address:)">is​Array(address:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">isArray</span>(<span class="variable">address</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This functions detects if an address is an array</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>address</th>
+    <td><code class="type">Int</code></td>
+    <td><p>Address to check if it is an array</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.addprint()">
+    <h3>
+        <code><a href="#semantichandler.addprint()">add​Print()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addPrint</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Add print is a function that creates the print quadruple in case of a single value, or multiple prints in case of an array</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.addforeachrange(range:id:)">
+    <h3>
+        <code><a href="#semantichandler.addforeachrange(range:id:)">add​For​Each​Range(range:​id:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">addForEachRange</span>(<span class="variable">range</span>: <span class="type">String</span>, <span class="variable">id</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function add the quadruples needed to evaluate a for each statement.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>range</th>
+    <td><code class="type">String</code></td>
+    <td><p>String ... if close range, ..&lt; if not close range</p>
+</td>
+</tr>
+<tr>
+    <th>id</th>
+    <td><code class="type">String</code></td>
+    <td><p>String with the identifier of the variable that is going to change its value during iteration</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.plusplusonerange(id:)">
+    <h3>
+        <code><a href="#semantichandler.plusplusonerange(id:)">plusplus​One​Range(id:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">plusplusOneRange</span>(<span class="variable">id</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>At the end we add 1 to the value of the id in the for each operation</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.endforeachrange(id:)">
+    <h3>
+        <code><a href="#semantichandler.endforeachrange(id:)">end​For​Each​Range(id:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">endForEachRange</span>(<span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Call plusplusOneRange and add the GOTO at the end of iteration to verify again the operations</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.savevaluevariable(id:)">
+    <h3>
+        <code><a href="#semantichandler.savevaluevariable(id:)">save​Value​Variable(id:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">saveValueVariable</span>(<span class="variable">id</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Given an identifier we get the symbol, add the symbol as an operand and finally the quadruple of assignment is generated</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">String</code></td>
+    <td><p>Identifier of variable that is going to be assigned</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.generatequadruple()">
+    <h3>
+        <code><a href="#semantichandler.generatequadruple()">generate​Quadruple()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">generateQuadruple</span>() <span class="keyword">throws</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>While the are operands and operators we take 2 operands ans 1 operator. Check if it is valid with the semanticCube and generate the quadruple. If there is an error an invalid operation message is sent throught the delegate.</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.generatequadrupleassigncellarray(symbol:withvalue:)">
+    <h3>
+        <code><a href="#semantichandler.generatequadrupleassigncellarray(symbol:withvalue:)">generate​Quadruple​Assign​Cell​Array(symbol:​with​Value:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">generateQuadrupleAssignCellArray</span>(<span class="variable">symbol</span>: <a href="/Symbol"><span class="type">Symbol</span></a>, <span class="variable">withValue</span>: <span class="type">Bool</span>) <span class="keyword">throws</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>In order to get at the end the memory address  of an array, we generate the verify quadruples and calculate the final position to jump to get the right address.
+At the end we add as an operand the pointer indicating which address we want to access.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>symbol</th>
+    <td><code class="type">Symbol</code></td>
+    <td><p>Array in which we are going to be calculaling the final address</p>
+</td>
+</tr>
+<tr>
+    <th>with​Value</th>
+    <td><code class="type">Bool</code></td>
+    <td><p>Flag that indicates if we are only reading or writing the address</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.counto()">
+    <h3>
+        <code><a href="#semantichandler.counto()">count​O()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">countO</span>() -&gt; <span class="type">Int</span></body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.assigntopointer()">
+    <h3>
+        <code><a href="#semantichandler.assigntopointer()">assign​ToPointer()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">assignToPointer</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When we want to assign a value to a pointer, it is set with this function
+That takes the last operands and operator to assign the result to the pointer</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.needconstantint(value:)">
+    <h3>
+        <code><a href="#semantichandler.needconstantint(value:)">need​Constant​Int(value:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">needConstantInt</span>(<span class="variable">value</span> : <span class="type">Int</span>) -&gt; <span class="type">Int</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When a constant for an integer is needed we look for it in the constant table, if it was already there, we sent the address
+If not a new address is requested</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>value</th>
+    <td><code class="type">Int</code></td>
+    <td><p>Value to get the address</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.returnsymbolbyid(_:)">
+    <h3>
+        <code><a href="#semantichandler.returnsymbolbyid(_:)">return​Symbol​ByID(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">returnSymbolByID</span>(<span class="keyword">_</span> <span class="variable">id</span>: <span class="type">String</span>) -&gt; <a href="/Symbol"><span class="type">Symbol</span></a></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>This function returns the symbol given a certain identifier</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.readid(_:)">
+    <h3>
+        <code><a href="#semantichandler.readid(_:)">read​ID(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">readID</span>(<span class="keyword">_</span> <span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>To read a simple variable the read operator is added and the quadruples are generated using the operator and the address to be read</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.readidmulti(_:)">
+    <h3>
+        <code><a href="#semantichandler.readidmulti(_:)">read​IDMulti(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">readIDMulti</span>(<span class="keyword">_</span> <span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>To read (input) a multidimensional array, the operator add is taken and add the symbol as operand, getting the final address of the array as pointer. Finally we create the read quadruple for that pointer</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.whilep1()">
+    <h3>
+        <code><a href="#semantichandler.whilep1()">while​P1()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">whileP1</span>()  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When the while operation starts, it is added to the jump stack to be filled latter</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.whilep2()">
+    <h3>
+        <code><a href="#semantichandler.whilep2()">while​P2()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">whileP2</span>()  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The GOTOF is added with the result of a boolean expression
+If the last expression was not a boolean it sends an error</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.whilep3()">
+    <h3>
+        <code><a href="#semantichandler.whilep3()">while​P3()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">whileP3</span>()  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>We create the GOTO to the beginning of the while and fill the quadruple that we left ath the begining with the GOTOF</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.startfunction(_:)">
+    <h3>
+        <code><a href="#semantichandler.startfunction(_:)">start​Function(_:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">startFunction</span>(<span class="keyword">_</span> <span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When a funtion starts the current function property is set to the id of the new function</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.setcurrentcuadruple()">
+    <h3>
+        <code><a href="#semantichandler.setcurrentcuadruple()">set​Current​Cuadruple()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">setCurrentCuadruple</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Saves the count of quadruples where all the functions begin</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.endfunction()">
+    <h3>
+        <code><a href="#semantichandler.endfunction()">end​Function()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">endFunction</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When a funtion is ended with create the endFunc quadruple
+And reset the local and temporal memory</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.functioncall(_:args:)">
+    <h3>
+        <code><a href="#semantichandler.functioncall(_:args:)">function​Call(_:​args:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">functionCall</span>(<span class="keyword">_</span> <span class="variable">idFunction</span> : <span class="type">NSString</span>, <span class="variable">args</span> : [(<span class="type">String</span>, <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>)]) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When a function is called, we get the id of the function and its arguments.
+Check the type of the arguments and the sign of the function and check if they are the same, if there is an error we send the bad params message through the delegate
+The era quadruple is generated and send all the args as params in several quadruples
+At the end creates the gosub rutine quadruple to start executing the function</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id​Function</th>
+    <td><code class="type">NSString</code></td>
+    <td><p>Identifier of the function</p>
+</td>
+</tr>
+<tr>
+    <th>args</th>
+    <td><code class="type">[(String, Type​Symbol)]</code></td>
+    <td><p>Address and Type of each argument</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.returnfunctions()">
+    <h3>
+        <code><a href="#semantichandler.returnfunctions()">return​Functions()</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">returnFunctions</span>() </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>When the function returns something we check taht the expression that is going to be sent is of the same type of the function
+Then generate return quadruple for the expression and in case of an array, we send all the values
+At the end generate the endFunc quadruple</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.fillinfostack(infostack:varsymboltype:size:)">
+    <h3>
+        <code><a href="#semantichandler.fillinfostack(infostack:varsymboltype:size:)">fill​Info​Stack(info​Stack:​var​Symbol​Type:​size:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fillInfoStack</span>(<span class="variable">infoStack</span>: <a href="/InfoStack"><span class="type">InfoStack</span></a>, <span class="variable">varSymbolType</span> : <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">size</span> : <span class="type">Int</span>)  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The information of the stack is filled adding the number of addresses to be used</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>info​Stack</th>
+    <td><code class="type">Info​Stack</code></td>
+    <td><p>stack to be filled</p>
+</td>
+</tr>
+<tr>
+    <th>var​Symbol​Table</th>
+    <td></td>
+    <td><p>The type of the symbol that is used</p>
+</td>
+</tr>
+<tr>
+    <th>size</th>
+    <td><code class="type">Int</code></td>
+    <td><p>Size to be reserved</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+<div role="article" class="function" id="semantichandler.fillparcheg(t:funcname:)">
+    <h3>
+        <code><a href="#semantichandler.fillparcheg(t:funcname:)">fill​Parche​G(t:​func​Name:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fillParcheG</span>(<span class="variable">t</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">funcName</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>At the end of a function call the value is saved in a temporal variable in order to used it latter.</p>
+
+</div>
+</div>
+<div role="article" class="function" id="semantichandler.fillparchegarrays(t:namearray:)">
+    <h3>
+        <code><a href="#semantichandler.fillparchegarrays(t:namearray:)">fill​Parche​GArrays(t:​name​Array:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fillParcheGArrays</span>(<span class="variable">t</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">nameArray</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-11-24T10:32:07-0600">November 24, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

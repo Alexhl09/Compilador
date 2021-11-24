@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador - SemanticErrorDelegate</title>
+    <link rel="stylesheet" type="text/css" href="/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/">
+            <strong>
+                Compilador
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#requirements">Requirements</a><ul><li class="function"><a href="#semanticerrordelegate.sendvariablerepeated(id:)">send​Variable​Repeated(id:​)</a></li><li class="function"><a href="#semanticerrordelegate.sendinvalidoperationbetween(t1:t2:)">send​Invalid​Operation​Between(t1:​t2:​)</a></li><li class="function"><a href="#semanticerrordelegate.sendundeclarevariable(id:)">send​Undeclare​Variable(id:​)</a></li><li class="function"><a href="#semanticerrordelegate.sendtypemismatch()">send​Type​Mismatch()</a></li><li class="function"><a href="#semanticerrordelegate.sendbadparametersforfunc(id:)">send​Bad​Parameters​For​Func(id:​)</a></li><li class="function"><a href="#semanticerrordelegate.faltanoperandos()">faltan​Operandos()</a></li><li class="function"><a href="#semanticerrordelegate.badjumpstackempty()">bad​Jump​Stack​Empty()</a></li><li class="function"><a href="#semanticerrordelegate.constantalreadyassigned(id:)">constant​Already​Assigned(id:​)</a></li><li class="function"><a href="#semanticerrordelegate.notarray(id:)">not​Array(id:​)</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Protocol</small>
+    <code class="name">Semantic​Error​Delegate</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">protocol</span> <span class="type">SemanticErrorDelegate</span>  </body></html></code></pre>
+</div>
+
+
+
+
+    <section id="requirements">
+        <h2>Requirements</h2>
+
+        <div role="article" class="function" id="semanticerrordelegate.sendvariablerepeated(id:)">
+    <h3>
+        <code>send​Variable​Repeated(id:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">sendVariableRepeated</span>(<span class="variable">id</span> : <span class="type">String</span>) </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.sendinvalidoperationbetween(t1:t2:)">
+    <h3>
+        <code>send​Invalid​Operation​Between(t1:​t2:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">sendInvalidOperationBetween</span>(<span class="variable">t1</span> : <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>, <span class="variable">t2</span>: <a href="/TypeSymbol"><span class="type">TypeSymbol</span></a>) </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.sendundeclarevariable(id:)">
+    <h3>
+        <code>send​Undeclare​Variable(id:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">sendUndeclareVariable</span>(<span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.sendtypemismatch()">
+    <h3>
+        <code>send​Type​Mismatch()</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">sendTypeMismatch</span>() </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.sendbadparametersforfunc(id:)">
+    <h3>
+        <code>send​Bad​Parameters​For​Func(id:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">sendBadParametersForFunc</span>(<span class="variable">id</span>: <span class="type">NSString</span>) </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.faltanoperandos()">
+    <h3>
+        <code>faltan​Operandos()</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">faltanOperandos</span>() </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.badjumpstackempty()">
+    <h3>
+        <code>bad​Jump​Stack​Empty()</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">badJumpStackEmpty</span>() </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.constantalreadyassigned(id:)">
+    <h3>
+        <code>constant​Already​Assigned(id:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">constantAlreadyAssigned</span>(<span class="variable">id</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="function" id="semanticerrordelegate.notarray(id:)">
+    <h3>
+        <code>not​Array(id:​)</code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">func</span> <span class="function">notArray</span>(<span class="variable">id</span>: <span class="type">String</span>) </body></html></code></pre>
+</div>
+</div>
+    </section>
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-11-24T10:32:07-0600">November 24, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

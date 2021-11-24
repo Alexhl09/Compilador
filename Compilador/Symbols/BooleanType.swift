@@ -8,7 +8,7 @@
 import Foundation
 
 /// Boolean type has 2 possible values true or false
-enum BooleanType : Int {
+public enum BooleanType : Int {
     case T = 1
     case F = 0
 }
