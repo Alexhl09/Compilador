@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-enum TypeSymbol : Int {
+/// Enum with all the possible data types supported by the compiler
+public enum TypeSymbol : Int {
     case void
     case integer
     case string

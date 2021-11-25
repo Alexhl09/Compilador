@@ -1,0 +1,638 @@
+commit d703c4db3017d39b626f83f8c05a0155783fd14b
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Mon Nov 22 14:32:51 2021 -0600
+
+    adds assets
+
+commit 42dc9a04bcce1dea1a4802d55aaf0c2d392f0906
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Mon Nov 22 12:49:06 2021 -0600
+
+    fixes smartquotation error
+
+commit 5518ab76765018375c501f633ac791788ffcaba1
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 21 21:33:33 2021 -0600
+
+    Fixed iOS
+
+commit 5d47e136d182c320d1dca4c4351fdfe630330ad7
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 21 20:21:15 2021 -0600
+
+    Fixed bools comparison
+
+commit 254a126ea3aa1ecf5cdcdc5647f37878000109da
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 21 20:14:29 2021 -0600
+
+    Fixed bools comparison
+
+commit 252676facbf6ed08ad80551a0ed786b8a5fa58b1
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 21 18:17:31 2021 -0600
+
+    Fixed read arrays
+
+commit a84d530e90332f7b95bf18397c8c008b5a63e561
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 21 12:31:41 2021 -0600
+
+    iPadOs verified
+
+commit 9ef03c476bc471dd9a9833b40010454fada97aee
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 20 19:22:46 2021 -0600
+
+    Doc support
+
+commit a24ead6563da1a9eee7d5249cd0c0f1f3cadf325
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 20 18:29:05 2021 -0600
+
+    Added fixes
+
+commit 66a44fc4afa8221ed75abb5f4bcc87f57a8ed801
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 20 15:01:44 2021 -0600
+
+    Adapted to ipadOS
+
+commit 45b60262d578bf1c0848a033f476d04f1de6d50a
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 20 14:50:22 2021 -0600
+
+    Added stdin
+
+commit 0515ba0676ca184bfe03399c4225a2cf1d5131f3
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Nov 19 22:47:07 2021 -0600
+
+    Added target swiftui
+
+commit 0f0790905231e6214bcb142541cadba8c951157e
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Nov 19 18:34:12 2021 -0600
+
+    Added input ,
+
+commit 0b5912ebc171aa0e78592abee9ddb1ee1053c9f4
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Nov 19 14:00:55 2021 -0600
+
+    Added input quadruplke
+
+commit e4a72dca8e1ab80c46f7f1164eb67c8a3e389e60
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Nov 17 01:48:27 2021 -0600
+
+    Added more examples
+
+commit 5be808d19e911adbc9b107d72ab4933a7cadb4a5
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Nov 16 19:21:22 2021 -0600
+
+    return arrays
+
+commit b993dd528b55a632ce2df3c40414bd1569d3be00
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Nov 16 15:20:35 2021 -0600
+
+    Added accept arrays as params
+
+commit 1dc5f3a9bbb9933ebba2ef441468a9496ba7e569
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Nov 16 14:49:44 2021 -0600
+
+    Added return fibonacci
+
+commit 6600cc9202f240cde2233a7d5f32f90478e48f25
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Nov 15 20:10:26 2021 -0600
+
+    Added fibonacci example
+
+commit c531d6d26388c27c54fc42524dc3eb6ca27da24e
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Nov 15 20:08:53 2021 -0600
+
+    Added fibonacci example
+
+commit 24417269d173749d5f26a8d61a4e5192b9a182d1
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Nov 15 16:13:00 2021 -0600
+
+    Fix bug arrays 3 or more dim
+
+commit ba3f12b6f5c4ea862c473d2cdd7e32549e786df2
+Merge: 7cbb805 a6ce7d1
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Nov 15 15:42:28 2021 -0600
+
+    Merge branch 'main' of github.com:Alexhl09/Compilador
+
+commit 7cbb8056269eb3885203431b58531499f7606479
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Nov 15 15:42:23 2021 -0600
+
+    Fixed print
+
+commit a6ce7d15f0d102d03ddda3d71d86a91f26143e30
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Mon Nov 15 15:41:02 2021 -0600
+
+    verify
+
+commit fb9e30679acf8222d42575ee76467f4f71226d33
+Author: Juan Pablo Vargas Rodriguez <jpvargas59@gmail.com>
+Date:   Sun Nov 14 22:03:19 2021 -0600
+
+    Update README.md
+
+commit 422eb359fa92d8231460f3c5a7ea764cd1a0d2d5
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 15:16:31 2021 -0600
+
+    Fixed bug cahrs
+
+commit c1c201d8f5731885402ddfb9bb46093c0ac9ac6a
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 11:38:05 2021 -0600
+
+    Added prints arrays
+
+commit d7980f78241422da5bffcf0d6cd56c018810f4ca
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 11:35:39 2021 -0600
+
+    Added prints arrays
+
+commit 0488aa94ca48fdaebb87ca9364dd21d96dac0777
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 10:50:04 2021 -0600
+
+    Added array chars
+
+commit 3084e2bc6a4c445d04e7b24ac8e38a1149d5c315
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 02:12:50 2021 -0600
+
+    Stop exceution in problem
+
+commit da068015c0e0ddb7004ca23b06c268323fb3fbc8
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 02:04:13 2021 -0600
+
+    Checked arrays as var
+
+commit de29347aec17cd8711cfb84dfbf184a84826979f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 14 01:44:42 2021 -0600
+
+    Reviewed whiles and fors
+
+commit 471f5ce46779e7583f4935e9e61c71c617067993
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sat Nov 13 21:33:49 2021 -0600
+
+    adds gotoNextQuad
+
+commit 4c3376abbc365ee06401c2d5440dc2ba55b40bac
+Merge: cfc7cd2 7e32e2e
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sat Nov 13 21:29:27 2021 -0600
+
+    Merge remote-tracking branch 'refs/remotes/origin/main'
+    
+    Conflicts:
+            Compilador/VirtualMachine/VirtualMachine.swift
+
+commit 7e32e2e0fed6eb2086295eba405abf89cd30e60f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 13 21:27:30 2021 -0600
+
+    Added func stamenets vm and gotos
+
+commit cfc7cd281c216c3269d2bfee58addb280d04f667
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sat Nov 13 21:27:18 2021 -0600
+
+    adds bool operations
+
+commit 650d59f1915f94290c06139b103b176dfef8e5b2
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Nov 12 10:50:41 2021 -0600
+
+    rrayTest[1][1][array[array[0]]] = 3.4; working
+
+commit 83ae2eb2a5e354479fd034592ac2c30eaed6c58a
+Merge: ad5e5fa c88474a
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Thu Nov 11 20:06:50 2021 -0600
+
+    Merge branch 'main' of github.com:Alexhl09/Compilador
+
+commit ad5e5fa97f2b5621f591c9832958a8deca977d1c
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Thu Nov 11 20:06:38 2021 -0600
+
+    Parche g added
+
+commit c88474af94e8ef7fa8f4069e2e114094ef31806c
+Author: Juan Pablo Vargas Rodriguez <jpvargas59@gmail.com>
+Date:   Mon Nov 8 22:51:07 2021 -0600
+
+    Update README.md
+
+commit 2ac5fe3fcbebaff16e3c7ac882db7ed61cf5ad0f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Nov 7 23:21:02 2021 -0600
+
+    Save value in local memory virtual machine
+
+commit 306fbf6a590b1b64e7eca939b8b14c3d19d5f64b
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sun Nov 7 18:33:29 2021 -0600
+
+    adds globalInfoStack and fixes temporalInfoStack
+
+commit 6c4de39529cc7bd70fb07064b0a771624f549fd4
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sun Nov 7 18:23:09 2021 -0600
+
+    adds infoStack to symbol and counts each symbolType per function
+
+commit e628ebff89ccc9fe2d63acbea3784ca124b33d45
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sun Nov 7 17:59:26 2021 -0600
+
+    fixes typo
+
+commit 34f622c4e8bcbefe79e39686972d765469ed1c1c
+Author: Juan Pablo <jpvargas59@gmail.com>
+Date:   Sun Nov 7 17:56:21 2021 -0600
+
+    adds pointer memory block
+
+commit bf00104e5adafd986763ddd05a6e5626e34594a3
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 6 23:07:02 2021 -0600
+
+    Arrays first part
+
+commit cd8c837dce05464c671a698989b326b66ffc20a7
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 6 14:34:19 2021 -0600
+
+    Arrays 2D working
+
+commit fe4d297cacb62a3cebab98d505b3b2a0fca84704
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Nov 6 14:21:27 2021 -0600
+
+    Assign and declare arrays
+
+commit 706637a0ffe60c1c077864dce46f88baf91854de
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Nov 3 21:05:03 2021 -0600
+
+    Fixed args and params
+
+commit 923608bc85491422cb9bd8caed0799ab052a2755
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Oct 25 18:42:47 2021 -0500
+
+    Added parameters and return quadruples
+
+commit 07ecf2dbc5b607a4e9cf2f71600b4bc32b33dd97
+Author: Juan Pablo Vargas Rodriguez <jpvargas59@gmail.com>
+Date:   Sun Oct 24 20:38:24 2021 -0500
+
+    Update README.md
+
+commit 128ed15550ea0517dc3a39da1552ec377851a4fa
+Author: jpvargas <xp4230598>
+Date:   Sun Oct 24 20:32:43 2021 -0500
+
+    adds code generation for loops
+
+commit d31384e354a6f2600c392b807b066fb157d1868f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 23 14:55:56 2021 -0500
+
+    Added return function, not fully implemented
+
+commit 2d977a400e350f8c4e449fe6dc1809097b81c64e
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 23 14:36:45 2021 -0500
+
+    Added era operator
+
+commit 6a0590a0c604fe3a70637e17e4b3cc0d8c810b6f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 23 14:17:01 2021 -0500
+
+    Added funcend quadruple
+
+commit c101c8196d92bcde462253a42ebb2616604168ff
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Oct 22 23:43:22 2021 -0500
+
+    Added comments
+
+commit ebaf458c4ff876a2e92b7b749ae19e1332b910f9
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 20 23:37:11 2021 -0500
+
+    Fix bug bool isntead of char
+
+commit 5d373c7540a91b29a1e4a993fe1b06f7eb2fafcf
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 20 22:46:27 2021 -0500
+
+    Added goto main
+
+commit 69e9b37643a0ff69b99c1631e42a71993b2b51bb
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 20 22:35:34 2021 -0500
+
+    Fixed bug
+
+commit 93b4b3087511dde659878e831d1a0e73164a594d
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 20 19:49:49 2021 -0500
+
+    Subtitute stacks operands and type with tuple (operand, type)
+
+commit 7258e0a796f719ac9033029e40817be2f3018e0e
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 20 19:22:25 2021 -0500
+
+    Added constant table
+
+commit 65e348a3c88928475baa491d379fb29f332aa223
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 19 23:49:05 2021 -0500
+
+    Added read quadruple
+
+commit 229dbe2fceb28bda0a6b8cf7b13fcb89e4108348
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 19 23:27:50 2021 -0500
+
+    Added write file
+
+commit a11b85465770692b06e999afed75f60900feaaba
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 19 21:52:00 2021 -0500
+
+    Added ternary operator and for in 0..number
+
+commit c29e36112a41d01e2ca8255716be0b919f7446c3
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Oct 17 16:58:14 2021 -0500
+
+    Fixed semantic conditional
+
+commit a4a553b21e84852923e1325f4c6bdc73ee7d36ed
+Author: Juan Pablo Vargas Rodriguez <jpvargas59@gmail.com>
+Date:   Sat Oct 16 18:32:19 2021 -0500
+
+    updated readme for third delivery
+
+commit 33f5bc7c87704fa932143d4ef06fa7d57b201611
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 16 18:25:43 2021 -0500
+
+    Added Quadruples for conditional statements
+
+commit fbda252ea39d0366d1163e0e264249aba76af669
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 16 14:33:02 2021 -0500
+
+    Added logic concidionals
+
+commit 4557b9a4e5e793d76873f7fbf2a8982670e05acd
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Oct 15 21:30:13 2021 -0500
+
+    Added virtualMemory class
+
+commit 7efa79e532977e1a5fb772ec542c9f6b6333575b
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 13 21:04:59 2021 -0500
+
+    Added exceptions and corrected syntax
+
+commit a976d9500fe246c37ef600028f587ceaf7ed0db7
+Merge: 8c343c0 054fa4d
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 12 22:53:35 2021 -0500
+
+    Merge branch 'main' of github.com:Alexhl09/Compilador
+
+commit 8c343c011e8d6667f53101a60a2a90814def7a85
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 12 22:53:21 2021 -0500
+
+    Added basic quadruples
+
+commit 054fa4d3aed3a2c1509561ac52fdb4adb5554e7c
+Author: Alexhl09 <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 20:06:41 2021 -0500
+
+    Update README.md
+    
+    Added second delivery text
+
+commit ac4c8ecf62b7892d75141583c4b3438c3e1bc257
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 19:59:22 2021 -0500
+
+    added semanticCube
+
+commit bdec31e00f8a9e8c08cc036be98a073a058b9bb6
+Merge: 5b394de d6cda96
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 19:58:18 2021 -0500
+
+    Merge remote-tracking branch 'refs/remotes/origin/main'
+    
+    Conflicts:
+            .DS_Store
+
+commit 5b394deb2b9c9a78039896af8ca26779509c8a48
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 19:57:53 2021 -0500
+
+    added semanticCube
+
+commit d6cda967acc6d876d679ec92fd2f37f93503814d
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 9 19:52:25 2021 -0500
+
+    Added new diagrams
+
+commit 8d06da7d7f406ab9acfc50fc6169f4db4dc16b97
+Merge: 814e44d 4529792
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 9 18:33:47 2021 -0500
+
+    Added JP function
+
+commit 814e44d9e1740d009a46572159a1b0a7116bc646
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 9 18:32:40 2021 -0500
+
+    Added JP function
+
+commit 3751042deda8570089725f0a01d2130d87af50e3
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 9 18:32:24 2021 -0500
+
+    Added JP function
+
+commit 4529792f9eb445187e3494656b686b52717792c8
+Merge: 53f4d19 39282d7
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 18:23:45 2021 -0500
+
+    Merge branch 'main' of github.com:Alexhl09/Compilador
+
+commit 53f4d19d2c35415a6d259c5909afdf464750c3c7
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 9 18:21:02 2021 -0500
+
+    added symbol table and semanticCube
+
+commit 39282d700d1ee31839644096014d2943ece23cfc
+Author: jpvargas <xp4230598>
+Date:   Fri Oct 8 22:08:45 2021 -0500
+
+    Added file reading function for JP
+
+commit 70332313c680703e333ea6c13ebaf7041a806f7f
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Fri Oct 8 21:24:13 2021 -0500
+
+    Added functions to st
+
+commit 26aef5614b359fbfd7de073f7e457536b4c6d15a
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Thu Oct 7 11:57:14 2021 -0500
+
+    Added symbol table and add variables to st
+
+commit 8a102966938a152313084b029a7b9c1a93ca9d18
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Wed Oct 6 23:57:51 2021 -0500
+
+    Added symbol table and add variables to st
+
+commit 04d54615d23f8738ddf2f780554e41e0adedd66a
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 5 16:39:07 2021 -0500
+
+    Added symbol table
+
+commit 4381b0289d9a366a81f64c35cfd7b3d7d6bfad23
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Tue Oct 5 15:00:15 2021 -0500
+
+    Added precdence % in yacc
+
+commit ab020860c7f89a12a7a74d4a0af28988a9efab41
+Author: Juan Pablo Vargas Rodriguez <jpvargas59@gmail.com>
+Date:   Sat Oct 2 23:14:03 2021 -0500
+
+    Update README.md
+
+commit 2a7b50f403c6176f44eeb7db2bfa5e5a5508eeea
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 2 22:47:25 2021 -0500
+
+    Added STR token
+
+commit ef4bffd2594891f8b4d9f1727bb659384bd65f36
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 2 22:27:08 2021 -0500
+
+    Added diagrams
+
+commit 18208bff062c6e30163bc01dc38fb6e03fa54b3d
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 2 22:25:59 2021 -0500
+
+    Added diagrams
+
+commit adf2046f09d0ad98cf34856566d76dc194103e18
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Oct 2 22:12:29 2021 -0500
+
+    Fixed bugs
+
+commit efdbebea5894a32f21bf82c98750060f92a4b187
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 2 15:21:33 2021 -0500
+
+    added missing FOR token
+
+commit 589d5d2fb4b6a4ed9bdf4ca181fbd0ff3d1c2838
+Author: jpvargas <xp4230598>
+Date:   Sat Oct 2 15:21:13 2021 -0500
+
+    Added CompilerParser basic rules
+
+commit efb7b0dca84aef0773870a0e00b2ee2d3310f7c1
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Sep 27 12:28:46 2021 -0500
+
+    Added
+
+commit 16075e872dc9946a9ad0ce19079d62e5f029bccc
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Mon Sep 27 11:59:14 2021 -0500
+
+    Added null token
+
+commit 65da6da5840e9727754cfa653eab34a32397e996
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Sep 26 23:23:36 2021 -0500
+
+    Added token
+
+commit 3c9024947ff6c3092a3085dac36f07e084386670
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Sep 26 23:03:50 2021 -0500
+
+    Added ? token
+
+commit 23dede91cd726873076075bd7a6a9c327c4fd717
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sun Sep 26 22:19:13 2021 -0500
+
+    Added lexer
+
+commit 856b8ed41f0f56103f9e87070ab3b887fdcd99e4
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Sep 25 21:52:37 2021 -0500
+
+    Added test file
+
+commit de54b9af372aea3e1cb3c7c1142de3339d3aac8e
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Sep 25 15:39:52 2021 -0500
+
+    Added gitignore
+
+commit 309aca0dd470184d0ee96a39fad9af5805aeff6b
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Sep 25 15:38:53 2021 -0500
+
+    Added xcode project
+
+commit 162ee6f022f66d750386a9c1a6dba37483d12e77
+Author: Alejandro Hernández López <alexhl1999@hotmail.com>
+Date:   Sat Sep 25 15:37:18 2021 -0500
+
+    first commit

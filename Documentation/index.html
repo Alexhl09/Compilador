@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador - Compilador</title>
+    <link rel="stylesheet" type="text/css" href="/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="/">
+            <strong>
+                Compilador
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#classes">Classes</a></li><li><a href="#structures">Structures</a></li><li><a href="#enumerations">Enumerations</a></li><li><a href="#protocols">Protocols</a></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+                <section id="classes">
+        <h2>Classes</h2>
+        <dl>
+            <dt class="class">
+    <a href="/SemanticHandler" title="class - SemanticHandler">
+        Semantic​Handler
+    </a>
+</dt>
+<dd>
+    <p>The SemanticHandler is an special classs that manages the semantic actions of the compiler.</p>
+
+</dd>
+<dt class="class">
+    <a href="/VirtualMemorySemantic" title="class - VirtualMemorySemantic">
+        Virtual​Memory​Semantic
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="class">
+    <a href="/ArrayNode" title="class - ArrayNode">
+        Array​Node
+    </a>
+</dt>
+<dd>
+    <p>This class represents the nodes of the linked list generated to be used to keep track of the dimension of a multidimensional array</p>
+
+</dd>
+<dt class="class">
+    <a href="/Symbol" title="class - Symbol">
+        Symbol
+    </a>
+</dt>
+<dd>
+    <p>The symbol is one object that encapsulates the information of something that has been declared with an identifier.
+It could be a variable, constant, array, or a function. It constains all the information needed to execute some operations in the semantic analysis</p>
+
+</dd>
+<dt class="class">
+    <a href="/Node" title="class - Node">
+        Node
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="class">
+    <a href="/InfoStack" title="class - InfoStack">
+        Info​Stack
+    </a>
+</dt>
+<dd>
+    
+</dd>
+        </dl>
+    </section>
+    <section id="structures">
+        <h2>Structures</h2>
+        <dl>
+            <dt class="structure">
+    <a href="/OperatorStack" title="structure - OperatorStack">
+        Operator​Stack
+    </a>
+</dt>
+<dd>
+    <p>Operation stack  is a structure that has 2 properties, operands and operators.</p>
+
+</dd>
+<dt class="structure">
+    <a href="/Quadruple" title="structure - Quadruple">
+        Quadruple
+    </a>
+</dt>
+<dd>
+    <p>Struct that saves 4 elements, arg1, arg2, op and result. Basic quadruple</p>
+
+</dd>
+<dt class="structure">
+    <a href="/Queue" title="structure - Queue">
+        Queue
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="/Stack" title="structure - Stack">
+        Stack
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="/ArrayLinkedList" title="structure - ArrayLinkedList">
+        Array​Linked​List
+    </a>
+</dt>
+<dd>
+    <p>The arrays has a linked list with node representing the information of each dimension.</p>
+
+</dd>
+<dt class="structure">
+    <a href="/ArrayLinkedList_Index" title="structure - ArrayLinkedList.Index">
+        Array​Linked​List.​Index
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="/SymbolTable" title="structure - SymbolTable">
+        Symbol​Table
+    </a>
+</dt>
+<dd>
+    <p>Symbol Table is a linked list of node, each node representing one scope.
+Each node has a dictionary that keeps track of each symbol saved</p>
+
+</dd>
+<dt class="structure">
+    <a href="/SymbolTable_Index" title="structure - SymbolTable.Index">
+        Symbol​Table.​Index
+    </a>
+</dt>
+<dd>
+    
+</dd>
+        </dl>
+    </section>
+    <section id="enumerations">
+        <h2>Enumerations</h2>
+        <dl>
+            <dt class="enumeration">
+    <a href="/ErrorCompiler" title="enumeration - ErrorCompiler">
+        Error​Compiler
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="/BooleanType" title="enumeration - BooleanType">
+        Boolean​Type
+    </a>
+</dt>
+<dd>
+    <p>Boolean type has 2 possible values true or false</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="/Kind" title="enumeration - Kind">
+        Kind
+    </a>
+</dt>
+<dd>
+    <p>Kind is an enum with 2 possible values metod or field</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="/Operator" title="enumeration - Operator">
+        Operator
+    </a>
+</dt>
+<dd>
+    <p>Enum with all the possible Operators to be sent in quadruples</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="/TypeSymbol" title="enumeration - TypeSymbol">
+        Type​Symbol
+    </a>
+</dt>
+<dd>
+    <p>Enum with all the possible data types supported by the compiler</p>
+
+</dd>
+        </dl>
+    </section>
+    <section id="protocols">
+        <h2>Protocols</h2>
+        <dl>
+            <dt class="protocol">
+    <a href="/QueueProtocol" title="protocol - QueueProtocol">
+        Queue​Protocol
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="protocol">
+    <a href="/SemanticErrorDelegate" title="protocol - SemanticErrorDelegate">
+        Semantic​Error​Delegate
+    </a>
+</dt>
+<dd>
+    
+</dd>
+        </dl>
+    </section>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-11-24T10:32:07-0600">November 24, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

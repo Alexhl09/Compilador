@@ -54,6 +54,17 @@ public struct Stack<Element> {
             self.storage = first + last
         }
     }
+    
+    public mutating func reverseTop(n: Int){
+
+        if(n > self.size()){
+            self.storage.reverse()
+        }else{
+            let top = self.storage.dropFirst(size() - n).reversed()
+            let bottom : [Element] = self.storage.dropLast(n)
+            self.storage = bottom + top
+        }
+    }
 }
 
 extension Stack: CustomStringConvertible {

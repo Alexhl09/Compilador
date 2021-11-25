@@ -6,7 +6,9 @@
 //
 
 import Foundation
-enum BooleanType : Int {
+
+/// Boolean type has 2 possible values true or false
+public enum BooleanType : Int {
     case T = 1
     case F = 0
 }

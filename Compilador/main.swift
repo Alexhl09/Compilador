@@ -10,7 +10,7 @@ import Foundation
 print("Nombre archivo: ")
 
 // let file = readLine()
-let file = "smallest.aj"
+let file = "matrixMulti.aj"
 let p = readFromFile(file ?? "")
 let stream = CompilerStream.init(string: p)
 let lex = CompilerLex.init(stream: stream)

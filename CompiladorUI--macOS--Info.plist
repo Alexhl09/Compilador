@@ -6,7 +6,9 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>Icon</string>
+			<string>AJ_1024</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>AJ File</string>
 			<key>CFBundleTypeRole</key>
@@ -17,7 +19,10 @@
 			<array>
 				<string>alex.com.CompiladorUI.aj</string>
 			</array>
+			<key>NSDocumentClass</key>
+			<string>NSDocument</string>
 		</dict>
+		<dict/>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
@@ -30,11 +35,11 @@
 			<key>UTTypeDescription</key>
 			<string>AJ Programming language</string>
 			<key>UTTypeIconFile</key>
-			<string>Icon</string>
+			<string></string>
 			<key>UTTypeIcons</key>
 			<dict>
 				<key>UTTypeIconBackgroundName</key>
-				<string>swift</string>
+				<string></string>
 				<key>UTTypeIconBadgeName</key>
 				<string>Icon</string>
 				<key>UTTypeIconText</key>
@@ -62,11 +67,11 @@
 			<key>UTTypeDescription</key>
 			<string>AJ Programming language</string>
 			<key>UTTypeIconFile</key>
-			<string>Icon</string>
+			<string></string>
 			<key>UTTypeIcons</key>
 			<dict>
 				<key>UTTypeIconBackgroundName</key>
-				<string>swift</string>
+				<string></string>
 				<key>UTTypeIconBadgeName</key>
 				<string>Icon</string>
 				<key>UTTypeIconText</key>

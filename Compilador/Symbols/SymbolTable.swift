@@ -7,21 +7,38 @@
 
 import Foundation
 
-
+/**
+    The symbol is one object that encapsulates the information of something that has been declared with an identifier.
+ It could be a variable, constant, array, or a function. It constains all the information needed to execute some operations in the semantic analysis
+ */
 public class Symbol {
+    /// The line numer is the line in which the symbol is declared
     var lineNumber : UInt16
+    /// The identifier is the id of the symbol
     var identifier: String
+    /// The address given by the compiler during the semantic analysis
     var address: Int
+    /// This property indicates if the symbol is a function or variable
     var kind : Kind
+    /// The type indicates if the data type
     var type: TypeSymbol
+    /// Indicates if the symbol is constant
     var constant : Bool
+    /// Indicates of the symbol is an array
     var array : Bool
+    /// If the symbol is an array it has a tuple with the dimensions in case of a 2D array
     var dimension2D : (Int, Int)?
+    /// In case of an array it contains the information of all the dimensions in a LinkedList
     var arrayList : ArrayLinkedList?
+    /// Indicates oif the symbol has been assigned
     var assigned : Bool
+    /// The params given in case of a function
     var params : [Symbol] = []
+    /// The localInfoStack of a function saves the value fo number of local addresses in function
     var localInfoStack: InfoStack = InfoStack()
+    /// The localInfoStack of a function saves the value fo number of temporal addresses in function
     var temporalInfoStack: InfoStack = InfoStack()
+    /// The currentCuadruple indicates in which quadruple is being anallized
     var currentCuadruple : Int = 1
 
     
@@ -35,18 +52,6 @@ public class Symbol {
         self.assigned = assigned
         self.address = address
     }
-//    
-//    init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0, rows : NSNumber){
-//        self.lineNumber = UInt16(lineNumber)
-//        self.identifier = String(identifier)
-//        self.kind = kind
-//        self.type = type
-//        self.constant = constant
-//        self.array = array
-//        self.assigned = assigned
-//        self.address = address
-//        self.dimension2D = (rows.uintValue, 1)
-//    }
     
     init(_ lineNumber : Int, _ identifier : NSString, _ kind : Kind, _ type : TypeSymbol, _ constant: Bool, _ array : Bool, _ assigned : Bool, address: Int = 0, rows : NSNumber, columns : NSNumber){
         self.lineNumber = UInt16(lineNumber)
@@ -59,7 +64,7 @@ public class Symbol {
         self.address = address
         self.dimension2D = (rows.intValue, columns.intValue)
     }
-    
+    /// Default initializer
     init(){
         self.lineNumber = 0
         self.identifier = ""
@@ -99,7 +104,8 @@ extension Symbol : CustomStringConvertible {
 
 
 
-
+/// Symbol Table is a linked list of node, each node representing one scope.
+/// Each node has a dictionary that keeps track of each symbol saved
 public struct SymbolTable {
   public var head: Node?
   public var tail: Node?
@@ -165,26 +171,27 @@ extension SymbolTable{
         node.next = symbols
         return node.next!
     }
-    
+    /// This functions inserts a new symbol in the linked list in case this hasn't been declared in the same last node before
     @discardableResult  public mutating func insertInHashTable(_ symbol : Symbol) -> Bool {
         let index = symbol.identifier.hashValue
         guard !isEmpty else {
             let node = Node(symbols: [index: symbol])
             push(node)
-            //print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
             return true
         }
         
     
         if(self.head!.symbols[index] == nil){
             self.head!.symbols[index] = symbol
-           // print("Inserted symbol \(symbol.identifier) line \(symbol.lineNumber)")
             return true
         }else{
             return false
         }
     }
-    
+    /// This functionslooks for the symbol with the help of an identifier. If it doesn't find it, looks in the next node, until it reaches the global node, if it was never found returns nil
+    ///  - Parameter identifier: Takes the identifier to be looked up in the linkedlist
+    ///  - Returns: An optional symbol in case of found.Iif not returns nil.
+
     public mutating func lookup(_ identifier: String) -> Symbol?{
         let index = identifier.hashValue
         guard !isEmpty else {
@@ -342,203 +349,3 @@ extension Node: CustomStringConvertible {
 }
 
 
-
-
-/**
- 
- 
- class NodeSymbolTable {
-     var myVar : Variable
-     var lineNumber : UInt16
-     var nextNode : NodeSymbolTable?
-     
-     init(variable : Variable = Variable(), lineNumber : UInt16 = 0, nextNode : NodeSymbolTable? = nil) {
-         self.myVar = variable
-         self.lineNumber = lineNumber
-         self.nextNode = nextNode
-     }
-     
- }
-
- extension NodeSymbolTable : CustomStringConvertible {
-
-     var description: String {
-            return """
-                 |   Identifier's Name: \(myVar.identifier)
-                 |   Type: \(myVar.type)
-                 |   Scope: \(myVar.scope)
-                 |   Line Number: \(lineNumber)
-                 |
-                 --------------------------------------
-                 """
-     }
- }
-
- class ST{
-     var head : [Int : NodeSymbolTable] = [:]
-     
-     init(){
-         head = [:]
-     }
-     
-     func modify(id : String, s : Scope, t : TypeWord, l : UInt16) -> Bool {
-         let index = id.hashValue
-         var start: NodeSymbolTable? = self.head[index]
-         
-         if(start == nil){
-             print("-1")
-             return false
-         }
-         
-         while(start != nil){
-             if(start!.myVar.identifier == id){
-                 start!.myVar.setIdScopeAndType(identifier: id, scope: s, type: t)
-                 start!.lineNumber = l
-                 return true
-             }
-             start = start!.nextNode ?? nil
-         }
-         return false
-     }
-     
-     func deleteRecord(id : String) -> Bool {
-         let index = id.hashValue
-         var temp: NodeSymbolTable? = self.head[index]
-         var par: NodeSymbolTable? = self.head[index]
-         
-         // No hay id en un valor dentro del array
-         if(temp == nil){
-             return false
-         }
-         
-         // solo un identificador esta presente
-         if(temp!.myVar.identifier == id && temp!.nextNode == nil){
-             temp!.nextNode = nil
-             temp = nil
-             return true
-         }
-         
-         while(temp!.myVar.identifier != id && temp!.nextNode != nil){
-             par = temp
-             temp = temp!.nextNode
-         }
-         
-         if(temp!.myVar.identifier == id && temp!.nextNode != nil){
-             par?.nextNode = temp?.nextNode
-             temp?.nextNode = nil
-             temp = nil
-             return true
-         }else{
-             // Eliminar al final
-             par?.nextNode = nil
-             temp?.nextNode = nil
-             temp = nil
-             return true
-         }
-     }
-     
-     func find(id : String) -> String{
-         let index = id.hashValue
-         var start : NodeSymbolTable? = self.head[index]
-         
-         if(start == nil){
-             return "-1"
-         }
-         
-         while(start != nil){
-             if(start!.myVar.identifier == id){
-                 print(start!.myVar)
-                 return start!.myVar.scope.rawValue
-             }
-             
-             start = start!.nextNode
-         }
-         
-         return "-1"
-     }
-     
-     func varScopeValid(_ variable : Variable,_ start : NodeSymbolTable?) -> Bool {
-         print("ERROR, \(variable.identifier) ya existe")
-         return start?.nextNode?.myVar.identifier == variable.identifier && start?.nextNode?.myVar.scope == variable.scope
-     }
-     
-     func insert(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
-         let index = variable.identifier.hashValue
-         let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
-         if(self.head[index] == nil){
-             head[index] = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }else{
-             var start : NodeSymbolTable? = self.head[index]
-             while(!varScopeValid(variable, start) && start?.nextNode != nil){
-                 start = start?.nextNode
-             }
-             
-             start?.nextNode = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }
-     }
-     
-     func insertFunction(_ variable : Variable,_ lineaNum : UInt16) -> Bool {
-         let index = variable.identifier.hashValue
-         let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
-         if(self.head[index] == nil){
-             head[index] = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }else{
-             var start : NodeSymbolTable? = self.head[index]
-             while(!varScopeValid(variable, start) && start?.nextNode != nil){
-                 start = start?.nextNode
-             }
-             
-             start?.nextNode = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }
-     }
-     
-     func insertVariable(_ idFunction: String, _ variable : Variable, _ lineaNum : UInt16) -> Bool {
-         let index = idFunction.hashValue
-         print("JJ")
-         let p : NodeSymbolTable = NodeSymbolTable(variable: variable, lineNumber: lineaNum)
-         if(self.head[index] == nil){
-             head[index] = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }else{
-             let indexVariable = variable.identifier.hashValue
-             var start : NodeSymbolTable? = self.head[index]
-             while(start?.nextNode != nil){
-                 start = start?.nextNode
-             }
-             
-             start?.nextNode = p
-             print("Inserted \(variable.identifier)")
-             return true
-         }
-     }
- }
-
-
-
- extension ST : CustomStringConvertible {
-
-     var description: String {
-         return self.head.reduce("") { res, next in
-             var a = ""
-             if(next.value.nextNode != nil){
-                
-                 var temp : NodeSymbolTable? = next.value.nextNode!
-                 while(temp != nil){
-                     a += "\t " + temp!.description
-                     temp = temp!.nextNode
-                 }
-             }
-             
-             return res + "\n" + next.value.description + (a != "" ? "\n\t| \(a) |" : a)
-         }
-     }
- }**/

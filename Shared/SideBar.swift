@@ -11,7 +11,7 @@ extension Collection {
     return Array(self.enumerated())
   }
 }
-
+/// The side bar has all the quadruples generated during compilation
 struct Sidebar : View{
     @Binding var VM : VirtualMachine?
 #if os(iOS)

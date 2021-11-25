@@ -6,10 +6,9 @@
 //
 
 import Foundation
-
-struct Quadruple : Identifiable{
-    var id: UUID = UUID()
-    
+/// Struct that saves 4 elements, arg1, arg2, op and result. Basic quadruple
+public struct Quadruple : Identifiable{
+    public var id: UUID = UUID()
     var argument1 : String?
     let argument2 : String?
     let op : Operator
@@ -21,16 +20,3 @@ extension Quadruple: CustomStringConvertible {
         return "Op: \(op )".padding(toLength: 20, withPad: " ", startingAt: 0) + "Address1: \(argument1 ?? "")".padding(toLength: 20, withPad: " ", startingAt: 0) + "Address2: \(argument2 ?? "")".padding(toLength: 20, withPad: " ", startingAt: 0) + "Result: \(result ?? "")"
     }
 }
-
-//func quadruple(op : Operator, arg1 : Symbol, arg2: Symbol? = nil) -> Symbol? {
-//
-//    guard let arg = arg2 else {return nil}
-//    guard semanticCube[SemCubeKey(op1: arg1.type, op2: arg.type, o: op)] != nil else {return nil}
-//    switch op {
-//    case .sum:
-//        //return
-//    default:
-//        return nil
-//    }
-//
-//}

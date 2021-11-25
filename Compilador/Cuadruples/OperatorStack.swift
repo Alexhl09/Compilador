@@ -7,8 +7,11 @@
 
 import Foundation
 
-struct OperatorStack {
+/// Operation stack  is a structure that has 2 properties, operands and operators.
+public struct OperatorStack {
+    /// Operators is a stack of Operators
     var operators : Stack<Operator>
+    /// Operators is a stack of a tuple (String, TypeSymbol) String for the address and TypeSymbol for type
     var operands : Stack<(String, TypeSymbol)>
     
     init() {
@@ -27,16 +30,17 @@ struct OperatorStack {
     mutating func addOperator(op : Operator){
         operators.push(op)
     }
-    
+    /// This function get the last N Operands and pop them from the operands stack
     mutating func getLastNOperands(_ n : Int) -> [(String, TypeSymbol)] {
         if(n <= operands.size()){
             var lastP : [(String, TypeSymbol)] = []
-            for i in 0..<n{
+            for _ in 0..<n{
                 lastP.append(self.operands.pop()!)
             }
             return lastP
         }
         return []
     }
+  
     
 }

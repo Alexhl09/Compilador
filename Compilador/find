@@ -1,0 +1,23 @@
+
+ // A function to implement bubble sort
+func int find(int arr[10], int x)
+{
+    for(int i : 0..<10){
+        if(arr[i] == x){
+                return i;
+        }
+    }
+    return -1;
+}
+
+main()
+{
+    var arr[10] = {64, 34, 25, 12, 22, 11, 90, 29, 3, 0};
+    print("Array: ");
+    print(arr);
+    var n = 25;
+    var found = find(arr, n);
+    print("Sorted array:");
+    print(found);
+}
+ 

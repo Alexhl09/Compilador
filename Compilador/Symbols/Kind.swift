@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-enum Kind : Int {
+/// Kind is an enum with 2 possible values metod or field
+public enum Kind : Int {
     case method
     case field
 }

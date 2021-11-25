@@ -1,106 +1,21 @@
+//
+//  SemanticCube.swift
+//  Compilador
+//
+//  Created by Alejandro Hernández López on 23/11/21.
+//
 
-enum Operator : Int {
-    case sum
-    case minus
-    case multiply
-    case division
-    case modulo
-    case intDivision
-    case greaterThan
-    case lessThan
-    case greaterOrEqualThan
-    case lessOrEqualThan
-    case equal
-    case different
-    case and
-    case or
-    case assign
-    case goto
-    case gotof
-    case gotot
-    case read
-    case print
-    case noNil
-    case endFunc
-    case era
-    case gosub
-    case param
-    case rtn
-    case vrf
-    case sumAd
-}
-
-extension Operator : CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .sum:
-            return "+"
-        case .minus:
-            return "-"
-        case .multiply:
-            return "*"
-        case .division:
-            return "/"
-        case .modulo:
-            return "%"
-        case .intDivision:
-            return "div"
-        case .greaterThan:
-            return ">"
-        case .lessThan:
-            return "<"
-        case .greaterOrEqualThan:
-            return ">="
-        case .lessOrEqualThan:
-            return "<="
-        case .equal:
-            return "=="
-        case .different:
-            return "!="
-        case .and:
-            return "&&"
-        case .or:
-            return "||"
-        case .assign:
-            return "="
-        case .goto:
-            return "GOTO"
-        case .gotof:
-            return "GOTOF"
-        case .gotot:
-            return "GOTOT"
-        case .read:
-            return "READ"
-        case .print:
-            return "PRINT"
-        case .noNil:
-            return "noNil"
-        case .endFunc:
-            return "ENDFUNC"
-        case .era:
-            return "ERA"
-        case .gosub:
-            return "GOSUB"
-        case .param:
-            return "PARAM"
-        case .rtn:
-            return "RETURN"
-        case .vrf:
-            return "VERIFY"
-        case .sumAd:
-            return "SUM ADDR"
-        }
-    }
-}
-
-
+import Foundation
+/// Struct that saves the key of a SemanticCube
 struct SemCubeKey : Hashable {
     let op1 : TypeSymbol
     let op2 : TypeSymbol?
     let o : Operator
 }
 
+// MARK: - Semantic Cube
 
+/// Semantic cubes keeps track of the resultant TypeSymbol, from 2 types and an operartor
 var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     
     /// MARK : - Divisions
@@ -356,7 +271,7 @@ var semanticCube : [ SemCubeKey : TypeSymbol ] = [
     
     SemCubeKey.init(op1: .integer, op2: .pointer, o: .assign) : .integer,
     
-    /// MARK : - greaterThan
+    // MARK : - greaterThan
     
     // greaterThan integer
     SemCubeKey.init(op1: .integer, op2: .integer, o: .greaterThan) : .boolean,

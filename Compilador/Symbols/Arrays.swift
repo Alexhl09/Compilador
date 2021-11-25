@@ -8,7 +8,7 @@
 import Foundation
 
 
-
+/// The arrays has a linked list with node representing the information of each dimension.
 public struct ArrayLinkedList {
   public var head: ArrayNode?
   public var tail: ArrayNode?
@@ -182,14 +182,14 @@ extension ArrayLinkedList: Collection {
 
 }
 
-
+/// This class represents the nodes of the linked list generated to be used to keep track of the dimension of a multidimensional array
 public class ArrayNode {
     public var limSup : Int
     public var m : Int
     public var dim : Int
     public var r : Int
     public var next : ArrayNode?
-    
+    /// Initializer with limSup, m, dim, r
     init(limSup : Int, m: Int, dim : Int, r : Int, next : ArrayNode? = nil){
         self.limSup = limSup
         self.m = m
@@ -197,7 +197,7 @@ public class ArrayNode {
         self.dim = dim
         self.next = next
     }
-    
+    /// Initializer with deafult values
     init(next : ArrayNode? = nil){
         self.limSup = 0
         self.m = 0
@@ -206,17 +206,4 @@ public class ArrayNode {
         self.next = next
     }
 }
-
-//extension ArrayArrayNode: CustomStringConvertible {
-//  public var description: String {
-//    guard let next = next else {
-//        return "\(symbols)"
-//    }
-//      let t = self.symbols.reduce(into: "") { x, dic in
-//          x += "Hash\(dic.key) \t" + dic.value.description + "\n"
-//      }
-//    return "\(t) -> " + String(describing: next)  + "\n\n"
-//  }
-//}
-
 
