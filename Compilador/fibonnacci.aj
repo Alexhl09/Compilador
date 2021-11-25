@@ -1,14 +1,4 @@
-const x = "hola mundo";
-
-func void holaMundo() {
-	print(x);
-}
-
 main() {
-<<<<<<< HEAD
-	var string y = "AJ dice: ";
-    print(y, holaMundo());
-=======
     var n = 50;
     var t1 = 0;
     var t2 = 1;
@@ -28,7 +18,6 @@ main() {
             }
         }
     }    
->>>>>>> main
 }
 
 

@@ -31,7 +31,7 @@ struct ContentView: View {
             
             List {
                 Text("Da click en el siguiente link para")
-                Link("aprender AJ", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!)
+                Link("aprender AJ", destination: URL(string: "https://youtu.be/dcG1uJnYKxE")!)
                 Spacer()
                 Image("1")
                     .resizable()
