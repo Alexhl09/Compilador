@@ -38,3 +38,9 @@ Asi mismo, se trabajo también en ir preparando las bases para el manejo de arre
 ## Avance 6
 
 Este avance logró integrar toda la ejecución del compilador y sobre todo de la maquina virtual. Es decir, que en esta semana se trabajo en la máquina virtual y la ejecución de cuadruplos. A su vez, se trabajó con el código para manejar arreglos y funciones.
+
+## Avence 7 (último)
+El último avance del proyecto. Sin duda cuando más bugs y detalles aparecieron pues en este avance se trabajó en la integración del compilador y máquina virtual con el IDE desarrollado. Así mismo se dieron los últimos arreglos al IDE para permitir la integración de ambos productos. 
+
+En este avance también se terminó todo lo relacionado a arreglos y manejo de memoria por lo que podemos dar por finalizada el desarrollo del proyecto pues el compilador, máquina virtual e IDE quedaron terminados en su totalidad.
+
