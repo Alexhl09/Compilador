@@ -102,6 +102,8 @@
 		A9955AAB271A5AA400A5BC43 /* VirtualMemorySemantic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AAA271A5AA400A5BC43 /* VirtualMemorySemantic.swift */; };
 		A9955AC9271FC28100A5BC43 /* WriteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9955AC8271FC28100A5BC43 /* WriteFile.swift */; };
 		A9FA5EA826FFBF5100425354 /* ReadFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */; };
+		F9D399EE274C362E00DECCB9 /* manual.json in Resources */ = {isa = PBXBuildFile; fileRef = F9D399ED274C362E00DECCB9 /* manual.json */; };
+		F9D399EF274C362E00DECCB9 /* manual.json in Resources */ = {isa = PBXBuildFile; fileRef = F9D399ED274C362E00DECCB9 /* manual.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -224,6 +226,7 @@
 		A9955ADD2724920700A5BC43 /* outputCompilador.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outputCompilador.txt; sourceTree = "<group>"; };
 		A9FA5EA726FFBF5100425354 /* ReadFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFromFile.swift; sourceTree = "<group>"; };
 		A9FA5EA926FFBF9D00425354 /* test.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.test; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F9D399ED274C362E00DECCB9 /* manual.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manual.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +305,7 @@
 		A982EDCC274890F50066E995 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F9D399ED274C362E00DECCB9 /* manual.json */,
 				A982EE782749D4410066E995 /* swift.png */,
 				A982EE5A27489F7A0066E995 /* OCLexInput.swift */,
 				A982EE5D2748E5D70066E995 /* Compilador-Swift.h */,
@@ -524,6 +528,7 @@
 			files = (
 				A982EDE0274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE792749D4410066E995 /* swift.png in Resources */,
+				F9D399EE274C362E00DECCB9 /* manual.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +538,7 @@
 			files = (
 				A982EDE1274890F60066E995 /* Assets.xcassets in Resources */,
 				A982EE7A2749D4410066E995 /* swift.png in Resources */,
+				F9D399EF274C362E00DECCB9 /* manual.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

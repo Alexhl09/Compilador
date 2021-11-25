@@ -13,7 +13,6 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @State private var selection = 0
     @Binding var document : TextFile
-    
     var body: some View {
         TabView(selection: $selection) {
             
@@ -30,16 +29,30 @@ struct ContentView: View {
             }
             .tag(0)
             
-            HStack {
+            List {
+                Text("Da click en el siguiente link para")
+                Link("aprender AJ", destination: URL(string: "https://www.hackingwithswift.com/quick-start/swiftui")!)
                 Spacer()
-                VStack {
-                    Spacer()
-                    Text("Manual de usuario")
-                    Spacer()
-                }
+                Image("1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
+                Image("2")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
+                Image("3")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
+                Image("4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
+                Image("5")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
+                Image("6")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill);
                 Spacer()
             }
-            .background(Color.red)
             .tabItem {
                 Image(systemName: "text.book.closed.fill")
                 Text("Manual de usuario")

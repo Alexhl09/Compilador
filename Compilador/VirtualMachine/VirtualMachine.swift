@@ -53,6 +53,7 @@ class VirtualMachine {
         var arg2 : Int?
         var result : Int?
         var op : Operator
+        // loop to iterate over all quadruples
         repeat {
             currentIndex = self.activeStack.peek()?.index ?? -1
             currentQuadruple = self.quadruples[currentIndex]
@@ -62,7 +63,7 @@ class VirtualMachine {
             result = Int(currentQuadruple.result ?? "0")
             op = currentQuadruple.op
             
-            
+            // mega switch with all valid operations and corresponding cases
             switch op {
             case .sum, .minus, .multiply, .division, .modulo, .intDivision, .greaterThan, .lessThan, .greaterOrEqualThan, .lessOrEqualThan, .equal, .different, .and, .or:
                 self.basicOperation(op: op, arg1: arg1, arg2: arg2, res: result)
