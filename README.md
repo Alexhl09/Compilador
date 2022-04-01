@@ -1,6 +1,8 @@
 # Compilador
 Elaborado por Alejandro Hernández y Juan Pablo Vargas.
 
+## [Video](https://twitter.com/alejandro_09_/status/1468788209056419841?s=24&t=8PKw0mBCJp-vK4rap5MKFQ)
+
 ## Primer avance
 
 En este avance se trabajo en generar la estructura básica del proyecto en la que se generaron los archivos necesarios para generar el lexer y parser. Así mismo se realizaron las configuraciones necesarias en XCode para ejecutar correctamente las herramientas utilizadas en este proyecto. 
